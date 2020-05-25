@@ -86,7 +86,12 @@
 				</exclusion>
 			</exclusions>
 			<scope>runtime</scope>
+			
+
+
 		</dependency>
+		
+		
 
 		<!-- @Inject -->
 		<dependency>
@@ -206,6 +211,12 @@
 			<artifactId>log4jdbc-remix</artifactId>
 			<version>0.2.7</version>
 		</dependency>   
+		<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+		</dependency>
+		
 	</dependencies>
     <build>
         <plugins>
