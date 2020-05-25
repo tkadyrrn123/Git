@@ -1,0 +1,70 @@
+.myMenu{
+	float:left;
+}
+.myPageUl>li{
+	margin-top:30px;
+}
+a{
+	text-decoration: none;
+	color: pink;
+}
+.head{
+	color: pink;
+	text-align:center;
+    font-size: 28px;
+}
+.li{
+	width: 150px;
+	text-align:center;
+}
+a:hover{
+	color: skyblue;
+	cursor: pointer;
+}
+.space{
+	width: 14%;
+	text-align:center;
+    float: left;
+}
+.area{
+	margin: 250px 25% 50px;
+}
+.ul{
+	color: skyblue;
+}
+.image{
+	text-align: center;
+}
+.text{
+	border:none;
+	border-right:0px; 
+	border-top:0px; 
+	border-left:0px; 
+	border-bottom:0px;
+	font-size:28px;
+	color: gray;
+	margin: 10px 30px;
+}
+.top{
+	margin-top:30px;
+}
+hr{
+	width: 96%;
+}
+#submit{
+	margin-left: 34%;
+	background-color: pink;
+}
+#cancel{
+	background-color: gray;
+	color:white;
+}
+.button{
+	width: 150px;
+	height: 40px;
+	font-size: 16px;
+	margin-left: 1%;
+	margin-top: 50px;
+	border-radius: 5px;
+	border: 0;
+}
