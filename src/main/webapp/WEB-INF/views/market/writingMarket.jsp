@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +11,7 @@
    h5{ margin: 0 auto;}
    h2{font-family: "Sans-Serif"; margin-left: 11%;}
    hr{border-color: lavender;}
-   .inputs{border: none; margin-left: 20px;}
+   .inputs{height: 60%; border: 1px solid lavender; margin-left: 20px; width: 80%;}
    #tr1{height: 10%}
    #tr2{height: 10%;}
    #tr3{height: 10%;}
@@ -31,34 +31,34 @@
 <body>
 <jsp:include page="../common/menubar.jsp"/>
 <div id="body">
-      <h2>&nbsp;Áß°íÀåÅÍ</h2>
+      <h2>&nbsp;ì¤‘ê³ ìž¥í„°</h2>
       <hr style="width: 80%; margin-left: 11%"><br>
 
          <form>
             <table id="tb">
                  <tr id="tr1">
-                   <td colspan=2 style="color: darksalmon; font-weight: bold;">ÀÛ¼ºÇÏ±â</td>
+                   <td colspan=2 style="color: darksalmon; font-weight: bold;">ìž‘ì„±í•˜ê¸°</td>
                 </tr> 
                 <tr id="tr2">
-                   <td class="td1">Á¦¸ñ</td>
+                   <td class="td1">ì œëª©</td>
                      <td>
-                        <input class="inputs" type="text" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä" size="90">
+                        <input class="inputs" type="text" placeholder="ì œëª©ì„ ìž…ë ¥í•˜ì„¸ìš”" size="90">
                      </td>
                   </tr>
                   <tr id="tr3">
-                     <td class="td1">°¡°Ý</td>
+                     <td class="td1">ê°€ê²©</td>
                      <td>
-                       <input class="inputs" type="text" placeholder="°¡°ÝÀ» ÀÔ·ÂÇÏ¼¼¿ä" size="90">
+                       <input class="inputs" type="text" placeholder="ê°€ê²©ì„ ìž…ë ¥í•˜ì„¸ìš”" size="90">
                      </td>
                   </tr>      
                   <tr id="tr4">
-                     <td class="td1">³»¿ë</td>
+                     <td class="td1">ë‚´ìš©</td>
                      <td>
-                        <textarea id="content" placeholder="³»¿ë ÀÔ·ÂÇÏ¼¼¿ä " style="margin-left: 20px;"></textarea>
+                        <textarea id="content" placeholder="ë‚´ìš© ìž…ë ¥í•˜ì„¸ìš” " style="margin-left: 20px;"></textarea>
                      </td>
                   </tr>      
                   <tr id="tr5">
-                     <td class="td1">¹°Ç°»çÁø</td>
+                     <td class="td1">ë¬¼í’ˆì‚¬ì§„</td>
                      <td>
                   <input type="file" style="margin-left: 20px; padding: 5px;">
                      </td>
@@ -66,8 +66,8 @@
 
             </table><br>
               <div id="btns">
-                  <button class="btn">Ãë¼Ò</button>
-                  <button class="btn">ÀÛ¼º¿Ï·á</button>
+                  <button class="btn">ì·¨ì†Œ</button>
+                  <button class="btn">ìž‘ì„±ì™„ë£Œ</button>
             </div>
          </form>
    </div><br>
