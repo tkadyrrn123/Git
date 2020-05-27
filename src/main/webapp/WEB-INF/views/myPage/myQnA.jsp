@@ -10,10 +10,24 @@
 <style>
 	#myBoardTable{
 		margin:0 auto;
+		border-collapse:collapse;
 	}
-	td{
-		text-align: center;
+	#myBoardTable thead th{
+    background: #6f809a;
+    color: #fff;
+    border: 1px solid #60718b;
+    font-weight: normal;
+    text-align: center;
+    padding: 8px 5px;
+    font-size: 0.92em;
 	}
+	#myBoardTable tbody td{
+	    border: 1px solid #d6dce7;
+	    padding: 5px;
+	    text-align: center;
+	    line-height: 22px;
+	}
+	
 	.number{
 		width: 50px;
 	}
@@ -26,11 +40,26 @@
 	.type{
 		width: 70px;
 	}
+	/* .topBoard{
+		background-color: #A9D0F5;
+	}
 	.topBoard>th{
 		border-bottom: 2px solid gray;
 	}
 	.bottomBoard>tr:last-child>td{
 		border-bottom: 2px solid gray;
+	}
+	.bottomBoard>tr>td:nth-child(even){
+		border-right: 1px solid black;
+	}
+	.bottomBoard>tr>td:nth-child(odd){
+		border-right: 1px solid black;
+	}
+	.bottomBoard>tr>td:last-child{
+		border-right: 0px;
+	} */
+	.bottomBoard>tr:nth-child(even){
+		background-color: #CEF6F5;
 	}
 	#write{
 		background-color:skyblue;
@@ -140,6 +169,9 @@
 .upload-name{
 	margin-right: 50px;
 }
+.myPageUl li:nth-child(3) {
+	background-color: #8181F7;
+}
 </style>
 <script>
 function goDetail() {
@@ -176,7 +208,9 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+	<img class="img" src="resources/images/myPageImage.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
+	<b id="headcomment">QnA</b>
 	<div class="myMenu">
 	<jsp:include page="myPageHeader.jsp"/>
 	</div>
@@ -191,6 +225,24 @@ $(document).ready(function(){
 			</tr>
 		</thead>
 		<tbody class="bottomBoard">
+			<tr>
+				<td>22</td>
+				<td>A동 벤치 고장난것 같아요! </td>
+				<td>2020-05-09</td>
+				<td>처리 중</td>
+			</tr>
+			<tr>
+				<td>22</td>
+				<td>A동 벤치 고장난것 같아요! </td>
+				<td>2020-05-09</td>
+				<td>처리 중</td>
+			</tr>
+			<tr>
+				<td>22</td>
+				<td>A동 벤치 고장난것 같아요! </td>
+				<td>2020-05-09</td>
+				<td>처리 중</td>
+			</tr>
 			<tr>
 				<td>22</td>
 				<td>A동 벤치 고장난것 같아요! </td>

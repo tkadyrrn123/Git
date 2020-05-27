@@ -7,14 +7,12 @@
 </head>
 <body>
 	<ul class="myPageUl">
-		<li class="head">마이페이지</li>
-		<li class="li"><h3><a href="breakfast.my">조석식 예약</a></h3></li>
-		<li class="li"><h3><a href="myBoard.my">내 게시글</a></h3></li>
-		<li class="li"><h3><a href="myQnA.my">QnA</a></h3></li>
-		<li class="li"><h3><a href="myProfile.my">프로필</a></h3></li>
-		<li class="li"><h3><a href="myComment.my">내 댓글</a></h3></li>
+		<li class="li"><b><a href="breakfast.my">조석식 예약</a></b></li>
+		<li class="li"><b><a href="myBoard.my">내 게시글</a></b></li>
+		<li class="li"><b><a href="myQnA.my">QnA</a></b></li>
+		<li class="li"><b><a href="myProfile.my">프로필</a></b></li>
+		<li class="li"><b><a href="myComment.my">내 댓글</a></b></li>
 	</ul>
 	<br clear="all">
-	
 </body>
 </html>
