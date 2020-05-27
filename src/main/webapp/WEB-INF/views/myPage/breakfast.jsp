@@ -71,6 +71,9 @@
 .resBody>td{
 	padding: 10px;
 }
+.myPageUl li:nth-child(1) {
+	background-color: #8181F7;
+}
 </style>
 <script>
 function goDetail() {
@@ -105,7 +108,9 @@ function resPopupClose() {
 </script>
 </head>
 <body>
+	<img class="img" src="resources/images/myPageImage.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
+	<b id="headcomment">조석식 예약</b>
 	<div class="myMenu">
 	<jsp:include page="myPageHeader.jsp"/>
 	</div>

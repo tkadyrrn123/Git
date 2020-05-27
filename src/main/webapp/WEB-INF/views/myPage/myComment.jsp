@@ -9,9 +9,22 @@
 <style>
 	#myBoardTable{
 		margin:0 auto;
+		border-collapse:collapse;
 	}
-	td{
-		text-align: center;
+	#myBoardTable thead th{
+    background: #6f809a;
+    color: #fff;
+    border: 1px solid #60718b;
+    font-weight: normal;
+    text-align: center;
+    padding: 8px 5px;
+    font-size: 0.92em;
+	}
+	#myBoardTable tbody td{
+	    border: 1px solid #d6dce7;
+	    padding: 5px;
+	    text-align: center;
+	    line-height: 22px;
 	}
 	.number{
 		width: 50px;
@@ -31,10 +44,21 @@
 	.bottomBoard>tr:last-child>td{
 		border-bottom: 2px solid gray;
 	}
+	#pagingTable a{
+	color: black;
+	}
+	.bottomBoard>tr:nth-child(even){
+		background-color: #CEF6F5;
+	}
+	.myPageUl li:nth-child(5) {
+	background-color: #8181F7;
+}
 </style>
 </head>
 <body>
+	<img class="img" src="resources/images/myPageImage.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
+	<b id="headcomment">내 댓글</b>
 	<div class="myMenu">
 	<jsp:include page="myPageHeader.jsp"/>
 	</div>
@@ -48,6 +72,31 @@
 			</tr>
 		</thead>
 		<tbody class="bottomBoard">
+			<tr>
+				<td>22</td>
+				<td>A동 벤치 고장난것 같아요! </td>
+				<td>2020-05-09</td>
+			</tr>
+			<tr>
+				<td>22</td>
+				<td>A동 벤치 고장난것 같아요! </td>
+				<td>2020-05-09</td>
+			</tr>
+			<tr>
+				<td>22</td>
+				<td>A동 벤치 고장난것 같아요! </td>
+				<td>2020-05-09</td>
+			</tr>
+			<tr>
+				<td>22</td>
+				<td>A동 벤치 고장난것 같아요! </td>
+				<td>2020-05-09</td>
+			</tr>
+			<tr>
+				<td>22</td>
+				<td>A동 벤치 고장난것 같아요! </td>
+				<td>2020-05-09</td>
+			</tr>
 			<tr>
 				<td>22</td>
 				<td>A동 벤치 고장난것 같아요! </td>
