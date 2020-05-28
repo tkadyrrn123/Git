@@ -16,7 +16,7 @@
     cursor: move; 
     background-color: #EAE9E9;}
 
-.layerpop_area .content {
+.layerpop_area .content { 
     margin: 2%;
     text-align:center;
     }

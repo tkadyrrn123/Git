@@ -16,7 +16,7 @@
     background: #6f809a;
     color: #fff;
     border: 1px solid #60718b;
-    font-weight: normal;
+    font-weight: normal; 
     text-align: center;
     padding: 8px 5px;
     font-size: 0.92em;
