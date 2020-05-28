@@ -40,24 +40,9 @@
 	.type{
 		width: 70px;
 	}
-	/* .topBoard{
-		background-color: #A9D0F5;
+	.bottomBoard>tr>td:nth-child(2){
+		cursor: pointer;
 	}
-	.topBoard>th{
-		border-bottom: 2px solid gray;
-	}
-	.bottomBoard>tr:last-child>td{
-		border-bottom: 2px solid gray;
-	}
-	.bottomBoard>tr>td:nth-child(even){
-		border-right: 1px solid black;
-	}
-	.bottomBoard>tr>td:nth-child(odd){
-		border-right: 1px solid black;
-	}
-	.bottomBoard>tr>td:last-child{
-		border-right: 0px;
-	} */
 	.bottomBoard>tr:nth-child(even){
 		background-color: #CEF6F5;
 	}
@@ -174,16 +159,17 @@
 }
 </style>
 <script>
-function goDetail() {
+function goDetail(data) {
     /*팝업 오픈전 별도의 작업이 있을경우 구현*/ 
 
-    popupOpen(); //레이어 팝업창 오픈 
+    popupOpen(data); //레이어 팝업창 오픈 
 }
-function popupOpen() {
+function popupOpen(data) {
     $('.layerpop').css("position", "absolute");
     //영역 가운에데 레이어를 뛰우기 위해 위치 계산 
     $('.layerpop').css("top",(($(window).height() - $('.layerpop').outerHeight()) / 2) + $(window).scrollTop());
     $('.layerpop').css("left",(($(window).width() - $('.layerpop').outerWidth()) / 2) + $(window).scrollLeft());
+    $('#QnATitle').val(data);
     $('#layerbox').show();
 }
 function popupClose() {
@@ -227,25 +213,25 @@ $(document).ready(function(){
 		<tbody class="bottomBoard">
 			<tr>
 				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
+				<td onClick="javascript:goDetail('A동 벤치 고장난것 같아요!');">A동 벤치 고장난것 같아요!</td>
 				<td>2020-05-09</td>
 				<td>처리 중</td>
 			</tr>
 			<tr>
 				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
+				<td onClick="javascript:goDetail('A동 벤치 고장난것 같아요!');">A동 벤치 고장난것 같아요!</td>
 				<td>2020-05-09</td>
 				<td>처리 중</td>
 			</tr>
 			<tr>
 				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
+				<td onClick="javascript:goDetail('A동 벤치 고장난것 같아요!');">A동 벤치 고장난것 같아요!</td>
 				<td>2020-05-09</td>
 				<td>처리 중</td>
 			</tr>
 			<tr>
 				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
+				<td onClick="javascript:goDetail('A동 벤치 고장난것 같아요!');">A동 벤치 고장난것 같아요!</td>
 				<td>2020-05-09</td>
 				<td>처리 중</td>
 			</tr>
