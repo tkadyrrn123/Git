@@ -8,34 +8,43 @@
 <title>Insert title here</title>
 <script src="https://kit.fontawesome.com/4d55e1ad7a.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <style>
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
 	html, body { height:100%; padding: 0; margin: 0;}
 	ul, li{padding: 0; margin: 0; list-style-type:none; }
-	.menubar{background: white; width: 80%; height: 8%; margin: 0 auto;
+	.menubar{background: rgb(255,255,255,0); width: 80%; height: 8%; margin: 0 auto;
 	         border-radius: 30px; line-height: 40px;
-	         font-family: 'Nanum Gothic'; font-weight: bold;
-	         margin-top: 3%; position: absolute; top: 30px; left: 10%;
-	         box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 2px 2px rgba(0,0,0,0.12), 0 4px 4px rgba(0,0,0,0.12), 0 8px 8px rgba(0,0,0,0.12), 0 16px 16px rgba(0,0,0,0.12);}
-	.menubar img{float: left; height: 175%; width: 11%; margin-top: -47px;}
+	         font-family: 'Nanum Gothic';
+	         position: absolute; top: 0px; left: 10%; color:white;
+	         }
+	.menubar a{float: left; font-family: 'Anton', sans-serif; font-size: 45px; margin-top: 18px;}
 	.catelist li{float: left; display: inline-block; text-align: center;}
-	.dropdown{width: 134px; line-height: 84px;}
+	.catelist>ul>li:first-child{margin-left: 18px;}
+	.dropdown{width: 134px; line-height: 75px;}
 	.dropdown:hover label{color: #62B3B6;}
-	.sub li:nth-child(1){border-top: 2px solid #62B3B6;}
-	.sub li{width: 134px; line-height: 50px; text-align: center;
-			background: white; border-bottom: 1px solid #dedede; cursor: pointer;}
-	.sub li:hover{background: #62B3B6; color:white;}
+	.sub li{width: 134px; line-height: 50px; text-align: center; cursor: pointer;}
+	.sub li:hover{color:white;}
 	.user{line-height: 84px;}
 	.user li{float:right; width: 40px;}
 	.user .fas{font-size: 20px;}
 	.user .fas:hover{color: #62B3B6;}
+	.on{color: blue;}
 	
+	a:link { color: white; text-decoration: none;}
+	a:visited { color: white; text-decoration: none;}
+	a:hover { color: white; text-decoration: none;}
 </style>
 </head>
 <body>
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
 	
 	<div class="menubar">
-		<a href="#"><img src="resources/images/로고.png"></a>
+		<a href="#">HOUSTORY</a>
 		
 		<div class="catelist">
 			<ul>
@@ -75,7 +84,6 @@
 		
 		<div class="user">
 			<ul>
-				
 				<li><i class="fas fa-cogs"></i></li>
 				<li><i class="fas fa-sign-out-alt"></i></li>
 				<li><i class="fas fa-user"></i></li>
@@ -97,8 +105,7 @@
 		    });
 	});
 	
-	
-	
 	</script>
+	
 </body>
 </html>

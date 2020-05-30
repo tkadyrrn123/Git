@@ -387,9 +387,10 @@ h2 {
 	display: inline-block;
 	padding: 3px 7px;
 	line-height: normal;
+	font-size: 16px;
 	vertical-align: middle;
 	cursor: pointer;
-	border-radius: .25em;
+	border-radius: 5px;
 }
 
 /* named upload */
@@ -576,7 +577,7 @@ h2 {
 						<td>
 							<p>프로필 사진</p>
 							<div class="filebox bs3-primary preview-image">
-								<input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
+								<input class="upload-name" value="파일선택" disabled="disabled" style="width: 30%;">
 								<label for="input_file">업로드</label> 
 							  	<input type="file" name="profile_img" id="input_file" class="upload-hidden"> 
 							</div>
@@ -927,15 +928,8 @@ h2 {
 	        
 			if(dongCnt > 0){
 				alert("'동'을 입력해주세요.");
-	            
 	            return false;
 			}
-	        
-// 	        if(apt_dong.val().indexOf('동')<0){
-// 	            alert("'동'을 입력해주세요.");
-// 	            apt_dong.focus();
-// 	            return false;
-// 	        }
 	        
 	        if(aptAdd_phone.val().indexOf('-')>=0){
 	        	 alert("'-'를 빼고 입력해주세요.");
@@ -946,7 +940,6 @@ h2 {
 	       	if(bool){
 	          		 $('#aptAddForm').submit();
 	          		 $(".modal3").fadeOut();
-	          		 alert(apt_dong.val());
 	        }   
 	       	
 		}
@@ -996,6 +989,8 @@ h2 {
 		$(".apt_join").click(function(){
 			$(".modal").fadeOut();
 		});
+		
+		
 	</script>
 </body>
 </html>
