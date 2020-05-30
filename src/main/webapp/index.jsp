@@ -834,7 +834,7 @@ h2 {
 		</div>
 		<br clear="all">
 		<div class="modal-content">
-			<form method="get" action="aptAdd.apt" id="aptAddForm" name="aptAddForm">
+			<form method="get" action="aptAdd.do" id="aptAddForm" name="aptAddForm">
 				<table style="width: 100%;">
 					<tr>
 						<td><h1>아파트 신청</h1></td>

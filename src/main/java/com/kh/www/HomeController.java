@@ -3,7 +3,6 @@ package com.kh.www;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.www.Apart.model.exception.ApartException;
@@ -26,39 +24,39 @@ import com.kh.www.Apart.model.vo.Apart;
 @Controller
 public class HomeController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	@Autowired
+	private ApartService aptService;
 	
-	
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "home.do", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-//		logger.info("Welcome home! The client locale is {}.", locale);
-//		
-//		Date date = new Date();
-//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-//		
-//		String formattedDate = dateFormat.format(date);
-//		
-//		model.addAttribute("serverTime", formattedDate );
+	@RequestMapping("aptAdd.do")
+	public String aptInsert(@RequestParam("aptAdd_Name") String name, @RequestParam("address1") String address,
+			                @RequestParam("aptAdd_dong") String[] dong, @RequestParam("aptAdd_phone") String phone,
+			                Model model, HttpServletResponse response) throws IOException {
 		
-		return "home";
-	}
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String homejsp(Locale locale, Model model) {
-//		logger.info("Welcome home! The client locale is {}.", locale);
-//		
-//		Date date = new Date();
-//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-//		
-//		String formattedDate = dateFormat.format(date);
-//		
-//		model.addAttribute("serverTime", formattedDate );
+		System.out.println("이름:" + name);
+		System.out.println("주소:" + address);
+		System.out.println("동:" + Arrays.toString(dong));
+		System.out.println("전화번호:" + phone);
 		
-		return "home";
+		String dongjoin = String.join(",",dong);
+		
+		Apart apt = new Apart(name, dongjoin, address, phone);
+		
+		int result = aptService.aptInsert(apt);
+		
+		if(result>0) {
+			model.addAttribute("msg","아파트를 신청하였습니다.");
+			response.setContentType("text/html; charset=UTF-8");
+			
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('아파트를 신청하였습니다.'); history.go(-1);</script>");
+            out.flush();
+
+
+			return "index";
+		}else {
+			throw new ApartException("아파트 추가에 실패했습니다.");
+		}
+		
 	}
 	
 }
