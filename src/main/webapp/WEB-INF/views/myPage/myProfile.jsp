@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,58 +30,67 @@
 	<div class="myMenu">
 	<jsp:include page="myPageHeader.jsp"/>
 	</div>
-	<div class="area">
-		<ul class="ul">
-			<li class="image"><img src="resources/images/Profile.png" width="110px" height="110px"><label id="plusbtn" for="plus">+</label><input type="file" id="plus"></li>
-			<li class="top">현재 아파트</li>
-			<li>
-			<input type="text" class="text">
-			<hr>
-			</li>
-			<li class="top">등급</li>
-			<li>
-			<input type="text" class="text">
-			<hr>
-			</li>
-			<li class="top">이름</li>
-			<li>
-			<input type="text" class="text">
-			<hr>
-			</li>
-			<li class="top">동</li>
-			<li>
-			<input type="text" class="text">
-			<hr>
-			</li>
-			<li class="top">호수</li>
-			<li>
-			<input type="text" class="text">
-			<hr>
-			</li>
-			<li class="top">휴대전화 번호</li>
-			<li>
-			<input type="text" class="text"> 
-			<hr>
-			</li>
-			<li class="top">현재 비밀번호</li>
-			<li>
-			<input type="password" class="text"> 
-			<hr>
-			</li>
-			<li class="top">새 비밀번호</li>
-			<li>
-			<input type="password" class="text"> 
-			<hr>
-			</li>
-			<li class="top">새 비밀번호 확인</li>
-			<li>
-			<input type="password" class="text"> 
-			<hr>
-			</li>
-		</ul>
-		<input type="submit" value="수정" id="submit" class="button">
-		<button type="button" id="cancel" class="button">탈퇴</button>
-		<br>
-	</div>
+	<form action="updatePage.my" method="post">
+		<div class="area">
+			<ul class="ul">
+				<li class="image"><img src="resources/images/${member.userFile}" width="110px" height="110px"><label id="plusbtn" for="plus">+</label><input type="file" id="plus"></li>
+				<li class="top">현재 아파트</li>
+				<li>
+				<input type="text" class="text" value="${member.aptName}" readonly>
+				<hr>
+				</li>
+				<li class="top">등급</li>
+				<li>
+				<c:if test="${member.userLevel == 1}">
+					<input type="text" class="text" value="일반등급" readonly>
+				</c:if>
+				<c:if test="${member.userLevel == 2}">
+					<input type="text" class="text" value="관리등급" readonly>
+				</c:if>
+				<hr>
+				</li>
+				<li class="top">이름</li>
+				<li>
+				<input type="text" class="text" value="${member.userName}" readonly>
+				<hr>
+				</li>
+				<li class="top">닉네임</li>
+				<li>
+				<input type="text" class="text" value="${member.nickName}" readonly>
+				<hr>
+				</li>
+				<li class="top">동</li>
+				<li>
+				<input type="text" class="text" value="${member.aptDong}" readonly>
+				<hr>
+				</li>
+				<li class="top">호수</li>
+				<li>
+				<input type="text" class="text" value="${member.aptHosu}" readonly>
+				<hr>
+				</li>
+				<li class="top">이메일</li>
+				<li>
+				<input type="text" class="text" value="${member.email}" readonly>
+				<hr>
+				</li>
+				<li class="top">휴대전화 번호</li>
+				<li>
+				<input type="text" class="text" value="${member.phone}" readonly>
+				<hr>
+				</li>
+			</ul>
+			<input type="submit" id="submit" class="button" value="수정">
+			<button type="button" id="cancel" class="button">탈퇴</button>
+			<br>
+		</div>
+	</form>
+	<script>
+		$('#plus').change(function(){
+			var formData = new FormData();
+			formData.append("uploadfile",$("input[id=plus]")[0].files[0]);
+		});
+	</script>
+	<jsp:include page="../common/Footer.jsp"></jsp:include>
 </body>
 </html>

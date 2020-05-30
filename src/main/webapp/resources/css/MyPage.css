@@ -8,14 +8,13 @@
      height: 400px;
 }
 .myMenu{
-	border-top:1px solid gray;
+	margin-top: -4px;
 	border-bottom:1px solid gray;
 }
 .myPageUl{
 	margin-left: 32%;
 }
 .myPageUl>li{
-	height: 30px;
 	padding: 20px 0;
 	float:left;
 }
