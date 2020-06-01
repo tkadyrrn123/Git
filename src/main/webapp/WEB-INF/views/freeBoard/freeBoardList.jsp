@@ -7,13 +7,20 @@
 <title>Insert title here</title>
 <!-- <link rel="stylesheet" type="text/css" href="resources/css/freeBoard.css"> -->
 <style>
+.img { 
+     filter: brightness(70%);
+     width: 100%;
+     height: 400px;
+}
 	* { box-sizing: border-box; }
 /* 	body { background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); } */
-	.commnuity_header { margin-top:100px;
-						margin-bottom:10px;
-						text-align: center; 
-						color:pink; 
-						padding: 70px;}
+ 	.commnuity_header { 
+	position: absolute;
+	left: 45%;
+	top: 220px;
+	color: white;
+	font-size: 1.5em; 	
+ 	} 
     .board_wrab {text-align: center; 
     			  color:rgb(94, 92, 92);
     			  margin-top:20px;
@@ -26,7 +33,7 @@
     .board_wrab thead{font-weight: bold;}
     .board_wrab td{border-bottom: 1px solid #aaa; 
     				padding:15px;}
-	.board_wrab tr:first-child>td{border-top: 2px solid black;}
+	#board_head{border-top: 2px solid black;}
     .btitle{white-space: nowrap; 
     		overflow: hidden; 
     		text-overflow: ellipsis;}
@@ -37,9 +44,10 @@
     			  border-radius: 5px; 
     			  font-size: 0.9em; 
     			  font-weight: bold; 
-                  color:rgb(139, 134, 134);}
+                  color:rgb(139, 134, 134);
+                  border:0;}
 	.page_wrap{display:inline-block; position:absolute; margin-top: 10px; margin-left: 50%;}
-	.form_wrap{margin:30px auto 0 auto; width: 267px;}
+	.form_wrap{margin:30px auto 0 auto; width: 340px;}
 
 	#selectBox{
 	  display: block;
@@ -127,10 +135,11 @@
 	  }
 	}
 	
-	.search_input{height:33.75px; margin:0 5px;}
+	.search_input{height:37px; margin:0 5px; vertical-align:bottom; border:1px solid #dad4d4;}
 </style>
 </head>
 <body>
+	<img class="img" src="resources/images/myPageImage.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<h2>자유 게시판</h2>
@@ -165,7 +174,7 @@
 	<div class="board_wrab">
         <table>
             <thead>
-                <tr>
+                <tr id="board_head">
                     <td style="width: 5%;">번호</td>
                     <td class="btitle">제목</td>
                     <td style="width: 7%;">작성자</td>
@@ -222,7 +231,7 @@
     <button type="button" class="btn_standard">1</button>
     </div>
     <div class="board_btn">
-       <button class="btn_standard">글쓰기</button>
+       <button class="btn_standard" onclick="location.href='writing.fr'">글쓰기</button>
     </div>
     <div class="form_wrap">
     <form class="board_search" name="search_form" action="get">
