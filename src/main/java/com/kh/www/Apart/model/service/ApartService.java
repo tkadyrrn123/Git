@@ -12,4 +12,8 @@ public interface ApartService {
 
 	String donglist(String name);
 	
+	int aptDupName(String name);
+
+	String address(String loc);
+	
 }
