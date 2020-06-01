@@ -447,7 +447,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	<!-- ================================================== -->
 						<!--로그인화면 -->
 	<!-- ================================================== -->
-	
+	<button onclick="location.href='info.ai'">dsfkjakcfascf</button>
 	<div class="loginBox">
 		<h2>L O G I N</h2>
 		<div class="hr-line">OR</div>
@@ -868,47 +868,46 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 					<tr>
 						<td><h1>아파트 신청</h1></td>
 					</tr>
-					<tr>
-						<td>
-							<p><em>*</em> 아파트명</p>
-							<input type="text" id="aptAdd_Name" name="aptAdd_Name" autocomplete=off placeholder="아파트명을 입력해주세요. ex) '래미안아파트  -> 래미안' ">
-							<label class="aptchk ok" style="display: none; color: green; font-size: x-small;">이 아파트는 신청 가능합니다.</label>
-							<label class="aptchk error" style="display: none; color: red; font-size: x-small;">탈퇴된 아파트거나 이미 존재하는 아파트입니다.</label>
-						    <input type="hidden" name="aptDuplicateCheck" id="aptDuplicateCheck" value="0"/>
 
-							<script type="text/javascript">
-								$('#aptAdd_Name').on('keyup',function(){
-									 var aptName = $('#aptAdd_Name').val().trim();
-									 
-									 
-									 if($('#aptAdd_Name').val().length == 0){
-										 $('.aptchk').hide();
-									 } else{
-										 $.ajax({
-											url: 'aptDupChk.do',
-											data: {name:aptName},
-											success: function(data){
-												console.log(data);
-												
-												if(data == 'true'){
-													$('.error').hide();
-													$('.ok').show();
-													$('#aptDuplicateCheck').val(1);
-												}else{
-													$('.error').show();
-													$('.ok').hide();
-													$('#aptDuplicateCheck').val(0);
-												}
-											}
-										});
-									 }
-									 
-									
-									 
-							    });
-							</script>
-						</td>
-					</tr>
+<tr>
+                  <td>
+                     <p><em>*</em> 아파트명</p>
+                     <input type="text" id="aptAdd_Name" name="aptAdd_Name" autocomplete=off placeholder="아파트명을 입력해주세요. ex) '래미안아파트  -> 래미안' ">
+                     <label class="aptchk ok" style="display: none; color: green; font-size: x-small;">이 아파트는 신청 가능합니다.</label>
+                     <label class="aptchk error" style="display: none; color: red; font-size: x-small;">탈퇴된 아파트거나 이미 존재하는 아파트입니다.</label>
+                      <input type="hidden" name="aptDuplicateCheck" id="aptDuplicateCheck" value="0"/>
+
+                     <script type="text/javascript">
+                        $('#aptAdd_Name').on('keyup',function(){
+                            var aptName = $('#aptAdd_Name').val().trim();
+                            
+                            
+                            if($('#aptAdd_Name').val().length == 0){
+                               $('.aptchk').hide();
+                            } else{
+                               $.ajax({
+                                 url: 'aptDupChk.do',
+                                 data: {name:aptName},
+                                 success: function(data){
+                                    console.log(data);
+                                    
+                                    if(data == 'true'){
+                                       $('.error').hide();
+                                       $('.ok').show();
+                                       $('#aptDuplicateCheck').val(1);
+                                    }else{
+                                       $('.error').show();
+                                       $('.ok').hide();
+                                       $('#aptDuplicateCheck').val(0);
+                                    }
+                                 }
+                              });
+                            }                
+                         });
+                     </script>
+                  </td>
+               </tr>
+
 					<tr>
 						<td>
 							<p><em>*</em> 위치</p>

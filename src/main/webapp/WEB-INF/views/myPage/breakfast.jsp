@@ -16,7 +16,7 @@
     cursor: move; 
     background-color: #EAE9E9;}
 
-.layerpop_area .content {
+.layerpop_area .content { 
     margin: 2%;
     text-align:center;
     }
@@ -26,13 +26,19 @@
     border-radius:5px;
     background: #fff;
     cursor: move; 
-    background-color: #EAE9E9;}
+    background-color: #EAE9E9;
+    cursor: default;
+    }
 
 .reslayerpop_area .content {
     margin: 2%;
     }
-.resContent{
-	border-bottom: 2px solid #BDBDBD;
+    
+.rescategory{
+	background: #E0E6F8;
+	color:#08088A;
+	font-weight: bold;
+	text-align: center;
 }
 /*-- POPUP common style E --*/
 .close{
@@ -64,12 +70,16 @@
 }
 .reservation{
 	width: 100%;
+	border-collapse: collapse;
 }
-.resHead>td{
-	border-bottom: 2px solid #BDBDBD;
+.resHead>th{
+	border-bottom: 2px solid #08088A;
+	color: #08088A;
+	height: 50px;
 }
 .resBody>td{
 	padding: 10px;
+	border-bottom: 1px solid #BDBDBD;
 }
 .myPageUl li:nth-child(1) {
 	background-color: #8181F7;
@@ -168,29 +178,29 @@ function resPopupClose() {
     
     <!--ResPopup Start -->
     <div id="reslayerbox" class="reslayerpop"
-        style="overflow:scroll; width: 450px; height: 450px;">
+        style="overflow:scroll; width: 450px; height: 380px;">
         <article class="reslayerpop_area">
         <br>
         <div class="content">
         	<table class="reservation">
         		<tr class="resHead">
-        			<td>예약 진행상황</td>
-        			<td>예약완료</td>
+        			<th>예약 진행상황</th>
+        			<th>예약완료</th>
         		</tr>
         		<tr class="resBody">
-        			<td>예약일</td>
+        			<td class="rescategory">예약일</td>
         			<td class="resContent">2020-05-09</td>
         		</tr>
         		<tr class="resBody">
-        			<td>예약시간</td>
+        			<td class="rescategory">예약시간</td>
         			<td class="resContent">조식(07:00 ~ 08:30)</td>
         		</tr>
         		<tr class="resBody">
-        			<td>메뉴</td>
+        			<td class="rescategory">메뉴</td>
         			<td class="resContent">샌드위치</td>
         		</tr>
         	</table>
-        	<br><br>
+        	<br>
         	<hr size="2" color=#BDBDBD>
     		<button onClick="javascript:resPopupClose();" class="resclose"><b>확인</b></button>
         </div>

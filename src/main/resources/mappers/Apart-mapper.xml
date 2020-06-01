@@ -25,7 +25,8 @@
 	</select>
 	
 	<select id="aptDupName" resultType="_int">
-		SELECT COUNT(*) FROM TB_APART WHERE APT_NAME=#{name}
-	</select>
+      SELECT COUNT(*) FROM TB_APART WHERE APT_NAME=#{name}
+   </select>
+
 
 </mapper>
