@@ -86,10 +86,35 @@
 }
 </style>
 <script>
+$(function(){
+	var date = new Date();
+	var mdate = new Date();
+	mdate.setDate(60);
+	document.getElementById('date').min = date.toISOString().substring(0, 10);
+	document.getElementById('date').max = mdate.toISOString().substring(0, 10);
+});
 function goDetail() {
-    /*팝업 오픈전 별도의 작업이 있을경우 구현*/ 
-
-    popupOpen(); //레이어 팝업창 오픈 
+    /*팝업 오픈전 별도의 작업이 있을경우 구현*/
+    var date = $('.date').val();
+    var time = $('.time').val();
+    var option = $('#bf_food').val();
+    if(!date || !time || !option){
+    	alert("빈 곳 없이 전부 입력해주세요.");
+    }else{
+		$.ajax({
+			url: "insertBreak.my",
+			data: {date:$('.date').val(), time:$('.time').val(), option:$('#bf_food').val()},
+			success:function(data){
+				console.log(data);
+				if(data == '"success"'){
+					popupOpen(); //레이어 팝업창 오픈 
+				}
+				else{
+					alert("조석식 예약에 실패하였습니다.");
+				}
+			}
+		});
+    }
 }
 function popupOpen() {
     $('.layerpop').css("position", "absolute");
@@ -128,12 +153,12 @@ function resPopupClose() {
 		<table id="breakfast">
 			<tr>
 				<td><b>예약일&ensp;&ensp;</b></td>
-				<td><input name="date" type="date" placeholder="예약일을 선택해주세요."></td>
+				<td><input id="date" class="date" name="date" type="date" placeholder="예약일을 선택해주세요."></td>
 			</tr>
 			<tr><td><br></td></tr>
 			<tr>
 				<td><b>예약시간&ensp;</b></td>
-				<td><input name="date" type="time" placeholder="예약시간을 선택해주세요."></td>
+				<td><input id="time" class="time" name="time" type="time" placeholder="예약시간을 선택해주세요."></td>
 			</tr>
 			<tr><td><br></td></tr>
 			<tr>
