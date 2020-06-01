@@ -868,6 +868,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 					<tr>
 						<td><h1>아파트 신청</h1></td>
 					</tr>
+
 <tr>
                   <td>
                      <p><em>*</em> 아파트명</p>
@@ -901,14 +902,12 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
                                     }
                                  }
                               });
-                            }
-                            
-                           
-                            
+                            }                
                          });
                      </script>
                   </td>
                </tr>
+
 					<tr>
 						<td>
 							<p><em>*</em> 위치</p>
@@ -948,6 +947,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	          var apt_address = $('#aptAddForm #address1');
 	          var apt_dong = $('#aptAddForm input[name=aptAdd_dong]');
 	          var aptAdd_phone = $('#aptAddForm #aptAdd_phone');
+	          var apt_dup = $('#aptDuplicateCheck');
 	          var dongCnt = 0;
 	          var bool = true;
 	          
@@ -977,6 +977,12 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	        
 	        if(apt_Name.val().indexOf('아파트')>=0){
 	        	 alert("'아파트'를 빼고 입력해주세요.");
+	        	 apt_Name.focus();
+		         return false;
+	        }
+	        
+	        if(apt_dup.val()>=0){
+	        	 alert("중복된 아파트입니다.");
 	        	 apt_Name.focus();
 		         return false;
 	        }

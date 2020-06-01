@@ -11,6 +11,11 @@ public interface ApartService {
 	ArrayList<Apart> searchApt(String text);
 
 	String donglist(String name);
+
+	int aptDupName(String name);
+	
+	
+	
 	
 	int aptDupName(String name);
 

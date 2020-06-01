@@ -28,4 +28,5 @@
       SELECT COUNT(*) FROM TB_APART WHERE APT_NAME=#{name}
    </select>
 
+
 </mapper>
