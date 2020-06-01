@@ -18,7 +18,7 @@
 html ,body{margin: 0; padding: 0; height: 100%; }
 
 
-.modal_pop{height: 100%;}
+.modal_pop{height: 100%; overflow-y: hidden;}
 .modal_pop>p{
 		    width: 100%;
 		    height: 9%;
@@ -55,7 +55,7 @@ html ,body{margin: 0; padding: 0; height: 100%; }
 	    vertical-align: 5px;
 	    margin-left: -6px;
 }
-#search3>input[type="text"]{vertical-align: -4px; margin-left: 12px;}
+#search3>form>input[type="text"]{ vertical-align: -4px; margin-left: 12px;}:focus{outline: none;}
 	
 .myButton {
 	box-shadow:inset 0px 1px 0px 0px #d9fbbe;
@@ -102,7 +102,7 @@ html ,body{margin: 0; padding: 0; height: 100%; }
     text-align: center;
 }
 .close_btn:active {background: #fff;}
-#search_content{min-height:355px;  border: 5px solid #ddeaf2; margin: 20px 25px 0px 25px; overflow-y: scroll; }
+#search_content{height:355px;  border: 5px solid #ddeaf2; margin: 20px 25px 0px 25px; overflow-y: scxroll; }
 #search_content>table{
 					clear: both;
 				    width: 100%;
@@ -163,7 +163,7 @@ html ,body{margin: 0; padding: 0; height: 100%; }
 				<tbody>
 				<c:if test="${!empty msg}">
 					<tr>
-						<td colspan="2">검색 결과가 없습니다.</td>
+						<td colspan="2" onclick="event.cancelBubble = true;" style="cursor: default;">검색 결과가 없습니다.</td>
 					</tr>
 				</c:if>
 				<c:if test="${!empty list}">

@@ -27,5 +27,10 @@ public class ApartServiceImpl implements ApartService{
 	public ArrayList<Apart> searchApt(String text) {
 		return aptDAO.searchApt(sqlSession, text);
 	}
+
+	@Override
+	public String donglist(String name) {
+		return aptDAO.donglist(sqlSession, name);
+	}
 	
 }

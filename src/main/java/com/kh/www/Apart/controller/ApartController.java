@@ -26,7 +26,7 @@ public class ApartController {
 		
 		ArrayList<Apart> list = aptService.searchApt(text);
 		System.out.println(list);
-		if(list != null) {
+		if(!list.isEmpty()) {
 			model.addAttribute("list", list);
 		}else {
 			model.addAttribute("msg", "검색결과가 없습니다.");
