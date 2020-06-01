@@ -14,10 +14,6 @@ public interface ApartService {
 
 	int aptDupName(String name);
 	
-	
-	
-	
-	int aptDupName(String name);
 
 	String address(String loc);
 	

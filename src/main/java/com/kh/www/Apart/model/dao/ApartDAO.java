@@ -26,8 +26,6 @@ public class ApartDAO {
 	      return sqlSession.selectOne("aptMapper.aptDupName", name);
 	   }
 
-	public int aptDupName(SqlSessionTemplate sqlSession, String name) {
-		return sqlSession.selectOne("aptMapper.aptDupName", name);
-	}
+	
 
 }

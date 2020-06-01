@@ -101,23 +101,7 @@ public class HomeController {
 	}
 	
 	
-	@RequestMapping("aptDupChk.do")
-	   public void aptDupName(@RequestParam("name") String name, HttpServletResponse response) {
-	      
-	      System.out.println(name);
-	      
-	      int result = aptService.aptDupName(name);
-	      
-	      boolean isable = result == 0 ? true : false;
-	      
-	      try {
-	         response.getWriter().print(isable);
-	      } catch (IOException e) {
-	         e.printStackTrace();
-	      }
-	      
-	      
-	   }
+
 	
 
 	
