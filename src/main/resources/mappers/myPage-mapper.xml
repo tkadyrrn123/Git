@@ -15,4 +15,13 @@
         </if>
         where user_id = #{userId} AND user_delete = 'N'
     </update>
+    <update id="imageUpdate">
+    	update tb_user
+    	set user_file = #{userFile}
+    	where user_id = #{userId} AND user_delete = 'N'
+    </update>
+    <insert id="insertBreak">
+    	insert into tb_meal
+    	values(#{userId}, #{rDate}, #{rTime}, #{rOption})
+    </insert>
 </mapper>

@@ -9,17 +9,17 @@
 <link rel="stylesheet" type="text/css" href="resources/css/MyPage.css">
 <style>
 	.myPageUl li:nth-child(4) {
-	background-color: #8181F7;
-}
+		background-color: #8181F7;
+	}
 	#plus{
-	position: absolute;
-	width: 1px; 
-	height: 1px; 
-	padding: 0; 
-	margin: -1px; 
-	overflow: hidden; 
-	clip:rect(0,0,0,0); 
-	border: 0;
+		position: absolute;
+		width: 1px; 
+		height: 1px; 
+		padding: 0; 
+		margin: -1px; 
+		overflow: hidden; 
+		clip:rect(0,0,0,0); 
+		border: 0;
 	}
 </style>
 </head>
@@ -33,7 +33,11 @@
 	<form action="updatePage.my" method="post">
 		<div class="area">
 			<ul class="ul">
-				<li class="image"><img src="resources/images/${member.userFile}" width="110px" height="110px"><label id="plusbtn" for="plus">+</label><input type="file" id="plus"></li>
+				<li class="image">
+					<img src="resources/images/${member.userFile}" width="110px" height="110px" id="image">
+					<label id="plusbtn" for="plus">+</label>
+					<input type="file" id="plus" name="plus">
+				</li>
 				<li class="top">현재 아파트</li>
 				<li>
 				<input type="text" class="text" value="${member.aptName}" readonly>
@@ -86,9 +90,47 @@
 		</div>
 	</form>
 	<script>
+		/* 프로필사진 ajax로 변경 */
 		$('#plus').change(function(){
+			var reg = /(.*?)\.(jpg|jpeg|png|gif|bmp)$/i;
+			
+			/* 이미지파일을 넣어 보낼 객체 */
 			var formData = new FormData();
+			
+			var src = $('#image').attr("src");
+			
+			/* img 태그로부터 파일명 만 뽑아서 저장 */
+			var srcFileName = src.replace("resources/images/","");
+			
+			/* 원래 파일이름, 새 파일 넣음*/
+			formData.append("originFile",srcFileName);
 			formData.append("uploadfile",$("input[id=plus]")[0].files[0]);
+			
+			/* 이미지 파일일 경우 */
+			if((this.value).match(reg)){
+				$.ajax({
+					type: "post",
+					enctype: "multipart/form-data",
+					url: "image.my",
+					data: formData,
+					processData : false,
+					contentType : false,
+					success : function(data){
+						/* 새 파일 */
+						var $newFile = data.replace(/\"/gi,"");
+						
+						/* 새 파일 이미지 태그에 넣어줌 */
+						$("#image").attr("src","resources/images/" + $newFile);
+					},
+					error : function(error){
+						alert("프로필 사진 변경에 실패하였습니다.");
+						alert(error);
+					}
+				});
+			}else{
+				alert("이미지 파일이 아닙니다!");
+			}
+			
 		});
 	</script>
 	<jsp:include page="../common/Footer.jsp"></jsp:include>

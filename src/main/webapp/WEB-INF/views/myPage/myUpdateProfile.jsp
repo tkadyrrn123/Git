@@ -33,7 +33,7 @@
 	<form action="update.my" method="post" onsubmit="return check();">
 		<div class="area">
 			<ul class="ul">
-				<li class="image"><img src="resources/images/${member.userFile}" width="110px" height="110px"><label id="plusbtn" for="plus">+</label><input type="file" id="plus"></li>
+				<li class="image"><img src="resources/images/${member.userFile}" width="110px" height="110px"></li>
 				<li class="top">현재 아파트</li>
 				<li>
 				<input type="hidden" value="${member.userId }" name="userId">
@@ -133,10 +133,6 @@
 			}
 			return true;
 		}
-		$('#plus').change(function(){
-			var formData = new FormData();
-			formData.append("uploadfile",$("input[id=plus]")[0].files[0]);
-		});
 	</script>
 </body>
 </html>
