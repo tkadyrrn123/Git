@@ -83,6 +83,7 @@ h2 {
 	border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
     padding-left: 8px;
+    color: white;
 }
 .loginBox input[type="password"]{
     display: inline-block;
@@ -95,6 +96,7 @@ h2 {
 	border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
     padding-left: 8px;
+    color: white;
 }
 
 .loginBox input[type="submit"]{
@@ -438,6 +440,8 @@ h2 {
     background-color: #2f3640;
     border-color: #2f3640;
 }
+
+div.postcodify_popup_layer input.keyword:focus{outline: none;}
 </style>
 </head>
 <body>
@@ -504,7 +508,7 @@ h2 {
 					</tr>
 					<tr>
 						<td>
-							<p>닉네임</p>
+							<p><em>*</em> 닉네임</p>
 							<input type="text" id="nickName" name="nickName" autocomplete=off>
 						</td>
 					</tr>
@@ -535,38 +539,12 @@ h2 {
 						        <div class="options-container">
 						          <div class="option">
 						            <input type="radio" class="radio" id="automobiles" name="category" />
-						            <label for="automobiles">101동</label>
+						            <label for="automobiles">아파트를 검색해주세요.</label>
 						          </div>
 						
-						          <div class="option">
-						            <input type="radio" class="radio" id="film" name="category" />
-						            <label for="film">102동</label>
-						          </div>
-						
-						          <div class="option">
-						            <input type="radio" class="radio" id="science" name="category" />
-						            <label for="science">103동</label>
-						          </div>
-						
-						          <div class="option">
-						            <input type="radio" class="radio" id="art" name="category" />
-						            <label for="art">104동</label>
-						          </div>
-						
-						          <div class="option">
-						            <input type="radio" class="radio" id="music" name="category" />
-						            <label for="music">105동</label>
-						          </div>
-						
-						          <div class="option">
-						            <input type="radio" class="radio" id="travel" name="category" />
-						            <label for="travel">106동</label>
-						          </div>
 						        </div>
-						
-						        <div class="selected">
-						            동을 선택해주세요.
-						        </div>
+						        
+						        <div class="selected">동을 선택해주세요.</div>
 						        <input type="hidden" id="aptDong" name="aptDong" value="">
 						     </div>
 							<input type="text" id="aptNum" name="aptNum" autocomplete=off placeholder="호수를 입력해주세요 ex)1305호">
@@ -582,6 +560,7 @@ h2 {
 							  	<input type="file" name="profile_img" id="input_file" class="upload-hidden"> 
 							</div>
 							<script>
+							// 파일 미리보기 기능
 							$(document).ready(function(){
 								   var fileTarget = $('.filebox .upload-hidden');
 							
@@ -641,11 +620,44 @@ h2 {
 	</div>	
 	
 	<script>
+	// 아파트 이름 별로 동리스트 출력
+	  $('.selected').on('click',function(){
+			var name = $('#aptName').val();
+			
+			$.ajax({
+				url: 'donglist.bo',
+				data: {name:name},
+				success: function(data){
+					
+					var $options;
+					var $option;
+					
+					$options = $('.options-container');
+					
+					$('.option').remove();
+					
+					for(var i in data){
+						$input = $('<div class="option"><input type="radio" class="radio" id="op'+i+'"name="category" /></div>');
+						$label = $('<label for="op'+i+'">').text(data[i]);
+						
+						$input.append($label);
+						$options.append($input);
+						
+					}
+					
+					customselect();
+				}
+				
+			})
+		  	
+	  })
+	
+	  //패스워드 검사
       $('#pwd').on('keyup',function(){
     	  
          var pwd = $('#pwd').val();
          var check = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-         
+       
          if(check.test(pwd)){
             $('#pwdmsg').text('사용 가능');
             $('#pwdmsg').css({'color' : 'green', 'font-size' : 'x-small'});
@@ -657,7 +669,7 @@ h2 {
          }
          
       });
-      
+      //패스워드 확인란 검사
       $('#pwd2').on('keyup',function(){
 	  	  var pwd = $('#pwd').val();
 	  	  var pwd2 = $('#pwd2').val();
@@ -674,18 +686,22 @@ h2 {
 	        
 	    });
       
+      //데이터 보내기 전에 검사
       function jnform(){
           var userId = $('#memberjoinForm #id');
           var userPwd = $('#memberjoinForm #pwd');
           var userPwdChk = $('#memberjoinForm #pwd2');
           var name = $('#memberjoinForm #name');
+          var nickname = $('#memberjoinForm #nickname');
           var email = $('#memberjoinForm #email');
           var phone = $('#memberjoinForm #phone');
           var aptName = $('#memberjoinForm #aptName');
           var aptDong = $('#memberjoinForm .selected').text().trim();
           var aptNum = $('#memberjoinForm #aptNum');
           var bool = true;
-			
+        	  
+          $('#aptNum').val(aptDong);
+          
        	if(userId.val() == ''){
             alert("아이디를 입력해주세요.");
             userId.focus();
@@ -709,6 +725,12 @@ h2 {
             name.focus();
            return false;
          }
+         
+         if(nickname.val() == ''){
+             alert('닉네임을 입력해주세요.');
+             nickname.focus();
+            return false;
+          }
          
          if(email.val() == ''){
              alert('이메일을 입력해주세요.');
@@ -751,11 +773,17 @@ h2 {
     
     
 	<script>
+	$(document).ready(function(){
+		customselect();
+	});
+	
+	function customselect(){ 
+		
 		const selected = document.querySelector(".selected");
 		const optionsContainer = document.querySelector(".options-container");
 	
 		const optionsList = document.querySelectorAll(".option");
-	
+		console.log(optionsList);
 		selected.addEventListener("click", () => {
 		  optionsContainer.classList.toggle("active");
 		});
@@ -766,9 +794,11 @@ h2 {
 		    optionsContainer.classList.remove("active");
 		  });
 		});
+	};
 		
+		//아파트 검색 팝업창
 		function searchApt(){
-			window.open('AptSearch.me', 'checkForm', 'width=520, height=550');
+			window.open('AptSearch.me', 'checkForm', 'width=520, height=590');
 		}
 		
 		

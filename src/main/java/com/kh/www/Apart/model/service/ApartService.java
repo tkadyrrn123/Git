@@ -9,5 +9,7 @@ public interface ApartService {
 	int aptInsert(Apart apt);
 
 	ArrayList<Apart> searchApt(String text);
+
+	String donglist(String name);
 	
 }

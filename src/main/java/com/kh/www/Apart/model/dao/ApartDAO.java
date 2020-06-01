@@ -18,4 +18,8 @@ public class ApartDAO {
 		return (ArrayList)sqlSession.selectList("aptMapper.searchApt", text);
 	}
 
+	public String donglist(SqlSessionTemplate sqlSession, String name) {
+		return sqlSession.selectOne("aptMapper.donglist", name);
+	}
+
 }
