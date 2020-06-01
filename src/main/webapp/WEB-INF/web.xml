@@ -96,5 +96,19 @@
 		<servlet-name>ApartServlet</servlet-name>
 		<url-pattern>*.apt</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ClubServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/Club-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ClubServlet</servlet-name>
+		<url-pattern>*.cb</url-pattern>
+	</servlet-mapping>
 
 </web-app>

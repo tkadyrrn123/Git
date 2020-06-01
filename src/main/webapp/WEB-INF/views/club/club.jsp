@@ -16,7 +16,6 @@ $accent-color: #355cc9;
 
 body {
 	margin: 0;
-	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -24,11 +23,12 @@ body {
 	font-family: 'Montserrat', sans-serif;
 }
 .wrapper {
-	width:80%;
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: center;
-	margin-top: 100px; 
+	width: 80%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 53px;
+    margin-left: 200px;
 }
 
 .card {
@@ -311,7 +311,7 @@ body {
 	 table{text-align:center;}  
 	 th{width:80px; height: 30px;}
 	 #all{margin-top: 250px;}
-	 #title{width:50%; margin-left: -379px;; font-size:30px; font-weight:bold; margin-top: 800px;}
+	 #title{width: 50%; margin-left: 246px; font-size: 30px; font-weight: bold; margin-top: 30px;}
 	#line{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px; border: 1px solid lightgray;} 
 	
 		.btn-standard {
@@ -324,20 +324,26 @@ body {
 	    font-size: 12px;
 	    padding: 7px;
 	}
-	
-	
+	.img{filter: brightness(70%);
+     width: 100%;
+     height: 400px;}
+     #headcomment{
+	position: absolute;
+	left: 45%;
+	top: 220px;
+	color: white;
+	font-size: 1.5em;
+}	
 </style>
-
-
-
 
 </head>
 <body>
 
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
 	
-	<c:import url="bar.jsp"/>
-
+	<img class="img" src="resources/images/05.PNG">
+	<jsp:include page="../common/menubar.jsp"/> 
+	<b id="headcomment">동호회 페이지</b>	
 	<div id= title>
 			동호회
 	</div> 
@@ -971,10 +977,10 @@ body {
         </div>
         
 	</div>
-	
+	<jsp:include page="../common/Footer.jsp"/>
 	<script>
 		$('#detailBtn').on('click', function(){
-			location.href="clubDetail.bo"
+			location.href="clubDetail.cb"
 		});
 	</script>
 	

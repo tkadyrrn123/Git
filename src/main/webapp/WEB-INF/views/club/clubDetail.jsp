@@ -8,11 +8,12 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
-   #all{margin-top: 250px;}
+   #all{margin-top: 30px;}
 	#menu{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;}
 	#line1{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px;}
-	#line2{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 228px;}
+	#line2{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 145px;}
 	#line3{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 100px;}
+	#line4{width: 90%; background: lightgray; height:2px; margin: auto; margin-top: 10px;}
 	.sellAll{width: 80%; margin: 40px 0px 0px 200px;}
 
 	#content1{width: 80%; margin-left:100px;}
@@ -21,19 +22,27 @@
 	#content4{width: 65%; margin-left:100px;} 
 	#content5{width: 61.8%; margin-left:150px;} 
 
-	#title{font-size:30px; width: 50%; font-weight:bold; margin-top: 20px; display: inline-block; margin-left: 130px;} 
-	#hit{display: inline-block; width: 15%; text-align:center; } 
-	#date{display: inline-block; width: 15%; text-align:right; }
 	
-	#sellPic{width: 49%; height: 400px; margin-left: 70px; margin-top: 20px; display: inline-block; float:left;}
-	#img{margin-left : 100px; width: 60%} 
+	#sellPic{width: 42%; height: 500px; margin-left: 140px; margin-top: 30px; display: inline-block;}
+	#img{width: 100%; height:500px;}  
+	#infoBox{ background: rgba(224, 224, 224, 0.61);     display: inline-block;
+    float: right;
+    margin-right: 111px;
+    margin-top: 30px; width: 33%; height:500px;}
+	
+	#title{margin-left: 20px; font-size: 30px; font-weight:bold; margin-top: 35px; height: 100px; }
+	#name{margin-left: 20px; margin-top: 20px; font-size: 20px; font-weight:bold; display: inline-block;}
+	#nameInput{display: inline-block; margin-left: 30px;}
+	#count{margin-left: 20px; margin-top: 50px; font-size: 20px; font-weight:bold;}  
+	#countInput{margin-left: 52px; margin-top: 20px; } 
+	#applyBtn{margin-left: 52px; width: 80%; height: 50px; margin-top: 100px;}  
 	
 	
-	#itemName{display: inline-block; font-size: 30px; font-weight:bold; margin-top: 35px; margin-right: 420px;}
-	#price{display: inline-block;  margin-top:30px; width:45%; margin-left: 20px;}
-	
-	#name{display: inline-block; margin-top: 30px; margin-left: 20px;}  
- 	#sellContent{margin-left: 0px; width: 80%; margin-left: 190px; min-height: 200px; border:none; font-size: 16px;}
+	.cTitle{margin-left: 170px; font-size: 30px; font-weight:bold; margin-top: 40px;}
+	#intro{} 
+ 	.textarea{margin-top: 40px; width: 80%; margin-left: 190px; min-height: 200px; border:none; font-size: 16px;}
+ 	
+ 	
  	textarea{ resize:none;}
  	textarea:focus {outline: none;}
  	#btn{float:right; margin: 20px 200px 0px 0px;}
@@ -74,57 +83,61 @@
  	#likeBtn4{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display:none;}  
  	#likeImg{width: 100%; height:100%; }  
  	#likeImg2{width:100%; height:100%;}  
- 	.likeCount{display: inline-block;    vertical-align: sub; margin-left: 10px;}  
+ 	.likeCount{display: inline-block;    vertical-align: sub; margin-left: 10px;}
+ 	.img{filter: brightness(70%);
+     width: 100%;
+     height: 400px;  }
+     #headcomment{
+	position: absolute;
+	left: 43%;
+	top: 220px;
+	color: white;
+	font-size: 1.5em;
+}
+     
 </style> 
  
   
 
 
-</head>
+</head> 
 <body>
 	
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
-	
-	<c:import url="bar.jsp"/>
-	
-	<div id= all>
+	<img class="img" src="resources/images/05.PNG">
+	<jsp:include page="../common/menubar.jsp"/>
+	<b id="headcomment">동호회 상세 페이지</b>	
+	<div id= all> 
 		<div id= menu>
-			중고 장터
+			동호회 상세 페이지
 		</div>
 		<div id="line1"></div>
 		
 		<div id="content1">
-			<div id="title">
-				물건 싸게 팔아요 S급 1번 밖에 안썼어요~~
-			</div>
-			
-			<div id="date" >
-				게시글 등록일 : 
-			</div>
-			
-			<div id="hit">
-				조회수 : 
-			</div>
 
 			
 			<div id=sellPic>
-				<img id=img src="${ pageContext.servletContext.contextPath }/resources/images/01.png"/>
+				<img id=img src="${ pageContext.servletContext.contextPath }/resources/images/soap.png"/>
 			</div>
 			
 			
-			
-			<div id="itemName">
-				레미안 석관 아파트
+			<div id="infoBox">
+				<div id="title">
+					누구나 손쉽게 따라하는 재즈 피아노 동호회
+
+				</div>
+				<div id="line4"></div>
+				
+				<div id="name">작성자  </div>		
+					
+				<div id="nameInput">송도훈</div>
+					
+				<div id="count">모집 인원  </div>
+				
+				<div id="countInput">총 20명 중 14명 모집완료</div>
+				
+				<button class="btn" id="applyBtn">가입 신청하기</button> 
 			</div>
-			
-			<div id="price">
-				5억
-			</div>			
-			
-			<div id="name">
-				닉네임
-			</div>
-			
 			
 			
 
@@ -132,18 +145,79 @@
 		
 			<div id="line2"></div>
 		<div id="content2">
-			<textarea id="sellContent" readonly>
-			
-구입일 - 2020년 1월 24일
-애플케어 - 2022년 1월 24일
-외상 - X
-내부문제 - X
-셀룰러 - O
+			<div class="cTitle" id="intro">동호회 소개</div>
+			<textarea class="textarea" id="introInput" readonly style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+'듣고 싶은 음악을 다른 사람이 아니라,
 
-댓글에 번호 또는 카톡 아이디 써주세요
+자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
+
+그 생각 하나로 피아노 클래스를 준비했습니다.
+
+한 곡, 두 곡 피아노 연주를 완성시켜 나가며 느끼는 뿌듯함과 행복을 여러분께 전해드리고 싶습니다
+
+피아노에 대해, 악보를 보는 법에 대해 전혀 몰라도 괜찮아요.
+어떤 걸 배우나요?
+악보를 읽는 법부터 시작합니다
+클래스를 통해 제이엠의 자작곡 6가지를 함께 연주해봅니다. 이 때에 모든 곡은 같은 과정을 거쳐 익혀볼 거예요.
+
+피아노를 처음 시작하는 분들의 눈높이에 맞추어 배우는 클래스인만큼, 악보는 화음 및 어려운 운지가 많이 빠지고 멜로디와 간단한 반주 위주 구성으로 선정했습니다.
+건반을 두드리는 모습을 보며 천천히 익힙니다
 			</textarea>
 			
-			
+			<div class="cTitle" id="plan">동호회 활동 계획</div>
+			<textarea class="textarea" id="planInput" readonly style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+'듣고 싶은 음악을 다른 사람이 아니라,
+
+자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
+
+그 생각 하나로 피아노 클래스를 준비했습니다.
+
+한 곡, 두 곡 피아노 연주를 완성시켜 나가며 느끼는 뿌듯함과 행복을 여러분께 전해드리고 싶습니다
+
+피아노에 대해, 악보를 보는 법에 대해 전혀 몰라도 괜찮아요.
+어떤 걸 배우나요?
+악보를 읽는 법부터 시작합니다
+클래스를 통해 제이엠의 자작곡 6가지를 함께 연주해봅니다. 이 때에 모든 곡은 같은 과정을 거쳐 익혀볼 거예요.
+
+피아노를 처음 시작하는 분들의 눈높이에 맞추어 배우는 클래스인만큼, 악보는 화음 및 어려운 운지가 많이 빠지고 멜로디와 간단한 반주 위주 구성으로 선정했습니다.
+건반을 두드리는 모습을 보며 천천히 익힙니다
+			</textarea>
+			<div class="cTitle" id="loction">동호회 활동 장소</div>
+			<textarea class="textarea" id="locationInput" readonly style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+'듣고 싶은 음악을 다른 사람이 아니라,
+
+자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
+
+그 생각 하나로 피아노 클래스를 준비했습니다.
+
+한 곡, 두 곡 피아노 연주를 완성시켜 나가며 느끼는 뿌듯함과 행복을 여러분께 전해드리고 싶습니다
+
+피아노에 대해, 악보를 보는 법에 대해 전혀 몰라도 괜찮아요.
+어떤 걸 배우나요?
+악보를 읽는 법부터 시작합니다
+클래스를 통해 제이엠의 자작곡 6가지를 함께 연주해봅니다. 이 때에 모든 곡은 같은 과정을 거쳐 익혀볼 거예요.
+
+피아노를 처음 시작하는 분들의 눈높이에 맞추어 배우는 클래스인만큼, 악보는 화음 및 어려운 운지가 많이 빠지고 멜로디와 간단한 반주 위주 구성으로 선정했습니다.
+건반을 두드리는 모습을 보며 천천히 익힙니다
+			</textarea>
+			<div class="cTitle" id="etc">기타 사항</div>
+			<textarea class="textarea" id="etcInput" readonly style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+'듣고 싶은 음악을 다른 사람이 아니라,
+
+자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
+
+그 생각 하나로 피아노 클래스를 준비했습니다.
+
+한 곡, 두 곡 피아노 연주를 완성시켜 나가며 느끼는 뿌듯함과 행복을 여러분께 전해드리고 싶습니다
+
+피아노에 대해, 악보를 보는 법에 대해 전혀 몰라도 괜찮아요.
+어떤 걸 배우나요?
+악보를 읽는 법부터 시작합니다
+클래스를 통해 제이엠의 자작곡 6가지를 함께 연주해봅니다. 이 때에 모든 곡은 같은 과정을 거쳐 익혀볼 거예요.
+
+피아노를 처음 시작하는 분들의 눈높이에 맞추어 배우는 클래스인만큼, 악보는 화음 및 어려운 운지가 많이 빠지고 멜로디와 간단한 반주 위주 구성으로 선정했습니다.
+건반을 두드리는 모습을 보며 천천히 익힙니다
+			</textarea>
 			
 
 		</div>
@@ -240,7 +314,7 @@
 		
 	</div>
 	
-	
+		<jsp:include page="../common/Footer.jsp"/>
 	
 	
 	
@@ -268,11 +342,17 @@
 		});
 		
 		
+		/** textarea 높이 자동 조절 **/
+		$(function () {
+			
+		  $('.textarea').height(1).height( $('.textarea').prop('scrollHeight') - 10  );	
+		});
+		
 		/** 댓글 창 높이 자동 조절 **/
 		$(function () {
 			
-		  $('#rContent').height(1).height( $('#rContent').prop('scrollHeight') - 20  );	
-		});
+			  $('#rContent').height(1).height( $('#rContent').prop('scrollHeight') - 20  );	
+			});
 		
 		$('.likeBtn').click(function(){
 			$(this).parent().children('.likeBtn2').css('display','inline-block');
@@ -295,6 +375,11 @@
 			count = count - 1;
 			$(this).parent().children('.likeCount').text(count);
 		});
+		
+		$('#updateBtn').on('click', function(){
+			location.href="clubUpdate.cb"
+		});
+		
 	</script> 
 
 </body>

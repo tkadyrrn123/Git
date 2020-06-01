@@ -43,40 +43,40 @@
       float: left;
    }
    #warning{width:80%; margin: 0px auto;} 
-   #menubar{float: left; display: inline-block; width:15%; height: 400px; border: 1px solid #ddd; color: #545861; padding-top:20px;}
+   #menubar{float: left; display: inline-block; width:15%; height: 400px; border: 1px solid #ddd; color: #545861; padding-top:20px;margin-left:20px;}
    ul{list-style:none;}
-   #menubar li{font-size: 30px; height: 70px; font-weight: normal;}
+   #menubar li{font-size: 30px; height: 70px; font-weight: normal; margin-left:30px; }
    #menu{width:100%; height: 400px; margin-bottom:100px; background: skyblue;}
-   #all{margin-top: 250px;}
+   #all{margin-top: 30px; height:110%;}
    #hello:hover, #info:hover, #pic:hover{cursor:pointer;}
-   
-   
+   .img{filter: brightness(70%);
+     width: 100%;
+     height: 400px;  }
+     #headcomment{
+	position: absolute;
+	left: 43%;
+	top: 220px;
+	color: white;
+	font-size: 1.5em;
+}	   
    
 </style>
 
 </head>
 <body>
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
-	
+
+    <img class="img" src="resources/images/06.png">
 	<jsp:include page="../common/menubar.jsp"/>
+	<b id="headcomment">아파트 정보</b>
 
-
-
-	 
-	
-	
-	
-	
-	
-	
-	
 	
    <div id="all">
       <!-- 좌측 메뉴 바 -->
       <div id="menubar">
          <ul>
-            <li id="hello" onclick="location.href='welcome.ap'">인사말</li>
-            <li id="info" onclick="location.href='information.ap'">아파트 정보</li>   
+            <li id="hello" onclick="location.href='welcome.apt'">인사말</li>
+            <li id="info" onclick="location.href='information.apt'">아파트 정보</li>   
          </ul>
       </div>
    
@@ -84,13 +84,13 @@
 	
 	
 		<!-- 지도 표시 공간 -->
-         <!-- <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> -->
+          <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> 
          <div id="map"></div>   
    
  		 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b84e06d19b1a33aab7847008f9f1ccbe&libraries=services"></script>
  		 <script>
  			<!-- 지도 중심 좌표 -->
- 			var mapContainer = document.getElementById('map')
+ 			var mapContainer = document.getElementById('map'),
  			mapOption = {
  					center: new kakao.maps.LatLng(33.450701, 126.570667),
  					level: 3 <!-- 확대 레벨 -->
@@ -123,7 +123,6 @@
  					<!-- 중심을 입력한 곳으로 -->
  					map.setCenter(coords);
  				} else{
- 					console.log('안됫어');
  				}
  			});
 
@@ -173,16 +172,8 @@
             <div id="warning">▶본 페이지의 사진, 일러스트(그림), 분양 정보는 고객의 이해를 돕기 위해 제작된 것으로 인·허가 과정과 실시공에 따라 실제와 차이가 있을 수 있습니다.</div>
          </div>
       </div>
+
    </div>
+   <jsp:include page="../common/Footer.jsp"/>   
 </body>
-
-<script>
-
-
-</script>
-
-
-
-
-
 </html>
