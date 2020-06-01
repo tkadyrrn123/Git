@@ -375,7 +375,6 @@ h2 {
 } 
 
 .filebox input[type="file"] {
-	position: absolute;
 	width: 1px;
 	height: 1px;
 	padding: 0;
@@ -873,6 +872,41 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 						<td>
 							<p><em>*</em> 아파트명</p>
 							<input type="text" id="aptAdd_Name" name="aptAdd_Name" autocomplete=off placeholder="아파트명을 입력해주세요. ex) '래미안아파트  -> 래미안' ">
+							<label class="aptchk ok" style="display: none; color: green; font-size: x-small;">이 아파트는 신청 가능합니다.</label>
+							<label class="aptchk error" style="display: none; color: red; font-size: x-small;">탈퇴된 아파트거나 이미 존재하는 아파트입니다.</label>
+						    <input type="hidden" name="aptDuplicateCheck" id="aptDuplicateCheck" value="0"/>
+
+							<script type="text/javascript">
+								$('#aptAdd_Name').on('keyup',function(){
+									 var aptName = $('#aptAdd_Name').val().trim();
+									 
+									 
+									 if($('#aptAdd_Name').val().length == 0){
+										 $('.aptchk').hide();
+									 } else{
+										 $.ajax({
+											url: 'aptDupChk.do',
+											data: {name:aptName},
+											success: function(data){
+												console.log(data);
+												
+												if(data == 'true'){
+													$('.error').hide();
+													$('.ok').show();
+													$('#aptDuplicateCheck').val(1);
+												}else{
+													$('.error').show();
+													$('.ok').hide();
+													$('#aptDuplicateCheck').val(0);
+												}
+											}
+										});
+									 }
+									 
+									
+									 
+							    });
+							</script>
 						</td>
 					</tr>
 					<tr>
@@ -914,6 +948,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	          var apt_address = $('#aptAddForm #address1');
 	          var apt_dong = $('#aptAddForm input[name=aptAdd_dong]');
 	          var aptAdd_phone = $('#aptAddForm #aptAdd_phone');
+	          var apt_dup = $('#aptDuplicateCheck');
 	          var dongCnt = 0;
 	          var bool = true;
 	          
@@ -943,6 +978,12 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	        
 	        if(apt_Name.val().indexOf('아파트')>=0){
 	        	 alert("'아파트'를 빼고 입력해주세요.");
+	        	 apt_Name.focus();
+		         return false;
+	        }
+	        
+	        if(apt_dup.val()>=0){
+	        	 alert("중복된 아파트입니다.");
 	        	 apt_Name.focus();
 		         return false;
 	        }

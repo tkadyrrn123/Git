@@ -32,5 +32,10 @@ public class ApartServiceImpl implements ApartService{
 	public String donglist(String name) {
 		return aptDAO.donglist(sqlSession, name);
 	}
+
+	@Override
+	public int aptDupName(String name) {
+		return aptDAO.aptDupName(sqlSession, name);
+	}
 	
 }
