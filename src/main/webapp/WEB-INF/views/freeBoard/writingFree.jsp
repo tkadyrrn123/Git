@@ -56,19 +56,20 @@
                 <tr id="tr2">
                    <td class="td1">제목</td>
                      <td>
-                        <input id="titleInput" type="text" placeholder="제목을 입력하세요" size="90">
+                        <input id="titleInput" type="text" placeholder="제목을 입력하세요" size="90" name="boardTitle">
                      </td>
                   </tr>
                   <tr id="tr3">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;"></textarea>
+                        <textarea id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;" name="boardContent">
+                        </textarea>
                      </td>
                   </tr>      
                   <tr id="tr4">
                      <td class="td1">첨부</td>
                      <td>
-                  <input type="file" style="margin-left: 20px; padding: 5px;">
+                  <input type="file" style="margin-left: 20px; padding: 5px;" name="uploadFile">
                      </td>
                   </tr>      
 
