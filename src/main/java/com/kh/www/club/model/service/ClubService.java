@@ -11,4 +11,12 @@ public interface ClubService {
 
 	ArrayList<Club> selectList(PageInfo pi);
 
+	int insertClub(Club c);
+
+	int insertBoard();
+
+	int insertFile(String renameFileName);
+
+	int deleteClub();
+
 }

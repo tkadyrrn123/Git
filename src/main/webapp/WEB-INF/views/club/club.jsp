@@ -974,7 +974,8 @@ body {
 							<!-- 맨 끝으로 --> 
 							<button class="btn-standard" onclick="location.href='<%=request.getContextPath()%>/worryList.bo?currentPage='">&gt;&gt;</button>
 
-        </div>
+       			</div>
+       			<button class="btn-standard" onclick="location.href='clubInsertForm.cb'">글쓰기</button> 
         
 	</div>
 	<jsp:include page="../common/Footer.jsp"/>

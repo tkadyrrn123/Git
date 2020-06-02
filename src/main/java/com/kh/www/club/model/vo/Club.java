@@ -8,13 +8,12 @@ public class Club {
 	private String clubPlace;
 	private String clubEtc;
 	private int maxPeople;
-	private String deleteYn;
 	private String endYn;
 	
 	public Club() {}
 
 	public Club(String clubName, int boardNo, String clubIntro, String clubPlan, String clubPlace, String clubEtc,
-			int maxPeople, String deleteYn, String endYn) {
+			int maxPeople, String endYn) {
 		super();
 		this.clubName = clubName;
 		this.boardNo = boardNo;
@@ -23,7 +22,6 @@ public class Club {
 		this.clubPlace = clubPlace;
 		this.clubEtc = clubEtc;
 		this.maxPeople = maxPeople;
-		this.deleteYn = deleteYn;
 		this.endYn = endYn;
 	}
 
@@ -83,14 +81,6 @@ public class Club {
 		this.maxPeople = maxPeople;
 	}
 
-	public String getDeleteYn() {
-		return deleteYn;
-	}
-
-	public void setDeleteYn(String deleteYn) {
-		this.deleteYn = deleteYn;
-	}
-
 	public String getEndYn() {
 		return endYn;
 	}
@@ -103,7 +93,7 @@ public class Club {
 	public String toString() {
 		return "Club [clubName=" + clubName + ", boardNo=" + boardNo + ", clubIntro=" + clubIntro + ", clubPlan="
 				+ clubPlan + ", clubPlace=" + clubPlace + ", clubEtc=" + clubEtc + ", maxPeople=" + maxPeople
-				+ ", deleteYn=" + deleteYn + ", endYn=" + endYn + "]";
+				+ ", deleteYn=" + ", endYn=" + endYn + "]";
 	}
 	
 	

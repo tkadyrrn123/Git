@@ -20,4 +20,20 @@ public class ClubDAO {
 		return null;
 	}
 
+	public int insertClub(SqlSessionTemplate sqlSession, Club c) {
+		return sqlSession.insert("clubMapper.insertClub", c);
+	}
+
+	public int insertBoard(SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("clubMapper.insertBoard");
+	}
+
+	public int insertFile(SqlSessionTemplate sqlSession, String renameFileName) {
+		return sqlSession.insert("clubMapper.insertFile", renameFileName);
+	}
+
+	public int deleteClub(SqlSessionTemplate sqlSession) {
+		return sqlSession.update("clubMapper.deleteClub");
+	}
+
 }

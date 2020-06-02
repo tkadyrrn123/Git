@@ -29,4 +29,24 @@ public class ClubServiceImpl implements ClubService {
 		return cDAO.selectList(sqlSession, pi);
 	}
 
+	@Override
+	public int insertClub(Club c) {
+		return cDAO.insertClub(sqlSession, c);
+	}
+
+	@Override
+	public int insertBoard() {
+		return cDAO.insertBoard(sqlSession);
+	}
+
+	@Override
+	public int insertFile(String renameFileName) {
+		return cDAO.insertFile(sqlSession, renameFileName);
+	}
+
+	@Override
+	public int deleteClub() {
+		return cDAO.deleteClub(sqlSession);
+	}
+
 }
