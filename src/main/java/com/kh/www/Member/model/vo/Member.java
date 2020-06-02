@@ -13,9 +13,7 @@ public class Member {
 	private int userLevel;
 	private String userFile;
 	
-	public Member() {
-		// TODO Auto-generated constructor stub
-	}
+	public Member() {}
 	
 
 	public Member(String userId, String userPwd, String userName, String nickName, String phone, String email,

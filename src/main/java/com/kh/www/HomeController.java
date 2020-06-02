@@ -17,6 +17,7 @@ import com.google.gson.JsonIOException;
 import com.kh.www.Apart.model.exception.ApartException;
 import com.kh.www.Apart.model.service.ApartService;
 import com.kh.www.Apart.model.vo.Apart;
+import com.kh.www.Member.model.service.MemberService;
 
 /**
  * Handles requests for the application home page.
@@ -26,6 +27,8 @@ public class HomeController {
 	
 	@Autowired
 	private ApartService aptService;
+	@Autowired
+	private MemberService mService;
 	
 	@RequestMapping("aptAdd.do")
 	public String aptInsert(@RequestParam("aptAdd_Name") String name, @RequestParam("address1") String address,
@@ -97,28 +100,17 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@RequestMapping("dupid.do")
+	public void dupid(@RequestParam("id") String id) {
+		System.out.println(id);
 		
+		int result = mService.dupid(id);
+				
+	
 	}
 	
 	
-	@RequestMapping("aptDupChk.do")
-	   public void aptDupName(@RequestParam("name") String name, HttpServletResponse response) {
-	      
-	      System.out.println(name);
-	      
-	      int result = aptService.aptDupName(name);
-	      
-	      boolean isable = result == 0 ? true : false;
-	      
-	      try {
-	         response.getWriter().print(isable);
-	      } catch (IOException e) {
-	         e.printStackTrace();
-	      }
-	      
-	      
-	   }
-	
-
 	
 }
