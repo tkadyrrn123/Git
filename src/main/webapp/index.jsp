@@ -481,6 +481,8 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 						<td>
 							<p><em>*</em> 아이디</p>
 							<input type="text" id="id" name="id" autocomplete=off>
+							<label id="idchk" style="display: none; font-size: x-small;"></label>
+							<input type="hidden" id="idchk1" value="0"/>
 						</td> 
 					</tr>
 					<tr>
@@ -650,8 +652,40 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 			})
 		  	
 	  })
-	
-	  //패스워드 검사
+	  //아이디 중복검사
+	  $('#id').on('keyup',function(){
+		  var id = $('#id').val();
+		  var check = /^[A-Za-z0-9_\-]{5,20}$/;
+		  
+		  if(id.length==0){
+			  $('#idchk').hide();
+			  $('#idchk1').val(0);
+		  }
+		  if(id.length<4){
+			  $('#idchk').show();
+			  $('#idchk').text('아이디를 5자리 이상 입력해주세요.');
+			  $('#idchk').css('color','red');
+			  $('#idchk1').val(0);
+		  }
+		  
+          if(check.test(id)){
+        	  $('#idchk').text('사용 가능합니다.');
+			  $('#idchk').css('color','green');
+			  $('#idchk').val(1);
+		  }else{
+			  $('#idchk').text('5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.');
+			  $('#idchk').css('color','red');
+			  $('#idchk').val(0);
+		  }
+          $.ajax({
+				url: 'dupid.do',
+				data: {id:id},
+				success: function(data){
+					console.log(data);
+				}
+          });
+	  });
+	  //패스워드 중복검사
       $('#pwd').on('keyup',function(){
     	  
          var pwd = $('#pwd').val();
@@ -760,11 +794,27 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
              aptNum.focus();
             	return false;
          }
-            
+         
+         if($('#pwdchk').val() == 0 ){
+             alert('사용가능한 비밀번호를 입력해주세요.');
+             $('#pwd').focus();
+             return false;
+         }
+         
+         if($('#pwdchk2').val() == 0 ){
+             alert('입력했던 비밀번호와 같이 입력해주세요.');
+             $('#pwd2').focus();
+             return false;
+         }
+         
+         if($('#idchk').val() == 0 ){
+             alert('사용가능한 아이디를 입력해주세요.');
+             userId.focus();
+             return false;
+         }
        	 if(bool){
           		 $('#memberjoinForm').submit();
           		 $(".modal").fadeOut();
-//           		 location.reload();
          }   
        	 
 		}
