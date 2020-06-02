@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.www.freeBoard.model.exception.FreeBoardException;
+import com.kh.www.freeBoard.model.service.FreeBoardService;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
 
 
 @Controller
 public class FreeBoardController {
+	
+	@Autowired
+	private FreeBoardService freeService;
+	
 	
 	@RequestMapping("list.fr")
 	public String freeBoardListView() {		
@@ -64,27 +70,26 @@ public class FreeBoardController {
 	}
 	
 	@RequestMapping("insert.fr")
-	public String insertFreeBoard(@ModelAttribute FreeBoard b, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) throws FreeBoardException {
-		
-
+	public String insertFreeBoard(@ModelAttribute FreeBoard fb, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) throws FreeBoardException {
 		
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			String renameFileName = saveFile(uploadFile, request);
 			
 			if(renameFileName != null) {
-				b.setFileName(renameFileName);
+				fb.setFileName(renameFileName);
+				
 			}
 		}
 		
-		int result = 0; 
-				// bService.insertBoard(b);
+		int result = freeService.insertBoard(fb); 
 		
 		
 		if(result > 0) {
-			return "redirect:blist.bo";
+			return "redirect:list.fr";
 		} else {
 			throw new FreeBoardException("게시물 등록 실패");
 		}
+		
 	}
 	
 

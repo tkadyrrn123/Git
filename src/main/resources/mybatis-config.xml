@@ -15,6 +15,7 @@
 		<mapper resource="mappers/Apart-mapper.xml"/>
 		<mapper resource="mappers/myPage-mapper.xml"/>
 		<mapper resource="mappers/Notice-mapper.xml"/>
+		<mapper resource="mappers/free-mapper.xml"/>
 	</mappers>
 	
 
