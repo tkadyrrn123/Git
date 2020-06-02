@@ -24,5 +24,9 @@
 		SELECT APT_DONG FROM TB_APART WHERE APT_NAME=#{name}
 	</select>
 	
+	<select id="aptDupName" resultType="_int">
+      SELECT COUNT(*) FROM TB_APART WHERE APT_NAME=#{name}
+   </select>
+
 
 </mapper>

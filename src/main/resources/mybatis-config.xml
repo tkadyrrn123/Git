@@ -8,11 +8,13 @@
 	<typeAliases>
 		<typeAlias type="com.kh.www.Apart.model.vo.Apart" alias="Apart"/>
 		<typeAlias type="com.kh.www.Member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.www.Notice.model.vo.Notice" alias="Notice"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/Apart-mapper.xml"/>
 		<mapper resource="mappers/myPage-mapper.xml"/>
+		<mapper resource="mappers/Notice-mapper.xml"/>
 	</mappers>
 	
 

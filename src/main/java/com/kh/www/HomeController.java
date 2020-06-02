@@ -17,6 +17,7 @@ import com.google.gson.JsonIOException;
 import com.kh.www.Apart.model.exception.ApartException;
 import com.kh.www.Apart.model.service.ApartService;
 import com.kh.www.Apart.model.vo.Apart;
+import com.kh.www.Member.model.service.MemberService;
 
 /**
  * Handles requests for the application home page.
@@ -26,16 +27,18 @@ public class HomeController {
 	
 	@Autowired
 	private ApartService aptService;
+	@Autowired
+	private MemberService mService;
 	
 	@RequestMapping("aptAdd.do")
 	public String aptInsert(@RequestParam("aptAdd_Name") String name, @RequestParam("address1") String address,
 			                @RequestParam("aptAdd_dong") String[] dong, @RequestParam("aptAdd_phone") String phone,
 			                Model model, HttpServletResponse response) throws IOException {
 		
-		System.out.println("이름:" + name);
-		System.out.println("주소:" + address);
-		System.out.println("동:" + Arrays.toString(dong));
-		System.out.println("전화번호:" + phone);
+		System.out.println("�씠由�:" + name);
+		System.out.println("二쇱냼:" + address);
+		System.out.println("�룞:" + Arrays.toString(dong));
+		System.out.println("�쟾�솕踰덊샇:" + phone);
 		
 		String dongjoin = String.join(",",dong);
 		
@@ -44,17 +47,17 @@ public class HomeController {
 		int result = aptService.aptInsert(apt);
 		
 		if(result>0) {
-			model.addAttribute("msg","아파트를 신청하였습니다.");
+			model.addAttribute("msg","�븘�뙆�듃瑜� �떊泥��븯���뒿�땲�떎.");
 			response.setContentType("text/html; charset=UTF-8");
 			
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('아파트를 신청하였습니다.'); history.go(-1);</script>");
+            out.println("<script>alert('�븘�뙆�듃瑜� �떊泥��븯���뒿�땲�떎.'); history.go(-1);</script>");
             out.flush();
 
 
 			return "index";
 		}else {
-			throw new ApartException("아파트 추가에 실패했습니다.");
+			throw new ApartException("�븘�뙆�듃 異붽��뿉 �떎�뙣�뻽�뒿�땲�떎.");
 		}
 		
 	}
@@ -80,7 +83,34 @@ public class HomeController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("aptDupChk.do")
+	public void aptDupName(@RequestParam("name") String name, HttpServletResponse response) {
+		
+		System.out.println(name);
+		
+		int result = aptService.aptDupName(name);
+		
+		boolean isable = result == 0 ? true : false;
+		
+		try {
+			response.getWriter().print(isable);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
+	
+	@RequestMapping("dupid.do")
+	public void dupid(@RequestParam("id") String id) {
+		System.out.println(id);
+		
+		int result = mService.dupid(id);
+				
+	
+	}
+	
+	
 	
 }

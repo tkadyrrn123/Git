@@ -21,5 +21,9 @@ public class ApartDAO {
 	public String donglist(SqlSessionTemplate sqlSession, String name) {
 		return sqlSession.selectOne("aptMapper.donglist", name);
 	}
+	
+	public int aptDupName(SqlSessionTemplate sqlSession, String name) {
+	      return sqlSession.selectOne("aptMapper.aptDupName", name);
+	   }
 
 }
