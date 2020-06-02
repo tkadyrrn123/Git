@@ -13,12 +13,11 @@
 	
 	<mappers>
 		<mapper resource="mappers/Apart-mapper.xml"/>
+		<mapper resource="mappers/Member-mapper.xml"/>
 		<mapper resource="mappers/myPage-mapper.xml"/>
 		<mapper resource="mappers/Notice-mapper.xml"/>
 	</mappers>
 	
-
-
 
 
 </configuration>
