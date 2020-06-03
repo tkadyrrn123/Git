@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 public class MemberDAO {
 
 	public int dupid(SqlSessionTemplate sqlSession, String id) {
-		return sqlSession.selectOne(statement, parameter);
+		return sqlSession.selectOne("memberMapper.dupid", id);
 	}
 	
 }

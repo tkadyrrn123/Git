@@ -447,9 +447,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	<!-- ================================================== -->
 						<!--로그인화면 -->
 	<!-- ================================================== -->
-	<button onclick="location.href='list.fr'">
-		자게로 이동
-	</button>
+	<button onclick="location.href='info.ai'">dsfkjakcfascf</button>
 	<div class="loginBox">
 		<h2>L O G I N</h2>
 		<div class="hr-line">OR</div>
@@ -668,24 +666,37 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 			  $('#idchk').text('아이디를 5자리 이상 입력해주세요.');
 			  $('#idchk').css('color','red');
 			  $('#idchk1').val(0);
+		  }else{
+			  if(check.test(id)){
+	        	  $('#idchk').text('사용 가능합니다.');
+				  $('#idchk').css('color','green');
+				  $('#idchk1').val(1);
+				  
+				  $.ajax({
+						url: 'dupid.do',
+						data: {id:id},
+						success: function(data){
+							console.log(data);
+							
+							if(data == 'true'){
+								$('#idchk1').val(1);
+							}else{
+								$('#idchk1').val(0);
+							}
+							
+						}
+		          });
+				  
+			  }else{
+				  $('#idchk').text('5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.');
+				  $('#idchk').css('color','red');
+				  $('#idchk1').val(0);
+			  }
 		  }
 		  
-          if(check.test(id)){
-        	  $('#idchk').text('사용 가능합니다.');
-			  $('#idchk').css('color','green');
-			  $('#idchk').val(1);
-		  }else{
-			  $('#idchk').text('5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.');
-			  $('#idchk').css('color','red');
-			  $('#idchk').val(0);
-		  }
-          $.ajax({
-				url: 'dupid.do',
-				data: {id:id},
-				success: function(data){
-					console.log(data);
-				}
-          });
+          
+          
+          
 	  });
 	  //패스워드 중복검사
       $('#pwd').on('keyup',function(){
@@ -712,11 +723,11 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	      if(pwd == pwd2){
 	      	  	$('#pwdchkmsg').text('일치');
 	            $('#pwdchkmsg').css({'color' : 'green', 'font-size' : 'x-small'});
-	            $('#pwdchk2').val(1);
+	            $('#idchk1').val(1);
 	      } else {
 	            $('#pwdchkmsg').text('불일치');
 	            $('#pwdchkmsg').css({'color' : 'red', 'font-size' : 'x-small'});
-	            $('#pwdchk2').val(0);
+	            $('#idchk1').val(0);
 	      }
 	        
 	    });
@@ -809,7 +820,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
              return false;
          }
          
-         if($('#idchk').val() == 0 ){
+         if($('#idchk1').val() == 0 ){
              alert('사용가능한 아이디를 입력해주세요.');
              userId.focus();
              return false;
