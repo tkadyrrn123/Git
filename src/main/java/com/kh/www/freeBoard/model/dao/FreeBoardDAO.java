@@ -1,8 +1,12 @@
 package com.kh.www.freeBoard.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
 
 @Repository
@@ -14,9 +18,19 @@ public class FreeBoardDAO {
 		
 
 		return sqlSession.insert("freeMapper.insertBoard", fb);					
-	
 		
+	}
+
+	public int getListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("freeMapper.getListCount");
+	}
+
+	public ArrayList<FreeBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
+		int offset = (pi.getCurrentPage() -1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("freeMapper.selectList", null, rowBounds);
 	}
 
 }
