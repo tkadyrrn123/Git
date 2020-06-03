@@ -38,7 +38,7 @@ body {
 	margin-bottom: 50px;
 	perspective: 1500px;
 	
-}
+} 
 
 .card .content {
 		position: relative;

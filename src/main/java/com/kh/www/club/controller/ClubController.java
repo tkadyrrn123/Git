@@ -75,7 +75,7 @@ public class ClubController {
 		if(result1 >0 && result2 > 0 && result3 > 0) {
 			return "redirect:clubList.cb";
 		} else {
-			throw new ClubException("°Ô½Ã¹° µî·Ï¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
+			throw new ClubException("ê²Œì‹œë¬¼ ë“±ë¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
 		}
 	}
 	
@@ -115,14 +115,15 @@ public class ClubController {
 		if(result > 0 ) {
 			return "redirect:clubList.cb";
 		}else {
-			throw new ClubException("°Ô½Ã±Û »èÁ¦¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
+			throw new ClubException("ê²Œì‹œê¸€ ì‚­ì œì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
 		}
 
 	}
 	
 
 	
-
+	
+	
 	
 	
 	
