@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.www.common.Pagenation;
+import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.exception.FreeBoardException;
 import com.kh.www.freeBoard.model.service.FreeBoardService;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
@@ -27,9 +31,30 @@ public class FreeBoardController {
 	
 	
 	@RequestMapping("list.fr")
-	public String freeBoardListView() {		
+	public String freeBoardListView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) throws FreeBoardException{		
+
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
 		
-		return"freeBoardList";
+		int listCount = freeService.getListCount();
+		
+		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+		
+		ArrayList<FreeBoard> list = freeService.selectList(pi);
+		
+		if(list !=null) {
+			// 보낼 것 : list, pi, 
+			// 갈 화면 정해야함 : view
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.setViewName("FreeBoardList");
+		} else {
+			throw new FreeBoardException("게시글 조회 실패");
+		}
+		
+		return "freeBoardList";
 	}
 	
 	
