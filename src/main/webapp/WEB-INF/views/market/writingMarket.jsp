@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-   #body{margin-top: 300px;}
+   #body{margin-top: 20px;}
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavender;}
    h5{ margin: 0 auto;}
    h2{font-family: "Sans-Serif"; margin-left: 11%;}
@@ -26,19 +26,29 @@
  
     input::placeholder{font-style: italic; color: darksalmon;}
     textarea::placeholder{font-style: italic; color: darksalmon;}
+    
+	.img{width:100%; height:400px;}
+	.header_wrap{background-color:rgba(0, 0, 0, 0.5); width:100%; height: 400px;position:absolute;top:0;}
+	#headcomment{
+	position: absolute;
+	left: 45%;
+	top: 220px;
+	color: white;
+	font-size: 1.5em;}
 </style>
 </head>
 <body>
-<jsp:include page="../common/menubar.jsp"/>
+<img class="img" src="resources/images/market6.jpg">
+	<div class="header_wrap">
+	<jsp:include page="../common/menubar.jsp"/>
+	<b id="headcomment">중고 장터</b>
+	</div>
 <div id="body">
-      <h2>&nbsp;중고장터</h2>
+      <h2 style="color: darksalmon;">작성하기</h2>
       <hr style="width: 80%; margin-left: 11%"><br>
 
          <form>
             <table id="tb">
-                 <tr id="tr1">
-                   <td colspan=2 style="color: darksalmon; font-weight: bold;">작성하기</td>
-                </tr> 
                 <tr id="tr2">
                    <td class="td1">제목</td>
                      <td>
