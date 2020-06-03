@@ -108,6 +108,7 @@
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">동호회 상세 페이지</b>	
 	<div id= all> 
+		<form action="clubUpdateForm.cb" method="POST">
 		<div id= menu>
 			동호회 상세 페이지
 		</div>
@@ -122,19 +123,16 @@
 			
 			
 			<div id="infoBox">
-				<div id="title">
-					누구나 손쉽게 따라하는 재즈 피아노 동호회
-
-				</div>
+				<textarea name="clubName"  id="title" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; " required>누구나 손쉽게 따라하는 재즈 피아노 동호회</textarea>
 				<div id="line4"></div>
 				
 				<div id="name">작성자  </div>		
 					
 				<div id="nameInput">송도훈</div>
 					
-				<div id="count">모집 인원  </div>
+				<div id="count">총 모집 인원  </div>
 				
-				<div id="countInput">총 20명 중 14명 모집완료</div>
+				<textarea  name="maxPeople"  id="countInput">20</textarea>
 				
 				<button class="btn" id="applyBtn">가입 신청하기</button> 
 			</div>
@@ -146,7 +144,7 @@
 			<div id="line2"></div>
 		<div id="content2">
 			<div class="cTitle" id="intro">동호회 소개</div>
-			<textarea class="textarea" id="introInput" readonly style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+			<textarea name="clubIntro" class="textarea" id="introInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
 '듣고 싶은 음악을 다른 사람이 아니라,
 
 자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
@@ -165,7 +163,7 @@
 			</textarea>
 			
 			<div class="cTitle" id="plan">동호회 활동 계획</div>
-			<textarea class="textarea" id="planInput" readonly style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+			<textarea name="clubPlan"  class="textarea" id="planInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
 '듣고 싶은 음악을 다른 사람이 아니라,
 
 자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
@@ -183,7 +181,7 @@
 건반을 두드리는 모습을 보며 천천히 익힙니다
 			</textarea>
 			<div class="cTitle" id="loction">동호회 활동 장소</div>
-			<textarea class="textarea" id="locationInput" readonly style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+			<textarea name="clubPlace"  class="textarea" id="locationInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
 '듣고 싶은 음악을 다른 사람이 아니라,
 
 자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
@@ -201,7 +199,7 @@
 건반을 두드리는 모습을 보며 천천히 익힙니다
 			</textarea>
 			<div class="cTitle" id="etc">기타 사항</div>
-			<textarea class="textarea" id="etcInput" readonly style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+			<textarea name="clubEtc"  class="textarea" id="etcInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
 '듣고 싶은 음악을 다른 사람이 아니라,
 
 자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
@@ -232,7 +230,7 @@
 				<button class="btn" id="listBtn">목록</button>
 		</div>
 		
-		
+		</form>
 		
 		<!--  댓글 작성  -->
 		<div id="content3">
@@ -289,7 +287,7 @@
 					<button class="btn" id="rDeleteBtn">삭제</button> 
 				</div>
 				<div width="100%">
-					<p id="rContent"  readonly>010-1234-5678 쪽으로 연락 주세요</p>
+					<p id="rContent" readonly>010-1234-5678 쪽으로 연락 주세요</p>
 				</div> 
 				<div>
 					<button class="btn" id="replyBtn">답글</button>
@@ -376,9 +374,15 @@
 			$(this).parent().children('.likeCount').text(count);
 		});
 		
-		$('#updateBtn').on('click', function(){
-			location.href="clubUpdate.cb"
-		});
+
+		
+   		/* 삭제  */
+   		$('#deleteBtn').on('click', function(){
+   			if(confirm("게시물을 삭제하시겠습니까?")){
+   				location.href="deleteClub.cb";
+   			}
+   		});
+		
 		
 	</script> 
 
