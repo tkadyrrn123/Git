@@ -9,6 +9,7 @@
 		<typeAlias type="com.kh.www.Apart.model.vo.Apart" alias="Apart"/>
 		<typeAlias type="com.kh.www.Member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.www.Notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.kh.www.freeBoard.model.vo.FreeBoard" alias="FreeBoard"/>
 	</typeAliases>
 	
 	<mappers>
