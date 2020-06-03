@@ -382,7 +382,11 @@
    				location.href="deleteClub.cb";
    			}
    		});
-		
+	    
+	    
+	    
+	    
+	    
 		
 	</script> 
 
