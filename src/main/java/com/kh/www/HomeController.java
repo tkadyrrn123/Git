@@ -41,7 +41,7 @@ public class HomeController {
 		System.out.println("동:" + Arrays.toString(dong));
 		System.out.println("전화번호:" + phone);
 		
-		String dongjoin = String.join(",",dong);
+		String dongjoin = String.join(",",dong); 
 		
 		Apart apt = new Apart(name, dongjoin, address, phone);
 		
