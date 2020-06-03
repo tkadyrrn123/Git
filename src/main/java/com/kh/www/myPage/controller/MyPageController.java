@@ -175,7 +175,7 @@ public class MyPageController {
 		String savePath = root + "\\images";
 		
 		File f = new File(savePath + "\\" + fileName);
-		
+		  
 		if(f.exists()) {
 			f.delete();
 		}
