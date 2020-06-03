@@ -18,5 +18,5 @@ public interface ClubService {
 	int insertFile(String renameFileName);
 
 	int deleteClub();
-
+ 
 }

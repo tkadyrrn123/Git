@@ -22,7 +22,7 @@ public class ClubDAO {
 
 	public int insertClub(SqlSessionTemplate sqlSession, Club c) {
 		return sqlSession.insert("clubMapper.insertClub", c);
-	}
+	} 
 
 	public int insertBoard(SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("clubMapper.insertBoard");

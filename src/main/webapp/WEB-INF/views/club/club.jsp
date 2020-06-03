@@ -11,7 +11,7 @@
 $accent-color: #355cc9;
 
 * {
-	box-sizing: border-box;
+	box-sizing: border-box; 
 }
 
 body {

@@ -21,7 +21,7 @@
 	#content3{width: 65%; margin-left:100px;}
 	#content4{width: 65%; margin-left:100px;} 
 	#content5{width: 61.8%; margin-left:150px;} 
-
+ 
 	
 	#sellPic{width: 42%; height: 500px; margin-left: 140px; margin-top: 30px; display: inline-block;}
 	#img{width: 100%; height:500px;}  

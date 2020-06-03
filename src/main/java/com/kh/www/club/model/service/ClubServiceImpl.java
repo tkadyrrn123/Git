@@ -23,7 +23,7 @@ public class ClubServiceImpl implements ClubService {
 	public int getListCount() {
 		return cDAO.getListCount(sqlSession);
 	}
-
+ 
 	@Override
 	public ArrayList<Club> selectList(PageInfo pi) {
 		return cDAO.selectList(sqlSession, pi);

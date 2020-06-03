@@ -28,6 +28,6 @@
 		update tb_board
 		set BOARD_DELETE = 'Y'
 		where BOARD_NO = 4
-	</update>
+	</update> 
 	
 </mapper>

@@ -12,7 +12,7 @@
    h2{font-family: "Sans-Serif";     margin-left: 11%;}
    hr{border-color: lavenderBlush;}
    #titleInput{height: 60%; border: 1px solid lavenderBlush; margin-left: 20px; width: 80%;}
-   
+    
    #tr1{height: 10%}
    #tr2{height: 10%;}
    #tr3{height: 70%;}

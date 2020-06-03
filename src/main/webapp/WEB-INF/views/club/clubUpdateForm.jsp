@@ -15,7 +15,7 @@
 	#line3{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 100px;}
 	#line4{width: 90%; background: lightgray; height:2px; margin: auto; margin-top: 10px;}
 	.sellAll{width: 80%; margin: 40px 0px 0px 200px;}
-
+ 
 	#content1{width: 80%; margin-left:100px;}
 	#content2{width: 80%; margin-left:100px;}
 	#content3{width: 65%; margin-left:100px;}

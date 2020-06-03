@@ -13,7 +13,7 @@
    hr{border-color: lavender;}
    #titleInput{height: 60%; border: 1px solid lavender; margin-left: 20px; width: 80%;}
    .countInput{height: 60%; border: 1px solid lavender; margin-left: 20px;}
-   
+    
    #tr1{height: 5%}
    #tr2{height: 5%;}
    #tr3{height: 5%;}

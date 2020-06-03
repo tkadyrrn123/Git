@@ -10,7 +10,7 @@ public class Club {
 	private int maxPeople;
 	private String endYn;
 	
-	public Club() {}
+	public Club() {} 
 
 	public Club(String clubName, int boardNo, String clubIntro, String clubPlan, String clubPlace, String clubEtc,
 			int maxPeople, String endYn) {

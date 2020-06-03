@@ -4,5 +4,5 @@ public class ClubException extends RuntimeException {
 	public ClubException() {}
 	public  ClubException(String msg) {
 		super(msg);
-	}
+	} 
 }
