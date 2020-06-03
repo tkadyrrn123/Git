@@ -42,6 +42,8 @@
     .img {filter: brightness(70%);
 		    width: 100%;
 		    height: 400px;}	    
+	#buttonTab{border-left: hidden; border-right: hidden;}
+	
 </style>
 </head>
 <body>
@@ -51,11 +53,12 @@
 	<h2>공지사항</h2>
 	</div>
 	<div class="board_wrab">
+	<h3 align="center">총 게시글 갯수 이거 나중에 삭제 : ${ pi.listCount }</h3>
         <table>
             <thead>
                 <tr id="notice_tr">
                     <td style="width: 7%;">번호</td>
-                    <td class="dong" style="width: 9%;">단지</td>
+                    <td class="dong" style="width: 9%;">동</td>
                     <td class="btitle">제목</td>
                     <td style="width: 10%;">작성자</td>
                     <td style="width: 11%">등록일</td>
@@ -107,7 +110,53 @@
         </table>
     </div>
     <div class="board_btn">
-			<button class="btn_standard" onclick="location.href='noticeInsertView.no';">글쓰기</button>
+		<button class="btn_standard" onclick="location.href='noticeInsertView.no';">글쓰기</button>
+		<br>
+		<br>
+		<button class="btn_standard" onclick="location.href='noticelogin.no?userId=user01&userPwd=pass01';" type="submit">임시로그인</button>
+		<!-- 페이징 처리 -->
+		<table>
+			<tr align="center" height="20" id="buttonTab">
+				<td colspan="6">
+				
+					<!-- [이전] -->
+					<c:if test="${ pi.currentPage <= 1 }">
+						[이전] &nbsp;
+					</c:if>
+					<c:if test="${ pi.currentPage > 1 }">
+						<c:url var="before" value="noticeList.no">
+							<c:param name="page" value="${ pi.currentPage - 1 }"/>
+						</c:url>
+						<a href="${ before }">[이전]</a> &nbsp;
+					</c:if>
+					
+					<!-- 페이지 -->
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<c:if test="${ p eq pi.currentPage }">
+							<font color="red" size="4"><b>[${ p }]</b></font>
+						</c:if>
+						
+						<c:if test="${ p ne pi.currentPage }">
+							<c:url var="pagination" value="noticeList.no">
+								<c:param name="page" value="${ p }"/>
+							</c:url>
+							<a href="${ pagination }">${ p }</a> &nbsp;
+						</c:if>
+					</c:forEach>
+					
+					<!-- [다음] -->
+					<c:if test="${ pi.currentPage >= pi.maxPage }">
+						[다음]
+					</c:if>
+					<c:if test="${ pi.currentPage < pi.maxPage }">
+						<c:url var="after" value="noticeList.no">
+							<c:param name="page" value="${ pi.currentPage + 1 }"/>
+						</c:url> 
+						<a href="${ after }">[다음]</a>
+					</c:if>
+				</td>
+			</tr>
+		</table>
     </div>
 </body>
 </html>
