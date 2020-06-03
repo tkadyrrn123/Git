@@ -67,7 +67,7 @@
 
             </table><br>
               <div id="btns">
-                  <button class="btn" onclick="location.href='noticeList.no'">취소</button>
+                  <button type="button" class="btn" onclick="location.href='noticeList.no'">취소</button>
                   <button class="btn" type="submit">등록하기</button>
             </div>
          </form>
