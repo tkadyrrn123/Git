@@ -1,4 +1,4 @@
-package com.kh.www.freeBoard.controlloer;
+ package com.kh.www.freeBoard.controlloer;
 
 import java.io.File;
 import java.io.IOException;

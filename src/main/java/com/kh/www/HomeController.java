@@ -27,6 +27,7 @@ public class HomeController {
 	
 	@Autowired
 	private ApartService aptService;
+	
 	@Autowired
 	private MemberService mService;
 	
