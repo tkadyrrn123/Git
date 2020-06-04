@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@
 html ,body{margin: 0; padding: 0; height: 100%; }
 
 
-.modal_pop{height: 100%;}
+.modal_pop{height: 100%; overflow-y: hidden;}
 .modal_pop>p{
 		    width: 100%;
 		    height: 9%;
@@ -54,7 +55,7 @@ html ,body{margin: 0; padding: 0; height: 100%; }
 	    vertical-align: 5px;
 	    margin-left: -6px;
 }
-#search3>input[type="text"]{vertical-align: -4px; margin-left: 12px;}
+#search3>form>input[type="text"]{ vertical-align: -4px; margin-left: 12px;}:focus{outline: none;}
 	
 .myButton {
 	box-shadow:inset 0px 1px 0px 0px #d9fbbe;
@@ -101,7 +102,7 @@ html ,body{margin: 0; padding: 0; height: 100%; }
     text-align: center;
 }
 .close_btn:active {background: #fff;}
-#search_content{min-height:355px;  border: 5px solid #ddeaf2; margin: 20px 25px 0px 25px; overflow-y: scroll; }
+#search_content{height:355px;  border: 5px solid #ddeaf2; margin: 20px 25px 0px 25px; overflow-y: scxroll; }
 #search_content>table{
 					clear: both;
 				    width: 100%;
@@ -130,18 +131,27 @@ html ,body{margin: 0; padding: 0; height: 100%; }
 
 </style>
 </head>
-<body onload="aptSelect();">
+<body>
 	<div class="modal_pop">
 		<p>아파트 검색</p>
 		<div id="p1">
-			<p><img src="../../resources/images/modal_pop1.png"> 검색창에 찾으시는 아파트를 입력하세요.</p>
+			<p><img src="resources/images/modal_pop1.png"> 검색창에 찾으시는 아파트를 입력하세요.</p>
 		</div>
 		
 		<div id="search">
 			<div id="search2">검색</div>
-			<div id="search3"><input type="text" id="searchText" name="searchText"><a class="myButton">검색하기</a></div>
+			<div id="search3">
+				<form id="searchApt" action="searchApt.apt">
+					<input type="text" id="searchText" name="searchText">
+					<a class="myButton" onclick="searchApt();">검색하기</a>
+					<script>
+						function searchApt(){
+							$('#searchApt').submit();
+						}
+					</script>
+				</form>
+			</div>
 		</div>
-		
 		<div id="search_content" >
 			<table class="table-hover">
 				<thead>
@@ -151,34 +161,19 @@ html ,body{margin: 0; padding: 0; height: 100%; }
 					</tr>
 				</thead>
 				<tbody>
+				<c:if test="${!empty msg}">
 					<tr>
-						<td>KH</td>
-						<td>강남구 테헤란로 어딘가</td>
+						<td colspan="2" onclick="event.cancelBubble = true;" style="cursor: default;">검색 결과가 없습니다.</td>
 					</tr>
-					<tr>
-						<td>래미안 석관</td>
-						<td>성북구 석관동 어딘가</td>
-					</tr>
-					<tr>
-						<td>래미안 석관</td>
-						<td>성북구 석관동 어딘가</td>
-					</tr>
-					<tr>
-						<td>래미안 석관</td>
-						<td>성북구 석관동 어딘가</td>
-					</tr>
-					<tr>
-						<td>래미안 석관</td>
-						<td>성북구 석관동 어딘가</td>
-					</tr>
-					<tr>
-						<td>래미안 석관</td>
-						<td>성북구 석관동 어딘가</td>
-					</tr>
-					<tr>
-						<td>래미안 석관</td>
-						<td>성북구 석관동 어딘가</td>
-					</tr>
+				</c:if>
+				<c:if test="${!empty list}">
+					<c:forEach var="apt" items="${list}">
+						<tr>
+							<td>${apt.name}</td>
+							<td>${apt.address}</td>
+						</tr>
+					</c:forEach>
+				</c:if>
 				</tbody>
 			</table>
 		</div>
@@ -187,9 +182,9 @@ html ,body{margin: 0; padding: 0; height: 100%; }
 	
 	
 	<script>
-		function aptSelect(){
+		$(function(){
 			document.getElementById('searchText').value = opener.document.memberjoinForm.aptName.value;	
-		}
+		});
 		
 		$('#search_content tbody tr').click(function(){
 			opener.document.memberjoinForm.aptName.value = $(this).children().eq(0).text();

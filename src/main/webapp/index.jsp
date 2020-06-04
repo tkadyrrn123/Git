@@ -83,6 +83,7 @@ h2 {
 	border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
     padding-left: 8px;
+    color: white;
 }
 .loginBox input[type="password"]{
     display: inline-block;
@@ -95,6 +96,7 @@ h2 {
 	border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
     padding-left: 8px;
+    color: white;
 }
 
 .loginBox input[type="submit"]{
@@ -373,7 +375,6 @@ h2 {
 } 
 
 .filebox input[type="file"] {
-	position: absolute;
 	width: 1px;
 	height: 1px;
 	padding: 0;
@@ -387,9 +388,10 @@ h2 {
 	display: inline-block;
 	padding: 3px 7px;
 	line-height: normal;
+	font-size: 16px;
 	vertical-align: middle;
 	cursor: pointer;
-	border-radius: .25em;
+	border-radius: 5px;
 }
 
 /* named upload */
@@ -437,13 +439,15 @@ h2 {
     background-color: #2f3640;
     border-color: #2f3640;
 }
+
+div.postcodify_popup_layer input.keyword:focus{outline: none;}
 </style>
 </head>
 <body>
 	<!-- ================================================== -->
 						<!--로그인화면 -->
 	<!-- ================================================== -->
-	<button onclick="location.href='market.ma'">go market</button>
+	<button onclick="location.href='info.ai'">dsfkjakcfascf</button>
 	<div class="loginBox">
 		<h2>L O G I N</h2>
 		<div class="hr-line">OR</div>
@@ -477,6 +481,8 @@ h2 {
 						<td>
 							<p><em>*</em> 아이디</p>
 							<input type="text" id="id" name="id" autocomplete=off>
+							<label id="idchk" style="display: none; font-size: x-small;"></label>
+							<input type="hidden" id="idchk1" value="0"/>
 						</td> 
 					</tr>
 					<tr>
@@ -503,7 +509,7 @@ h2 {
 					</tr>
 					<tr>
 						<td>
-							<p>닉네임</p>
+							<p><em>*</em> 닉네임</p>
 							<input type="text" id="nickName" name="nickName" autocomplete=off>
 						</td>
 					</tr>
@@ -534,38 +540,12 @@ h2 {
 						        <div class="options-container">
 						          <div class="option">
 						            <input type="radio" class="radio" id="automobiles" name="category" />
-						            <label for="automobiles">101동</label>
+						            <label for="automobiles">아파트를 검색해주세요.</label>
 						          </div>
 						
-						          <div class="option">
-						            <input type="radio" class="radio" id="film" name="category" />
-						            <label for="film">102동</label>
-						          </div>
-						
-						          <div class="option">
-						            <input type="radio" class="radio" id="science" name="category" />
-						            <label for="science">103동</label>
-						          </div>
-						
-						          <div class="option">
-						            <input type="radio" class="radio" id="art" name="category" />
-						            <label for="art">104동</label>
-						          </div>
-						
-						          <div class="option">
-						            <input type="radio" class="radio" id="music" name="category" />
-						            <label for="music">105동</label>
-						          </div>
-						
-						          <div class="option">
-						            <input type="radio" class="radio" id="travel" name="category" />
-						            <label for="travel">106동</label>
-						          </div>
 						        </div>
-						
-						        <div class="selected">
-						            동을 선택해주세요.
-						        </div>
+						        
+						        <div class="selected">동을 선택해주세요.</div>
 						        <input type="hidden" id="aptDong" name="aptDong" value="">
 						     </div>
 							<input type="text" id="aptNum" name="aptNum" autocomplete=off placeholder="호수를 입력해주세요 ex)1305호">
@@ -576,11 +556,12 @@ h2 {
 						<td>
 							<p>프로필 사진</p>
 							<div class="filebox bs3-primary preview-image">
-								<input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
+								<input class="upload-name" value="파일선택" disabled="disabled" style="width: 30%;">
 								<label for="input_file">업로드</label> 
 							  	<input type="file" name="profile_img" id="input_file" class="upload-hidden"> 
 							</div>
 							<script>
+							// 파일 미리보기 기능
 							$(document).ready(function(){
 								   var fileTarget = $('.filebox .upload-hidden');
 							
@@ -640,11 +621,89 @@ h2 {
 	</div>	
 	
 	<script>
+	// 아파트 이름 별로 동리스트 출력
+	  $('.selected').on('click',function(){
+			var name = $('#aptName').val();
+			
+			$.ajax({
+				url: 'donglist.bo',
+				data: {name:name},
+				success: function(data){
+					
+					var $options;
+					var $option;
+					
+					$options = $('.options-container');
+					
+					$('.option').remove();
+					
+					for(var i in data){
+						$input = $('<div class="option"><input type="radio" class="radio" id="op'+i+'"name="category" /></div>');
+						$label = $('<label for="op'+i+'">').text(data[i]);
+						
+						$input.append($label);
+						$options.append($input);
+						
+					}
+					
+					customselect();
+				}
+				
+			})
+		  	
+	  })
+	  //아이디 중복검사
+	  $('#id').on('keyup',function(){
+		  var id = $('#id').val();
+		  var check = /^[A-Za-z0-9_\-]{5,20}$/;
+		  
+		  if(id.length==0){
+			  $('#idchk').hide();
+			  $('#idchk1').val(0);
+		  }
+		  if(id.length<4){
+			  $('#idchk').show();
+			  $('#idchk').text('아이디를 5자리 이상 입력해주세요.');
+			  $('#idchk').css('color','red');
+			  $('#idchk1').val(0);
+		  }else{
+			  if(check.test(id)){
+	        	  $('#idchk').text('사용 가능합니다.');
+				  $('#idchk').css('color','green');
+				  $('#idchk1').val(1);
+				  
+				  $.ajax({
+						url: 'dupid.do',
+						data: {id:id},
+						success: function(data){
+							console.log(data);
+							
+							if(data == 'true'){
+								$('#idchk1').val(1);
+							}else{
+								$('#idchk1').val(0);
+							}
+							
+						}
+		          });
+				  
+			  }else{
+				  $('#idchk').text('5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.');
+				  $('#idchk').css('color','red');
+				  $('#idchk1').val(0);
+			  }
+		  }
+		  
+          
+          
+          
+	  });
+	  //패스워드 중복검사
       $('#pwd').on('keyup',function(){
     	  
          var pwd = $('#pwd').val();
          var check = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-         
+       
          if(check.test(pwd)){
             $('#pwdmsg').text('사용 가능');
             $('#pwdmsg').css({'color' : 'green', 'font-size' : 'x-small'});
@@ -656,7 +715,7 @@ h2 {
          }
          
       });
-      
+      //패스워드 확인란 검사
       $('#pwd2').on('keyup',function(){
 	  	  var pwd = $('#pwd').val();
 	  	  var pwd2 = $('#pwd2').val();
@@ -664,27 +723,31 @@ h2 {
 	      if(pwd == pwd2){
 	      	  	$('#pwdchkmsg').text('일치');
 	            $('#pwdchkmsg').css({'color' : 'green', 'font-size' : 'x-small'});
-	            $('#pwdchk2').val(1);
+	            $('#idchk1').val(1);
 	      } else {
 	            $('#pwdchkmsg').text('불일치');
 	            $('#pwdchkmsg').css({'color' : 'red', 'font-size' : 'x-small'});
-	            $('#pwdchk2').val(0);
+	            $('#idchk1').val(0);
 	      }
 	        
 	    });
       
+      //데이터 보내기 전에 검사
       function jnform(){
           var userId = $('#memberjoinForm #id');
           var userPwd = $('#memberjoinForm #pwd');
           var userPwdChk = $('#memberjoinForm #pwd2');
           var name = $('#memberjoinForm #name');
+          var nickname = $('#memberjoinForm #nickname');
           var email = $('#memberjoinForm #email');
           var phone = $('#memberjoinForm #phone');
           var aptName = $('#memberjoinForm #aptName');
           var aptDong = $('#memberjoinForm .selected').text().trim();
           var aptNum = $('#memberjoinForm #aptNum');
           var bool = true;
-			
+        	  
+          $('#aptNum').val(aptDong);
+          
        	if(userId.val() == ''){
             alert("아이디를 입력해주세요.");
             userId.focus();
@@ -708,6 +771,12 @@ h2 {
             name.focus();
            return false;
          }
+         
+         if(nickname.val() == ''){
+             alert('닉네임을 입력해주세요.');
+             nickname.focus();
+            return false;
+          }
          
          if(email.val() == ''){
              alert('이메일을 입력해주세요.');
@@ -738,11 +807,27 @@ h2 {
              aptNum.focus();
             	return false;
          }
-            
+         
+         if($('#pwdchk').val() == 0 ){
+             alert('사용가능한 비밀번호를 입력해주세요.');
+             $('#pwd').focus();
+             return false;
+         }
+         
+         if($('#pwdchk2').val() == 0 ){
+             alert('입력했던 비밀번호와 같이 입력해주세요.');
+             $('#pwd2').focus();
+             return false;
+         }
+         
+         if($('#idchk1').val() == 0 ){
+             alert('사용가능한 아이디를 입력해주세요.');
+             userId.focus();
+             return false;
+         }
        	 if(bool){
           		 $('#memberjoinForm').submit();
           		 $(".modal").fadeOut();
-//           		 location.reload();
          }   
        	 
 		}
@@ -750,11 +835,17 @@ h2 {
     
     
 	<script>
+	$(document).ready(function(){
+		customselect();
+	});
+	
+	function customselect(){ 
+		
 		const selected = document.querySelector(".selected");
 		const optionsContainer = document.querySelector(".options-container");
 	
 		const optionsList = document.querySelectorAll(".option");
-	
+		console.log(optionsList);
 		selected.addEventListener("click", () => {
 		  optionsContainer.classList.toggle("active");
 		});
@@ -765,9 +856,11 @@ h2 {
 		    optionsContainer.classList.remove("active");
 		  });
 		});
+	};
 		
+		//아파트 검색 팝업창
 		function searchApt(){
-			window.open('AptSearch.me', 'checkForm', 'width=520, height=550');
+			window.open('AptSearch.me', 'checkForm', 'width=520, height=590');
 		}
 		
 		
@@ -833,17 +926,51 @@ h2 {
 		</div>
 		<br clear="all">
 		<div class="modal-content">
-			<form method="get" action="aptAdd.apt" id="aptAddForm" name="aptAddForm">
+			<form method="get" action="aptAdd.do" id="aptAddForm" name="aptAddForm">
 				<table style="width: 100%;">
 					<tr>
 						<td><h1>아파트 신청</h1></td>
 					</tr>
-					<tr>
-						<td>
-							<p><em>*</em> 아파트명</p>
-							<input type="text" id="aptAdd_Name" name="aptAdd_Name" autocomplete=off placeholder="아파트명을 입력해주세요. ex) '래미안아파트  -> 래미안' ">
-						</td>
-					</tr>
+
+<tr>
+                  <td>
+                     <p><em>*</em> 아파트명</p>
+                     <input type="text" id="aptAdd_Name" name="aptAdd_Name" autocomplete=off placeholder="아파트명을 입력해주세요. ex) '래미안아파트  -> 래미안' ">
+                     <label class="aptchk ok" style="display: none; color: green; font-size: x-small;">이 아파트는 신청 가능합니다.</label>
+                     <label class="aptchk error" style="display: none; color: red; font-size: x-small;">탈퇴된 아파트거나 이미 존재하는 아파트입니다.</label>
+                      <input type="hidden" name="aptDuplicateCheck" id="aptDuplicateCheck" value="0"/>
+
+                     <script type="text/javascript">
+                        $('#aptAdd_Name').on('keyup',function(){
+                            var aptName = $('#aptAdd_Name').val().trim();
+                            
+                            
+                            if($('#aptAdd_Name').val().length == 0){
+                               $('.aptchk').hide();
+                            } else{
+                               $.ajax({
+                                 url: 'aptDupChk.do',
+                                 data: {name:aptName},
+                                 success: function(data){
+                                    console.log(data);
+                                    
+                                    if(data == 'true'){
+                                       $('.error').hide();
+                                       $('.ok').show();
+                                       $('#aptDuplicateCheck').val(1);
+                                    }else{
+                                       $('.error').show();
+                                       $('.ok').hide();
+                                       $('#aptDuplicateCheck').val(0);
+                                    }
+                                 }
+                              });
+                            }                
+                         });
+                     </script>
+                  </td>
+               </tr>
+
 					<tr>
 						<td>
 							<p><em>*</em> 위치</p>
@@ -883,6 +1010,7 @@ h2 {
 	          var apt_address = $('#aptAddForm #address1');
 	          var apt_dong = $('#aptAddForm input[name=aptAdd_dong]');
 	          var aptAdd_phone = $('#aptAddForm #aptAdd_phone');
+	          var apt_dup = $('#aptDuplicateCheck');
 	          var dongCnt = 0;
 	          var bool = true;
 	          
@@ -916,6 +1044,12 @@ h2 {
 		         return false;
 	        }
 	        
+	        if(apt_dup.val()>=0){
+	        	 alert("중복된 아파트입니다.");
+	        	 apt_Name.focus();
+		         return false;
+	        }
+	        
 	        apt_dong.each(function (i) {
 	        	
                 if(apt_dong.eq(i).val().indexOf('동')<0){
@@ -927,15 +1061,8 @@ h2 {
 	        
 			if(dongCnt > 0){
 				alert("'동'을 입력해주세요.");
-	            
 	            return false;
 			}
-	        
-// 	        if(apt_dong.val().indexOf('동')<0){
-// 	            alert("'동'을 입력해주세요.");
-// 	            apt_dong.focus();
-// 	            return false;
-// 	        }
 	        
 	        if(aptAdd_phone.val().indexOf('-')>=0){
 	        	 alert("'-'를 빼고 입력해주세요.");
@@ -946,7 +1073,6 @@ h2 {
 	       	if(bool){
 	          		 $('#aptAddForm').submit();
 	          		 $(".modal3").fadeOut();
-	          		 alert(apt_dong.val());
 	        }   
 	       	
 		}
@@ -996,6 +1122,8 @@ h2 {
 		$(".apt_join").click(function(){
 			$(".modal").fadeOut();
 		});
+		
+		
 	</script>
 </body>
 </html>

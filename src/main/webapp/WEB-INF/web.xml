@@ -6,7 +6,10 @@
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>
+			classpath:root-context.xml
+			
+		</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -15,6 +18,27 @@
 	</listener>
 
 	<!-- Processes application requests -->
+	<!-- 한글깨짐 방지 인코딩 -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- 공용 에러페이지 등록 -->
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/WEB-INF/views/common/errorPage.jsp</location>
+    </error-page>
+    <!-- 기본  -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -29,7 +53,7 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+	<!-- 마이페이지  -->
 	<servlet>
 		<servlet-name>myPageServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -43,7 +67,7 @@
 		<servlet-name>myPageServlet</servlet-name>
 		<url-pattern>*.my</url-pattern>
 	</servlet-mapping>
-	
+	<!-- 멤버  -->
 	<servlet>
 		<servlet-name>MemberServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -57,17 +81,70 @@
 		<servlet-name>MemberServlet</servlet-name>
 		<url-pattern>*.me</url-pattern>
 	</servlet-mapping>
-	
-		<!-- 중고게시판 -->
+  
+	<!-- 아파트  -->
 	<servlet>
+		<servlet-name>ApartServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/Apart-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ApartServlet</servlet-name>
+		<url-pattern>*.apt</url-pattern>
+	</servlet-mapping>
+	<!-- 동호회  -->
+	<servlet>
+		<servlet-name>ClubServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/Club-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ClubServlet</servlet-name>
+		<url-pattern>*.cb</url-pattern>
+	</servlet-mapping>
+	<!-- 자유게시판  -->
+	<servlet>
+		<servlet-name>FreeBoardServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/freeBoard-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>FreeBoardServlet</servlet-name>
+		<url-pattern>*.fr</url-pattern>
+	</servlet-mapping>
+	<!-- 공지사항  -->
+	<servlet>
+		<servlet-name>NoticeServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/Notice-context.xml</param-value>
+		</init-param>
+	</servlet>
+  <servlet-mapping>
+    <servlet-name>NoticeServlet</servlet-name>
+		<url-pattern>*.no</url-pattern>
+	</servlet-mapping>
+	
+  <servlet>
 		<servlet-name>MarketServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/Market-context.xml</param-value>
-		</init-param>
-	</servlet>
-	
+  </servlet>
 	<servlet-mapping>
 		<servlet-name>MarketServlet</servlet-name>
 		<url-pattern>*.ma</url-pattern>

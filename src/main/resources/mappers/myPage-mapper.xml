@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="myPageMapper">
+    <update id="memberUpdate">
+        update tb_user
+        set user_name = #{userName},
+        nickname = #{nickName},
+        phone = #{phone},
+        email = #{email},
+        apt_name = #{aptName},
+        apt_dong = #{aptDong},
+        apt_hosu = #{aptHosu}
+        <if test="userPwd != ''">
+            ,user_pwd = #{userPwd}
+        </if>
+        where user_id = #{userId} AND user_delete = 'N'
+    </update>
+    <update id="imageUpdate">
+    	update tb_user
+    	set user_file = #{userFile}
+    	where user_id = #{userId} AND user_delete = 'N'
+    </update>
+    <insert id="insertBreak">
+    	insert into tb_meal
+    	values(#{userId}, #{rDate}, #{rTime}, #{rOption})
+    </insert>
+</mapper>

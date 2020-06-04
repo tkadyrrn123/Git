@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="clubMapper">
+	 
+	
+	<select id="getListCount" resultType="_int">
+		select count(*)
+		from tb_club
+		where delete_yn ='N'
+	</select>
+	
+	<insert id="insertBoard">
+		insert into tb_board
+		values(SEQ_BOARD.NEXTVAL, '동호회', '동호회', sysdate, '이름수정예정', default, default)
+	</insert>
+	
+	<insert id="insertClub">
+		insert into tb_club
+		values(#{clubName}, SEQ_BOARD.CURRVAL, #{clubIntro}, #{clubPlan}, #{clubPlace}, #{clubEtc}, #{maxPeople}, default)
+	</insert>
+	
+	<insert id="insertFile">
+		insert into tb_file
+		values(SEQ_FILE.NEXTVAL, SEQ_BOARD.CURRVAL, #{renameFileName}, NULL)
+	</insert>
+	
+	<update id="deleteClub">
+		update tb_board
+		set BOARD_DELETE = 'Y'
+		where BOARD_NO = 4
+	</update>
+	
+</mapper>

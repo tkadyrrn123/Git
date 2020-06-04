@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="freeMapper">
+	<insert id="insertBoard">
+		<if test="fileName != null">
+			insert all
+			
+			into tb_board
+			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, 'userid', default, default)	
+			into tb_free
+			values(seq_board.currval)
+			into tb_File
+			values(seq_file.nextval, seq_board.currval, #{fileName}, null)
+
+			select * from dual	
+		</if>
+		<if test="fileName == null">
+			insert all
+			
+			into tb_board
+			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, 'userid', default, default)
+			into tb_free
+			values(seq_board.currval)
+			into tb_File
+			values(seq_file.nextval, seq_board.currval, null, null)
+			
+			
+			select * from dual	
+		</if>
+	</insert>
+ 	
+	<select id="getListCount" resultType="_int">
+		select count(*)
+		from tb_board
+		where board_delete = 'N'
+	</select>
+	
+	<select id="selectList" resultMap="boardResultSet">
+		select *
+		from tb_board
+		where board_delete='N'
+		order by board_no desc
+	</select>
+	<resultMap type="FreeBoard" id="boardResultSet">
+		<id property="boardNo" column="board_No"/>
+		<result property="boardTitle" column="board_Title"/>
+		<result property="boardContent" column="board_Content"/>
+		<result property="createDate" column="create_Date"/>
+		<result property="userId" column="user_Id"/>
+		<result property="boardCount" column="board_Count"/>
+		<result property="boardDelete" column="board_Delete"/>
+	</resultMap>
+
+
+</mapper>
