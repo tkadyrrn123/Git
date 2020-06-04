@@ -20,8 +20,45 @@
     	set user_file = #{userFile}
     	where user_id = #{userId} AND user_delete = 'N'
     </update>
-    <insert id="insertBreak">
+    <insert id="insertBreakfast">
     	insert into tb_meal
     	values(#{userId}, #{rDate}, #{rTime}, #{rOption})
     </insert>
+    <resultMap type="Meal" id="MealResultMap">
+    	<result property="userId" column="user_id"/>
+    	<result property="rDate" column="r_date"/>
+    	<result property="rTime" column="r_time"/>
+    	<result property="rOption" column="r_option"/>
+    </resultMap>
+    <select id="selectBreakfast" resultMap="MealResultMap">
+    	select * from tb_meal
+    	where user_id = #{userId} and r_date > sysdate-1
+    </select>
+    <select id="getListCount" resultType="_int">
+    	select count(*)
+    	from tb_board
+    	where user_id = #{userId}
+    </select>
+    <resultMap type="MyBoard" id="MyBoardResultSet">
+    	<id property="boardNo" column="board_no"/>
+    	<result property="boardTitle" column="board_title"/>
+    	<result property="createDate" column="create_date"/>
+    	<result property="free" column="free"/>
+    	<result property="market" column="market"/>
+    	<result property="club" column="club"/>
+    	<result property="clubNotice" column="club_notice"/>
+    </resultMap>
+    <select id="getBoardList" resultMap="MyBoardResultSet">
+    	select b.board_no, b.board_title, b.create_date, f.board_no free, m.board_no market, c.board_no club, cn.board_no club_notice
+		from tb_board b
+		LEFT JOIN tb_free f
+		    ON(b.board_no = f.board_no)
+		LEFT JOIN tb_market m
+		    ON(b.board_no = m.board_no)
+		LEFT JOIN tb_club c
+		    ON(b.board_no = c.board_no)
+		LEFT JOIN tb_club_notice cn
+		    ON(b.board_no = cn.board_no)
+		where b.user_id = #{userId}
+    </select>
 </mapper>
