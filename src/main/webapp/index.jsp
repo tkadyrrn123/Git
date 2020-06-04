@@ -447,7 +447,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	<!-- ================================================== -->
 						<!--로그인화면 -->
 	<!-- ================================================== -->
-	<button onclick="location.href='information.apt'">dsfkjakcfascf</button>
+	<button onclick="location.href='info.ai'">dsfkjakcfascf</button>
 	<div class="loginBox">
 		<h2>L O G I N</h2>
 		<div class="hr-line">OR</div>
