@@ -10,6 +10,7 @@
 		<typeAlias type="com.kh.www.Member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.www.Notice.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.kh.www.freeBoard.model.vo.FreeBoard" alias="FreeBoard"/>
+		<typeAlias type="com.kh.www.market.model.vo.Market" alias="Market"/>
 	</typeAliases>
 	
 	<mappers>
@@ -18,7 +19,7 @@
 		<mapper resource="mappers/myPage-mapper.xml"/>
 		<mapper resource="mappers/Notice-mapper.xml"/>
 		<mapper resource="mappers/free-mapper.xml"/>
-    <mapper resource="mappers/market-mapper.xml"/>
+   		<mapper resource="mappers/market-mapper.xml"/>
 	</mappers>
 
 </configuration>
