@@ -18,8 +18,7 @@
 		<mapper resource="mappers/myPage-mapper.xml"/>
 		<mapper resource="mappers/Notice-mapper.xml"/>
 		<mapper resource="mappers/free-mapper.xml"/>
+    <mapper resource="mappers/market-mapper.xml"/>
 	</mappers>
-	
-
 
 </configuration>
