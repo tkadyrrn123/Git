@@ -472,7 +472,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 		</div>
 		<br clear="all">
 		<div class="modal-content">
-			<form method="get" action="memberInsert.me" id="memberjoinForm" name="memberjoinForm">
+			<form method="post" action="memberInsert.do" id="memberjoinForm" name="memberjoinForm" enctype="Multipart/form-data">
 				<table style="width: 100%;">
 					<tr>
 						<td><h1>회원가입</h1></td>
@@ -681,6 +681,8 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 							if(data == 'true'){
 								$('#idchk1').val(1);
 							}else{
+								$('#idchk').text('이미 있는 아이디거나 탈퇴된 아이디입니다.');
+								  $('#idchk').css('color','red');
 								$('#idchk1').val(0);
 							}
 							
@@ -723,11 +725,11 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	      if(pwd == pwd2){
 	      	  	$('#pwdchkmsg').text('일치');
 	            $('#pwdchkmsg').css({'color' : 'green', 'font-size' : 'x-small'});
-	            $('#idchk1').val(1);
+	            $('#pwdchk2').val(1);
 	      } else {
 	            $('#pwdchkmsg').text('불일치');
 	            $('#pwdchkmsg').css({'color' : 'red', 'font-size' : 'x-small'});
-	            $('#idchk1').val(0);
+	            $('#pwdchk2').val(0);
 	      }
 	        
 	    });
@@ -746,7 +748,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
           var aptNum = $('#memberjoinForm #aptNum');
           var bool = true;
         	  
-          $('#aptNum').val(aptDong);
+          $('#aptDong').val(aptDong);
           
        	if(userId.val() == ''){
             alert("아이디를 입력해주세요.");
@@ -1044,7 +1046,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 		         return false;
 	        }
 	        
-	        if(apt_dup.val()>=0){
+	        if(apt_dup.val()<=0){
 	        	 alert("중복된 아파트입니다.");
 	        	 apt_Name.focus();
 		         return false;
@@ -1122,7 +1124,6 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 		$(".apt_join").click(function(){
 			$(".modal").fadeOut();
 		});
-		
 		
 	</script>
 </body>
