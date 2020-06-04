@@ -3,6 +3,7 @@ package com.kh.www.myPage.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.sql.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,13 +19,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.kh.www.Member.model.vo.Member;
+import com.kh.www.common.Pagenation;
+import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.myPage.model.exception.MyPageException;
 import com.kh.www.myPage.model.service.MyPageService;
 import com.kh.www.myPage.model.vo.Meal;
+import com.kh.www.myPage.model.vo.MyBoard;
 @SessionAttributes("member")
 @Controller
 public class MyPageController {
@@ -43,8 +48,33 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("myBoard.my")
-	public String myBoardView() {
-		return "myBoard";
+	public ModelAndView myBoardView(@ModelAttribute Member m, @RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = myService.getListCount(m.getUserId());
+		
+		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+		
+		ArrayList<MyBoard> blist = myService.getBoardList(m.getUserId(),pi);
+		System.out.println(blist);
+		for(MyBoard b : blist) {
+			if(b.getFree() != 0) {
+				b.setType("자유");
+			}else if(b.getMarket() != 0) {
+				b.setType("중고마켓");
+			}else if(b.getClub() != 0) {
+				b.setType("동호회");
+			}else if(b.getClubNotice() != 0) {
+				b.setType("동호회 공지");
+			}
+		}
+		System.out.println(blist);
+		mv.setViewName("myBoard");
+		return mv;
 	}
 	
 	@RequestMapping("myComment.my")
@@ -62,6 +92,7 @@ public class MyPageController {
         return "myUpdateProfile";
     }
 	
+	// 내 정보 수정
 	@RequestMapping("update.my")
     public String memberUpdate(@ModelAttribute Member m,Model model,@RequestParam("userOldPwd") String userOldPwd) {
         int result = myService.memberUpdate(m);
@@ -75,6 +106,7 @@ public class MyPageController {
         }
         return "myProfile";
     }
+	// 프로필사진 수정
 	@RequestMapping("image.my")
 	public void updateImage(MultipartHttpServletRequest request, HttpServletResponse response) {
 		int result = 0;
@@ -119,14 +151,16 @@ public class MyPageController {
 			e.printStackTrace();
 		}
 	}
-	@RequestMapping("insertBreak.my")
+	
+	// 조석식 예약
+	@RequestMapping("insertBreakfast.my")
 	public void insertBreak(@ModelAttribute Member m, @RequestParam("date") String date, 
 													  @RequestParam("time") String time,
 													  @RequestParam("option") String option,
 													  HttpServletResponse response) {
 		Date d = Date.valueOf(date);
 		Meal meal = new Meal(m.getUserId(), d, time, option);
-		int result = myService.insertBreak(meal);
+		int result = myService.insertBreakfast(meal);
 		Gson gson = new Gson();
 		if(result > 0) {
 			try {
@@ -140,6 +174,30 @@ public class MyPageController {
 			}
 		}else {
 			throw new MyPageException("조석식 예약에 실패하였습니다.");
+		}
+		
+	}
+	
+	// 조석식 리스트 가져오기
+	@RequestMapping("breakfastList.my")
+	public void breakList(@ModelAttribute Member m, HttpServletResponse response) {
+		String userId = m.getUserId();
+		ArrayList<Meal> mList = myService.getBreakfastList(userId);
+		
+		Gson gson = new Gson();
+		if(mList != null && !mList.isEmpty()) {
+			try {
+				response.setContentType("application/json; charset=utf-8");
+				gson.toJson(mList, response.getWriter());
+			} catch (JsonIOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			throw new MyPageException("조석식 목록을 불러오는데 실패하였습니다.");
 		}
 		
 	}
@@ -175,7 +233,7 @@ public class MyPageController {
 		String savePath = root + "\\images";
 		
 		File f = new File(savePath + "\\" + fileName);
-		  
+		
 		if(f.exists()) {
 			f.delete();
 		}
