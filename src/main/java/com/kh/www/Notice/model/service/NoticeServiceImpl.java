@@ -33,4 +33,22 @@ public class NoticeServiceImpl implements NoticeService {
 	public ArrayList<Notice> selectList(PageInfo pi) {
 		return nDAO.selectList(sqlSession, pi);
 	}
+	
+	@Override
+	public Notice selectNotice(int nNo) {
+		//조회수 증가 체크하기
+		Notice n = null;
+		
+		int result = nDAO.addReadCount(sqlSession, nNo);
+		
+		if(result > 0) {
+			n = nDAO.selectNotice(sqlSession, nNo);
+		}
+		return n;
+	}
+	
+	 @Override
+	public Notice selectUpdateNotice(int nNo) {
+		 return nDAO.selectNotice(sqlSession, nNo);
+	}
 }

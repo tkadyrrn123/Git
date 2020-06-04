@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공지사항 수정</title>
 <style type="text/css">
    #notice_write_body{margin-top: 30px;}
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavenderBlush;}
@@ -42,20 +42,24 @@
 <jsp:include page="../common/menubar.jsp"/>
 <div id="notice_write_body">
          <form action="noticeInsert.no" method="post" enctype="Multipart/form-data">
+	        <input type="hidden" name="page" value="${ page }">
+			<input type="hidden" name="nNo" value="${ notice.nNo }">
+<%-- 			<input type="hidden" name="renameFileName" value="${ board.renameFileName }"> --%>
+			
             <table id="tb">
                  <tr id="tr1">
-                   <td colspan=2 style="color: darksalmon; font-weight: bold; font-size: 30px;">공지사항 등록</td>
+                   <td colspan=2 style="color: darksalmon; font-weight: bold; font-size: 30px;">공지사항 수정</td>
                 </tr> 
                 <tr id="tr2">
                    <td class="td1">제목</td>
                      <td>
-                        <input id="titleInput" name="nTitle" type="text" placeholder="제목을 입력하세요" size="90">
+                        <input id="titleInput" name="nTitle" type="text" size="90" value="${ notice.nTitle }">
                      </td>
                  </tr>
                   <tr id="tr3">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea id="content" name="nContent" placeholder="내용 입력하세요 " style="margin-left: 20px; resize: none;"></textarea>
+                        <textarea id="content" name="nContent" style="margin-left: 20px; resize: none;">${ notice.nContent }</textarea>
                      </td>
                   </tr>      
                   <tr id="tr4">
@@ -67,8 +71,8 @@
 
             </table><br>
               <div id="btns">
-                  <button type="button" class="btn" onclick="location.href='noticeList.no'">취소</button>
-                  <button class="btn" type="submit">등록하기</button>
+                  <button type="button" class="btn" onclick="location.href='javascript:history.go(-1);'">취소</button>
+                  <button class="btn" type="submit">수정하기</button>
             </div>
          </form>
    	</div>

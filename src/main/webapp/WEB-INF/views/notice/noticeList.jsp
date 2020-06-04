@@ -43,7 +43,8 @@
 		    width: 100%;
 		    height: 400px;}	    
 	#buttonTab{border-left: hidden; border-right: hidden;}
-	
+	#notice_list_tb a{color:rgb(139, 134, 134);}
+	#notice_page_tb a{color:rgb(139, 134, 134);}
 </style>
 </head>
 <body>
@@ -53,8 +54,7 @@
 	<h2>공지사항</h2>
 	</div>
 	<div class="board_wrab">
-	<h3 align="center">총 게시글 갯수 이거 나중에 삭제 : ${ pi.listCount }</h3>
-        <table>
+        <table id="notice_list_tb">
             <thead>
                 <tr id="notice_tr">
                     <td style="width: 7%;">번호</td>
@@ -65,57 +65,35 @@
                     <td style="width: 7%;">조회수</td>
                 </tr>
             </thead>
+            <c:forEach var="n" items="${ list }">
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td class="dong">102동</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>관리사무소</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td class="dong">전체</td>
-                    <td class="btitle">아파트 정문 입구 도로 공사에 관한 공지사항입니다. 필독요청</td>
-                    <td>관리사무소</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td class="dong">103동</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td class="dong">103동</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>관리사무소</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td class="dong">103동</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>관리사무소</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
+                   <td align="center">${ n.nNo }</td>
+                    <td class="dong">101동</td><!-- 동표시되어야함 -->
+                    <td class="notice_list_td">
+						<c:url var="ndetail" value="ndetail.no">
+							<c:param name="nNo" value="${ n.nNo }"/>
+							<c:param name="page" value="${ pi.currentPage }"/>
+						</c:url>
+						<a href="${ ndetail }">${ n.nTitle }</a>
+                    </td>
+                    <td align="center">${ n.userId }</td>
+                    <td align="center">${ n.nCreateDate }</td>
+                    <td align="center">${ n.nCount }</td>
                 </tr>
             </tbody>
+            </c:forEach>
         </table>
-    </div>
-    <div class="board_btn">
-		<button class="btn_standard" onclick="location.href='noticeInsertView.no';">글쓰기</button>
-		<br>
-		<br>
-		<button class="btn_standard" onclick="location.href='noticelogin.no?userId=user01&userPwd=pass01';" type="submit">임시로그인</button>
-		<!-- 페이징 처리 -->
-		<table>
+        
+        <div class="board_btn">
+			<button class="btn_standard" onclick="location.href='noticeInsertView.no';">글쓰기</button>
+			<br>
+			<br>
+			<button class="btn_standard" onclick="location.href='noticelogin.no?userId=user01&userPwd=pass01';" type="submit">임시로그인</button>
+    	</div>
+        
+        <!---------- 페이징 처리 -------->
+		<table id="notice_page_tb">
 			<tr align="center" height="20" id="buttonTab">
 				<td colspan="6">
 				
@@ -158,5 +136,6 @@
 			</tr>
 		</table>
     </div>
+	<jsp:include page="../common/Footer.jsp"/>	
 </body>
 </html>
