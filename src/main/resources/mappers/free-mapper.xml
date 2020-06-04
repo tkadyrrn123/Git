@@ -22,7 +22,7 @@
 			into tb_free
 			values(seq_board.currval)
 			into tb_File
-			values(seq_file.nextval, seq_board.currval, null, null)
+			values(seq_file.nextval, seq_board.currval, null, null, null)
 			
 			
 			select * from dual	

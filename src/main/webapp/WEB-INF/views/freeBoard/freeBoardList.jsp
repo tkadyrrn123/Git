@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -184,46 +185,16 @@
                 </tr>
             </thead>
             <tbody>
+            <c:forEach var="b" items="${ list }">
                 <tr>
-                    <td>1</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>2</td>
+                    <td>${ b.boardNo}</td>
+                    <td>${ b.boardTitle }</td>
+                    <td>${ b.userId }</td>
+                    <td>${ b.createDate}</td>
+                    <td>${ b.boardCount }</td>
+                    <td>추천수?</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td class="btitle">아파트에 이상한 사람이 다니는거 같지 않나요?</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>0</td>
-                </tr>
+            </c:forEach>   
             </tbody>
         </table>
     </div>
