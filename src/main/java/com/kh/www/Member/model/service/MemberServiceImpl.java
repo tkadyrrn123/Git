@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.www.Member.model.dao.MemberDAO;
+import com.kh.www.Member.model.vo.Member;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService {
@@ -18,6 +19,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int dupid(String id) {
 		return mDAO.dupid(sqlSession, id);
+	}
+
+	@Override
+	public int InsertMember(Member m) {
+		return mDAO.InsertMember(sqlSession, m);
 	}
 
 }

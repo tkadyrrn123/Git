@@ -13,5 +13,4 @@ public class MemberController {
 		return "../Apart/joinAptSearch";
 	}
 	
-	
 }

@@ -1,6 +1,7 @@
 package com.kh.www.club.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,16 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public int deleteClub() {
 		return cDAO.deleteClub(sqlSession);
+	}
+
+	@Override
+	public Club selectClub(String clubName) {
+		return cDAO.selectClub(sqlSession, clubName);
+	}
+
+	@Override
+	public int insertClubMember(HashMap m) {
+		return cDAO.insertClubMember(sqlSession, m);
 	}
 
 }
