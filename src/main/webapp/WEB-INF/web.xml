@@ -57,5 +57,20 @@
 		<servlet-name>MemberServlet</servlet-name>
 		<url-pattern>*.me</url-pattern>
 	</servlet-mapping>
+	
+		<!-- 중고게시판 -->
+	<servlet>
+		<servlet-name>MarketServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/Market-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>MarketServlet</servlet-name>
+		<url-pattern>*.ma</url-pattern>
+	</servlet-mapping>
 
 </web-app>

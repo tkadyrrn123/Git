@@ -77,7 +77,7 @@
 		<div class=sellAll>
 			<div class=sell>
 				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="${ pageContext.servletContext.contextPath }/resources/images/ap.jpg"/></div>
+					<div class=sellPic><img class=sellPic src="/resources/images/ap.jpg"/></div>
 					<div class=sellName>아파트</div>
 					<div class=sellAddress>닉네임</div>
 					<div class=sellPrice>4억 3000천만</div>
@@ -173,23 +173,43 @@
 		<button id="write-btn" class="btn-standard" type="button" value="글쓰기" onclick="location.href='writingMarket.ma'">글쓰기</button>
 		
 		
+		<!-- 페이징 처리 -->
 		<div class="pagingArea" align="center">
-
-			<!-- 맨 처음으로 -->
-			<button class="btn-standard" onclick="location.href='<%= request.getContextPath() %>/worryList.bo?currentPage=1'">&lt;&lt;</button>
-						
-			<!-- 이전 페이지로 -->
-			<button class="btn-standard" onclick="location.href='<%= request.getContextPath() %>/worryList.bo?currentPage='" id="beforeBtn">&lt;</button>	
-			<!-- 10개 페이지 목록 -->
-			<button id="choosen"  class="btn-standard" disabled>4</button>		
-			<button id="numBtn"  class="btn-standard" onclick="location.href='<%=request.getContextPath() %>/worryList.bo?currentPage='">5</button>	
-			<!-- 다음 페이지로 -->
-			<button id="afterBtn"  class="btn-standard" onclick="location.href='<%= request.getContextPath()%>/worryList.bo?currentPage='">&gt;</button>
-			<script>
-				$('#afterBtn').attr('disabled', 'ture');
-			</script>
-			<!-- 맨 끝으로 --> 
-			<button class="btn-standard" onclick="location.href='<%=request.getContextPath()%>/worryList.bo?currentPage='">&gt;&gt;</button>
+			<!-- [이전] -->
+			<c:if test="${ pi.currentPage <= 1 }">
+				[이전] &nbsp;
+			</c:if>
+			<c:if test="${ pi.currentPage > 1 }">
+				<c:url var="before" value="blist.bo">
+					<c:param name="page" value="${ pi.currentPage - 1 }"/>
+				</c:url>
+				<a href="${ before }">[이전]</a> &nbsp;
+			</c:if>
+				
+			<!-- 페이지 -->
+			<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				<c:if test="${ p eq pi.currentPage }">
+					<font color="red" size="4"><b>[${ p }]</b></font>
+				</c:if>
+					
+				<c:if test="${ p ne pi.currentPage }">
+					<c:url var="pagination" value="blist.bo">
+						<c:param name="page" value="${ p }"/>
+					</c:url>
+					<a href="${ pagination }">${ p }</a> &nbsp;
+				</c:if>
+			</c:forEach>
+				
+			<!-- [다음] -->
+			<c:if test="${ pi.currentPage >= pi.maxPage }">
+				[다음]
+			</c:if>
+			<c:if test="${ pi.currentPage < pi.maxPage }">
+				<c:url var="after" value="blist.bo">
+					<c:param name="page" value="${ pi.currentPage + 1 }"/>
+				</c:url> 
+				<a href="${ after }">[다음]</a>
+			</c:if>
         </div>
 	</div>
 	
