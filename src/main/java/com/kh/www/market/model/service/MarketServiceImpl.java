@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.www.market.model.dao.MarketDAO;
 
-@Service("mService")
+@Service("marketService")
 public class MarketServiceImpl implements MarketService {
 
 	@Autowired
