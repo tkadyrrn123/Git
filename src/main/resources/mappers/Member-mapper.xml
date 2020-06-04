@@ -4,4 +4,8 @@
 	<select id="dupid" resultType="_int">
 		SELECT COUNT(*) FROM TB_USER WHERE USER_ID = #{id}
 	</select>
+	
+	<insert id="InsertMember">
+		INSERT INTO TB_USER VALUES(#{userId},#{userPwd},#{userName},#{nickName},#{phone},#{email},#{aptName},#{aptDong},#{aptHosu},#{userLevel},#{userFile},default,'N')
+	</insert>
 </mapper>
