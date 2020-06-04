@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.www.common.Pagination;
+import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.market.model.service.MarketService;
 
@@ -25,7 +25,7 @@ public class MarketController {
 			currentPage = page;
 		}
 		
-		PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
+		PageInfo pi = Pagenation.getPageInfo(currentPage,listCount);
 		
 		
 		return "marketList";

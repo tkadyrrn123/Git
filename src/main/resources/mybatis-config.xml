@@ -11,6 +11,8 @@
 		<typeAlias type="com.kh.www.Notice.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.kh.www.freeBoard.model.vo.FreeBoard" alias="FreeBoard"/>
 		<typeAlias type="com.kh.www.club.model.vo.Club" alias="Club"/>
+		<typeAlias type="com.kh.www.myPage.model.vo.Meal" alias="Meal"/>
+		<typeAlias type="com.kh.www.myPage.model.vo.MyBoard" alias="MyBoard"/>
 	</typeAliases>
 	
 	<mappers>
