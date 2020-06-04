@@ -33,4 +33,12 @@ public class FreeBoardDAO {
 		return (ArrayList)sqlSession.selectList("freeMapper.selectList", null, rowBounds);
 	}
 
+	public int addReadCount(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("freeMapper.addReadCount", boardNo);
+	}
+
+	public FreeBoard selectFreeBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("freeMapper.selectFreeBoard", boardNo);
+	}
+
 }

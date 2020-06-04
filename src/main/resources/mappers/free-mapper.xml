@@ -51,5 +51,15 @@
 		<result property="boardDelete" column="board_Delete"/>
 	</resultMap>
 
+	<select id="selectFreeBoard" resultMap="boardResultSet">
+		select *
+		from tb_board
+		where board_No=#{boardNo} and board_delete='N'
+	</select>
+	<update id="addReadCount">
+		update tb_board
+		set board_count = board_count +1
+		where board_No=#{boardNo}
+	</update>
 
 </mapper>
