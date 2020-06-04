@@ -111,7 +111,7 @@
 				
 				<textarea  name="maxPeople"  id="countInput">20</textarea>
 				
-				<button class="btn" id="applyBtn">가입 신청하기</button> 
+
 			</div>
 			
 			
