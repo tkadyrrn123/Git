@@ -45,6 +45,7 @@
 	#buttonTab{border-left: hidden; border-right: hidden;}
 	#notice_list_tb a{color:rgb(139, 134, 134);}
 	#notice_page_tb a{color:rgb(139, 134, 134);}
+	
 </style>
 </head>
 <body>
@@ -65,8 +66,8 @@
                     <td style="width: 7%;">조회수</td>
                 </tr>
             </thead>
-            <c:forEach var="n" items="${ list }">
             <tbody>
+             <c:forEach var="n" items="${ list }">
                 <tr>
                    <td align="center">${ n.nNo }</td>
                     <td class="dong">101동</td><!-- 동표시되어야함 -->
@@ -81,8 +82,8 @@
                     <td align="center">${ n.nCreateDate }</td>
                     <td align="center">${ n.nCount }</td>
                 </tr>
+             </c:forEach>
             </tbody>
-            </c:forEach>
         </table>
         
         <div class="board_btn">
