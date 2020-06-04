@@ -1,7 +1,9 @@
 package com.kh.www.club.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +19,10 @@ public class ClubDAO {
 	}
 
 	public ArrayList<Club> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		return null;
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("clubMapper.selectList", null, rowBounds);
 	}
 
 	public int insertClub(SqlSessionTemplate sqlSession, Club c) {
@@ -36,4 +41,25 @@ public class ClubDAO {
 		return sqlSession.update("clubMapper.deleteClub");
 	}
 
+	public Club selectClub(SqlSessionTemplate sqlSession, String clubName) {
+		return sqlSession.selectOne("clubMapper.selectClub", clubName);
+	}
+
+	public int insertClubMember(SqlSessionTemplate sqlSession, HashMap m) {
+		return sqlSession.insert("clubMapper.insertClubMember", m);
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
