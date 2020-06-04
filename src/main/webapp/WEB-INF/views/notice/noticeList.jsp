@@ -45,6 +45,8 @@
 	#buttonTab{border-left: hidden; border-right: hidden;}
 	#notice_list_tb a{color:rgb(139, 134, 134);}
 	#notice_page_tb a{color:rgb(139, 134, 134);}
+ 	#notice_list_tb thead tr td{background-color:#eff3f9;}
+	#notice_list_tb tbody tr:nth-child(even){background-color:#eff3f9;}
 </style>
 </head>
 <body>
@@ -65,24 +67,26 @@
                     <td style="width: 7%;">조회수</td>
                 </tr>
             </thead>
-            <c:forEach var="n" items="${ list }">
+            
             <tbody>
-                <tr>
-                   <td align="center">${ n.nNo }</td>
-                    <td class="dong">101동</td><!-- 동표시되어야함 -->
-                    <td class="notice_list_td">
-						<c:url var="ndetail" value="ndetail.no">
-							<c:param name="nNo" value="${ n.nNo }"/>
-							<c:param name="page" value="${ pi.currentPage }"/>
-						</c:url>
-						<a href="${ ndetail }">${ n.nTitle }</a>
-                    </td>
-                    <td align="center">${ n.userId }</td>
-                    <td align="center">${ n.nCreateDate }</td>
-                    <td align="center">${ n.nCount }</td>
-                </tr>
+            	<c:forEach var="n" items="${ list }">
+	                <tr>
+	                   <td align="center">${ n.nNo }</td>
+	                    <td class="dong">101동</td><!-- 동표시되어야함 -->
+	                    <td class="notice_list_td">
+							<c:url var="ndetail" value="ndetail.no">
+								<c:param name="nNo" value="${ n.nNo }"/>
+								<c:param name="page" value="${ pi.currentPage }"/>
+							</c:url>
+							<a href="${ ndetail }">${ n.nTitle }</a>
+	                    </td>
+	                    <td align="center">${ n.userId }</td>
+	                    <td align="center">${ n.nCreateDate }</td>
+	                    <td align="center">${ n.nCount }</td>
+	                </tr>
+                </c:forEach>
             </tbody>
-            </c:forEach>
+            
         </table>
         
         <div class="board_btn">
