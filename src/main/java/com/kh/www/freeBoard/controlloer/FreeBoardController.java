@@ -31,7 +31,7 @@ public class FreeBoardController {
 	
 	
 	@RequestMapping("list.fr")
-	public String freeBoardListView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) throws FreeBoardException{		
+	public ModelAndView freeBoardListView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) throws FreeBoardException{		
 
 		int currentPage = 1;
 		if(page != null) {
@@ -44,17 +44,18 @@ public class FreeBoardController {
 		
 		ArrayList<FreeBoard> list = freeService.selectList(pi);
 		
+		System.out.println("list.fr "+list);
 		if(list !=null) {
 			// 보낼 것 : list, pi, 
 			// 갈 화면 정해야함 : view
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
-			mv.setViewName("FreeBoardList");
+			mv.setViewName("freeBoardList");
 		} else {
 			throw new FreeBoardException("게시글 조회 실패");
 		}
 		
-		return "freeBoardList";
+		return mv;
 	}
 	
 	
