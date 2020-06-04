@@ -1,6 +1,7 @@
   <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -333,7 +334,10 @@ body {
 	top: 220px;
 	color: white;
 	font-size: 1.5em;
-}	
+	}	
+	#writeBtn{ background:black; color:white; margin-left: 1300px;}
+	.pagingArea{    display: inline;
+    width: 100%;}
 </style>
 
 </head>
@@ -349,26 +353,32 @@ body {
 	</div> 
 		<div id="line"></div> 
 
-
+<!-- 동호회 리스트  -->
 <div class="wrapper">
+		<c:forEach var="b" items="${ list }" varStatus="status">
         <div class="card">
-            <input type="checkbox" id="card1" class="more" aria-hidden="true">
+            <input type="checkbox" id="card${ status.index }" class="more" aria-hidden="true">
             <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/0505.jpg')">
+                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/${ b.fileName }')">
                     <div class="inner">
-                        <h2>피부에 양보해조</h2>
+                        <h2>${ b.clubName }</h2>
 			
-                        <label for="card1" class="button" aria-hidden="true" style="margin-top: 160px;">
+                        <label for="card${ status.index }" class="button" aria-hidden="true" style="margin-top: 160px;">
                             Details
                         </label>
-                        <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;"> 
+                        <c:url var="cdetail" value="clubDetail.cb">
+	                        <c:param name="clubName" value="${ b.clubName }"></c:param>
+	                        <c:param name="page" value="${ pi.currentPage }"></c:param>
+                        </c:url>
+                        <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;" onclick="location.href='${ cdetail }'"> 
                       	      상세페이지 이동
                         </label>
+                        
                     </div>
                 </div>
                 <div class="back">
                     <div class="inner">
-                    	<h2>피부에 양보해조</h2>
+                    	<h2>${ b.clubName }</h2>
                         
                         <div class="info">  
                            <table>
@@ -378,8 +388,7 @@ body {
                            			</th>
                            			<td>
                            				<p>
-                           				사업 초기 처음 화장품을 만들 때부터 배웠던
-										저의 노하우를 알려드리는 과정입니다.
+                           				${ b.clubIntro }
 										</p>
                            			</td>
                                 </tr>
@@ -388,9 +397,7 @@ body {
                            				계획
                            			</th>
                            			<td>
-                           				입문자분들을 위한
-										내 브랜드 화장품 만들기
-										클래스입니다.
+                           				${ b.clubPlan }
                            			</td>
                            		</tr>
                            		<tr>
@@ -398,7 +405,7 @@ body {
                            				장소
                            			</th>
                            			<td>
-                           				102동 1203호
+                           				${ b.clubPlace }
                            			</td> 
                            		</tr>
                            		<tr>
@@ -406,586 +413,67 @@ body {
                            				인원수
                            			</th> 
                            			<td>
-                           				( 20 / 40 )
+                           				( 20 / ${ b.maxPeople } )
                            			</td>
                            		</tr>
                            </table>
                         </div>
 
-                        <label for="card1" class="button return" aria-hidden="true">
+                        <label for="card${ status.index }" class="button return" aria-hidden="true">
                             <i class="fas fa-arrow-left"></i>
                         </label>
                     </div>
                 </div>
             </div>
         </div>
-         <div class="card">
-            <input type="checkbox" id="card2" class="more" aria-hidden="true">
-            <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/cafe.png')">
-                    <div class="inner">
-                        <h2>커피에 양보해조</h2>
-
-                        <label for="card2" class="button" aria-hidden="true" style="margin-top: 160px;">
-                            Details
-                        </label>
-                        <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;"> 
-                      	      상세페이지 이동
-                        </label>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                    	<h2>피부에 양보해조</h2>
-                        
-                        <div class="info">  
-                           <table>
-                           		<tr>
-                           			<th>
-                           				소개
-                           			</th>
-                           			<td>
-                           				<p>
-                           				사업 초기 처음 화장품을 만들 때부터 배웠던
-										저의 노하우를 알려드리는 과정입니다.
-										</p>
-                           			</td>
-                                </tr>
-                           		<tr>
-                           			<th>
-                           				계획
-                           			</th>
-                           			<td>
-                           				입문자분들을 위한
-										내 브랜드 화장품 만들기
-										클래스입니다.
-                           			</td>
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				장소
-                           			</th>
-                           			<td>
-                           				102동 1203호
-                           			</td> 
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				인원수
-                           			</th> 
-                           			<td>
-                           				( 20 / 40 )
-                           			</td>
-                           		</tr>
-                           </table>
-                        </div>
-                        <label for="card2" class="button return" aria-hidden="true">
-                            <i class="fas fa-arrow-left"></i>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <div class="card">
-            <input type="checkbox" id="card3" class="more" aria-hidden="true">
-            <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/develop.png')">
-                    <div class="inner">
-                        <h2>코딩에 양보해조</h2>
-
-                        <label for="card3" class="button" aria-hidden="true" style="margin-top: 160px;">
-                            Details
-                        </label>
-                         <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;"> 
-                      	      상세페이지 이동
-                        </label>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                    	<h2>피부에 양보해조</h2>
-                        
-                        <div class="info">  
-                           <table>
-                           		<tr>
-                           			<th>
-                           				소개
-                           			</th>
-                           			<td>
-                           				<p>
-                           				사업 초기 처음 화장품을 만들 때부터 배웠던
-										저의 노하우를 알려드리는 과정입니다.
-										</p>
-                           			</td>
-                                </tr>
-                           		<tr>
-                           			<th>
-                           				계획
-                           			</th>
-                           			<td>
-                           				입문자분들을 위한
-										내 브랜드 화장품 만들기
-										클래스입니다.
-                           			</td>
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				장소
-                           			</th>
-                           			<td>
-                           				102동 1203호
-                           			</td> 
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				인원수
-                           			</th> 
-                           			<td>
-                           				( 20 / 40 )
-                           			</td>
-                           		</tr>
-                           </table>
-                        </div>
-                        <label for="card3" class="button return" aria-hidden="true">
-                            <i class="fas fa-arrow-left"></i>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <div class="card">
-            <input type="checkbox" id="card4" class="more" aria-hidden="true">
-            <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/draw.png')">
-                    <div class="inner">
-                        <h2>그림에 양보해조</h2>
-
-                        <label for="card4" class="button" aria-hidden="true" style="margin-top: 160px;">
-                            Details
-                        </label>
-                         <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;"> 
-                      	      상세페이지 이동
-                        </label>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                    	<h2>피부에 양보해조</h2>
-                        
-                        <div class="info">  
-                           <table>
-                           		<tr>
-                           			<th>
-                           				소개
-                           			</th>
-                           			<td>
-                           				<p>
-                           				사업 초기 처음 화장품을 만들 때부터 배웠던
-										저의 노하우를 알려드리는 과정입니다.
-										</p>
-                           			</td>
-                                </tr>
-                           		<tr>
-                           			<th>
-                           				계획
-                           			</th>
-                           			<td>
-                           				입문자분들을 위한
-										내 브랜드 화장품 만들기
-										클래스입니다.
-                           			</td>
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				장소
-                           			</th>
-                           			<td>
-                           				102동 1203호
-                           			</td> 
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				인원수
-                           			</th> 
-                           			<td>
-                           				( 20 / 40 )
-                           			</td>
-                           		</tr>
-                           </table>
-                        </div>
-                        <label for="card4" class="button return" aria-hidden="true">
-                            <i class="fas fa-arrow-left"></i>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <div class="card">
-            <input type="checkbox" id="card5" class="more" aria-hidden="true">
-            <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/guitar.png')">
-                    <div class="inner">
-                        <h2>기타에 양보해조</h2>
-
-                        <label for="card5" class="button" aria-hidden="true" style="margin-top: 160px;">
-                            Details
-                        </label>
-                         <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;"> 
-                      	      상세페이지 이동
-                        </label>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                    	<h2>피부에 양보해조</h2>
-                        
-                        <div class="info">  
-                           <table>
-                           		<tr>
-                           			<th>
-                           				소개
-                           			</th>
-                           			<td>
-                           				<p>
-                           				사업 초기 처음 화장품을 만들 때부터 배웠던
-										저의 노하우를 알려드리는 과정입니다.
-										</p>
-                           			</td>
-                                </tr>
-                           		<tr>
-                           			<th>
-                           				계획
-                           			</th>
-                           			<td>
-                           				입문자분들을 위한
-										내 브랜드 화장품 만들기
-										클래스입니다.
-                           			</td>
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				장소
-                           			</th>
-                           			<td>
-                           				102동 1203호
-                           			</td> 
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				인원수
-                           			</th> 
-                           			<td>
-                           				( 20 / 40 )
-                           			</td>
-                           		</tr>
-                           </table>
-                        </div>
-                        <label for="card5" class="button return" aria-hidden="true">
-                            <i class="fas fa-arrow-left"></i>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <div class="card">
-            <input type="checkbox" id="card6" class="more" aria-hidden="true">
-            <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/hola.png')">
-                    <div class="inner">
-                        <h2>스페인에 양보해조</h2>
-
-                        <label for="card6" class="button" aria-hidden="true" style="margin-top: 160px;">
-                            Details
-                        </label>
-                         <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;"> 
-                      	      상세페이지 이동
-                        </label>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                    	<h2>피부에 양보해조</h2>
-                        
-                        <div class="info">  
-                           <table>
-                           		<tr>
-                           			<th>
-                           				소개
-                           			</th>
-                           			<td>
-                           				<p>
-                           				사업 초기 처음 화장품을 만들 때부터 배웠던
-										저의 노하우를 알려드리는 과정입니다.
-										</p>
-                           			</td>
-                                </tr>
-                           		<tr>
-                           			<th>
-                           				계획
-                           			</th>
-                           			<td>
-                           				입문자분들을 위한
-										내 브랜드 화장품 만들기
-										클래스입니다.
-                           			</td>
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				장소
-                           			</th>
-                           			<td>
-                           				102동 1203호
-                           			</td> 
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				인원수
-                           			</th> 
-                           			<td>
-                           				( 20 / 40 )
-                           			</td>
-                           		</tr>
-                           </table>
-                        </div>
-                        <label for="card6" class="button return" aria-hidden="true">
-                            <i class="fas fa-arrow-left"></i>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <div class="card">
-            <input type="checkbox" id="card7" class="more" aria-hidden="true">
-            <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/lettering.png')">
-                    <div class="inner">
-                        <h2>레터링에 양보해조</h2>
-
-                        <label for="card7" class="button" aria-hidden="true" style="margin-top: 160px;">
-                            Details
-                        </label>
-                         <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;"> 
-                      	      상세페이지 이동
-                        </label>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                    	<h2>피부에 양보해조</h2>
-                        
-                        <div class="info">  
-                           <table>
-                           		<tr>
-                           			<th>
-                           				소개
-                           			</th>
-                           			<td>
-                           				<p>
-                           				사업 초기 처음 화장품을 만들 때부터 배웠던
-										저의 노하우를 알려드리는 과정입니다.
-										</p>
-                           			</td>
-                                </tr>
-                           		<tr>
-                           			<th>
-                           				계획
-                           			</th>
-                           			<td>
-                           				입문자분들을 위한
-										내 브랜드 화장품 만들기
-										클래스입니다.
-                           			</td>
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				장소
-                           			</th>
-                           			<td>
-                           				102동 1203호
-                           			</td> 
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				인원수
-                           			</th> 
-                           			<td>
-                           				( 20 / 40 )
-                           			</td>
-                           		</tr>
-                           </table>
-                        </div>
-                        <label for="card7" class="button return" aria-hidden="true">
-                            <i class="fas fa-arrow-left"></i>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <div class="card">
-            <input type="checkbox" id="card8" class="more" aria-hidden="true">
-            <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/pt.png')">
-                    <div class="inner">
-                        <h2>내몸에 양보해조</h2>
-
-                        <label for="card8" class="button" aria-hidden="true" style="margin-top: 160px;">
-                            Details
-                        </label>
-                         <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;"> 
-                      	      상세페이지 이동
-                        </label>
-                    </div>
-                </div>
-                <div class="back">
-                   <div class="inner">
-                    	<h2>피부에 양보해조</h2>
-                        
-                        <div class="info">  
-                           <table>
-                           		<tr>
-                           			<th>
-                           				소개
-                           			</th>
-                           			<td>
-                           				<p>
-                           				사업 초기 처음 화장품을 만들 때부터 배웠던
-										저의 노하우를 알려드리는 과정입니다.
-										</p>
-                           			</td>
-                                </tr>
-                           		<tr>
-                           			<th>
-                           				계획
-                           			</th>
-                           			<td>
-                           				입문자분들을 위한
-										내 브랜드 화장품 만들기
-										클래스입니다.
-                           			</td>
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				장소
-                           			</th>
-                           			<td>
-                           				102동 1203호
-                           			</td> 
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				인원수
-                           			</th> 
-                           			<td>
-                           				( 20 / 40 )
-                           			</td>
-                           		</tr>
-                           </table>
-                        </div>
-                        <label for="card8" class="button return" aria-hidden="true">
-                            <i class="fas fa-arrow-left"></i>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <div class="card">
-            <input type="checkbox" id="card9" class="more" aria-hidden="true">
-            <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/soap.png')">
-                    <div class="inner">
-                        <h2>비누에 양보해조</h2>
-
-                        <label for="card9" class="button" aria-hidden="true" style="margin-top: 160px;">
-                            Details
-                        </label>
-                         <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;"> 
-                      	      상세페이지 이동
-                        </label>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                    	<h2>피부에 양보해조</h2>
-                        
-                        <div class="info">  
-                           <table>
-                           		<tr>
-                           			<th>
-                           				소개
-                           			</th>
-                           			<td>
-                           				<p>
-                           				사업 초기 처음 화장품을 만들 때부터 배웠던
-										저의 노하우를 알려드리는 과정입니다.
-										</p>
-                           			</td>
-                                </tr>
-                           		<tr>
-                           			<th>
-                           				계획
-                           			</th>
-                           			<td>
-                           				입문자분들을 위한
-										내 브랜드 화장품 만들기
-										클래스입니다.
-                           			</td>
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				장소
-                           			</th>
-                           			<td>
-                           				102동 1203호
-                           			</td> 
-                           		</tr>
-                           		<tr>
-                           			<th>
-                           				인원수
-                           			</th> 
-                           			<td>
-                           				( 20 / 40 )
-                           			</td>
-                           		</tr>
-                           </table>
-                        </div>
-                        <label for="card9" class="button return" aria-hidden="true"> 
-                            <i class="fas fa-arrow-left"></i>
-                        </label> 
-                    </div>
-                </div>
-            </div>
-        </div>
+        </c:forEach>
         
         		<div class="pagingArea" align="center">
 
-							<!-- 맨 처음으로 -->
-							<button class="btn-standard" onclick="location.href='<%= request.getContextPath() %>/worryList.bo?currentPage=1'">&lt;&lt;</button>
-						
-							<!-- 이전 페이지로 -->
-							<button class="btn-standard" onclick="location.href='<%= request.getContextPath() %>/worryList.bo?currentPage='" id="beforeBtn">&lt;</button>	
-							<!-- 10개 페이지 목록 -->
-									<button id="choosen"  class="btn-standard" disabled>4</button>		
-									<button id="numBtn"  class="btn-standard" onclick="location.href='<%=request.getContextPath() %>/worryList.bo?currentPage='">5</button>	
-							<!-- 다음 페이지로 -->
-							<button id="afterBtn"  class="btn-standard" onclick="location.href='<%= request.getContextPath()%>/worryList.bo?currentPage='">&gt;</button>
-							<script>
-									$('#afterBtn').attr('disabled', 'ture');
-							</script>
-							<!-- 맨 끝으로 --> 
-							<button class="btn-standard" onclick="location.href='<%=request.getContextPath()%>/worryList.bo?currentPage='">&gt;&gt;</button>
+				<!-- [이전] -->
+				<c:if test="${ pi.currentPage <= 1 }">
+					<button class="btn-standard">이전</button>
+				</c:if>
+				<c:if test="${ pi.currentPage > 1 }">
+					<c:url var="before" value="clubList.cb">
+						<c:param name="page" value="${ pi.currentPage - 1 }"/>
+					</c:url>
+					<button class="btn-standard" onclick="location.href='${ before }'">[이전]</button> &nbsp;
+				</c:if>
+				
+				<!-- 페이지 -->
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ p eq pi.currentPage }">
+						<button class="btn-standard">${ p }</button>
+					</c:if>
+					
+					<c:if test="${ p ne pi.currentPage }">
+						<c:url var="pagination" value="clubList.cb">
+							<c:param name="page" value="${ p }"/>
+						</c:url>
+						<button class="btn-standard" onclick="location.href='${ pagination }'">${ p }</button> &nbsp;
+					</c:if>
+				</c:forEach>
+				
+				<!-- [다음] -->
+				<c:if test="${ pi.currentPage >= pi.maxPage }">
+					<button class="btn-standard">다음</button>
+				</c:if>
+				<c:if test="${ pi.currentPage < pi.maxPage }">
+					<c:url var="after" value="clubList.cb">
+						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					</c:url> 
+					<button class="btn-standard" onclick="location.href='${ after }'">다음</button>
+				</c:if>
 
        			</div>
-       			<button class="btn-standard" onclick="location.href='clubInsertForm.cb'">글쓰기</button> 
+       			<button id="writeBtn" class="btn-standard" onclick="location.href='clubInsertForm.cb'">글쓰기</button> 
         
 	</div>
 	<jsp:include page="../common/Footer.jsp"/>
-	<script>
-		$('#detailBtn').on('click', function(){
-			location.href="clubDetail.cb"
-		});
-	</script>
+
 	
 	
 
-</body>
+	</body>
 </html> 
