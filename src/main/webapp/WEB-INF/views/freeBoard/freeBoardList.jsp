@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 <!-- <link rel="stylesheet" type="text/css" href="resources/css/freeBoard.css"> -->
 <style>
+.fbTitle{color: black !important;}
+.fbTitle:visited{color: gray !important;}
+
 .img { 
      filter: brightness(70%);
      width: 100%;
@@ -192,7 +195,7 @@
                     		<c:param name="boardNo" value="${fb.boardNo}"/>
                     		<c:param name="page" value="${pi.currentPage}"/>
                     	</c:url>
-                    	<a href="${ bdetail }">${ fb.boardTitle}</a>
+                    	<a href="${ bdetail }" class="fbTitle">${ fb.boardTitle}</a>
                     </td>
                     <td>${ fb.userId }</td>
                     <td>${ fb.createDate}</td>

@@ -57,15 +57,14 @@
 				</li>
 				<li class="dropdown"><label>공지사항</label>
 					<ul class="sub">
-						<li>공지사항</li>
-						<li>?</li>
-						<li>?</li>
+						<li onclick="location.href='noticeList.no'">공지사항</li>
+
 					</ul>
 				</li>
 				<li class="dropdown"><label>커뮤니티</label>
 					<ul class="sub">
-						<li>자유게시판</li>
-						<li>중고장터</li>
+						<li onclick="location.href='list.fr'">자유게시판</li>
+						<li onclick="location.href='market.ma'">중고장터</li>
 					</ul>
 				</li>
 				<li class="dropdown"><label>동호회</label>
