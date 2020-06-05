@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.www.Member.model.vo.Member;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.exception.FreeBoardException;
@@ -96,7 +98,7 @@ public class FreeBoardController {
 	}
 	
 	@RequestMapping("insert.fr")
-	public String insertFreeBoard(@ModelAttribute FreeBoard fb, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) throws FreeBoardException {
+	public String insertFreeBoard(@ModelAttribute FreeBoard fb, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session) throws FreeBoardException {
 		
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			String renameFileName = saveFile(uploadFile, request);
@@ -106,6 +108,10 @@ public class FreeBoardController {
 				
 			}
 		}
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String id = loginUser.getUserId();
+		fb.setUserId(id);
+		System.out.println("insert.fr 세션id : " + id);
 		
 		int result = freeService.insertBoard(fb); 
 		
