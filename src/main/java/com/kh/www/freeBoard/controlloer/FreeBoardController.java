@@ -118,6 +118,23 @@ public class FreeBoardController {
 		
 	}
 	
+	@RequestMapping("bdetail.fr")
+	public ModelAndView freeDetail(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
+							 ModelAndView mv) {
+		
+		FreeBoard fb = freeService.selectFreeBoard(boardNo);
+		
+		if(fb != null) {
+			mv.addObject("fb", fb)
+			  .addObject("page", page)
+			  .setViewName("detailFree");
+		} else {
+			throw new FreeBoardException("자게 상세 조회 실패");
+		}
+		
+		return mv;
+	}
+	
 
 	
 }
