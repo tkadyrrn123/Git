@@ -451,9 +451,9 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	<div class="loginBox">
 		<h2>L O G I N</h2>
 		<div class="hr-line">OR</div>
-		<form method="post">
-			<div class="icon1"><img src="resources/images/user.png"></div><input type="text" name="" placeholder="아이디">	
-			<div class="icon2"><img src="resources/images/password.png"></div><input type="password" name="" placeholder="password">	
+		<form method="post" action="login.do">
+			<div class="icon1"><img src="resources/images/user.png"></div><input type="text" name="id" placeholder="아이디">	
+			<div class="icon2"><img src="resources/images/password.png"></div><input type="password" name="pwd" placeholder="password">	
 			<input type="submit" class="login" value="로그인">	
 		</form>
 		<div class="cf">
@@ -610,6 +610,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 								    });
 								});
 							</script>
+							<input type="hidden" name="user_level" value="1">
 						</td>
 					</tr>
 				</table>

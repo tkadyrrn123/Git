@@ -26,4 +26,9 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.InsertMember(sqlSession, m);
 	}
 
+	@Override
+	public Member Login(String id) {
+		return mDAO.Login(sqlSession, id);
+	}
+
 }
