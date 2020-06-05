@@ -23,14 +23,14 @@
 	.board_box .comu_board{width: 400px;}
 	.comu_board_cate li{float: left; padding: 0 10px;}
 	.comu_board_cate li:first-child{padding-left: 0;}
-	.comu_board_cate li:nth-child(2){background: url(../images/tab_bar.gif) 0 center no-repeat;}
-	.noti_more, .comu_more{display: block; width: 21px; height: 21px; position: absolute; top: 20px; right: 20px; background: url(../images/tab_more_btn.jpg) 0 0 no-repeat;}
+	.comu_board_cate li:nth-child(2){background: url(resources/images/tab_bar.gif) 0 center no-repeat;}
+	.noti_more, .comu_more{display: block; width: 21px; height: 21px; position: absolute; top: 20px; right: 20px; background: url(resources/images/tab_more_btn.jpg) 0 0 no-repeat;}
 </style>
 </head>
 <body>
 	<jsp:include page="common/menubar.jsp"/>
 	
-	<div class="back"><img src="../images/main_back2.png"></div>
+	<div class="back"><img src="resources/images/main_back2.png"></div>
 	<div class="board_box">
 		<div class="mboard noti_board">
 			<p class="title">공지사항<span>아파트 새 소식을 확인해주세요!</span></p> 

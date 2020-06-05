@@ -12,12 +12,14 @@ public class Member {
 	private String aptHosu;
 	private int userLevel;
 	private String userFile;
+	private String ACCEPT;
+	private String status;
 	
 	public Member() {}
 	
 
 	public Member(String userId, String userPwd, String userName, String nickName, String phone, String email,
-			String aptName, String aptDong, String aptHosu, int userLevel, String userFile) {
+			String aptName, String aptDong, String aptHosu, int userLevel, String userFile, String ACCEPT, String status) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -30,6 +32,8 @@ public class Member {
 		this.aptHosu = aptHosu;
 		this.userLevel = userLevel;
 		this.userFile = userFile;
+		this.ACCEPT = ACCEPT;
+		this.status = status;
 	}
 
 
@@ -120,14 +124,29 @@ public class Member {
 	public void setUserFile(String userFile) {
 		this.userFile = userFile;
 	}
+	
+	public String getACCEPT() {
+		return ACCEPT;
+	}
 
+	public void setACCEPT(String aCCEPT) {
+		ACCEPT = aCCEPT;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
 		return "Member [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", nickName=" + nickName
 				+ ", phone=" + phone + ", email=" + email + ", aptName=" + aptName + ", aptDong=" + aptDong
-				+ ", aptHosu=" + aptHosu + ", userLevel=" + userLevel + ", userFile=" + userFile + "]";
+				+ ", aptHosu=" + aptHosu + ", userLevel=" + userLevel + ", userFile=" + userFile + ", ACCEPT=" + ACCEPT
+				+ ", status=" + status + "]";
 	}
-	
-	
+
 }
