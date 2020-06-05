@@ -14,7 +14,6 @@ public class NoticeDAO {
 	
 	//등록
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
-		System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★"+n);
 		return sqlSession.insert("NoticeMapper.insertNotice", n);
 	}
 	

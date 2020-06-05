@@ -32,7 +32,7 @@
     		text-overflow: ellipsis;}
     .board_btn{position:absolute;
     		   margin-top:10px;
-    		   margin-left:87%;}
+    		   margin-left:86%;}
     .btn_standard{padding:7px; 
     			  border-radius: 5px; 
     			  font-size: 0.9em; 
@@ -87,31 +87,12 @@
                 </tr>
              </c:forEach>
 
-            	<c:forEach var="n" items="${ list }">
-	                <tr>
-	                   <td align="center">${ n.nNo }</td>
-	                    <td class="dong">101동</td><!-- 동표시되어야함 -->
-	                    <td class="notice_list_td">
-							<c:url var="ndetail" value="ndetail.no">
-								<c:param name="nNo" value="${ n.nNo }"/>
-								<c:param name="page" value="${ pi.currentPage }"/>
-							</c:url>
-							<a href="${ ndetail }">${ n.nTitle }</a>
-	                    </td>
-	                    <td align="center">${ n.userId }</td>
-	                    <td align="center">${ n.nCreateDate }</td>
-	                    <td align="center">${ n.nCount }</td>
-	                </tr>
-                </c:forEach>
             </tbody>
 
         </table>
         
         <div class="board_btn">
 			<button class="btn_standard" onclick="location.href='noticeInsertView.no';">글쓰기</button>
-			<br>
-			<br>
-			<button class="btn_standard" onclick="location.href='noticelogin.no?userId=user01&userPwd=pass01';" type="submit">임시로그인</button>
     	</div>
         
         <!---------- 페이징 처리 -------->
@@ -133,7 +114,7 @@
 					<!-- 페이지 -->
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:if test="${ p eq pi.currentPage }">
-							<font color="red" size="4"><b>[${ p }]</b></font>
+							<font color="red" size="4"><b>[${ p }] &nbsp;</b></font>
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
@@ -146,13 +127,13 @@
 					
 					<!-- [다음] -->
 					<c:if test="${ pi.currentPage >= pi.maxPage }">
-						[다음]
+						&nbsp; [다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
 						<c:url var="after" value="noticeList.no">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
-						<a href="${ after }">[다음]</a>
+						<a href="${ after }">&nbsp; [다음]</a>
 					</c:if>
 				</td>
 			</tr>
