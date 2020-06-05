@@ -64,9 +64,9 @@
 					<b>${ fb.boardTitle } </b>
 				</div>
 				<div id="cdt_profile" style="float:left;display:inline;">
-						<img class="comment2-1img" src="<%= request.getContextPath() %>/css/화단사진.jpg">
+						<img class="comment2-1img" src="${ contextPath}/resources/uploadFiles/${ fb.userFile} ">
 					</div>
-					<div class="dong">${ fb.userId }(101동)</div>
+					<div class="dong">${ fb.nickname }(101동)</div>
 					<div style="display:inline;"><i class="far fa-clock"></i> ${ fb.createDate }</div>
 					<div style="display:inline;"><i class="far fa-eye"></i> ${ fb.boardCount }</div>
 				<!--수정 /삭제 선택 -->	
@@ -80,6 +80,7 @@
 		<!-- 게시글 상단부 끝  -->	
 		
 		<!-- 첨부파일 -->
+			<img src="${ contextPath}/resources/buploadFiles/${ fb.fileName} ">
 			<a href="${ contextPath }/resources/buploadFiles/${ fb.fileName }">
 				${ fb.fileName }
 			</a>
