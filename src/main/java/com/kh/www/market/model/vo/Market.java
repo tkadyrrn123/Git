@@ -12,11 +12,11 @@ public class Market {
 	private String userId;
 	private int boardCount;
 	private char boardStatus;
-	
+	private String fileName;
 	public Market() {}
 
 	public Market(int boardNo, int price, String boardTitle, String boardContent, Date createDate, String userId,
-			int boardCount, char saleStatus, char boardStatus) {
+			int boardCount, char saleStatus, char boardStatus, String fileName) {
 		super();
 		this.boardNo = boardNo;
 		this.price = price;
@@ -27,6 +27,7 @@ public class Market {
 		this.boardCount = boardCount;
 		this.saleStatus = saleStatus;
 		this.boardStatus = boardStatus;
+		this.fileName = fileName;
 	}
 
 	public int getBoardNo() {
@@ -100,12 +101,20 @@ public class Market {
 	public void setBoardStatus(char boardStatus) {
 		this.boardStatus = boardStatus;
 	}
+	
+	public char getFileName() {
+		return boardStatus;
+	}
+	
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
 	@Override
 	public String toString() {
 		return "Market [boardNo=" + boardNo + ", price=" + price + ", boardTitle=" + boardTitle + ", boardContent="
 				+ boardContent + ", createDate=" + createDate + ", userId=" + userId + ", boardCount=" + boardCount
-				+ ", saleStatus=" + saleStatus + ", boardStatus=" + boardStatus + "]";
+				+ ", saleStatus=" + saleStatus + ", boardStatus=" + boardStatus + ", fileName=" + fileName + "]";
 	}
 	
 }

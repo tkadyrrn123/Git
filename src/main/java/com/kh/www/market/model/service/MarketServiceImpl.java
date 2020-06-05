@@ -10,7 +10,7 @@ import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.market.model.dao.MarketDAO;
 import com.kh.www.market.model.vo.Market;
 
-@Service("mService")
+@Service("marketService")
 public class MarketServiceImpl implements MarketService {
 
 	@Autowired
@@ -27,6 +27,21 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public ArrayList<Market> selectList(PageInfo pi) {
 		return mDAO.selectList(sqlSession, pi);
+	}
+
+	@Override
+	public int writingMarket(Market m) {
+		return mDAO.writingMarket(sqlSession, m);
+	}
+
+	@Override
+	public int insertBoard() {
+		return mDAO.insertBoard(sqlSession);
+	}
+
+	@Override
+	public int insertFile(String renameFileName) {
+		return mDAO.insertFile(sqlSession, renameFileName);
 	}
 	
 }

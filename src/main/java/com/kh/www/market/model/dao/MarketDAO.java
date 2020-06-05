@@ -23,7 +23,18 @@ public class MarketDAO {
 		
 		return (ArrayList)sqlSession.selectList("marketMapper.selectList", null, rowBounds);
 	}
+
+	public int insertBoard(SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("marketMapper.insertBoard");
+	}
 	
+	public int writingMarket(SqlSessionTemplate sqlSession, Market m) {
+		return sqlSession.insert("marketMapper.insertMarket",m);
+	}
+	
+	public int insertFile(SqlSessionTemplate sqlSession, String renameFileName) {
+		return sqlSession.insert("marketMapper.insertFile", renameFileName);
+	}
 	
 
 }

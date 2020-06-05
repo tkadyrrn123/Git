@@ -11,6 +11,9 @@
 		<typeAlias type="com.kh.www.Notice.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.kh.www.freeBoard.model.vo.FreeBoard" alias="FreeBoard"/>
 		<typeAlias type="com.kh.www.market.model.vo.Market" alias="Market"/>
+		<typeAlias type="com.kh.www.club.model.vo.Club" alias="Club"/>
+		<typeAlias type="com.kh.www.myPage.model.vo.Meal" alias="Meal"/>
+		<typeAlias type="com.kh.www.myPage.model.vo.MyBoard" alias="MyBoard"/>
 	</typeAliases>
 	
 	<mappers>
@@ -18,8 +21,11 @@
 		<mapper resource="mappers/Member-mapper.xml"/>
 		<mapper resource="mappers/myPage-mapper.xml"/>
 		<mapper resource="mappers/Notice-mapper.xml"/>
+		<mapper resource="mappers/club-mapper.xml"/>
 		<mapper resource="mappers/free-mapper.xml"/>
    		<mapper resource="mappers/market-mapper.xml"/>
 	</mappers>
+	
+
 
 </configuration>

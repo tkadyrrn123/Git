@@ -9,11 +9,12 @@ public class Club {
 	private String clubEtc;
 	private int maxPeople;
 	private String endYn;
+	private String fileName;
 	
 	public Club() {}
 
 	public Club(String clubName, int boardNo, String clubIntro, String clubPlan, String clubPlace, String clubEtc,
-			int maxPeople, String endYn) {
+			int maxPeople, String endYn, String fileName) {
 		super();
 		this.clubName = clubName;
 		this.boardNo = boardNo;
@@ -23,6 +24,7 @@ public class Club {
 		this.clubEtc = clubEtc;
 		this.maxPeople = maxPeople;
 		this.endYn = endYn;
+		this.fileName = fileName;
 	}
 
 	public String getClubName() {
@@ -89,14 +91,20 @@ public class Club {
 		this.endYn = endYn;
 	}
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 	@Override
 	public String toString() {
 		return "Club [clubName=" + clubName + ", boardNo=" + boardNo + ", clubIntro=" + clubIntro + ", clubPlan="
 				+ clubPlan + ", clubPlace=" + clubPlace + ", clubEtc=" + clubEtc + ", maxPeople=" + maxPeople
-				+ ", deleteYn=" + ", endYn=" + endYn + "]";
+				+ ", endYn=" + endYn + ", fileName=" + fileName + "]";
 	}
-	
-	
-	
+
 	
 }

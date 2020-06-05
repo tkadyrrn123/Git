@@ -53,9 +53,6 @@
 		
 </style>
 
-
-
-
 </head>
 <body>
 	
@@ -75,88 +72,17 @@
 		
 		<!-- 게시글 리스트 -->
 		<div class=sellAll>
+		<c:forEach var="m" items="${list}">
 			<div class=sell>
 				<div class=sellDiv>
 					<div class=sellPic><img class=sellPic src="/resources/images/ap.jpg"/></div>
-					<div class=sellName>아파트</div>
-					<div class=sellAddress>닉네임</div>
-					<div class=sellPrice>4억 3000천만</div>
-	
+					<div class=sellName>${m.boardTitle}</div>
+					<div class=sellAddress>${m.userId}</div>
+					<div class=sellPrice>${m.price}</div>
 				</div>
 			</div>
-			<div class=sell>
-				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="${ pageContext.servletContext.contextPath }/resources/images/ap.jpg"/></div>
-					<div class=sellName>아파트</div>
-					<div class=sellAddress>닉네임</div>
-					<div class=sellPrice>4억 3000천만</div>
-	
-				</div>
-			</div>
-			<div class=sell>
-				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="${ pageContext.servletContext.contextPath }/resources/images/ap.jpg"/></div>
-					<div class=sellName>아파트</div>
-					<div class=sellAddress>닉네임</div>
-					<div class=sellPrice>4억 3000천만</div>
-	
-				</div>
-			</div>
-			<div class=sell>
-				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="${ pageContext.servletContext.contextPath }/resources/images/ap.jpg"/></div>
-					<div class=sellName>아파트</div>
-					<div class=sellAddress>닉네임</div>
-					<div class=sellPrice>4억 3000천만</div>
-	
-				</div>
-			</div>
-			<div class=sell>
-				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="${ pageContext.servletContext.contextPath }/resources/images/ap.jpg"/></div>
-					<div class=sellName>아파트</div>
-					<div class=sellAddress>닉네임</div>
-					<div class=sellPrice>4억 3000천만</div>
-	
-				</div>
-			</div>
-			<div class=sell>
-				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="${ pageContext.servletContext.contextPath }/resources/images/ap.jpg"/></div>
-					<div class=sellName>아파트</div>
-					<div class=sellAddress>닉네임</div>
-					<div class=sellPrice>4억 3000천만</div>
-	
-				</div>
-			</div>
-			<div class=sell>
-				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="${ pageContext.servletContext.contextPath }/resources/images/ap.jpg"/></div>
-					<div class=sellName>아파트</div>
-					<div class=sellAddress>닉네임</div>
-					<div class=sellPrice>4억 3000천만</div>
-	
-				</div>
-			</div>
-			<div class=sell>
-				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="${ pageContext.servletContext.contextPath }/resources/images/ap.jpg"/></div>
-					<div class=sellName>아파트</div>
-					<div class=sellAddress>닉네임</div>
-					<div class=sellPrice>4억 3000천만</div>
-	
-				</div>
-			</div>
-			<div class=sell>
-				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="${ pageContext.servletContext.contextPath }/resources/images/ap.jpg"/></div>
-					<div class=sellName>아파트</div>
-					<div class=sellAddress>닉네임</div>
-					<div class=sellPrice>4억 3000천만</div>
-	
-				</div>
-			</div>
-		</div>
+		</c:forEach>
+		</div>		
 		
 		<div class="marketFilterForm">
 		  <form class="marketFilter">
@@ -170,7 +96,7 @@
           </form>
 		</div>
 		
-		<button id="write-btn" class="btn-standard" type="button" value="글쓰기" onclick="location.href='writingMarket.ma'">글쓰기</button>
+		<button id="write-btn" class="btn-standard" type="button" value="글쓰기" onclick="location.href='writingMarketView.ma'">글쓰기</button>
 		
 		
 		<!-- 페이징 처리 -->

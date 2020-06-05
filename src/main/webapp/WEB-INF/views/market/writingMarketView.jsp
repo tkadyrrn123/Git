@@ -47,39 +47,47 @@
       <h2 style="color: darksalmon;">작성하기</h2>
       <hr style="width: 80%; margin-left: 11%"><br>
 
-         <form>
+         <form action="writingMarket.ma" method="post" enctype="Multipart/form-data">
             <table id="tb">
                 <tr id="tr2">
                    <td class="td1">제목</td>
                      <td>
-                        <input name="title" class="inputs" type="text" placeholder="제목을 입력하세요" size="90">
+                        <input class="inputs" type="text" placeholder="제목을 입력하세요" size="90">
                      </td>
                   </tr>
                   <tr id="tr3">
                      <td class="td1">가격</td>
                      <td>
-                       <input name="price" class="inputs" type="text" placeholder="가격을 입력하세요" size="90">
+                       <input class="inputs" type="text" placeholder="가격을 입력하세요" size="90">
                      </td>
                   </tr>      
                   <tr id="tr4">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea name="content" id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;"></textarea>
+                        <textarea id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;"></textarea>
                      </td>
                   </tr>      
                   <tr id="tr5">
                      <td class="td1">물품사진</td>
                      <td>
-                  <input name="uploadFile" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
+                  <input type="file" style="margin-left: 20px; padding: 5px;">
                      </td>
                   </tr>      
 
             </table><br>
               <div id="btns">
-                  <button class="btn">취소</button>
+                  <button id="cancle" class="btn" type="reset">취소</button>
                   <button class="btn">작성완료</button>
             </div>
          </form>
    </div><br>
+   
+   <script>
+   	${'#cancle'}.on('click', function(){
+   		if(confirm("작성을 중단하고 이전 페이지로 이동하시겠습니까?")){
+   			location.href="clubList.cb";
+   		}
+   	});
+   </script>
 </body>
 </html>

@@ -3,17 +3,43 @@
 <mapper namespace="marketMapper">
     <select id="getListCount" resultType="_int">
     	select count(*)
-    	from market
-    	where SALE_YN = 'Y'
+    	from tb_market
+    		join tb_board using(board_no)
+    	where board_delete= 'N'
     </select>
     
     <select id="selectList" resultMap="marketResultSet">
-    	select *
-    	from market
+    	select BOARD_NO,MARKET_PRICE,SALE_YN,BOARD_TITLE,BOARD_CONTENT,CREATE_DATE,USER_ID,FILE_NAME
+    	from tb_market
+    		join tb_board using(board_no)
+    		left join tb_file using(board_no)
+    	where board_delete = 'N'
     	order by board_no desc
     </select>
     <resultMap type="Market" id="marketResultSet">
     	<id property="boardNo" column="BOARD_NO"/>
     	<result property="price" column="MARKET_PRICE"/>
+    	<result property="saleStatus" column="SALE_YN"/>
+    	<result property="boardTitle" column="BOARD_TITLE"/>
+    	<result property="boardContent" column="BOARD_CONTENT"/>
+    	<result property="createDate" column="CREATE_DATE"/>
+    	<result property="userId" column="USER_ID"/>
+    	<result property="fileName" column="FILE_NAME"/>
     </resultMap>
+    
+    <insert id="insertBoard">
+    	insert into tb_board
+    	values(SEQ_BOARD.NEXTVAL, '중고장터', '중고장터', SYSDATE, 'user01', default, default)
+    </insert>
+    
+    <insert id="insertMarket">
+    	insert into tb_market
+    	values(SEQ_BOARD.CURRVAL,#{price},'Y')
+    </insert>
+    
+    <insert id="insertFile">
+    	insert into tb_file
+    	values(SEQ_FILE.NEXTVAL, SEQ_BOARD.CURRVAL, #{fileName}, NULL, NULL)
+    </insert>
+    
 </mapper>

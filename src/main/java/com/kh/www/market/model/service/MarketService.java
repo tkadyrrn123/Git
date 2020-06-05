@@ -9,4 +9,10 @@ public interface MarketService {
 	int getListCount();
 
 	ArrayList<Market> selectList(PageInfo pi);
+
+	int writingMarket(Market m);
+
+	int insertBoard();
+
+	int insertFile(String renameFileName);
 }
