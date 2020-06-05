@@ -6,6 +6,25 @@
 	</select>
 	
 	<insert id="InsertMember">
-		INSERT INTO TB_USER VALUES(#{userId},#{userPwd},#{userName},#{nickName},#{phone},#{email},#{aptName},#{aptDong},#{aptHosu},#{userLevel},#{userFile},default,'N')
+		INSERT INTO TB_USER VALUES(#{userId},#{userPwd},#{userName},#{nickName},#{phone},#{email},#{aptName},#{aptDong},#{aptHosu},#{userFile},#{userLevel},default,default)
 	</insert>
+	
+	<select id="LoginMember" parameterType="string" resultMap="MemberResult">
+	 	SELECT * FROM TB_USER WHERE USER_ID = #{id}
+	</select>
+	
+	<resultMap type="Member" id="MemberResult">
+		<id column="USER_ID" property="userId" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_NAME" property="userName" />
+		<result column="NICKNAME" property="nickName" />
+		<result column="PHONE" property="phone" />
+		<result column="EMAIL" property="email" />
+		<result column="APT_NAME" property="aptName" />
+		<result column="APT_DONG" property="aptDong" />
+		<result column="APT_HOSU" property="aptHosu" />
+		<result column="USER_LEVEL" property="userLevel" />
+		<result column="USER_FILE" property="userFile" />
+		<result column="USER_DELETE" property="status" />
+	</resultMap>
 </mapper>

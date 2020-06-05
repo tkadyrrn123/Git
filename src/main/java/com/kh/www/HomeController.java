@@ -14,10 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -30,6 +33,7 @@ import com.kh.www.Member.model.vo.Member;
 /**
  * Handles requests for the application home page.
  */
+@SessionAttributes("loginUser")
 @Controller
 public class HomeController {
 	
@@ -135,8 +139,6 @@ public class HomeController {
 	@RequestMapping("memberInsert.do")
 	public String InsertMember(@ModelAttribute Member m, @RequestParam("profile_img") MultipartFile imgFile,
 								HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int userLevel = 1;
-		System.out.println(imgFile);
 		m.setUserId(request.getParameter("id"));
 		m.setUserName(request.getParameter("name"));
 		m.setNickName(request.getParameter("nickName"));
@@ -145,7 +147,7 @@ public class HomeController {
 		m.setAptName(request.getParameter("aptName"));
 		m.setAptDong(request.getParameter("aptDong"));
 		m.setAptHosu(request.getParameter("aptNum"));
-		m.setUserLevel(userLevel);
+		m.setUserLevel(Integer.parseInt(request.getParameter("user_level")));
 		
 		String encPwd = BCryptPasswordEncoder.encode(request.getParameter("pwd"));
 		System.out.println(encPwd);
@@ -208,6 +210,27 @@ public class HomeController {
 		return renameFileName;
 	}
 	
-	
+	//로그인
+	@RequestMapping("login.do")
+	public String Login(@RequestParam("id") String id, @RequestParam("pwd") String pwd,
+						Model model, HttpServletResponse response) throws IOException {
+		
+		Member loginUser = mService.Login(id);
+		System.out.println(loginUser);
+		
+		if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd())) {
+			model.addAttribute("loginUser", loginUser);
+			
+			return "/WEB-INF/views/Main";
+		}else {
+			response.setContentType("text/html; charset=UTF-8");
+			
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인 실패.');</script>");
+            out.flush();
+            
+			return "index";
+		}
+	}
 	
 }
