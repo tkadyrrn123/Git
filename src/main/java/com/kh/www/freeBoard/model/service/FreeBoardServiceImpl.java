@@ -35,4 +35,16 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 		return fDAO.selectList(sqlSession, pi);
 	}
 
+	@Override
+	public FreeBoard selectFreeBoard(int boardNo) {
+		
+		FreeBoard fb = null;
+		int result = fDAO.addReadCount(sqlSession, boardNo);
+		
+		if(result > 0) {
+			fb = fDAO.selectFreeBoard(sqlSession, boardNo); 
+		}
+		return fb;
+	}
+
 }
