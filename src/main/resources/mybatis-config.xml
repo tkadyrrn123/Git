@@ -13,6 +13,7 @@
 		<typeAlias type="com.kh.www.club.model.vo.Club" alias="Club"/>
 		<typeAlias type="com.kh.www.myPage.model.vo.Meal" alias="Meal"/>
 		<typeAlias type="com.kh.www.myPage.model.vo.MyBoard" alias="MyBoard"/>
+		<typeAlias type="com.kh.www.Member.model.vo.MemberCount" alias="MemberCount"/>
 	</typeAliases>
 	
 	<mappers>

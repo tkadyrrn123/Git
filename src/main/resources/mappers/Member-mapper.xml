@@ -6,11 +6,11 @@
 	</select>
 	
 	<insert id="InsertMember">
-		INSERT INTO TB_USER VALUES(#{userId},#{userPwd},#{userName},#{nickName},#{phone},#{email},#{aptName},#{aptDong},#{aptHosu},#{userFile},#{userLevel},default,default)
+		INSERT INTO TB_USER VALUES(#{userId},#{userPwd},#{userName},#{nickName},#{phone},#{email},#{aptName},#{aptDong},#{aptHosu},#{userFile},#{userLevel},sysdate,default,default)
 	</insert>
 	
 	<select id="LoginMember" parameterType="string" resultMap="MemberResult">
-	 	SELECT * FROM TB_USER WHERE USER_ID = #{id}
+	 	SELECT * FROM TB_USER WHERE USER_ID = #{id} AND ACCEPT='Y' AND USER_DELETE = 'N'
 	</select>
 	
 	<resultMap type="Member" id="MemberResult">
@@ -24,7 +24,37 @@
 		<result column="APT_DONG" property="aptDong" />
 		<result column="APT_HOSU" property="aptHosu" />
 		<result column="USER_LEVEL" property="userLevel" />
+		<result column="CREATE_DATE" property="createDate" />
 		<result column="USER_FILE" property="userFile" />
 		<result column="USER_DELETE" property="status" />
 	</resultMap>
+	
+	<select id="newCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER WHERE USER_LEVEL='2' AND ACCEPT='N' 
+		UNION ALL
+		SELECT COUNT(*) FROM TB_APART WHERE APT_ACCEPT='N'
+	</select>
+	
+	<select id="memberCount" resultMap="MemberCount">
+		SELECT COUNT(*) ALLP, NVL(COUNT(DECODE(ACCEPT,'Y',1,NULL)),0) ACCP,
+       NVL(COUNT(DECODE(ACCEPT,'N',1,NULL)),0) DISACC, NVL(COUNT(DECODE(USER_DELETE,'Y',1,NULL)),0) DELP
+		FROM TB_USER 
+		WHERE USER_LEVEL IN ('1','2')
+	</select>
+	
+	<resultMap type="MemberCount" id="MemberCount">
+		<id column="ALLP" property="allMember"/>
+		<result column="ACCP" property="accept"/>
+		<result column="DISACC" property="disaccept"/>
+		<result column="DELP" property="delete"/>
+	</resultMap>
+	
+	<select id="memberList" resultMap="MemberResult">
+		SELECT * FROM(SELECT * FROM TB_USER ORDER BY ROWNUM DESC) WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
+	
+	<select id="dupNick" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER WHERE NICKNAME=#{nick}
+	</select>
+	
 </mapper>
