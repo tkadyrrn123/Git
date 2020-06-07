@@ -14,5 +14,7 @@ public interface FreeBoardService {
 	int getListCount();
 
 	ArrayList<FreeBoard> selectList(PageInfo pi);
+
+	FreeBoard selectFreeBoard(int boardNo);
 	
 }

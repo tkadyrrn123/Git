@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,14 +61,14 @@
 			<br>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
 				<div class="detailTable_title">
-					<b>여기는 제목을 쓰는 공간으로 깨끗하고 살기 좋은 아파트를 위하여</b>
+					<b>${ fb.boardTitle } </b>
 				</div>
 				<div id="cdt_profile" style="float:left;display:inline;">
 						<img class="comment2-1img" src="<%= request.getContextPath() %>/css/화단사진.jpg">
 					</div>
-					<div class="dong">닉네임(101동)</div>
-					<div style="display:inline;"><i class="far fa-clock"></i> 2020.2.29. 19:16</div>
-					<div style="display:inline;"><i class="far fa-eye"></i> 120</div>
+					<div class="dong">${ fb.userId }(101동)</div>
+					<div style="display:inline;"><i class="far fa-clock"></i> ${ fb.createDate }</div>
+					<div style="display:inline;"><i class="far fa-eye"></i> ${ fb.boardCount }</div>
 				<!--수정 /삭제 선택 -->	
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
@@ -77,16 +78,16 @@
 				<hr>
 			</div>
 		<!-- 게시글 상단부 끝  -->	
+		
+		<!-- 첨부파일 -->
+			<a href="${ contextPath }/resources/buploadFiles/${ fb.fileName }">
+				${ fb.fileName }
+			</a>
 		<!-- 게시글 내용  -->
-			<div class="board_content"> 여KH 아파트가 벌써 입주 10년이 지났습니다. 아파트도 노후화가 되어가고 있어 아파트 가치상승을 위해 조금씩 노력을 해가야할것 같습니다.
-							우리 아파트는 입주 초에는 예쁜 조경과 더불어 깨끗한 단지가 자랑거리였습니다.
-							그런데 지금의 우리 아파트는 화단의 낙엽 뿐만 아니라 각동 구석구석에 담배꽁초 및 각종 쓰레기가 방치되어있습니다.
-							청소에 조금 더 신경써주셨으면 합니다. 참고로 이웃아파트 아파밀리에는 근무인원이 많지 않음에도 지금은 우리 아파트와 너무 비교될정도로 단지 관리를 잘 하고 있는것같아요.
-							물론 먼저 담배꽁초나 쓰레기를 무단으로 버리지않는게 먼저 이겠지만, 청소가 그때그때 제때 이뤄지지않아 부담없이 담배꽁초등을 더 버리시는것도 있는것같습니다.
-							입주초기에는 입대위가 주축이 되어 입주민들과 관리주체 모두가 함께 아파트 대청소도 실시하고했었는데 최근 몇년 전부터는 입대의나 부녀회같은 자생단체 활동을 전혀 찾아볼수가없네요
-							이번에는 동대표 회장을 입주민이 직접 선출하였고, 두 후보자의 공약이 입주민과 좀 더 소통하여 살기좋은 아파트를 만든다는것이 주 내용이었습니다.
-							공약대로 입주민과 적극적으로 소통하는 기구 이길 바라며 우리 입주민들또한 관심을 가지고 소통해갔으면 합니다.
-							입주민모두 새해 복 많이 받으세요~~</div>
+			<div class="board_content">
+			<% pageContext.setAttribute("newLineChar", "\r\n"); %>
+			${ fn:replace(fb.boardContent, newLineChar, "<br>") }
+			</div>
 		<!-- 게시글 내용 끝 -->	
 			<br>
 			<hr style="width: 900px;">

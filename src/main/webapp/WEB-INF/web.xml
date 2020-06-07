@@ -123,6 +123,7 @@
 		<servlet-name>FreeBoardServlet</servlet-name>
 		<url-pattern>*.fr</url-pattern>
 	</servlet-mapping>
+	
 	<!-- 공지사항  -->
 	<servlet>
 		<servlet-name>NoticeServlet</servlet-name>
@@ -137,6 +138,7 @@
 		<servlet-name>NoticeServlet</servlet-name>
 		<url-pattern>*.no</url-pattern>
 	</servlet-mapping>
+
 	<!--관리자  -->
 	<servlet>
 		<servlet-name>AdminServlet</servlet-name>
@@ -151,4 +153,20 @@
 		<servlet-name>AdminServlet</servlet-name>
 		<url-pattern>*.adm</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 중고장터  -->
+	<servlet>
+		<servlet-name>MarketServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/Market-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>MarketServlet</servlet-name>
+		<url-pattern>*.ma</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

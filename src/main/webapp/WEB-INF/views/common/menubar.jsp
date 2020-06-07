@@ -52,31 +52,21 @@
 					<ul class="sub">
 						<li onclick="location.href='welcome.apt'">아파트 정보</li>
 						<li onclick="location.href='information.apt'">아파트 위치</li>
-						<li>아파트 전경</li>
 					</ul>
 				</li>
-				<li class="dropdown"><label>공지사항</label>
-					<ul class="sub">
-						<li>공지사항</li>
-						<li>?</li>
-						<li>?</li>
-					</ul>
+				<li class="dropdown" onclick="location.href='noticeList.no'"><label>공지사항</label>
+	
 				</li>
 				<li class="dropdown"><label>커뮤니티</label>
 					<ul class="sub">
-						<li>자유게시판</li>
-						<li>중고장터</li>
+						<li onclick="location.href='list.fr'">자유게시판</li>
+						<li onclick="location.href='market.ma'">중고장터</li>
 					</ul>
 				</li>
 				<li class="dropdown"><label>동호회</label>
 					<ul class="sub">
 						<li onclick="location.href='clubList.cb'">동호회 목록</li>
 						<li>동호회 공지</li>
-					</ul>
-				</li>
-				<li class="dropdown"><label>Q&A</label>
-					<ul class="sub">
-						<li>1:1 문의</li>
 					</ul>
 				</li>
 			</ul>
