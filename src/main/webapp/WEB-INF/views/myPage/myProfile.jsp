@@ -103,7 +103,7 @@
 			var src = $('#image').attr("src");
 			
 			/* img 태그로부터 파일명 만 뽑아서 저장 */
-			var srcFileName = src.replace("resources/images/","");
+			var srcFileName = src.replace("resources/uploadFiles/","");
 			
 			/* 원래 파일이름, 새 파일 넣음*/
 			formData.append("originFile",srcFileName);
@@ -123,7 +123,7 @@
 						var $newFile = data.replace(/\"/gi,"");
 						
 						/* 새 파일 이미지 태그에 넣어줌 */
-						$("#image").attr("src","resources/images/" + $newFile);
+						$("#image").attr("src","resources/uploadFiles/" + $newFile);
 					},
 					error : function(error){
 						alert("프로필 사진 변경에 실패하였습니다.");
