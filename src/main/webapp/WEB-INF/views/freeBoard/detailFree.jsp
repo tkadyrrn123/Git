@@ -56,7 +56,7 @@
 		<form>
 			<!-- 게시글 상단부 시작  -->	
 			<br>
-			<h2 style="margin-left: 15px;">자유게시판 상세보기</h2>
+			<h4 style="margin-left: 15px; color: gray;">자유게시판 상세보기</h4>
 			<hr>
 			<br>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
@@ -73,11 +73,16 @@
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
 					<div class="pop"><label>수정</label></div>
-					<div class="pop"><label>삭제</label></div>
+					<div class="pop"><label onclick="location.href='${ bdelete }'">삭제</label></div>
 				</div>
 				<hr>
 			</div>
 		<!-- 게시글 상단부 끝  -->	
+		
+		<c:url var="bdelete" value="bdelete.fr">
+			<c:param name="boardNo" value="${ fb.boardNo }"/>
+			<c:param name="page" value="${ page }"/>
+		</c:url>
 		
 		<!-- 첨부파일 -->
 			<img src="${ contextPath}/resources/buploadFiles/${ fb.fileName} ">

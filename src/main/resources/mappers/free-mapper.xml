@@ -52,9 +52,15 @@
 	</resultMap>
 
 	<select id="selectFreeBoard" resultMap="fdetailResultSet">
-		select *
-		from v_fb_detail
-		where board_No=#{boardNo} 
+		select board_no,
+		        b.board_title, b.board_content, b.create_date, b.board_count,
+		        f1.file_name,
+		        u.nickname, u.user_file
+		from tb_free f
+		     join tb_board b using(board_no)
+		     join tb_file f1 using(board_no)
+		     join tb_user u using(user_id)
+		where b.board_delete = 'N' and board_no = #{boardNo}
 	</select>
 	<resultMap type="FreeBoard" id="fdetailResultSet">
 		<id property="boardNo" column="board_No"/>

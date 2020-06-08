@@ -142,6 +142,12 @@ public class FreeBoardController {
 		return mv;
 	}
 	
+	@RequestMapping("bdelete.fr")
+	public String deleteFree() {
+		
+		return "";
+	}
+	
 
 	
 }
