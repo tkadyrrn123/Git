@@ -93,7 +93,7 @@
 			<br>
 			<hr style="width: 900px;">
 			<div class="go_list_box">
-				<input type="button" class="go_list" value="목록">
+				<input type="button" class="go_list" value="목록" onclick="location.href='list.fr'">
 			</div>
 			<br>
 			<!--댓글 작성  -->
