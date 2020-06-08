@@ -72,7 +72,6 @@ public class NoticeController {
 	@RequestMapping("noticeInsert.no") //공지사항 작성
 	public String noticeInsert(@ModelAttribute Notice n, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session) {
 	
-		System.out.println("db가기전 n:"+n);
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			
 			String renameFileName = saveFile(uploadFile, request);
@@ -101,7 +100,7 @@ public class NoticeController {
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\nuploadFiles";
+		String savePath = root + "\\uploadFiles";
 		
 		File folder = new File(savePath);
 		
@@ -196,7 +195,7 @@ public class NoticeController {
 	//공지사항 수정시 기존에 업로드한 파일 삭제 
 	public void deleteFile(String fileName, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\nuploadFiles";
+		String savePath = root + "\\uploadFiles";
 		
 		File f = new File(savePath + "\\" + fileName);
 		
@@ -211,8 +210,7 @@ public class NoticeController {
 		response.setContentType("application/json; charset=UTF-8");
 		
 		ArrayList<Comment> clist = noticeService.noticeCommentList(nNo);
-		
-		//System.out.println("Controller cList : " + clist);
+		System.out.println("Controller cList : " + clist);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {

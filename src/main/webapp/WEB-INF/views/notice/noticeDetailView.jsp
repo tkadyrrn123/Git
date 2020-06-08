@@ -90,7 +90,7 @@
 		<!-------- 첨부파일 O 때 ------------>		
 			<c:if test="${ !empty notice.renameFileName }">
 				<div>
-					<img src="${contextPath}/resources/nuploadFiles/${ notice.renameFileName }" style="width: 850px; margin-left:50px;">
+					<img src="${contextPath}/resources/uploadFiles/${ notice.renameFileName }" style="width: 850px; margin-left:50px;">
 				</div>
 			</c:if>
 		<!---------- 첨부파일 O 끝  ---------->		
@@ -179,14 +179,14 @@
 				var $rContent;
 				var $rCreateDate;
 				
-				console.log("데이터"+data);
+				console.log(data);
 // 				$('#rCount').text('댓글('+data.length + ')');
 				
 				if(data.length > 0){
 					for(var i in data){
 						$div = $('<div id="commentBody">');
 						$userfile_div = $('<div id="notice_profile" style="float:left;display:inline;">');
-						$userfile = $('<img src="/resources/nuploadFiles/'+data[i].userfile+'"style="width: 850px; margin-left:50px;">');
+						$userfile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'"style="width: 50px; margin-left:50px;">');
 						$rUserId = $('<div width="100">').text(data[i].rUserId);
 						$rContent = $('<div>').text(data[i].rContent.replace(/\+/g, ' '));
 						$rCreateDate = $('<div width="100">').text(data[i].rCreateDate);
@@ -199,24 +199,22 @@
 					}
 				}else{
 					$div = $('<div>');
-					$rContent = $('<div>').text('등록된 댓글이 없습니다.');
+					$rContent = $('<div style="text-align: center;">').text('등록된 댓글이 없습니다.');
 					
 					$div.append($rContent);
 					$noticeComment.append($div);
 				}
 
-			},
-			error: function(data){
 			}
 		});
 	}
-// 	$(function(){
-// 		getCommentList();
+	$(function(){
+		getCommentList();
 		
-// 		setInterval(function(){
-// 			getCommentList();
-// 		}, 1000);
-// 	});
+		setInterval(function(){
+			getCommentList();
+		}, 1000);
+	});
 	
 	//댓글 등록
 	$('#rSubmit').on('click', function(){
@@ -226,12 +224,12 @@
 		
 		$.ajax({
 			url:'addNoticeComment.no',
-			data:{rContent:rContent, noticeNo:noticeNo, userfile:userfile},
+			data:{rContent:rContent, noticeNo:noticeNo},
 			success: function(data){
 				
 				if(data == 'success'){
 					getCommentList();
-					$('#rContent').val("");
+					$('#rContent').val('');
 				}
 			}
 		});
