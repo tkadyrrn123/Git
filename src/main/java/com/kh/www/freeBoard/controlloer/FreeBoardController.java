@@ -130,6 +130,7 @@ public class FreeBoardController {
 		
 		FreeBoard fb = freeService.selectFreeBoard(boardNo);
 		
+		
 		if(fb != null) {
 			mv.addObject("fb", fb)
 			  .addObject("page", page)
@@ -139,6 +140,12 @@ public class FreeBoardController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping("bdelete.fr")
+	public String deleteFree() {
+		
+		return "";
 	}
 	
 

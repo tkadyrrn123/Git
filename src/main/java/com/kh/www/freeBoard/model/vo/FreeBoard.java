@@ -14,7 +14,26 @@ public class FreeBoard {
 	private int fileNo;
 	private String fileName;
 	
+	private String userName;
+	private String nickname;
+	private String userFile;
+	private String userLevel;
+	
 	public FreeBoard() {}
+
+	
+	
+	public FreeBoard(int boardNo, String boardTitle, String boardContent, Date createDate, int boardCount,
+			String nickname, String userFile) {
+		super();
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.createDate = createDate;
+		this.boardCount = boardCount;
+		this.nickname = nickname;
+		this.userFile = userFile;
+	}
 
 	public FreeBoard(int boardNo, String boardTitle, String boardContent, Date createDate, String userId,
 			int boardCount, String boardDelete, int fileNo, String fileName) {
@@ -28,6 +47,25 @@ public class FreeBoard {
 		this.boardDelete = boardDelete;
 		this.fileNo = fileNo;
 		this.fileName = fileName;
+	}
+	
+	public FreeBoard(int boardNo, String boardTitle, String boardContent, Date createDate, String userId,
+			int boardCount, String boardDelete, int fileNo, String fileName, String userName, String nickname,
+			String userFile, String userLevel) {
+		super();
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.createDate = createDate;
+		this.userId = userId;
+		this.boardCount = boardCount;
+		this.boardDelete = boardDelete;
+		this.fileNo = fileNo;
+		this.fileName = fileName;
+		this.userName = userName;
+		this.nickname = nickname;
+		this.userFile = userFile;
+		this.userLevel = userLevel;
 	}
 
 	public int getBoardNo() {
@@ -102,14 +140,45 @@ public class FreeBoard {
 		this.fileName = fileName;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getUserFile() {
+		return userFile;
+	}
+
+	public void setUserFile(String userFile) {
+		this.userFile = userFile;
+	}
+
+	public String getUserLevel() {
+		return userLevel;
+	}
+
+	public void setUserLevel(String userLevel) {
+		this.userLevel = userLevel;
+	}
+
 	@Override
 	public String toString() {
 		return "FreeBoard [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
 				+ ", createDate=" + createDate + ", userId=" + userId + ", boardCount=" + boardCount + ", boardDelete="
-				+ boardDelete + ", fileNo=" + fileNo + ", fileName=" + fileName + "]";
+				+ boardDelete + ", fileNo=" + fileNo + ", fileName=" + fileName + ", userName=" + userName
+				+ ", nickname=" + nickname + ", userFile=" + userFile + ", userLevel=" + userLevel + "]";
 	}
-	
-	
-	
+
 
 }
