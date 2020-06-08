@@ -13,12 +13,8 @@ import com.kh.www.freeBoard.model.vo.FreeBoard;
 public class FreeBoardDAO {
 
 	public int insertBoard(SqlSessionTemplate sqlSession, FreeBoard fb) {
-		
 //		int result = sqlSession.insert("freeMapper.insertFile", fb.getFileName());
-		
-
 		return sqlSession.insert("freeMapper.insertBoard", fb);					
-		
 	}
 
 	public int getListCount(SqlSessionTemplate sqlSession) {

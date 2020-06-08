@@ -56,7 +56,7 @@
 		<form>
 			<!-- 게시글 상단부 시작  -->	
 			<br>
-			<h2 style="margin-left: 15px;">자유게시판 상세보기</h2>
+			<h4 style="margin-left: 15px; color: gray;">자유게시판 상세보기</h4>
 			<hr>
 			<br>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
@@ -64,22 +64,28 @@
 					<b>${ fb.boardTitle } </b>
 				</div>
 				<div id="cdt_profile" style="float:left;display:inline;">
-						<img class="comment2-1img" src="<%= request.getContextPath() %>/css/화단사진.jpg">
+						<img class="comment2-1img" src="${ contextPath}/resources/uploadFiles/${ fb.userFile} ">
 					</div>
-					<div class="dong">${ fb.userId }(101동)</div>
+					<div class="dong">${ fb.nickname }(101동)</div>
 					<div style="display:inline;"><i class="far fa-clock"></i> ${ fb.createDate }</div>
 					<div style="display:inline;"><i class="far fa-eye"></i> ${ fb.boardCount }</div>
 				<!--수정 /삭제 선택 -->	
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
 					<div class="pop"><label>수정</label></div>
-					<div class="pop"><label>삭제</label></div>
+					<div class="pop"><label onclick="location.href='${ bdelete }'">삭제</label></div>
 				</div>
 				<hr>
 			</div>
 		<!-- 게시글 상단부 끝  -->	
 		
+		<c:url var="bdelete" value="bdelete.fr">
+			<c:param name="boardNo" value="${ fb.boardNo }"/>
+			<c:param name="page" value="${ page }"/>
+		</c:url>
+		
 		<!-- 첨부파일 -->
+			<img src="${ contextPath}/resources/buploadFiles/${ fb.fileName} ">
 			<a href="${ contextPath }/resources/buploadFiles/${ fb.fileName }">
 				${ fb.fileName }
 			</a>
@@ -92,7 +98,7 @@
 			<br>
 			<hr style="width: 900px;">
 			<div class="go_list_box">
-				<input type="button" class="go_list" value="목록">
+				<input type="button" class="go_list" value="목록" onclick="location.href='list.fr'">
 			</div>
 			<br>
 			<!--댓글 작성  -->

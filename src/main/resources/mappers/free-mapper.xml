@@ -24,7 +24,6 @@
 			into tb_File
 			values(seq_file.nextval, seq_board.currval, null, null, null)
 			
-			
 			select * from dual	
 		</if>
 	</insert>
@@ -36,9 +35,10 @@
 	</select>
 	
 	<select id="selectList" resultMap="boardResultSet">
-		select *
-		from tb_board
-		where board_delete='N'
+		select board_no, board_title, board_content, create_date, user_id, board_count, board_delete
+		from tb_free
+		     join tb_board using(board_no)
+		where board_delete = 'N'
 		order by board_no desc
 	</select>
 	<resultMap type="FreeBoard" id="boardResultSet">
@@ -51,11 +51,27 @@
 		<result property="boardDelete" column="board_Delete"/>
 	</resultMap>
 
-	<select id="selectFreeBoard" resultMap="boardResultSet">
-		select *
-		from tb_board
-		where board_No=#{boardNo} and board_delete='N'
+	<select id="selectFreeBoard" resultMap="fdetailResultSet">
+		select board_no,
+		        b.board_title, b.board_content, b.create_date, b.board_count,
+		        f1.file_name,
+		        u.nickname, u.user_file
+		from tb_free f
+		     join tb_board b using(board_no)
+		     join tb_file f1 using(board_no)
+		     join tb_user u using(user_id)
+		where b.board_delete = 'N' and board_no = #{boardNo}
 	</select>
+	<resultMap type="FreeBoard" id="fdetailResultSet">
+		<id property="boardNo" column="board_No"/>
+		<result property="boardTitle" column="board_Title"/>	
+		<result property="boardContent" column="board_Content"/>	
+		<result property="createDate" column="create_Date"/>	
+		<result property="boardCount" column="board_Count"/>	
+		<result property="nickname" column="nickname"/>	
+		<result property="userFile" column="user_File"/>	
+		<result property="fileName" column="file_name"/>	
+	</resultMap>
 	<update id="addReadCount">
 		update tb_board
 		set board_count = board_count +1
