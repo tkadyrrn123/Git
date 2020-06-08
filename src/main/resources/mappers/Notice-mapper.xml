@@ -2,22 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="NoticeMapper">
     
-    <!-- 공지사항 작성 / 파일이 있을 경우 없을 경우 -->
     <insert id="insertNotice">
-    <if test="renameFileName != null">
-    	insert all 
-    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT)
-    	into tb_file values(SEQ_FILE.nextval, NULL, #{renameFileName}, SEQ_notice.currval, NULL)
-    	select *
-   		 	from dual
-    </if>
-     <if test="renameFileName == null">
-    	insert all 
-    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT)
-    	into tb_file values(SEQ_FILE.nextval, NULL, NULL, SEQ_notice.currval, NULL)
-    	select *
-   		 	from dual
-    </if>
+    <!-- 공지사항 작성 / 파일이 있을 경우-->
+	    <if test="renameFileName != null">
+	    	insert all 
+	    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT)
+	    	into tb_file values(SEQ_FILE.nextval, NULL, #{renameFileName}, SEQ_notice.currval, NULL)
+	    	select *
+	   		 	from dual
+	    </if>
+	<!-- 공지사항 작성 / 파일이 없을 경우 -->
+	     <if test="renameFileName == null">
+	    	insert all 
+	    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT)
+	    	into tb_file values(SEQ_FILE.nextval, NULL, NULL, SEQ_notice.currval, NULL)
+	    	select *
+	   		 	from dual
+	    </if>
     </insert>
     
     <!-- 공지사항 전체 글 갯수 가져오기 -->
@@ -27,7 +28,7 @@
 		where notice_delete = 'N'
 	</select>
 	
-	<!-- 공지사항 목록 불러오기 -->
+	<!-- 공지사항 리스트 페이지 가져오기 -->
 	<select id="selectList" resultMap="noticeResultSet">
 		select *
 		from tb_notice
@@ -48,14 +49,14 @@
 <!-- 		<result property="originalFileName" column="?"/> -->
 	</resultMap>
 	
-	<!-- 게시글 조회 카운트 -->
+	<!-- 공지사항 조회 카운트 -->
 	<update id="addReadCount">
 		update tb_notice
 		set notice_count = notice_count +1
 		where notice_no = #{nNo}
 	</update>
 	
-	<!-- 게시글 상세보기 -->
+	<!-- 공지사항 상세조회 -->
 	<select id="selectNotice" resultMap="noticeResultSet2">
 		select notice_no, user_id, notice_title, notice_content, notice_date, notice_count, nickname, user_file, file_name
 		from tb_notice
@@ -76,5 +77,50 @@
 		<result property="noticeFile" column="USER_FILE"/><!--프로필사진  -->
 	</resultMap>
 	
+	<!-- 공지사항 업데이트 / 파일이 있는 게시글의 파일만 업데이트(파일테이블)-->
+	<update id="updateNotice_tb_file">
+    	update tb_file
+    	set file_name = #{renameFileName}
+		where notice_no = #{nNo}	
+	</update>
+	
+	<!-- 공지사항 업데이트 / 글만 업데이트(노티스테이블)-->
+	<update id="updateNotice_tb_notice">
+		update tb_notice
+		set notice_title = #{nTitle}, notice_content = #{nContent}, notice_date = SYSDATE
+		where notice_no = #{nNo}
+	</update>
+	
+	<!-- 공지사항 삭제 아직! -->
+<!-- 	<update id="deleteBoard"> -->
+<!-- 		update board -->
+<!-- 		set b_status = 'N' -->
+<!-- 		where bId=#{bId} -->
+<!-- 	</update> -->
+	
+	<!-- 댓글리스트 불러오기 -->
+	<select id="NoticeCommentList" resultMap="replyResultSet">
+		select reply_no, notice_no, user_id, reply_content, comment_date, decyn, nickname, user_file
+		from tb_comment
+           join tb_user using(user_id)
+		where notice_no = #{nNo} and comments_delete = 'N'  
+        order by reply_no desc
+	</select>
+	
+	<resultMap type="NoticeComment" id="replyResultSet">
+		<id property="rNo" column="REPLY_NO"/>
+		<result property="noticeNo" column="NOTICE_NO"/>
+		<result property="rContent" column="REPLY_CONTENT"/>
+		<result property="rUserId" column="USER_ID"/>
+		<result property="rCreateDate" column="COMMENT_DATE"/>
+		<result property="rDecYN" column="DECYN"/>
+		<result property="rStatus" column="COMMENTS_DELETE"/>
+	</resultMap>
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertNoticeComment">
+		insert into tb_comment
+		values(SEQ_REPLY.nextval, null, #{noticeNo}, #{rUserId}, #{rContent}, sysdate, 0, default)
+	</insert>
 	
 </mapper>
