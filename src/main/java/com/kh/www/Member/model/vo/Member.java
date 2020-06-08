@@ -1,5 +1,7 @@
 package com.kh.www.Member.model.vo;
 
+import java.sql.Date;
+
 public class Member {
 	private String userId;
 	private String userPwd;
@@ -12,6 +14,7 @@ public class Member {
 	private String aptHosu;
 	private int userLevel;
 	private String userFile;
+	private Date createDate;
 	private String ACCEPT;
 	private String status;
 	
@@ -19,7 +22,7 @@ public class Member {
 	
 
 	public Member(String userId, String userPwd, String userName, String nickName, String phone, String email,
-			String aptName, String aptDong, String aptHosu, int userLevel, String userFile, String ACCEPT, String status) {
+			String aptName, String aptDong, String aptHosu, int userLevel, String userFile, Date createDate, String ACCEPT, String status) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -32,6 +35,7 @@ public class Member {
 		this.aptHosu = aptHosu;
 		this.userLevel = userLevel;
 		this.userFile = userFile;
+		this.createDate = createDate;
 		this.ACCEPT = ACCEPT;
 		this.status = status;
 	}
@@ -125,6 +129,14 @@ public class Member {
 		this.userFile = userFile;
 	}
 	
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	public String getACCEPT() {
 		return ACCEPT;
 	}
@@ -145,8 +157,8 @@ public class Member {
 	public String toString() {
 		return "Member [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", nickName=" + nickName
 				+ ", phone=" + phone + ", email=" + email + ", aptName=" + aptName + ", aptDong=" + aptDong
-				+ ", aptHosu=" + aptHosu + ", userLevel=" + userLevel + ", userFile=" + userFile + ", ACCEPT=" + ACCEPT
-				+ ", status=" + status + "]";
+				+ ", aptHosu=" + aptHosu + ", userLevel=" + userLevel + ", userFile=" + userFile + ", createDate="
+				+ createDate + ", ACCEPT=" + ACCEPT + ", status=" + status + "]";
 	}
-
+	
 }

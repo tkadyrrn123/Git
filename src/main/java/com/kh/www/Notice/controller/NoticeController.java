@@ -58,23 +58,7 @@ public class NoticeController {
 	public String boardinsertView() {
 		return "noticeInsertForm";
 	}
-	
-	//임시로그인
-	@RequestMapping(value="noticelogin.no", method=RequestMethod.GET)
-	public String memberLogin(String userId, String userPwd, HttpSession session) {
 		
-		Member m = new Member();
-		m.setUserId(userId);
-		m.setUserPwd(userPwd);
-		
-		session.setAttribute("loginUser", m);
-		
-		System.out.println("임시 로그인  : "+ m);
-
-		
-		return "redirect:noticeList.no";
-	}
-	
 	@RequestMapping("noticeInsert.no") //공지사항 등록
 	public String noticeInsert(@ModelAttribute Notice n, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session) {
 		//글쓰기 완료하면 리스트로 넘어감
@@ -94,10 +78,8 @@ public class NoticeController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String id = loginUser.getUserId();
 		
-		System.out.println("세션에서 가져온 id->"+id);
 		n.setUserId(id);
 		int result = noticeService.insertNotice(n);
-		System.out.println("db다녀온 n:"+n);
 		
 		if(result > 0) {
 			return "redirect:noticeList.no"; //DB에 저장하고나면 목록으로 이동
@@ -107,9 +89,7 @@ public class NoticeController {
 		
 	}
 	
-	
-	
-	public String saveFile(MultipartFile file, HttpServletRequest request) {
+	public String saveFile(MultipartFile file, HttpServletRequest request) { //첨부파일 저장
 		
 		String root = request.getSession().getServletContext().getRealPath("resources"); //작은 리소시스의 위치
 		String savePath = root + "\\nuploadFiles";
@@ -136,14 +116,14 @@ public class NoticeController {
 			e.printStackTrace();
 		}
 		
-		return renameFileName;
+		return renameFileName;//리네임 파일만 디비에 저장함 
 	}
 	
-	@RequestMapping("ndetail.no")
+	@RequestMapping("ndetail.no") // 공지사항 상세조회
 	public ModelAndView noticeDetail(@RequestParam("nNo") int nNo, @RequestParam("page") int page,
 							  ModelAndView mv) {
 		
-		Notice notice = noticeService.selectNotice(nNo);
+		Notice notice = noticeService.selectNotice(nNo); //글번호 전체 내용 가져오기
 		
 		if(notice != null) {
 			// 모델엔드뷰로 보드를 보낸다.

@@ -14,11 +14,7 @@ footer{
 	width: 100%;
 	text-align: left;
 	font: normal 16px sans-serif;
-	padding: 45px 0px;
-/* 	position: absolute; */
-/* 	bottom: 0; */
-/* 	left: 0; */
-/* 	right: 0; */
+	padding: 15px 0px;
 }
 
 footer .footer-limiter {
@@ -80,7 +76,7 @@ footer .footer-right a{
 			</div>
 
 			<div class="footer-left">
-				<div ><img src="../images/로고1.png"></div>
+				<div ><img src="resources/images/로고.png"></div>
 			</div>
 		</div>
 
