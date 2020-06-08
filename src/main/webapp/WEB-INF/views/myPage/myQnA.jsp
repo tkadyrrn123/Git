@@ -290,19 +290,26 @@ function QnAsubmit(){
 			</tr>
 		</thead>
 		<tbody class="bottomBoard">
-			<c:forEach var="i" begin="0" end="${qlist.size()-1}">
+			<c:if test="${qlist != null && !qlist.isEmpty()}">
+				<c:forEach var="i" begin="0" end="${qlist.size()-1}">
+					<tr>
+						<td>${qlist[i].QNAId }</td>
+						<td onClick="javascript:goDetail('${qlist[i]}');">${qlist[i].QNATitle }</td>
+						<td>${qlist[i].QNADate}</td>
+						<c:if test='${qlist[i].deleteYN eq "N"}'>
+							<td>처리 중</td>
+						</c:if>
+						<c:if test='${qlist[i].deleteYN eq "Y"}'>
+							<td>처리 완료</td>
+						</c:if>
+					</tr>
+				</c:forEach>
+			</c:if>
+			<c:if test="${qlist == null || qlist.isEmpty()}">
 				<tr>
-					<td>${qlist[i].QNAId }</td>
-					<td onClick="javascript:goDetail('${qlist[i]}');">${qlist[i].QNATitle }</td>
-					<td>${qlist[i].QNADate}</td>
-					<c:if test='${qlist[i].deleteYN eq "N"}'>
-						<td>처리 중</td>
-					</c:if>
-					<c:if test='${qlist[i].deleteYN eq "Y"}'>
-						<td>처리 완료</td>
-					</c:if>
+					<td colspan="4">불러올 QnA가 없습니다.</td>
 				</tr>
-			</c:forEach>
+			</c:if>
 		</tbody>
 	</table>
 	<table id = "pagingTable">

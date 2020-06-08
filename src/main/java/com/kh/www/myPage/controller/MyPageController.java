@@ -150,7 +150,7 @@ public class MyPageController {
 		// 원래 프사가 있을경우 파일 지움
 		String originFileName = request.getParameter("originFile");
 		if(originFileName != null) {
-			deleteFile(originFileName, request);
+			deleteFile(originFileName, request, "images");
 		}
 		
 		String renameFileName = "";
@@ -159,7 +159,7 @@ public class MyPageController {
 		if(imageFile != null && !imageFile.isEmpty()) {
 			
 			// 파일 저장
-			renameFileName = saveFile(imageFile, request);
+			renameFileName = saveFile(imageFile, request, "images");
 			
 			// 멤버 받아옴
 			HttpSession session = request.getSession();
@@ -256,7 +256,7 @@ public class MyPageController {
 		int result = 0;
 		if(file != null && !file.isEmpty()) {
 			// 파일 저장
-			renameFileName = saveFile(file, request);
+			renameFileName = saveFile(file, request, "QnAfiles");
 			
 			if(renameFileName != null) {
 				// DB에 QNA파일이름저장
@@ -271,16 +271,16 @@ public class MyPageController {
 			return "redirect:myQnA.my?page=" + page;
 		}else {
 			if(renameFileName != null) {
-				deleteFile(renameFileName, request);
+				deleteFile(renameFileName, request, "QnAfiles");
 			}
 			throw new MyPageException("QNA입력에 실패하였습니다.");
 		}
 	}
 	
-	public String saveFile(MultipartFile file, HttpServletRequest request) {
+	public String saveFile(MultipartFile file, HttpServletRequest request, String folderName) {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\QnAfiles";
+		String savePath = root + "\\" + folderName;
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -304,9 +304,9 @@ public class MyPageController {
 		return renameFileName;
 	}
 	
-	public void deleteFile(String fileName, HttpServletRequest request) {
+	public void deleteFile(String fileName, HttpServletRequest request, String folderName) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\images";
+		String savePath = root + "\\" + folderName;
 		
 		File f = new File(savePath + "\\" + fileName);
 		
