@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.common.Pagenation;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.exception.FreeBoardException;
 import com.kh.www.freeBoard.model.service.FreeBoardService;
@@ -46,7 +51,7 @@ public class FreeBoardController {
 		
 		ArrayList<FreeBoard> list = freeService.selectList(pi);
 		
-		System.out.println("list.fr "+list);
+	//	System.out.println("list.fr "+list);
 		if(list !=null) {
 			// 보낼 것 : list, pi, 
 			// 갈 화면 정해야함 : view
@@ -143,9 +148,30 @@ public class FreeBoardController {
 	}
 	
 	@RequestMapping("bdelete.fr")
-	public String deleteFree() {
+	public String deleteFree(@RequestParam("boardNo") int boardNo) {
+		int result = freeService.deleteFree(boardNo);
 		
-		return "";
+		if(result > 0) {
+			return "redirect:list.fr";
+		} else {
+			throw new FreeBoardException("삭제 실패!");
+		}
+	}
+	
+	@RequestMapping("rList.fr")
+	public void replyList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		ArrayList<Comment> list = freeService.selectRList(boardNo);
+		System.out.println("댓글리스트 받아옴? "+list);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 

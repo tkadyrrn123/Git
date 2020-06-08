@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
 
@@ -35,6 +36,14 @@ public class FreeBoardDAO {
 
 	public FreeBoard selectFreeBoard(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.selectOne("freeMapper.selectFreeBoard", boardNo);
+	}
+
+	public int deleteFree(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("freeMapper.deleteFree", boardNo);
+	}
+
+	public ArrayList<Comment> selectRList(SqlSessionTemplate sqlSession, int boardNo) {
+		return (ArrayList)sqlSession.selectList("freeMapper.getReplyList", boardNo);
 	}
 
 }

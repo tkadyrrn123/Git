@@ -36,7 +36,7 @@
 	.reply1_box{width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
 	.comment2-1img{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
 	.dong{line-height: 50px; display: inline; margin-left: 10px; margin-right: 10px;}
-	.reply1_btn{float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
+	.reply1_btn{float:right; width:70px; height:25px; background-color: navy; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
 	.reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
 
 /* 원댓글  */	
@@ -70,19 +70,20 @@
 					<div style="display:inline;"><i class="far fa-clock"></i> ${ fb.createDate }</div>
 					<div style="display:inline;"><i class="far fa-eye"></i> ${ fb.boardCount }</div>
 				<!--수정 /삭제 선택 -->	
+		<c:url var="bdelete" value="bdelete.fr">
+			<c:param name="boardNo" value="${ fb.boardNo }"/>
+			<c:param name="page" value="${ page }"/>
+		</c:url>
+		
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
 					<div class="pop"><label>수정</label></div>
-					<div class="pop"><label onclick="location.href='${ bdelete }'">삭제</label></div>
+					<div class="pop"><label onclick="deleteMsg();">삭제</label></div>
 				</div>
 				<hr>
 			</div>
 		<!-- 게시글 상단부 끝  -->	
 		
-		<c:url var="bdelete" value="bdelete.fr">
-			<c:param name="boardNo" value="${ fb.boardNo }"/>
-			<c:param name="page" value="${ page }"/>
-		</c:url>
 		
 		<!-- 첨부파일 -->
 			<img src="${ contextPath}/resources/buploadFiles/${ fb.fileName} ">
@@ -104,9 +105,9 @@
 			<!--댓글 작성  -->
 			<div class="reply1_box">
 				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="comment2-1img" src="<%=request.getContextPath()%>/css/화단사진.jpg">
+					<img class="comment2-1img" src="<%=request.getContextPath()%>/resources/uploadFiles/${ fb.userFile }">
 				</div>
-				<div class="dong">라랄라(202동)</div>
+				<div class="dong">${ fb.nickname }</div>
 					<input type="button" class="reply1_btn" value="댓글등록">
 				<div style="margin-left: 10px; margin-top: 12px;">
 					<textarea class="reply_TEXT" name="reply_TEXT" cols="105" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
@@ -114,18 +115,18 @@
 				</div>
 			</div>
 			<!--원 댓글  -->
-			<div class="reply2_box">
+			<div class="reply2_box" id="replyBox">
 				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="comment2-1img" src="<%=request.getContextPath()%>/css/화단사진.jpg">
+					<img class="comment2-1img" src="<%=request.getContextPath()%>/resources/uploadFiles/">
 				</div>
-				<div class="dong">라랄라(202동)</div>
+				<div class="dong" id="nickname">닉네임공간(202동)</div>
 					<input type="button" value="삭제" class="reply2_box_btn">
 					<input type="button" value="수정" class="reply2_box_btn">
-				<div style="margin-left: 10px;">와! 이런식으로 어쩌구 저쩌구한 투표결과를 보니 좋네요!</div>
-				<div style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div>
+				<div style="margin-left: 10px;" id="content">댓글 내용 공간</div>
+				<div style="margin-left: 10px; color: gray;" id="createDate">날짜공간</div>
 				<input type="button" value="답글" class="reply2_box_btn2">
 				<i class="far fa-thumbs-up">0</i>
-				</div>
+			</div>
 			
 			<!-- 대 댓글 -->
 			<div class="reply3_box">
@@ -144,6 +145,51 @@
 	</div>
 	
 	<script>
+	$(function(){
+		getReplyList();
+		/* 
+		setInterval(function(){
+			getReplyList();
+		}, 1000); */
+	});
+	
+	
+	function getReplyList(){
+		var boardNo = ${ fb.boardNo };
+		
+		$.ajax({
+			url: 'rList.fr',
+			data: {boardNo:boardNo},
+			dataType: 'json',
+			success: function(data){
+				console.log(data);
+				$divBox = $('#replyBox');
+				$div.html('');
+				
+				var div;
+				var $profileImg;
+				var $nickname;
+				var $rContent;
+				var $rCreateDate;
+				
+				if(data.length > 0){
+					for(var i in data){
+						$div = $('<div>');
+						$nickname = $('<div class="dong"').text(data[i].nickname);
+						
+						$div.append($nickname);
+					}
+				}
+			}
+		});
+	}
+	
+	function deleteMsg(){
+		var del = confirm('정말 삭제합니까?');
+		if(del){
+			location.href='${ bdelete }';
+		}
+	}
 	
 	// textarea 체크
 	$('.reply_TEXT').keyup(function (e){

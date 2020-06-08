@@ -78,4 +78,25 @@
 		where board_No=#{boardNo}
 	</update>
 
+	<update id="deleteFree">
+		update tb_board
+		set board_delete='Y'
+		where board_no=#{boardNo}
+	</update>
+	
+	<select id="getReplyList" resultMap="replyResultSet">
+		select reply_no, board_no, reply_content, comment_date,
+		        nickname, user_file
+		from tb_comment
+		     join tb_user using(user_id)
+		where comments_delete = 'N' and board_no=#{boardNo}
+	</select>
+	<resultMap type="Comment" id="replyResultSet">
+		<id property="rNo" column="REPLY_NO"/>
+		<result property="boardNo" column="board_no" />
+		<result property="rContent" column="reply_content" />
+		<result property="rCreateDate" column="comment_date" />
+		<result property="nickname" column="nickname" />
+		<result property="userFile" column="user_file" />
+	</resultMap>
 </mapper>
