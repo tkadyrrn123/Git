@@ -45,12 +45,16 @@
 				<li class="top">등급</li>
 				<li>
 				<c:if test="${loginUser.userLevel == 1}">
-					<input type="text" class="text" value="일반등급">
+					<input type="text" class="text" value="일반등급" readonly>
 					<input type="hidden" id="userLevel" name="userLevel" value=1>
 				</c:if>
 				<c:if test="${loginUser.userLevel == 2}">
-					<input type="text" class="text" value="관리등급">
-					<input type="hidden" id="userLevel" name="userLevel" value=1>
+					<input type="text" class="text" value="관리사무소" readonly>
+					<input type="hidden" id="userLevel" name="userLevel" value=2>
+				</c:if>
+				<c:if test="${loginUser.userLevel == 3}">
+					<input type="text" class="text" value="총관리자" readonly>
+					<input type="hidden" id="userLevel" name="userLevel" value=3>
 				</c:if>
 				<hr>
 				</li>

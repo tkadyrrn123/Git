@@ -49,7 +49,10 @@
 					<input type="text" class="text" value="일반등급" readonly>
 				</c:if>
 				<c:if test="${loginUser.userLevel == 2}">
-					<input type="text" class="text" value="관리등급" readonly>
+					<input type="text" class="text" value="관리사무소" readonly>
+				</c:if>
+				<c:if test="${loginUser.userLevel == 3}">
+					<input type="text" class="text" value="총관리자" readonly>
 				</c:if>
 				<hr>
 				</li>
