@@ -34,7 +34,7 @@
 		<div class="area">
 			<ul class="ul">
 				<li class="image">
-					<img src="resources/images/${loginUser.userFile}" width="110px" height="110px" id="image">
+					<img src="resources/uploadFiles/${loginUser.userFile}" width="110px" height="110px" id="image">
 					<label id="plusbtn" for="plus">+</label>
 					<input type="file" id="plus" name="plus">
 				</li>

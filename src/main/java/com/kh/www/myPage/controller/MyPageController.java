@@ -150,7 +150,7 @@ public class MyPageController {
 		// 원래 프사가 있을경우 파일 지움
 		String originFileName = request.getParameter("originFile");
 		if(originFileName != null) {
-			deleteFile(originFileName, request, "images");
+			deleteFile(originFileName, request);
 		}
 		
 		String renameFileName = "";
@@ -159,7 +159,7 @@ public class MyPageController {
 		if(imageFile != null && !imageFile.isEmpty()) {
 			
 			// 파일 저장
-			renameFileName = saveFile(imageFile, request, "images");
+			renameFileName = saveFile(imageFile, request);
 			
 			// 멤버 받아옴
 			HttpSession session = request.getSession();
@@ -256,7 +256,7 @@ public class MyPageController {
 		int result = 0;
 		if(file != null && !file.isEmpty()) {
 			// 파일 저장
-			renameFileName = saveFile(file, request, "QnAfiles");
+			renameFileName = saveFile(file, request);
 			
 			if(renameFileName != null) {
 				// DB에 QNA파일이름저장
@@ -271,16 +271,16 @@ public class MyPageController {
 			return "redirect:myQnA.my?page=" + page;
 		}else {
 			if(renameFileName != null) {
-				deleteFile(renameFileName, request, "QnAfiles");
+				deleteFile(renameFileName, request);
 			}
 			throw new MyPageException("QNA입력에 실패하였습니다.");
 		}
 	}
 	
-	public String saveFile(MultipartFile file, HttpServletRequest request, String folderName) {
+	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\" + folderName;
+		String savePath = root + "\\uploadFiles";
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -304,9 +304,9 @@ public class MyPageController {
 		return renameFileName;
 	}
 	
-	public void deleteFile(String fileName, HttpServletRequest request, String folderName) {
+	public void deleteFile(String fileName, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\" + folderName;
+		String savePath = root + "\\uploadFiles";
 		
 		File f = new File(savePath + "\\" + fileName);
 		

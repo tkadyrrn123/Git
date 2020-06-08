@@ -209,7 +209,7 @@ function popupOpen(data) {
 	    $('#QnAContent').val(content);
 	    if(fileName != 'null'){
 	    	$('.download-name').val(fileName);
-	    	$('#download').attr('href','resources/QnAfiles/'+fileName);
+	    	$('#download').attr('href','resources/uploadFiles/'+fileName);
 	    }else{
 	    	$('.download-name').val("파일이 존재하지 않습니다.");
 	    }
