@@ -10,6 +10,8 @@ import com.kh.www.Member.model.vo.Member;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.myPage.model.vo.Meal;
 import com.kh.www.myPage.model.vo.MyBoard;
+import com.kh.www.myPage.model.vo.MyComment;
+import com.kh.www.myPage.model.vo.MyQnA;
 
 @Repository("myDAO")
 public class MyPageDAO {
@@ -38,6 +40,33 @@ public class MyPageDAO {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("myPageMapper.getBoardList", userId, rowBounds);
+	}
+
+	public int getCommentListCount(String userId, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("myPageMapper.getCommentListCount",userId);
+	}
+
+	public ArrayList<MyComment> getCommentList(String userId, PageInfo pi, SqlSessionTemplate sqlSession) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("myPageMapper.getCommentList", userId, rowBounds);
+	}
+	public int insertQnA(MyQnA qNA, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("myPageMapper.insertQnA", qNA);
+	}
+
+	public int insertQnAFileName(MyQnA qNA, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("myPageMapper.insertQnAFileName", qNA);
+	}
+
+	public int getQnAListCount(String userId, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("myPageMapper.getQnAListCount", userId);
+	}
+
+	public ArrayList<MyQnA> getQnAList(String userId, PageInfo pi, SqlSessionTemplate sqlSession) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("myPageMapper.getQnAList", userId, rowBounds);
 	}
 
 }

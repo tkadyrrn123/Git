@@ -34,53 +34,53 @@
 		<div class="area">
 			<ul class="ul">
 				<li class="image">
-					<img src="resources/images/${member.userFile}" width="110px" height="110px" id="image">
+					<img src="resources/images/${loginUser.userFile}" width="110px" height="110px" id="image">
 					<label id="plusbtn" for="plus">+</label>
 					<input type="file" id="plus" name="plus">
 				</li>
 				<li class="top">현재 아파트</li>
 				<li>
-				<input type="text" class="text" value="${member.aptName}" readonly>
+				<input type="text" class="text" value="${loginUser.aptName}" readonly>
 				<hr>
 				</li>
 				<li class="top">등급</li>
 				<li>
-				<c:if test="${member.userLevel == 1}">
+				<c:if test="${loginUser.userLevel == 1}">
 					<input type="text" class="text" value="일반등급" readonly>
 				</c:if>
-				<c:if test="${member.userLevel == 2}">
+				<c:if test="${loginUser.userLevel == 2}">
 					<input type="text" class="text" value="관리등급" readonly>
 				</c:if>
 				<hr>
 				</li>
 				<li class="top">이름</li>
 				<li>
-				<input type="text" class="text" value="${member.userName}" readonly>
+				<input type="text" class="text" value="${loginUser.userName}" readonly>
 				<hr>
 				</li>
 				<li class="top">닉네임</li>
 				<li>
-				<input type="text" class="text" value="${member.nickName}" readonly>
+				<input type="text" class="text" value="${loginUser.nickName}" readonly>
 				<hr>
 				</li>
 				<li class="top">동</li>
 				<li>
-				<input type="text" class="text" value="${member.aptDong}" readonly>
+				<input type="text" class="text" value="${loginUser.aptDong}" readonly>
 				<hr>
 				</li>
 				<li class="top">호수</li>
 				<li>
-				<input type="text" class="text" value="${member.aptHosu}" readonly>
+				<input type="text" class="text" value="${loginUser.aptHosu}" readonly>
 				<hr>
 				</li>
 				<li class="top">이메일</li>
 				<li>
-				<input type="text" class="text" value="${member.email}" readonly>
+				<input type="text" class="text" value="${loginUser.email}" readonly>
 				<hr>
 				</li>
 				<li class="top">휴대전화 번호</li>
 				<li>
-				<input type="text" class="text" value="${member.phone}" readonly>
+				<input type="text" class="text" value="${loginUser.phone}" readonly>
 				<hr>
 				</li>
 			</ul>
