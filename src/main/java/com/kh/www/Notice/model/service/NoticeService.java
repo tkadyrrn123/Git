@@ -3,7 +3,7 @@ package com.kh.www.Notice.model.service;
 import java.util.ArrayList;
 
 import com.kh.www.Notice.model.vo.Notice;
-import com.kh.www.Notice.model.vo.NoticeComment;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 
 public interface NoticeService {
@@ -30,10 +30,10 @@ public interface NoticeService {
 	int updateNotice_Content(Notice n);
 	
 	//댓글리스트 가져오기
-	ArrayList<NoticeComment> noticeCommentList(int nNo);
+	ArrayList<Comment> noticeCommentList(int nNo);
 	
 	//댓글 등록
-	int insertNoticeComment(NoticeComment nc);
+	int insertNoticeComment(Comment nc);
 
 	
 }

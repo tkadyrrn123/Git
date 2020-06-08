@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.www.Notice.model.vo.Notice;
-import com.kh.www.Notice.model.vo.NoticeComment;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Repository
@@ -52,12 +52,12 @@ public class NoticeDAO {
 	}
 	
 	//댓글 리스트 가져오기
-	public ArrayList<NoticeComment> NoticeCommentList(SqlSessionTemplate sqlSession, int nNo) {
+	public ArrayList<Comment> NoticeCommentList(SqlSessionTemplate sqlSession, int nNo) {
 		return (ArrayList)sqlSession.selectList("NoticeMapper.NoticeCommentList", nNo);
 	}
 
 	//댓글등록
-	public int insertNoticeComment(SqlSessionTemplate sqlSession, NoticeComment nc) {
+	public int insertNoticeComment(SqlSessionTemplate sqlSession, Comment nc) {
 		return sqlSession.update("NoticeMapper.insertNoticeComment",nc);
 	}
 

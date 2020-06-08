@@ -107,7 +107,7 @@
         order by reply_no desc
 	</select>
 	
-	<resultMap type="NoticeComment" id="replyResultSet">
+	<resultMap type="Comment" id="replyResultSet">
 		<id property="rNo" column="REPLY_NO"/>
 		<result property="noticeNo" column="NOTICE_NO"/>
 		<result property="rContent" column="REPLY_CONTENT"/>
@@ -115,6 +115,8 @@
 		<result property="rCreateDate" column="COMMENT_DATE"/>
 		<result property="rDecYN" column="DECYN"/>
 		<result property="rStatus" column="COMMENTS_DELETE"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="userFile" column="USER_FILE"/><!--프로필사진  -->
 	</resultMap>
 	
 	<!-- 댓글 등록 -->

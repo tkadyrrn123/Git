@@ -66,11 +66,10 @@
 					<b>${ notice.nTitle }</b>
 				</div>
 				<div id="notice_profile" style="float:left;display:inline;">
-						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
-					</div>
-					<div class="dong">${ notice.userId }</div>
-					<div style="display:inline;"><i class="far fa-clock"></i>${ notice.nCreateDate }</div>
-					<div style="display:inline;"><i class="far fa-eye"></i>${ notice.nCount }</div>
+					<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }"></div>
+				<div class="dong">${ notice.userId }</div>
+				<div style="display:inline;"><i class="far fa-clock"></i>${ notice.nCreateDate }</div>
+				<div style="display:inline;"><i class="far fa-eye"></i>${ notice.nCount }</div>
 	<!-------------수정 /삭제 선택 -------------->	
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
@@ -109,16 +108,19 @@
 				<div class="dong">${ notice.userId }</div>
 					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
 				<div style="margin-left: 10px; margin-top: 12px;">
-					<textarea class="reply_TEXT" name="reply_TEXT" cols="105" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
+					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="100" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
 				<div style="color:#aaa; float: right; margin-top: 45px;" id="counter">(0/200자)</div>
 				</div>
 			</div>
 		<!-------------댓글 작성  끝------------>
 		<!-------------댓글 가져오기 ------------>	
-			<div class="reply2_box" class="noticeComment">
+			<div class="reply2_box" id="noticeComment">
 			
 <!-- 				<div id="notice_profile" style="float: left; display: inline;"> -->
 <%-- 					<img class="comment_img" src="<%=request.getContextPath()%>/css/화단사진.jpg"></div> --%>
+					
+					<div id="notice_profile" style="float:left;display:inline;">
+					<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }"></div>
 					
 <!-- 				<div id="notice_rUserId" class="dong">닉네임</div> -->
 				
@@ -169,9 +171,41 @@
 			data: {nNo:nNo},
 			dataType: 'json',
 			success: function(data){
-				console.log(data);		
-		
+				
+				$noticeComment = $('#noticeComment');
+				$noticeComment.html('');
+				
+				var $div;
+				var $rUserId;
+				var $rContent;
+				var $rCreateDate;
+				
+// 				$('#rCount').text('댓글('+data.length + ')');
+				
+				if(data.length > 0){
+					for(var i in data){
+						$div = $('<div>');
+						//$userfile_div = $('<div id="notice_profile" style="float:left;display:inline;">');
+						//$userfile = $('<img class="comment_img" src="'+'${contextPath}'+'/resources/uploadFiles/'+'${ notice.noticeFile }');
+						$rUserId = $('<div width="100">').text(data[i].rUserId);
+						$rContent = $('<div>').text(data[i].rContent.replace(/\+/g, ' '));
+						$rCreateDate = $('<div width="100">').text(data[i].rCreateDate);
+						
+						$div.append($rUserId);
+						$div.append($rContent);
+						$div.append($rCreateDate);
+						$noticeComment.append($div);
+					}
+				}else{
+					$div = $('<div>');
+					$rContent = $('<div>').text('등록된 댓글이 없습니다.');
+					
+					$div.append($rContent);
+					$noticeComment.append($div);
+				}
 
+			},
+			error: function(data){
 			}
 		});
 	}
@@ -196,7 +230,7 @@
 				
 				if(data == 'success'){
 					getCommentList();
-					$('#rContent').val('');
+					$('#rContent').val("");
 				}
 			}
 		});

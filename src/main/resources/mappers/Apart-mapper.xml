@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="aptMapper">
 	<insert id="aptInsert">
-		INSERT INTO TB_APART VALUES(SEQ_APT.NEXTVAL,#{name},#{dong},#{address},#{tel},default,default,null)
+		INSERT INTO TB_APART VALUES(SEQ_APT.NEXTVAL,#{name},#{dong},#{address},#{tel},default,default,default,null)
 	</insert>
 	
 	<select id="searchApt" resultMap="ApartResultMap">
-			SELECT * FROM TB_APART WHERE APT_NAME LIKE '%'||#{text}||'%'
+			SELECT * FROM TB_APART WHERE APT_NAME LIKE '%'||#{text}||'%' AND APT_ACCEPT='Y' AND APT_DELETE='N'
 	</select>
 	
 	<resultMap type="Apart" id="ApartResultMap">
@@ -15,18 +15,35 @@
 		<result property="dong" column="APT_DONG"/>
 		<result property="address" column="APT_ADDRESS"/>
 		<result property="tel" column="APT_TEL"/>
+		<result property="createdate" column="CREATE_DATE"/>
 		<result property="accept" column="APT_ACCEPT"/>
 		<result property="delete" column="APT_DELETE"/>
 		<result property="about" column="APT_ABOUT"/>
 	</resultMap>
 	
 	<select id="donglist" resultType="string">
-		SELECT APT_DONG FROM TB_APART WHERE APT_NAME=#{name}
+		SELECT APT_DONG FROM TB_APART WHERE APT_NAME=#{name} 
 	</select>
 	
 	<select id="aptDupName" resultType="_int">
       SELECT COUNT(*) FROM TB_APART WHERE APT_NAME=#{name}
-   </select>
-
+    </select>
+	
+	<select id="apartList" resultMap="ApartResultMap">
+		select * from tb_apart
+	</select>
+	
+	<select id="aptCount" resultMap="aptCount">
+		SELECT COUNT(*) ALLP, NVL(COUNT(DECODE(APT_ACCEPT,'Y',1,NULL)),0) ACCP,
+       			NVL(COUNT(DECODE(APT_ACCEPT,'N',1,NULL)),0) DISACC, NVL(COUNT(DECODE(APT_DELETE,'Y',1,NULL)),0) DELP
+		FROM TB_APART
+	</select>
+	
+	<resultMap type="MemberCount" id="aptCount">
+		<id column="ALLP" property="allMember"/>
+		<result column="ACCP" property="accept"/>
+		<result column="DISACC" property="disaccept"/>
+		<result column="DELP" property="delete"/>
+	</resultMap>
 
 </mapper>

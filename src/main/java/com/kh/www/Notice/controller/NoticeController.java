@@ -26,8 +26,8 @@ import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Notice.model.exception.NoticeException;
 import com.kh.www.Notice.model.service.NoticeService;
 import com.kh.www.Notice.model.vo.Notice;
-import com.kh.www.Notice.model.vo.NoticeComment;
 import com.kh.www.common.Pagenation;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Controller
@@ -210,7 +210,9 @@ public class NoticeController {
 	public void replyList(@RequestParam("nNo") int nNo, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		
-		ArrayList<NoticeComment> clist = noticeService.noticeCommentList(nNo);
+		ArrayList<Comment> clist = noticeService.noticeCommentList(nNo);
+		
+		//System.out.println("Controller cList : " + clist);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -226,7 +228,7 @@ public class NoticeController {
 	//댓글 등록
 	@RequestMapping("addNoticeComment.no")
 	@ResponseBody //success 리턴을 위해
-	public String addReply(@ModelAttribute NoticeComment nc, HttpSession session) {
+	public String addReply(@ModelAttribute Comment nc, HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String ncUserId = loginUser.getUserId();
 		

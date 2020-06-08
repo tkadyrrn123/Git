@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.www.Apart.model.dao.ApartDAO;
 import com.kh.www.Apart.model.vo.Apart;
+import com.kh.www.Member.model.vo.MemberCount;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -104,6 +105,16 @@ public class ApartServiceImpl implements ApartService{
 		}
 		return null;
 		
+	}
+
+	@Override
+	public ArrayList<Apart> apartList() {
+		return aptDAO.apartList(sqlSession);
+	}
+
+	@Override
+	public MemberCount aptCount() {
+		return aptDAO.aptCount(sqlSession);
 	}
 	
 }

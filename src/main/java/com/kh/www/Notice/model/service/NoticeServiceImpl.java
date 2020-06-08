@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.www.Notice.model.dao.NoticeDAO;
 import com.kh.www.Notice.model.vo.Notice;
-import com.kh.www.Notice.model.vo.NoticeComment;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Service("nService")
@@ -65,12 +65,12 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	
 	@Override //댓글 리스트 가져오기
-	public ArrayList<NoticeComment> noticeCommentList(int nNo) {
+	public ArrayList<Comment> noticeCommentList(int nNo) {
 		return nDAO.NoticeCommentList(sqlSession, nNo);
 	}
 	
 	@Override //댓글등록
-	public int insertNoticeComment(NoticeComment nc) {
+	public int insertNoticeComment(Comment nc) {
 		return nDAO.insertNoticeComment(sqlSession, nc);
 	}
 }
