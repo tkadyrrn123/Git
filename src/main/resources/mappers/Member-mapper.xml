@@ -50,7 +50,7 @@
 	</resultMap>
 	
 	<select id="memberList" resultMap="MemberResult">
-		SELECT * FROM(SELECT * FROM TB_USER ORDER BY ROWNUM DESC) WHERE ROWNUM BETWEEN 1 AND 5
+		SELECT * FROM(SELECT * FROM TB_USER WHERE USER_LEVEL IN (1,2) ORDER BY ROWNUM DESC ) WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
 	
 	<select id="dupNick" resultType="_int">
