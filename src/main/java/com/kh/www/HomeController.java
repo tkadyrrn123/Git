@@ -134,7 +134,21 @@ public class HomeController {
 		}
 		
 	}
-	
+	//닉네임 중복체크
+	@RequestMapping("dupNick.do")
+	public void dupNick(@RequestParam("nick") String nick, HttpServletResponse response) {
+		System.out.println(nick);
+		
+		int result = mService.dupNick(nick);
+				
+		boolean isable = result == 0 ? true : false;
+		
+		try {
+			response.getWriter().print(isable);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	//멤버 회원가입
 	@RequestMapping("memberInsert.do")
 	public String InsertMember(@ModelAttribute Member m, @RequestParam("profile_img") MultipartFile imgFile,
@@ -218,15 +232,19 @@ public class HomeController {
 		Member loginUser = mService.Login(id);
 		System.out.println(loginUser);
 		
-		if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd())) {
+		if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()) && (loginUser.getUserLevel() == 1 || loginUser.getUserLevel() == 2 )) {
 			model.addAttribute("loginUser", loginUser);
 			
 			return "/WEB-INF/views/Main";
+		}else if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()) && loginUser.getUserLevel() == 3) {
+			model.addAttribute("loginUser", loginUser);
+			
+			return "redirect:adminMain.adm";
 		}else {
 			response.setContentType("text/html; charset=UTF-8");
 			
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('로그인 실패.');</script>");
+            out.println("<script>alert('로그인 실패.'); history.go(-1);</script>");
             out.flush();
             
 			return "index";

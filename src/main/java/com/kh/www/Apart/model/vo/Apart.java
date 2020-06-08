@@ -1,11 +1,14 @@
 package com.kh.www.Apart.model.vo;
 
+import java.sql.Date;
+
 public class Apart {
 	private String id;
 	private String name;
 	private String dong;
 	private String address;
 	private String tel;
+	private Date createdate;
 	private String accept;
 	private String delete;
 	private String about;
@@ -20,14 +23,15 @@ public class Apart {
 		this.tel = tel;
 	}
 
-	public Apart(String id, String name, String dong, String address, String tel, String accept, String delete,
-			String about) {
+	public Apart(String id, String name, String dong, String address, String tel, Date createdate, String accept,
+			String delete, String about) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.dong = dong;
 		this.address = address;
 		this.tel = tel;
+		this.createdate = createdate;
 		this.accept = accept;
 		this.delete = delete;
 		this.about = about;
@@ -81,6 +85,14 @@ public class Apart {
 		this.accept = accept;
 	}
 
+	public Date getCreatedate() {
+		return createdate;
+	}
+
+	public void setCreatedate(Date createdate) {
+		this.createdate = createdate;
+	}
+
 	public String getDelete() {
 		return delete;
 	}
@@ -100,10 +112,7 @@ public class Apart {
 	@Override
 	public String toString() {
 		return "Apart [id=" + id + ", name=" + name + ", dong=" + dong + ", address=" + address + ", tel=" + tel
-				+ ", accept=" + accept + ", delete=" + delete + ", about=" + about + "]";
+				+ ", accept=" + accept + ", createdate=" + createdate + ", delete=" + delete + ", about=" + about + "]";
 	}
-	
-	
-	
-	
+
 }
