@@ -66,7 +66,7 @@
 					<b>${ notice.nTitle }</b>
 				</div>
 				<div id="cdt_profile" style="float:left;display:inline;">
-						<img class="comment2-1img" src="<%= request.getContextPath() %>/css/화단사진.jpg">
+						<img class="comment2-1img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
 					</div>
 					<div class="dong">${ notice.userId }</div>
 					<div style="display:inline;"><i class="far fa-clock"></i>${ notice.nCreateDate }</div>
@@ -88,6 +88,14 @@
 			<% pageContext.setAttribute("newLineChar", "\r\n"); %>
 			<div class="board_content">${ fn:replace( notice.nContent, newLineChar, "<br>") }</div>
 		<!-- 게시글 내용 끝 -->	
+		<!-- 첨부파일 O 때 -->		
+			<c:if test="${ !empty notice.renameFileName }">
+				<div>
+				<img src="${contextPath}/resources/nuploadFiles/${ notice.renameFileName }">
+<%-- 					<a href="${ contextPath }/resources/buploadFiles/${ notice.renameFileName }" download="${ notice.renameFileName }">${ notice.renameFileName }</a> --%>
+				</div>
+			</c:if>
+		<!-- 첨부파일 O 끝  -->		
 			<br>
 			<hr style="width: 900px;">
 			<div class="go_list_box">

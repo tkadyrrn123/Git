@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-   #notice_write_body{margin-top: 30px;}
+   #notice_write_body{margin-top: 30px; margin-bottom: 30px;}
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavenderBlush;}
    h5{ margin: 0 auto;}
    h2{font-family: "Sans-Serif";     margin-left: 11%;}
