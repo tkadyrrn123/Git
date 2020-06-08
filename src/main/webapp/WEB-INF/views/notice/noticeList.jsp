@@ -18,6 +18,7 @@
     			  margin-top: 50px;
     			  width:100%;
     			  postion:relative;
+    			  margin-bottom: 200px;
     			  } 
     .board_wrab table{border-collapse: collapse;
     				  width: 1500px;

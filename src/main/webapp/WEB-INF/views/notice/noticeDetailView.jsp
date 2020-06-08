@@ -103,7 +103,7 @@
 		<!-------------댓글 작성  ------------>
 			<div class="reply1_box" id="rtb">
 				<div id="notice_profile" style="float: left; display: inline;">
-					<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
+					<img id="userfile" class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
 				</div>
 				<div class="dong">${ notice.userId }</div>
 					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
@@ -118,9 +118,6 @@
 			
 <!-- 				<div id="notice_profile" style="float: left; display: inline;"> -->
 <%-- 					<img class="comment_img" src="<%=request.getContextPath()%>/css/화단사진.jpg"></div> --%>
-					
-					<div id="notice_profile" style="float:left;display:inline;">
-					<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }"></div>
 					
 <!-- 				<div id="notice_rUserId" class="dong">닉네임</div> -->
 				
@@ -175,22 +172,26 @@
 				$noticeComment = $('#noticeComment');
 				$noticeComment.html('');
 				
+				
 				var $div;
+				var $userfile;
 				var $rUserId;
 				var $rContent;
 				var $rCreateDate;
 				
+				console.log("데이터"+data);
 // 				$('#rCount').text('댓글('+data.length + ')');
 				
 				if(data.length > 0){
 					for(var i in data){
-						$div = $('<div>');
-						//$userfile_div = $('<div id="notice_profile" style="float:left;display:inline;">');
-						//$userfile = $('<img class="comment_img" src="'+'${contextPath}'+'/resources/uploadFiles/'+'${ notice.noticeFile }');
+						$div = $('<div id="commentBody">');
+						$userfile_div = $('<div id="notice_profile" style="float:left;display:inline;">');
+						$userfile = $('<img src="/resources/nuploadFiles/'+data[i].userfile+'"style="width: 850px; margin-left:50px;">');
 						$rUserId = $('<div width="100">').text(data[i].rUserId);
 						$rContent = $('<div>').text(data[i].rContent.replace(/\+/g, ' '));
 						$rCreateDate = $('<div width="100">').text(data[i].rCreateDate);
 						
+						$div.append($userfile);
 						$div.append($rUserId);
 						$div.append($rContent);
 						$div.append($rCreateDate);
@@ -209,13 +210,13 @@
 			}
 		});
 	}
-	$(function(){
-		getCommentList();
+// 	$(function(){
+// 		getCommentList();
 		
-		setInterval(function(){
-			getCommentList();
-		}, 1000);
-	});
+// 		setInterval(function(){
+// 			getCommentList();
+// 		}, 1000);
+// 	});
 	
 	//댓글 등록
 	$('#rSubmit').on('click', function(){
@@ -225,7 +226,7 @@
 		
 		$.ajax({
 			url:'addNoticeComment.no',
-			data:{rContent:rContent, noticeNo:noticeNo},
+			data:{rContent:rContent, noticeNo:noticeNo, userfile:userfile},
 			success: function(data){
 				
 				if(data == 'success'){
