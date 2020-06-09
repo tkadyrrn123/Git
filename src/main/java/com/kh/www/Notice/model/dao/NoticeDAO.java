@@ -60,6 +60,16 @@ public class NoticeDAO {
 	public int insertNoticeComment(SqlSessionTemplate sqlSession, Comment nc) {
 		return sqlSession.update("NoticeMapper.insertNoticeComment",nc);
 	}
+	
+	//댓글 수정
+	public int commentUpdate(SqlSessionTemplate sqlSession, Comment comment) {
+		return sqlSession.update("NoticeMapper.updateNoticeComment",comment);
+	}
+	
+	//댓글 삭제
+	public int commentUpdate(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("NoticeMapper.deleteNoticeComment",rNo);
+	}
 
 
 }

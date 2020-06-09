@@ -34,6 +34,12 @@ public interface NoticeService {
 	
 	//댓글 등록
 	int insertNoticeComment(Comment nc);
+	
+	//댓글 수정
+	int commentUpdate(Comment comment);
+	
+	//댓글 삭제
+	int commentUpdate(int rNo);
 
 	
 }
