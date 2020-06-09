@@ -57,7 +57,7 @@
 	
 	<insert id="insertFile">
 		insert into tb_file
-		values(SEQ_FILE.NEXTVAL, SEQ_BOARD.CURRVAL, #{renameFileName}, NULL)
+		values(SEQ_FILE.NEXTVAL, SEQ_BOARD.CURRVAL, #{renameFileName}, NULL, NULL)
 	</insert>
 	
 	<update id="deleteClub">
