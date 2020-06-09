@@ -123,6 +123,7 @@
 		<servlet-name>FreeBoardServlet</servlet-name>
 		<url-pattern>*.fr</url-pattern>
 	</servlet-mapping>
+	
 	<!-- 공지사항  -->
 	<servlet>
 		<servlet-name>NoticeServlet</servlet-name>
@@ -137,7 +138,8 @@
 		<servlet-name>NoticeServlet</servlet-name>
 		<url-pattern>*.no</url-pattern>
 	</servlet-mapping>
-	<!-- 중고게시판  -->
+
+	<!-- 중고장터  -->
 	<servlet>
 		<servlet-name>MarketServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -151,4 +153,5 @@
 		<servlet-name>MarketServlet</servlet-name>
 		<url-pattern>*.ma</url-pattern>
 	</servlet-mapping>
+	
 </web-app>

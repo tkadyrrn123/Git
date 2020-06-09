@@ -6,11 +6,11 @@
 			insert all
 			
 			into tb_board
-			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, 'userid', default, default)	
+			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, #{userId}, default, default)	
 			into tb_free
 			values(seq_board.currval)
 			into tb_File
-			values(seq_file.nextval, seq_board.currval, #{fileName}, null)
+			values(seq_file.nextval, seq_board.currval, #{fileName}, null, null)
 
 			select * from dual	
 		</if>
@@ -18,11 +18,11 @@
 			insert all
 			
 			into tb_board
-			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, 'userid', default, default)
+			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, #{userId}, default, default)
 			into tb_free
 			values(seq_board.currval)
 			into tb_File
-			values(seq_file.nextval, seq_board.currval, null, null)
+			values(seq_file.nextval, seq_board.currval, null, null, null)
 			
 			
 			select * from dual	
@@ -51,5 +51,15 @@
 		<result property="boardDelete" column="board_Delete"/>
 	</resultMap>
 
+	<select id="selectFreeBoard" resultMap="boardResultSet">
+		select *
+		from tb_board
+		where board_No=#{boardNo} and board_delete='N'
+	</select>
+	<update id="addReadCount">
+		update tb_board
+		set board_count = board_count +1
+		where board_No=#{boardNo}
+	</update>
 
 </mapper>

@@ -6,16 +6,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자유게시판-상세보기</title>
+<title>공지사항 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
-	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-top: 185px; margin-bottom: 50px; padding-bottom: 50px;}
+	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 50px; padding-bottom: 50px;}
 	#detailContent {width: 900px; height: 95px;}
 	.detailTable{margin: auto; text-align: center; border-collapse: collapse;}
   	.detailTable th{border-bottom: 1px solid lightgray; width:70px;}
  	.detailTable td{border-bottom: 1px solid lightgray; text-align: left;}
  	.detailTable_comment{margin: auto; border-bottom: 1px solid lightgray; height: 50px; background-color: lightgray; width: 800px;}
  	.detailTable_title{margin-left: 10px; font-size: 18px; padding-bottom: 10px; color:rgb(81, 143, 187);}
+	.img {filter: brightness(70%); width: 100%; height: 400px;}	
 
 /* 글내용 */
 	.board_content{width: 800px;    height: auto;    margin-left: 100px;    margin-top: 40px;    margin-bottom: 40px;}
@@ -51,48 +52,46 @@
 </style>
 </head>
 <body>
+<img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
 		<form>
 			<!-- 게시글 상단부 시작  -->	
 			<br>
-			<h2 style="margin-left: 15px;">자유게시판 상세보기</h2>
+			<h2 style="margin-left: 15px;">공지사항 상세보기</h2>
 			<hr>
 			<br>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
 				<div class="detailTable_title">
-					<b>${ fb.boardTitle } </b>
+					<b>${ notice.nTitle }</b>
 				</div>
 				<div id="cdt_profile" style="float:left;display:inline;">
 						<img class="comment2-1img" src="<%= request.getContextPath() %>/css/화단사진.jpg">
 					</div>
-					<div class="dong">${ fb.userId }(101동)</div>
-					<div style="display:inline;"><i class="far fa-clock"></i> ${ fb.createDate }</div>
-					<div style="display:inline;"><i class="far fa-eye"></i> ${ fb.boardCount }</div>
+					<div class="dong">${ notice.userId }</div>
+					<div style="display:inline;"><i class="far fa-clock"></i>${ notice.nCreateDate }</div>
+					<div style="display:inline;"><i class="far fa-eye"></i>${ notice.nCount }</div>
 				<!--수정 /삭제 선택 -->	
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
-					<div class="pop"><label>수정</label></div>
-					<div class="pop"><label>삭제</label></div>
+						<c:url var="nlist" value="noticeUpdateView.no">
+							<c:param name="page" value="${ page }"/>
+							<c:param name="nNo" value="${ notice.nNo }"/>
+						</c:url>
+					<div class="pop" onclick="location.href='${ nlist }'"><label>수정</label></div>
+					<div class="pop" onclick="location.href='noticeDelete.no'"><label>삭제</label></div>
 				</div>
 				<hr>
 			</div>
 		<!-- 게시글 상단부 끝  -->	
-		
-		<!-- 첨부파일 -->
-			<a href="${ contextPath }/resources/buploadFiles/${ fb.fileName }">
-				${ fb.fileName }
-			</a>
 		<!-- 게시글 내용  -->
-			<div class="board_content">
 			<% pageContext.setAttribute("newLineChar", "\r\n"); %>
-			${ fn:replace(fb.boardContent, newLineChar, "<br>") }
-			</div>
+			<div class="board_content">${ fn:replace( notice.nContent, newLineChar, "<br>") }</div>
 		<!-- 게시글 내용 끝 -->	
 			<br>
 			<hr style="width: 900px;">
 			<div class="go_list_box">
-				<input type="button" class="go_list" value="목록">
+				<input type="button" class="go_list" value="목록" onclick="location.href='noticeList.no'">
 			</div>
 			<br>
 			<!--댓글 작성  -->
@@ -164,5 +163,6 @@
       	        }
      });
 	</script>
+	<jsp:include page="../common/Footer.jsp"/>
 </body>
 </html>

@@ -4,15 +4,15 @@
     <insert id="insertNotice">
     <if test="renameFileName != null">
     	insert all 
-    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT)
-    	into tb_file values(SEQ_FILE.nextval, NULL, #{renameFileName}, SEQ_notice.currval)
+    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT)
+    	into tb_file values(SEQ_FILE.nextval, NULL, #{renameFileName}, SEQ_notice.currval, NULL)
     	select *
    		 	from dual
     </if>
      <if test="renameFileName == null">
     	insert all 
-    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT)
-    	into tb_file values(SEQ_FILE.nextval, NULL, NULL, SEQ_notice.currval)
+    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT)
+    	into tb_file values(SEQ_FILE.nextval, NULL, NULL, SEQ_notice.currval, NULL)
     	select *
    		 	from dual
     </if>
@@ -36,10 +36,22 @@
 		<result property="nContent" column="NOTICE_CONTENT"/>
 		<result property="nCreateDate" column="NOTICE_DATE"/>
 		<result property="nStatus" column="NOTICE_DELETE"/>
-<!-- 		<result property="nCount" column=""/> -->
+		<result property="nCount" column="NOTICE_COUNT"/>
 <!-- 		<result property="nModifyDate" column=""/> -->
 <!-- 		<result property="originalFileName" column=""/> -->
 <!-- 		<result property="renameFileName" column=""/> -->
 	</resultMap>
+	
+	<update id="addReadCount">
+		update tb_notice
+		set notice_count = notice_count +1
+		where notice_no = #{nNo}
+	</update>
+	
+	<select id="selectNotice" resultMap="noticeResultSet">
+		select *
+		from tb_notice
+		where notice_no =#{nNo} and notice_delete = 'N'
+	</select>
 	
 </mapper>

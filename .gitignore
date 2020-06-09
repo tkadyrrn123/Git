@@ -19,11 +19,12 @@ tmp/
 *.bak
 *.swp
 *~.nib
+
 local.properties
 .settings/
 .loadpath
 .recommenders
-
+uploadFiles/
 # External tool builders
 .externalToolBuilders/
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,9 @@
 <title>Insert title here</title>
 <!-- <link rel="stylesheet" type="text/css" href="resources/css/freeBoard.css"> -->
 <style>
+.fbTitle{color: black !important;}
+.fbTitle:visited{color: gray !important;}
+
 .img { 
      filter: brightness(70%);
      width: 100%;
@@ -180,50 +184,24 @@
                     <td style="width: 7%;">작성자</td>
                     <td style="width: 11%">등록일</td>
                     <td style="width: 6%;">조회수</td>
-                    <td style="width: 6%;">추천수</td>
                 </tr>
             </thead>
             <tbody>
+            <c:forEach var="fb" items="${ list }">
                 <tr>
-                    <td>1</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>2</td>
+                    <td>${ fb.boardNo }</td>               
+                    <td>
+                    	<c:url var="bdetail" value="bdetail.fr">
+                    		<c:param name="boardNo" value="${fb.boardNo}"/>
+                    		<c:param name="page" value="${pi.currentPage}"/>
+                    	</c:url>
+                    	<a href="${ bdetail }" class="fbTitle">${ fb.boardTitle}</a>
+                    </td>
+                    <td>${ fb.userId }</td>
+                    <td>${ fb.createDate}</td>
+                    <td>${ fb.boardCount }</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td class="btitle">아파트에 이상한 사람이 다니는거 같지 않나요?</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>유리창 청소하면 좋을텐데</td>
-                    <td>홍길동</td>
-                    <td>2020-05-12</td>
-                    <td>2</td>
-                    <td>0</td>
-                </tr>
+            </c:forEach>   
             </tbody>
         </table>
     </div>

@@ -54,11 +54,12 @@ public class NoticeController {
 		return mv;
 	}
 	
-	@RequestMapping("noticeInsertView.no")//공지사항 신규 작성
+	@RequestMapping("noticeInsertView.no")//공지사항 신규 작성으로 이동
 	public String boardinsertView() {
 		return "noticeInsertForm";
 	}
 	
+	//임시로그인
 	@RequestMapping(value="noticelogin.no", method=RequestMethod.GET)
 	public String memberLogin(String userId, String userPwd, HttpSession session) {
 		
@@ -68,11 +69,10 @@ public class NoticeController {
 		
 		session.setAttribute("loginUser", m);
 		
-		
 		System.out.println("임시 로그인  : "+ m);
 
 		
-		return "noticeList";
+		return "redirect:noticeList.no";
 	}
 	
 	@RequestMapping("noticeInsert.no") //공지사항 등록
@@ -137,5 +137,32 @@ public class NoticeController {
 		}
 		
 		return renameFileName;
+	}
+	
+	@RequestMapping("ndetail.no")
+	public ModelAndView noticeDetail(@RequestParam("nNo") int nNo, @RequestParam("page") int page,
+							  ModelAndView mv) {
+		
+		Notice notice = noticeService.selectNotice(nNo);
+		
+		if(notice != null) {
+			// 모델엔드뷰로 보드를 보낸다.
+			mv.addObject("notice", notice)
+			  .addObject("page", page)
+			  .setViewName("noticeDetailView");//메소드 연결하는거 메소드 체이닝
+		}
+		return mv;
+	}
+	
+	//수정하기 폼으로 이동
+	@RequestMapping("noticeUpdateView.no")
+	public ModelAndView noticeUpdateView(@RequestParam("nNo") int nNo, @RequestParam("page") int page, ModelAndView mv) {
+		System.out.println(nNo);
+		Notice notice = noticeService.selectUpdateNotice(nNo);
+		
+		if(notice != null) {
+			mv.addObject("notice", notice).addObject("page", page).setViewName("noticeUpdateForm");
+		}
+		return mv;
 	}
 }
