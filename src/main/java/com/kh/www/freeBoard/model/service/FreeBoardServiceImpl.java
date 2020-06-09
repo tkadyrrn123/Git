@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.dao.FreeBoardDAO;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
@@ -45,6 +46,21 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 			fb = fDAO.selectFreeBoard(sqlSession, boardNo); 
 		}
 		return fb;
+	}
+
+	@Override
+	public int deleteFree(int boardNo) {
+		return fDAO.deleteFree(sqlSession, boardNo);
+	}
+
+	@Override
+	public ArrayList<Comment> selectRList(int boardNo) {
+		return fDAO.selectRList(sqlSession, boardNo);
+	}
+
+	@Override
+	public int insertReply(Comment c) {
+		return fDAO.insertReply(sqlSession, c);
 	}
 
 }
