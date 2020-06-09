@@ -125,4 +125,18 @@
 		values(SEQ_REPLY.nextval, null, #{noticeNo}, #{rUserId}, #{rContent}, sysdate, 0, default)
 	</insert>
 	
+	<!--댓글 수정  -->
+	<update id="updateNoticeComment">
+		update tb_comment
+		set REPLY_CONTENT = #{rContent}, COMMENT_DATE = SYSDATE
+		where REPLY_NO = #{rNo}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteNoticeComment">
+		update tb_comment
+		set COMMENTS_DELETE = 'Y'
+		where REPLY_NO = #{rNo}
+	</update>
+	
 </mapper>

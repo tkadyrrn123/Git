@@ -13,6 +13,7 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -241,4 +242,25 @@ public class NoticeController {
 		}
 		
 	}
+	
+	//댓글 수정
+	@RequestMapping("commentUpdate.no")
+    @ResponseBody
+    private int commentUpdate(@RequestParam int rNo, @RequestParam String rContent) throws Exception{
+        
+        Comment comment = new Comment();
+        comment.setrNo(rNo);
+        comment.setrContent(rContent);
+        
+        return noticeService.commentUpdate(comment);
+    }
+	
+	//댓글 삭제
+	@RequestMapping("commentUpdate.no{rNo}")
+    @ResponseBody
+    private int commentUpdate(@PathVariable int rNo) throws Exception{
+        
+        return noticeService.commentUpdate(rNo);
+    }
+
 }
