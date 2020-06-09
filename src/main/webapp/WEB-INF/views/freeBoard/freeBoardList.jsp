@@ -11,6 +11,12 @@
 .fbTitle{color: black !important;}
 .fbTitle:visited{color: gray !important;}
 
+/* 페이징 */
+#prev{color: black !important;}
+#present{color: black !important;}
+#next{color: black !important;}
+
+
 .img { 
      filter: brightness(70%);
      width: 100%;
@@ -43,13 +49,21 @@
     		text-overflow: ellipsis;}
     .board_btn{position:absolute;
     		   margin-top:10px;
-    		   margin-left:87%;}
+    		   margin-left:80%;}
     .btn_standard{padding:7px; 
     			  border-radius: 5px; 
     			  font-size: 0.9em; 
     			  font-weight: bold; 
                   color:rgb(139, 134, 134);
                   border:0;}
+    #btnTr{text-align: right; border-bottom: none;}              
+	#btnWriting{padding:7px; 
+    			  border-radius: 5px; 
+    			  font-size: 0.9em; 
+    			  font-weight: bold; 
+                  color:rgb(139, 134, 134);
+                  border:0;}
+                  
 	.page_wrap{display:inline-block; position:absolute; margin-top: 10px; margin-left: 50%;}
 	.form_wrap{margin:30px auto 0 auto; width: 340px;}
 
@@ -203,14 +217,62 @@
                 </tr>
             </c:forEach>   
             </tbody>
+            <tfoot>
+            	<tr>
+            		<td colspan="5" id="btnTr">
+            			<button id="btnWriting" onclick="location.href='writing.fr'">글쓰기</button>
+            		</td>
+            	</tr>
+            </tfoot>
         </table>
     </div>
+    
     <div class="page_wrap">
+    <!-- 
     <button type="button" class="btn_standard">1</button>
+     -->
+    <!-- [이전] -->
+				<c:if test="${ pi.currentPage <= 1 }">
+					[이전] &nbsp;
+				</c:if>
+				<c:if test="${ pi.currentPage > 1 }">
+					<c:url var="before" value="list.fr">
+						<c:param name="page" value="${ pi.currentPage - 1 }"/>
+					</c:url>
+					<a href="${ before }" id="prev">[이전]</a> &nbsp;
+				</c:if>
+				
+				<!-- 페이지 -->
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ p eq pi.currentPage }">
+						<font color="red" size="4"><b>[${ p }]</b></font>
+					</c:if>
+					
+					<c:if test="${ p ne pi.currentPage }">
+						<c:url var="pagenation" value="list.fr">
+							<c:param name="page" value="${ p }"/>
+						</c:url>
+						<a href="${ pagenation }" id="present">${ p }</a> &nbsp;
+					</c:if>
+				</c:forEach>
+				
+				<!-- [다음] -->
+				<c:if test="${ pi.currentPage >= pi.maxPage }">
+					[다음]
+				</c:if>
+				<c:if test="${ pi.currentPage < pi.maxPage }">
+					<c:url var="after" value="list.fr">
+						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					</c:url> 
+					<a href="${ after }" id="next">[다음]</a>
+				</c:if>
+    
     </div>
+    <!-- 
     <div class="board_btn">
        <button class="btn_standard" onclick="location.href='writing.fr'">글쓰기</button>
     </div>
+     -->
     <div class="form_wrap">
     <form class="board_search" name="search_form" action="get">
 	    <div class="select-box">

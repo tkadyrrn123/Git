@@ -21,5 +21,7 @@ public interface FreeBoardService {
 	int deleteFree(int boardNo);
 
 	ArrayList<Comment> selectRList(int boardNo);
+
+	int insertReply(Comment c);
 	
 }

@@ -58,4 +58,9 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 		return fDAO.selectRList(sqlSession, boardNo);
 	}
 
+	@Override
+	public int insertReply(Comment c) {
+		return fDAO.insertReply(sqlSession, c);
+	}
+
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -162,9 +163,9 @@ public class FreeBoardController {
 	public void replyList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		ArrayList<Comment> list = freeService.selectRList(boardNo);
-		System.out.println("댓글리스트 받아옴? "+list);
+	//	System.out.println("댓글리스트 받아옴? "+list);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss zzz").create();
 		try {
 			gson.toJson(list, response.getWriter());
 		} catch (JsonIOException e) {
@@ -172,6 +173,25 @@ public class FreeBoardController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("addReply.fr")
+	@ResponseBody
+	public String addReply(@ModelAttribute Comment c, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String rUserId = loginUser.getUserId();
+		
+		c.setrUserId(rUserId);
+		
+	//	System.out.println("addReply.fr의 c는 방아오는지??? "+ c);
+		int result = freeService.insertReply(c);
+		
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new FreeBoardException("댓글 등록 실패!");
+		}
+		
 	}
 	
 

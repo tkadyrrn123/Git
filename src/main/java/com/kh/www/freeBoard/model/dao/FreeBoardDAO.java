@@ -46,4 +46,8 @@ public class FreeBoardDAO {
 		return (ArrayList)sqlSession.selectList("freeMapper.getReplyList", boardNo);
 	}
 
+	public int insertReply(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.insert("freeMapper.insertReply", c);
+	}
+
 }

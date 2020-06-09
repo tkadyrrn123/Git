@@ -90,6 +90,7 @@
 		from tb_comment
 		     join tb_user using(user_id)
 		where comments_delete = 'N' and board_no=#{boardNo}
+		order by reply_no desc
 	</select>
 	<resultMap type="Comment" id="replyResultSet">
 		<id property="rNo" column="REPLY_NO"/>
@@ -99,4 +100,9 @@
 		<result property="nickname" column="nickname" />
 		<result property="userFile" column="user_file" />
 	</resultMap>
+	
+	<insert id="insertReply">
+		insert into tb_comment
+		values(seq_reply.nextval, #{boardNo}, null, #{rUserId}, #{rContent}, sysdate, default, default)
+	</insert>
 </mapper>
