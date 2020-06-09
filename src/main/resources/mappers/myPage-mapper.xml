@@ -59,6 +59,53 @@
 		    ON(b.board_no = c.board_no)
 		LEFT JOIN tb_club_notice cn
 		    ON(b.board_no = cn.board_no)
-		where b.user_id = #{userId}
+		where b.user_id = #{userId} and board_delete = 'N'
+    </select>
+    <select id="getCommentListCount" resultType="_int">
+    	select count(*)
+    	from tb_comment
+    	where user_id = #{userId}
+    </select>
+    <resultMap type="MyComment" id="MyCommentResultSet">
+    	<id property="replyNo" column="reply_no"/>
+    	<result property="boardNo" column="board_no"/>
+    	<result property="replyContent" column="reply_content"/>
+    	<result property="commentDate" column="comment_date"/>
+    </resultMap>
+    <select id="getCommentList" resultMap="MyCommentResultSet">
+    	select reply_no, board_no, reply_content, comment_date
+    	from tb_comment
+    	where user_id = #{userId} and comments_delete = 'N'
+    </select>
+    <insert id="insertQnA">
+    	insert into tb_qna
+    	values(SEQ_QNA.NEXTVAL, #{QNATitle}, #{QNAContent}, #{userId}, default, default)
+    </insert>
+    <insert id="insertQnAFileName">
+    	insert all 
+    	into tb_qna
+    	values(SEQ_QNA.NEXTVAL, #{QNATitle}, #{QNAContent}, #{userId}, default, default)
+    	into tb_file
+    	values(SEQ_FILE.NEXTVAL, null, #{QNAFileName}, null, SEQ_QNA.CURRVAL)
+    	select * from dual
+    </insert>
+    <select id="getQnAListCount" resultType="_int">
+    	select count(*) from tb_QnA where user_id = #{userId}
+    </select>
+   	<resultMap type="MyQnA" id="MyQnAResultSet">
+    	<id property="QNAId" column="QnA_id"/>
+    	<result property="QNATitle" column="QnA_title"/>
+    	<result property="QNAContent" column="QnA_content"/>
+    	<result property="userId" column="user_id"/>
+    	<result property="QNADate" column="QnA_date"/>
+    	<result property="QNAFileName" column="file_name"/>
+    	<result property="deleteYN" column="DELETE_YN"/>
+    </resultMap>
+    <select id="getQnAList" resultMap="MyQnAResultSet">
+    	select QNA_ID, QNA_TITLE, QNA_CONTENT, USER_ID, QNA_DATE, FILE_NAME, DELETE_YN
+    	from tb_QnA
+    	left join tb_file
+    	using(QNA_ID)
+    	where user_id = #{userId}
     </select>
 </mapper>

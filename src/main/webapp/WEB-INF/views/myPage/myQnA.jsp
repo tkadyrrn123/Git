@@ -63,11 +63,12 @@
 /*-- POPUP common style S --*/
 .layerpop {
     display: none;
-    z-index: 1000;
+    z-index: 10000;
     border-radius:5px;
     background: #fff;
     cursor: move; 
-    background-color: rgb(253, 249, 234);}
+    background-color: rgb(253, 249, 234);
+    }
 
 .layerpop_area .content {
     margin: 2%;
@@ -92,6 +93,11 @@
 	border-radius: 5px;
 	border: 0;
 }
+.close2{
+	background-color:#D8D8D8;
+	border-radius: 5px;
+	border: 0;
+}
 .QnATable{
 	margin-left:5%;
 	border-collapse: collapse;
@@ -109,7 +115,7 @@
 	background-color:transparent;
 	border:0;
 	width: 280px;
-	height: 110px;
+	height: 220px;
 	resize: none;
 	padding-top: 90px;
 }
@@ -139,6 +145,9 @@
 .second.file{
 	height: 40px;
 }
+.second.fileDownload{
+	height: 40px;
+}
 .second label{
 	display: inline-block; 
 	padding: .3em .5em; 
@@ -154,14 +163,36 @@
 .upload-name{
 	margin-right: 50px;
 }
+.download-name{
+	margin-right: 50px;
+}
 .myPageUl li:nth-child(3) {
 	background-color: #8181F7;
+}
+#mask {  
+    position:absolute;  
+    z-index:9000;  
+    background-color:#000;  
+    display:none;  
+    left:0;
+    top:0;
+}
+#download{
+	display: inline-block; 
+	padding: .3em .5em; 
+	font-size: inherit; 
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #D8D8D8; 
+	cursor: pointer; 
+	border: 1px solid #ebebeb; 
+	border-bottom-color: #e2e2e2; 
+	border-radius: .25em;
 }
 </style>
 <script>
 function goDetail(data) {
     /*팝업 오픈전 별도의 작업이 있을경우 구현*/ 
-
     popupOpen(data); //레이어 팝업창 오픈 
 }
 function popupOpen(data) {
@@ -169,11 +200,44 @@ function popupOpen(data) {
     //영역 가운에데 레이어를 뛰우기 위해 위치 계산 
     $('.layerpop').css("top",(($(window).height() - $('.layerpop').outerHeight()) / 2) + $(window).scrollTop());
     $('.layerpop').css("left",(($(window).width() - $('.layerpop').outerWidth()) / 2) + $(window).scrollLeft());
-    $('#QnATitle').val(data);
+    if(data != null){
+	    var title = data.substring(data.lastIndexOf("QNATitle=")+9, data.lastIndexOf("QNAContent=")-2);
+	    var content = data.substring(data.lastIndexOf("QNAContent=")+11, data.lastIndexOf("userId=")-2);
+	    var fileName = data.substring(data.lastIndexOf("QNAFileName=")+12, data.lastIndexOf("deleteYN=")-2);
+	    console.log(fileName);
+	    $('#QnATitle').val(title);
+	    $('#QnAContent').val(content);
+	    if(fileName != 'null'){
+	    	$('.download-name').val(fileName);
+	    	$('#download').attr('href','resources/uploadFiles/'+fileName);
+	    }else{
+	    	$('.download-name').val("파일이 존재하지 않습니다.");
+	    }
+	    $('.writeCom').hide();
+	    $('.close').hide();
+	    $('.close2').show();
+	    $('.file').hide();
+	    $('.fileDownload').show();
+    }else{
+    	$('#QnATitle').val("");
+	    $('#QnAContent').val("");
+	    $('.upload-name').val("");
+	    $('.writeCom').show();
+	    $('.close').show();
+	    $('.file').show();
+	    $('.fileDownload').hide();
+	    $('.close2').hide();
+    }
     $('#layerbox').show();
+    var maskHeight = $(document).height();  
+    var maskWidth = $(window).width();
+    $("#mask").css({"width":maskWidth,"height":maskHeight});
+    $("#mask").fadeIn(0);      
+    $("#mask").fadeTo("slow",0.6);
 }
 function popupClose() {
     $('#layerbox').hide();
+    $("#mask, .window").hide();
 }
 $(document).ready(function(){ 
 	var fileTarget = $('#QnAFile'); 
@@ -188,12 +252,27 @@ $(document).ready(function(){
 		
 		// 추출한 파일명 삽입 
 		$(this).siblings('.upload-name').val(filename); 
-	}); 
+	});
+	$("#mask").click(function(){  
+		console.log("d");
+	    $(this).hide();  
+	    $("#layerbox").hide();  
+	});
 });
-
+function QnAsubmit(){
+	var title = $('#QnATitle').val();
+    var content = $('#QnAContent').val();
+    if(!title || !content){
+    	alert("제목과 내용 전부 입력해주시기 바랍니다.");
+    	return false;
+    }else{
+    	return true;
+    }
+}
 </script>
 </head>
 <body>
+	<div id="mask"></div>
 	<img class="img" src="resources/images/myPageImage.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">QnA</b>
@@ -211,30 +290,26 @@ $(document).ready(function(){
 			</tr>
 		</thead>
 		<tbody class="bottomBoard">
-			<tr>
-				<td>22</td>
-				<td onClick="javascript:goDetail('A동 벤치 고장난것 같아요!');">A동 벤치 고장난것 같아요!</td>
-				<td>2020-05-09</td>
-				<td>처리 중</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td onClick="javascript:goDetail('A동 벤치 고장난것 같아요!');">A동 벤치 고장난것 같아요!</td>
-				<td>2020-05-09</td>
-				<td>처리 중</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td onClick="javascript:goDetail('A동 벤치 고장난것 같아요!');">A동 벤치 고장난것 같아요!</td>
-				<td>2020-05-09</td>
-				<td>처리 중</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td onClick="javascript:goDetail('A동 벤치 고장난것 같아요!');">A동 벤치 고장난것 같아요!</td>
-				<td>2020-05-09</td>
-				<td>처리 중</td>
-			</tr>
+			<c:if test="${qlist != null && !qlist.isEmpty()}">
+				<c:forEach var="i" begin="0" end="${qlist.size()-1}">
+					<tr>
+						<td>${qlist[i].QNAId }</td>
+						<td onClick="javascript:goDetail('${qlist[i]}');">${qlist[i].QNATitle }</td>
+						<td>${qlist[i].QNADate}</td>
+						<c:if test='${qlist[i].deleteYN eq "N"}'>
+							<td>처리 중</td>
+						</c:if>
+						<c:if test='${qlist[i].deleteYN eq "Y"}'>
+							<td>처리 완료</td>
+						</c:if>
+					</tr>
+				</c:forEach>
+			</c:if>
+			<c:if test="${qlist == null || qlist.isEmpty()}">
+				<tr>
+					<td colspan="4">불러올 QnA가 없습니다.</td>
+				</tr>
+			</c:if>
 		</tbody>
 	</table>
 	<table id = "pagingTable">
@@ -248,7 +323,7 @@ $(document).ready(function(){
 						[이전] &nbsp;
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="">
+						<c:url var="before" value="myQnA.my">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
 						<a href="${ before }">[이전]</a> &nbsp;
@@ -261,7 +336,7 @@ $(document).ready(function(){
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="">
+							<c:url var="pagination" value="myQnA.my">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
 							<a href="${ pagination }">${ p }</a> &nbsp;
@@ -273,7 +348,7 @@ $(document).ready(function(){
 						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="">
+						<c:url var="after" value="myQnA.my">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
 						<a href="${ after }">[다음]</a>
@@ -290,24 +365,31 @@ $(document).ready(function(){
         <article class="layerpop_area">
         <br>
         <div class="content">
-        	<table class="QnATable">
-        		<tr>
-        			<td class="first"><b>제목</b></td>
-        			<td class="second title"><input type="text" id="QnATitle" placeholder="제목을 입력해주세요"></td>
-        		</tr>
-        		<tr>
-        			<td class="first"><b>내용</b></td>
-        			<td class="second content"><textarea id="QnAContent" placeholder="내용을 입력해주세요"></textarea></td>
-        		</tr>
-        		<tr>
-        			<td class="first"><b>파일</b></td>
-        			<td class="second file"><label for="QnAFile">파일선택</label>&emsp;&emsp;<input class="upload-name" value="파일선택" disabled="disabled">
-        			<input type="file" id="QnAFile"></td>
-        		</tr>
-        	</table>
-        	<br>
-    		<button onClick="javascript:popupClose();" class="close">취소</button>
-    		<button onClick="javascript:popupClose();" class="writeCom">작성완료</button>
+        	<form action="insertQnA.my" onsubmit="return QnAsubmit();" method="post" enctype="multipart/form-data">
+	        	<table class="QnATable">
+	        		<tr>
+	        			<td class="first"><b>제목</b></td>
+	        			<td class="second title"><input type="text" id="QnATitle" name="QnATitle" placeholder="제목을 입력해주세요"></td>
+	        		</tr>
+	        		<tr>
+	        			<td class="first"><b>내용</b></td>
+	        			<td class="second content"><textarea id="QnAContent" name="QnAContent" placeholder="내용을 입력해주세요"></textarea></td>
+	        		</tr>
+	        		<tr>
+	        			<td class="first"><b>파일</b></td>
+	        			<td class="second file"><label for="QnAFile">파일선택</label>&emsp;&emsp;<input class="upload-name" value="파일선택" disabled="disabled">
+	        			<input type="file" id="QnAFile" name="QnAFile"></td>
+	        			<td class="second fileDownload">
+	        			<a id="download" download>다운로드</a>&emsp;&emsp;<input class="download-name" disabled="disabled">
+	        			</td>
+	        		</tr>
+	        	</table>
+	        	<br>
+	        	<input type="hidden" name="page" value="${pi.currentPage}">
+	    		<button type="button" onClick="javascript:popupClose();" class="close">취소</button>
+	    		<input type="submit" class="writeCom" value="작성완료">
+	    		<button type="button" onClick="javascript:popupClose();" class="close2">닫기</button>
+    		</form>
         </div>
         </article>
     </div>

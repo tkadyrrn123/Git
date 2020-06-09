@@ -33,55 +33,59 @@
 	<form action="update.my" method="post" onsubmit="return check();">
 		<div class="area">
 			<ul class="ul">
-				<li class="image"><img src="resources/images/${member.userFile}" width="110px" height="110px"></li>
+				<li class="image"><img src="resources/uploadFiles/${loginUser.userFile}" width="110px" height="110px"></li>
 				<li class="top">현재 아파트</li>
 				<li>
-				<input type="hidden" value="${member.userId }" name="userId">
-				<input type="hidden" value="${member.userPwd }" name="userOldPwd">
-				<input type="hidden" value="${member.userFile }" name="userFile">
-				<input type="text" class="text" value="${member.aptName}" id="aptName" name="aptName">
+				<input type="hidden" value="${loginUser.userId }" name="userId">
+				<input type="hidden" value="${loginUser.userPwd }" name="userOldPwd">
+				<input type="hidden" value="${loginUser.userFile }" name="userFile">
+				<input type="text" class="text" value="${loginUser.aptName}" id="aptName" name="aptName">
 				<hr>
 				</li>
 				<li class="top">등급</li>
 				<li>
-				<c:if test="${member.userLevel == 1}">
-					<input type="text" class="text" value="일반등급">
+				<c:if test="${loginUser.userLevel == 1}">
+					<input type="text" class="text" value="일반등급" readonly>
 					<input type="hidden" id="userLevel" name="userLevel" value=1>
 				</c:if>
-				<c:if test="${member.userLevel == 2}">
-					<input type="text" class="text" value="관리등급">
-					<input type="hidden" id="userLevel" name="userLevel" value=1>
+				<c:if test="${loginUser.userLevel == 2}">
+					<input type="text" class="text" value="관리사무소" readonly>
+					<input type="hidden" id="userLevel" name="userLevel" value=2>
+				</c:if>
+				<c:if test="${loginUser.userLevel == 3}">
+					<input type="text" class="text" value="총관리자" readonly>
+					<input type="hidden" id="userLevel" name="userLevel" value=3>
 				</c:if>
 				<hr>
 				</li>
 				<li class="top">이름</li>
 				<li>
-				<input type="text" class="text" value="${member.userName}" id="userName" name="userName">
+				<input type="text" class="text" value="${loginUser.userName}" id="userName" name="userName">
 				<hr>
 				</li>
 				<li class="top">닉네임</li>
 				<li>
-				<input type="text" class="text" value="${member.nickName}" id="nickName" name="nickName">
+				<input type="text" class="text" value="${loginUser.nickName}" id="nickName" name="nickName">
 				<hr>
 				</li>
 				<li class="top">동</li>
 				<li>
-				<input type="text" class="text" value="${member.aptDong}" id="aptDong" name="aptDong">
+				<input type="text" class="text" value="${loginUser.aptDong}" id="aptDong" name="aptDong">
 				<hr>
 				</li>
 				<li class="top">호수</li>
 				<li>
-				<input type="text" class="text" value="${member.aptHosu}" id="aptHosu" name="aptHosu">
+				<input type="text" class="text" value="${loginUser.aptHosu}" id="aptHosu" name="aptHosu">
 				<hr>
 				</li>
 				<li class="top">이메일</li>
 				<li>
-				<input type="text" class="text" value="${member.email}" id="email" name="email">
+				<input type="text" class="text" value="${loginUser.email}" id="email" name="email">
 				<hr>
 				</li>
 				<li class="top">휴대전화 번호</li>
 				<li>
-				<input type="text" class="text" value="${member.phone}" id="phone" name="phone"> 
+				<input type="text" class="text" value="${loginUser.phone}" id="phone" name="phone"> 
 				<hr>
 				</li>
 				<li class="top">현재 비밀번호</li>
@@ -121,9 +125,9 @@
 				return false;
 			}
 			if(nowPass.length > 0 || newPass.length > 0 || newPass2.length > 0){
-				if(newPass == newPass2 && nowPass == '${member.userPwd}'){
+				if(newPass == newPass2 && nowPass == '${loginUser.userPwd}'){
 					return true;
-				}else if(nowPass != '${member.userPwd}'){
+				}else if(nowPass != '${loginUser.userPwd}'){
 					alert("비밀번호가 일치하지 않습니다.");
 					return false;
 				}else{
