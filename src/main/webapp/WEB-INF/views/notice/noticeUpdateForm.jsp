@@ -17,8 +17,9 @@
    #tr2{height: 10%;}
    #tr3{height: 70%;}
    #tr4{height: 10%;}
-   #tb{width: 60%; height: 600px; margin: 0 auto; }
+   #tb{width: 60%; height: 600px; margin: 0 auto;}
    .td1{text-align: center; font-size: 11px; background: lavenderBlush;}
+   #tb a{color:rgb(139, 134, 134);}
    
    #content{width: 90%; height: 90%; border: none;}
    #btns{text-align: center;}
@@ -41,10 +42,10 @@
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div id="notice_write_body">
-         <form action="noticeInsert.no" method="post" enctype="Multipart/form-data">
+         <form action="noticeUpdate.no" method="post" enctype="Multipart/form-data">
 	        <input type="hidden" name="page" value="${ page }">
 			<input type="hidden" name="nNo" value="${ notice.nNo }">
-<%-- 			<input type="hidden" name="renameFileName" value="${ board.renameFileName }"> --%>
+			<input type="hidden" name="renameFileName" value="${ notice.renameFileName }">
 			
             <table id="tb">
                  <tr id="tr1">
@@ -61,11 +62,19 @@
                      <td>
                         <textarea id="content" name="nContent" style="margin-left: 20px; resize: none;">${ notice.nContent }</textarea>
                      </td>
-                  </tr>      
+                  </tr>    
+                    
                   <tr id="tr4">
                      <td class="td1">첨부</td>
                      <td>
-                  <input type="file" name="uploadFile" style="margin-left: 20px; padding: 5px;">
+                 		<input type="file" name="reloadFile" style="margin-left: 20px; padding: 5px;">
+						<c:if test="${ !empty notice.renameFileName }">
+							<br><input type="button" value="기존 파일" style="margin-left: 24px;"> 
+							<a href="${ contextPath }/resources/nuploadFiles/${ notice.renameFileName }" download="${ notice.renameFileName }">
+								${  notice.renameFileName  }
+							</a>
+							<input type="hidden" name="originalFileName" value="${  notice.renameFileName  }"> 
+						</c:if>
                      </td>
                   </tr>      
 

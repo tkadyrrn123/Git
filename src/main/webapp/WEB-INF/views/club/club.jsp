@@ -335,7 +335,7 @@ body {
 	color: white;
 	font-size: 1.5em;
 	}	
-	#writeBtn{ background:black; color:white; margin-left: 1300px;}
+	#writeBtn{ background:black; color:white; margin-left: 1300px; margin-bottom:30px; margin-top: 30px;}
 	.pagingArea{    display: inline;
     width: 100%;}
 </style>
@@ -355,11 +355,12 @@ body {
 
 <!-- 동호회 리스트  -->
 <div class="wrapper">
+		
 		<c:forEach var="b" items="${ list }" varStatus="status">
         <div class="card">
             <input type="checkbox" id="card${ status.index }" class="more" aria-hidden="true">
             <div class="content">
-                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/images/${ b.fileName }')">
+                <div class="front" id="imgg" style="background-image: url('${ pageContext.servletContext.contextPath }/resources/clubFiles/${ b.fileName }')">
                     <div class="inner">
                         <h2>${ b.clubName }</h2>
 			
@@ -427,7 +428,10 @@ body {
             </div>
         </div>
         </c:forEach>
-        
+        <c:if test="${ empty list }">
+        	 활동중인 동호회가 없습니다.
+        	 <br><br>
+        </c:if>
         		<div class="pagingArea" align="center">
 
 				<!-- [이전] -->
@@ -438,7 +442,7 @@ body {
 					<c:url var="before" value="clubList.cb">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
-					<button class="btn-standard" onclick="location.href='${ before }'">[이전]</button> &nbsp;
+					<button class="btn-standard" onclick="location.href='${ before }'">이전</button>
 				</c:if>
 				
 				<!-- 페이지 -->
@@ -451,7 +455,7 @@ body {
 						<c:url var="pagination" value="clubList.cb">
 							<c:param name="page" value="${ p }"/>
 						</c:url>
-						<button class="btn-standard" onclick="location.href='${ pagination }'">${ p }</button> &nbsp;
+						<button class="btn-standard" onclick="location.href='${ pagination }'">${ p }</button>
 					</c:if>
 				</c:forEach>
 				
@@ -467,7 +471,7 @@ body {
 				</c:if>
 
        			</div>
-       			<button id="writeBtn" class="btn-standard" onclick="location.href='clubInsertForm.cb'">글쓰기</button> 
+       			<button id="writeBtn" class="btn-standard" onclick="location.href='clubInsertForm.cb'">동호회 만들기</button> 
         
 	</div>
 	<jsp:include page="../common/Footer.jsp"/>

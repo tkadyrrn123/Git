@@ -119,7 +119,7 @@
 
 			
 			<div id=sellPic>
-				<img id=img src="${ pageContext.servletContext.contextPath }/resources/images/${ c.fileName }"/>
+				<img id=img src="${ pageContext.servletContext.contextPath }/resources/clubFiles/${ c.fileName }"/>
 			</div>
 			
 			

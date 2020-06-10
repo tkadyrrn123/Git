@@ -35,7 +35,7 @@
 
 /* 댓글작성 */
 	.reply1_box{width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
-	.comment2-1img{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
+	.comment_img{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
 	.dong{line-height: 50px; display: inline; margin-left: 10px; margin-right: 10px;}
 	.reply1_btn{float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
 	.reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
@@ -56,7 +56,7 @@
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
 		<form>
-			<!-- 게시글 상단부 시작  -->	
+	<!----------- 게시글 상단부 시작  ---------->	
 			<br>
 			<h2 style="margin-left: 15px;">공지사항 상세보기</h2>
 			<hr>
@@ -65,13 +65,12 @@
 				<div class="detailTable_title">
 					<b>${ notice.nTitle }</b>
 				</div>
-				<div id="cdt_profile" style="float:left;display:inline;">
-						<img class="comment2-1img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
-					</div>
-					<div class="dong">${ notice.userId }</div>
-					<div style="display:inline;"><i class="far fa-clock"></i>${ notice.nCreateDate }</div>
-					<div style="display:inline;"><i class="far fa-eye"></i>${ notice.nCount }</div>
-				<!--수정 /삭제 선택 -->	
+				<div id="notice_profile" style="float:left;display:inline;">
+					<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }"></div>
+				<div class="dong">${ notice.userId }</div>
+				<div style="display:inline;"><i class="far fa-clock"></i>${ notice.nCreateDate }</div>
+				<div style="display:inline;"><i class="far fa-eye"></i>${ notice.nCount }</div>
+	<!-------------수정 /삭제 선택 -------------->	
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
 						<c:url var="nlist" value="noticeUpdateView.no">
@@ -83,64 +82,50 @@
 				</div>
 				<hr>
 			</div>
-		<!-- 게시글 상단부 끝  -->	
-		<!-- 게시글 내용  -->
+		<!---------- 게시글 상단부 끝  ----------->	
+		<!---------- 게시글 내용  ----------->
 			<% pageContext.setAttribute("newLineChar", "\r\n"); %>
 			<div class="board_content">${ fn:replace( notice.nContent, newLineChar, "<br>") }</div>
-		<!-- 게시글 내용 끝 -->	
-		<!-- 첨부파일 O 때 -->		
+		<!---------- 게시글 내용 끝 ------------>	
+		<!-------- 첨부파일 O 때 ------------>		
 			<c:if test="${ !empty notice.renameFileName }">
 				<div>
-				<img src="${contextPath}/resources/nuploadFiles/${ notice.renameFileName }">
-<%-- 					<a href="${ contextPath }/resources/buploadFiles/${ notice.renameFileName }" download="${ notice.renameFileName }">${ notice.renameFileName }</a> --%>
+					<img src="${contextPath}/resources/uploadFiles/${ notice.renameFileName }" style="width: 850px; margin-left:50px;">
 				</div>
 			</c:if>
-		<!-- 첨부파일 O 끝  -->		
+		<!---------- 첨부파일 O 끝  ---------->		
 			<br>
 			<hr style="width: 900px;">
 			<div class="go_list_box">
 				<input type="button" class="go_list" value="목록" onclick="location.href='noticeList.no'">
 			</div>
 			<br>
-			<!--댓글 작성  -->
-			<div class="reply1_box">
-				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="comment2-1img" src="<%=request.getContextPath()%>/css/화단사진.jpg">
+		<!-------------댓글 작성  ------------>
+			<div class="reply1_box" id="rtb">
+				<div id="notice_profile" style="float: left; display: inline;">
+					<img id="userFile" class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
 				</div>
-				<div class="dong">라랄라(202동)</div>
-					<input type="button" class="reply1_btn" value="댓글등록">
+				<div class="dong">${ notice.userId }</div>
+					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
 				<div style="margin-left: 10px; margin-top: 12px;">
-					<textarea class="reply_TEXT" name="reply_TEXT" cols="105" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
+					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="100" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
 				<div style="color:#aaa; float: right; margin-top: 45px;" id="counter">(0/200자)</div>
 				</div>
 			</div>
-			<!--원 댓글  -->
-			<div class="reply2_box">
-				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="comment2-1img" src="<%=request.getContextPath()%>/css/화단사진.jpg">
+		<!-------------댓글 작성  끝------------>
+		<!-------------댓글 가져오기 ------------>	
+			<div id="noticeComment_outer">
+				<div class="reply2_box" id="noticeComment">
+<!-- 					<div class="input-group"> -->
+<!-- 				<div id="notice_profile" style="float: left; display: inline;"> -->
+<%-- 					<img class="comment_img" src="<%=request.getContextPath()%>/css/화단사진.jpg"></div> --%>
+<!-- 				<div id="notice_rUserId" class="dong">닉네임</div> -->
+<!-- 				<div id="notice_rContent" style="margin-left: 10px;">댓글 내용</div> -->
+<!-- 				<div id="notice_rCreateDate" style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div> -->
+<!-- 					</div> -->
 				</div>
-				<div class="dong">라랄라(202동)</div>
-					<input type="button" value="삭제" class="reply2_box_btn">
-					<input type="button" value="수정" class="reply2_box_btn">
-				<div style="margin-left: 10px;">와! 이런식으로 어쩌구 저쩌구한 투표결과를 보니 좋네요!</div>
-				<div style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div>
-				<input type="button" value="답글" class="reply2_box_btn2">
-				<i class="far fa-thumbs-up">0</i>
-				</div>
-			
-			<!-- 대 댓글 -->
-			<div class="reply3_box">
-				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="comment2-1img"src="<%=request.getContextPath()%>/css/화단사진.jpg">
-				</div>
-				<div class="dong">뾰로롱(201동)</div>
-					<input type="button" value="삭제" class="reply2_box_btn">
-					<input type="button" value="수정" class="reply2_box_btn">
-				<div style="margin-left: 10px;">와! 이런식으로 어쩌구 저쩌구한 투표결과를 보니 좋네요!</div>
-				<div style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div>
-				<input type="button" value="답글" class="reply2_box_btn2">
-				<i class="fas fa-thumbs-up">1</i>
 			</div>
+		<!-------------댓글 가져오기 끝------------>			
 		</form>
 	</div>
 	
@@ -170,6 +155,131 @@
       	        	submenu.hide();
       	        }
      });
+	
+	// 댓글 리스트 불러오기
+	function getCommentList(){
+		var nNo = ${ notice.nNo };
+		
+		$.ajax({
+			url: 'cList.no',
+			data: {nNo:nNo},
+			dataType: 'json',
+			success: function(data){
+				
+				$noticeComment_outer = $('#noticeComment_outer');
+				$noticeComment_outer.html('');
+				
+				var $div;
+				var $userFile;
+				var $rUserId;
+				var $rContent;
+				var $rCreateDate;
+				
+				var $rModify;
+				var $rDelete;
+				
+				console.log(data);
+// 				$('#rCount').text('댓글('+data.length + ')');
+				
+				if(data.length > 0){
+					for(var i in data){
+						
+						$div = $('<div id="noticeComment" class="reply2_box">');
+						$div_userFile = $('<div style="float:left;display:inline;">');
+						$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'">');
+						
+						$rModify = $('<a onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\');"> 수정 </a>');
+						$rDelete = $('<a onclick="commentDelete('+data[i].rNo+');"> 삭제 </a> </div>');
+						
+						$rUserId = $('<div class="dong">').text(data[i].rUserId);
+						$rContent = $('<div class="rContent'+data[i].rNo+'" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;">').text(data[i].rContent.replace(/\+/g, ' '));
+						$rCreateDate = $('<div style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
+						
+						$div.append($userFile);
+						$div.append($rUserId);
+						$div.append($rModify);
+						$div.append($rDelete);
+						$div.append($rContent);
+						$div.append($rCreateDate);
+						$noticeComment_outer.append($div);
+					}
+				}else{
+					$div = $('<div id="noticeComment" class="reply2_box">');
+					$rContent = $('<div style="text-align: center;">').text('등록된 댓글이 없습니다.');
+					
+					$div.append($rContent);
+					$noticeComment_outer.append($div);
+				}
+
+			}
+		});
+	}
+	$(function(){
+		getCommentList();
+		
+// 		setInterval(function(){
+// 			getCommentList();
+// 		}, 1000);
+	});
+	
+	//댓글 등록
+	$('#rSubmit').on('click', function(){
+		var rContent = $("#rContent").val(); //댓글내용
+		var noticeNo = ${ notice.nNo }; //댓글이 참조하는 공지번호
+		
+		
+		$.ajax({
+			url:'addNoticeComment.no',
+			data:{rContent:rContent, noticeNo:noticeNo},
+			success: function(data){
+				
+				if(data == 'success'){
+					getCommentList();
+					$('#rContent').val('');
+				}
+			}
+		});
+	});
+	
+	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+	function commentUpdateForm(rNo, rContent){
+	    var a ='';
+	    
+	    a += '<div class="input-group">';
+	    a += '<input type="text" class="form-control" name="rContent_'+rNo+'" value="'+rContent+'"/>';
+	    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdate('+rNo+');">수정</button> </span>';
+	    a += '</div>';
+	    
+	    $('.rContent'+rNo).html(a);
+	    
+	}
+
+	//댓글 수정
+	function commentUpdate(rNo){
+	    var updateContent = $('[name=rContent_'+rNo+']').val();
+	    
+	    $.ajax({
+	        url : 'commentUpdate.no',
+	        dataType: 'json',
+	        data : {'rContent' : updateContent, 'rNo' : rNo},
+	        success : function(data){
+	        	console.log(data);
+	            if(data == 1) getCommentList(rNo); //댓글 수정후 목록 출력 
+	        }
+	    });
+	}
+	
+	//댓글 삭제 
+	function commentDelete(rNo){
+	    $.ajax({
+	        url : 'commentUpdate.no'+rNo,
+	        dataType: 'json',
+	        success : function(data){
+	            if(data == 1) getCommentList(rNo); //댓글 삭제후 목록 출력 
+	        }
+	    });
+	}
+
 	</script>
 	<jsp:include page="../common/Footer.jsp"/>
 </body>

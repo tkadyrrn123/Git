@@ -72,36 +72,20 @@
 			</tr>
 		</thead>
 		<tbody class="bottomBoard">
-			<tr>
-				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
-				<td>2020-05-09</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
-				<td>2020-05-09</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
-				<td>2020-05-09</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
-				<td>2020-05-09</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
-				<td>2020-05-09</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td>A동 벤치 고장난것 같아요! </td>
-				<td>2020-05-09</td>
-			</tr>
+			<c:if test="${clist != null && !clist.isEmpty()}">
+				<c:forEach var="i" begin="0" end="${clist.size()-1}">
+					<tr>
+						<td>${clist[i].replyNo}</td>
+						<td>${clist[i].replyContent}</td>
+						<td>${clist[i].commentDate}</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+			<c:if test="${clist == null || clist.isEmpty()}">
+				<tr>
+					<td colspan="3">불러올 내 댓글이 없습니다.</td>
+				</tr>
+			</c:if>
 		</tbody>
 		<tfoot>
 			<!-- 페이징 처리 -->
@@ -113,7 +97,7 @@
 						[이전] &nbsp;
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="">
+						<c:url var="before" value="myComment.my">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
 						<a href="${ before }">[이전]</a> &nbsp;
@@ -126,7 +110,7 @@
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="">
+							<c:url var="pagination" value="myComment.my">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
 							<a href="${ pagination }">${ p }</a> &nbsp;
@@ -138,7 +122,7 @@
 						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="">
+						<c:url var="after" value="myComment.my">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
 						<a href="${ after }">[다음]</a>
