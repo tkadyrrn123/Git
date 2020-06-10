@@ -13,7 +13,10 @@ public class Notice {
 	private Date nModifyDate; //공지사항 수정일
 	private String nStatus; //게시글 상태
 	private String originalFileName; //오리지널 첨부파일 
-	private String renameFileName; //리네이밍 첨부파일
+	private String renameFileName; //리네이밍 첨부파일- nuploadFiles 폴더로 들어감
+	
+	private String noticeNickname;//유저테이블 닉네임
+	private String noticeFile;//유저테이블 프로필 사진
 	
 	public Notice() {}
 
@@ -30,6 +33,24 @@ public class Notice {
 		this.nStatus = nStatus;
 		this.originalFileName = originalFileName;
 		this.renameFileName = renameFileName;
+	}
+	
+	public Notice(int nNo, String userId, String nTitle, String nContent, int nCount, Date nCreateDate,
+			Date nModifyDate, String nStatus, String originalFileName, String renameFileName, String noticeNickname,
+			String noticeFile) {
+		super();
+		this.nNo = nNo;
+		this.userId = userId;
+		this.nTitle = nTitle;
+		this.nContent = nContent;
+		this.nCount = nCount;
+		this.nCreateDate = nCreateDate;
+		this.nModifyDate = nModifyDate;
+		this.nStatus = nStatus;
+		this.originalFileName = originalFileName;
+		this.renameFileName = renameFileName;
+		this.noticeNickname = noticeNickname;
+		this.noticeFile = noticeFile;
 	}
 
 	public int getnNo() {
@@ -111,12 +132,28 @@ public class Notice {
 	public void setRenameFileName(String renameFileName) {
 		this.renameFileName = renameFileName;
 	}
+	
+	public String getNoticeNickname() {
+		return noticeNickname;
+	}
+
+	public void setNoticeNickname(String noticeNickname) {
+		this.noticeNickname = noticeNickname;
+	}
+
+	public String getNoticeFile() {
+		return noticeFile;
+	}
+
+	public void setNoticeFile(String noticeFile) {
+		this.noticeFile = noticeFile;
+	}
 
 	@Override
 	public String toString() {
 		return "Notice [nNo=" + nNo + ", userId=" + userId + ", nTitle=" + nTitle + ", nContent=" + nContent
 				+ ", nCount=" + nCount + ", nCreateDate=" + nCreateDate + ", nModifyDate=" + nModifyDate + ", nStatus="
-				+ nStatus + ", originalFileName=" + originalFileName + ", renameFileName=" + renameFileName + "]";
+				+ nStatus + ", originalFileName=" + originalFileName + ", renameFileName=" + renameFileName
+				+ ", noticeNickname=" + noticeNickname + ", noticeFile=" + noticeFile + "]";
 	}
-	
 }

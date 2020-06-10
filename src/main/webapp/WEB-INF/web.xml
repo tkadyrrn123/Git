@@ -139,6 +139,21 @@
 		<url-pattern>*.no</url-pattern>
 	</servlet-mapping>
 
+	<!--관리자  -->
+	<servlet>
+		<servlet-name>AdminServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/admin-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AdminServlet</servlet-name>
+		<url-pattern>*.adm</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 중고장터  -->
 	<servlet>
 		<servlet-name>MarketServlet</servlet-name>

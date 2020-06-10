@@ -452,8 +452,8 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 		<h2>L O G I N</h2>
 		<div class="hr-line">OR</div>
 		<form method="post" action="login.do">
-			<div class="icon1"><img src="resources/images/user.png"></div><input type="text" name="id" placeholder="아이디">	
-			<div class="icon2"><img src="resources/images/password.png"></div><input type="password" name="pwd" placeholder="password">	
+			<div class="icon1"><img src="resources/images/user.png"></div><input type="text" name="id" placeholder="아이디" autocomplete=off>	
+			<div class="icon2"><img src="resources/images/password.png"></div><input type="password" name="pwd" placeholder="password" autocomplete=off>	
 			<input type="submit" class="login" value="로그인">	
 		</form>
 		<div class="cf">
@@ -511,6 +511,8 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 						<td>
 							<p><em>*</em> 닉네임</p>
 							<input type="text" id="nickName" name="nickName" autocomplete=off>
+							<label id="nickchkmsg" style="display: none; font-size: x-small;"></label>
+							<input type="hidden" id="nickchk" value="0"/>
 						</td>
 					</tr>
 					<tr>
@@ -539,7 +541,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 							 <div class="select-box">
 						        <div class="options-container">
 						          <div class="option">
-						            <input type="radio" class="radio" id="automobiles" name="category" />
+						            <input type="radio" class="radio" id="automobiles" name="category" onclick="searchApt();"/>
 						            <label for="automobiles">아파트를 검색해주세요.</label>
 						          </div>
 						
@@ -734,7 +736,45 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	      }
 	        
 	    });
+      //닉네임 중복검사
+      $('#nickName').on('keyup',function(){
+    	  var nickName = $('#nickName').val();
+    	  var check = /[0-9]|[a-z]|[A-Z]|[가-힣]/;
+
+    	  if(nickName.length==0){
+			  $('#nickchkmsg').hide();
+			  $('#idchk1').val(0);
+		  }
+    	  if(nickName.length<2){
+			  $('#nickchkmsg').show();
+			  $('#nickchkmsg').text('닉네임을 2자리 이상 입력해주세요.');
+			  $('#nickchkmsg').css('color','red');
+			  $('#nickchk').val(0);
+		  }else{
+			  if(check.test(nickName)){
+	        	  $('#nickchkmsg').text('사용 가능합니다.');
+				  $('#nickchkmsg').css('color','green');
+				  $('#nickchk').val(1);
+		    	  $.ajax({
+		    		  url: 'dupNick.do',
+		    		  data: {nick:nickName},
+		    		  success: function(data){
+		    			  console.log(data);
+							
+							if(data == 'true'){
+								$('#nickchk').val(1);
+							}else{
+								$('#nickchkmsg').text('이미 있는 아이디거나 탈퇴된 아이디입니다.');
+								  $('#nickchkmsg').css('color','red');
+								$('#nickchk').val(0);
+							}
+		    		  }
+		    	  });
+			  }
+		  }
+	  });
       
+    	  
       //데이터 보내기 전에 검사
       function jnform(){
           var userId = $('#memberjoinForm #id');
@@ -811,6 +851,12 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
             	return false;
          }
          
+         if($('#idchk1').val() == 0 ){
+             alert('사용가능한 아이디를 입력해주세요.');
+             userId.focus();
+             return false;
+         }
+         
          if($('#pwdchk').val() == 0 ){
              alert('사용가능한 비밀번호를 입력해주세요.');
              $('#pwd').focus();
@@ -823,11 +869,17 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
              return false;
          }
          
-         if($('#idchk1').val() == 0 ){
-             alert('사용가능한 아이디를 입력해주세요.');
+         if($('#nickchk').val() == 0 ){
+             alert('사용가능한 닉네임을 입력해주세요.');
              userId.focus();
              return false;
          }
+         
+         if(phone.val().indexOf('-')<=0){
+        	 alert("'-'를 입력해주세요.");
+        	 phone.focus();
+	         return false;
+        }
        	 if(bool){
           		 $('#memberjoinForm').submit();
           		 $(".modal").fadeOut();
@@ -998,7 +1050,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 					<tr>
 						<td>
 							<p><em>*</em> 전화번호</p>
-							<input type="text" id="aptAdd_phone" name="aptAdd_phone" autocomplete=off placeholder="'-'없이 입력해주세요 ex) 01022334455">
+							<input type="text" id="aptAdd_phone" name="aptAdd_phone" autocomplete=off placeholder="'-'넣어서 입력해주세요 ex) 010-2233-4455">
 						</td>
 					</tr>
 				</table>
@@ -1067,8 +1119,8 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	            return false;
 			}
 	        
-	        if(aptAdd_phone.val().indexOf('-')>=0){
-	        	 alert("'-'를 빼고 입력해주세요.");
+	        if(aptAdd_phone.val().indexOf('-')<=0){
+	        	 alert("'-'를 입력해주세요.");
 	        	 aptAdd_phone.focus();
 		         return false;
 	        }

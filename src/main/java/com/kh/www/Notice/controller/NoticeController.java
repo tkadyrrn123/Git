@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -13,16 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Notice.model.exception.NoticeException;
 import com.kh.www.Notice.model.service.NoticeService;
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.common.Pagenation;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Controller
@@ -39,16 +44,21 @@ public class NoticeController {
 		if(page != null) {
 			currentPage = page;
 		}
+		
+		//공지사항 전체 리스트 갯수 가져오기
 		int listCount = noticeService.getNoticeListCount(); 
 
 		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
 		
+		//공지사항 리스트 페이지 가져오기
 		ArrayList<Notice> list = noticeService.selectList(pi);
 		
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
 			mv.setViewName("noticeList");
+		}else {
+			throw new NoticeException("공지사항 전체 조회에 실패했습니다.");
 		}
 
 		return mv;
@@ -58,31 +68,12 @@ public class NoticeController {
 	public String boardinsertView() {
 		return "noticeInsertForm";
 	}
-	
-	//임시로그인
-	@RequestMapping(value="noticelogin.no", method=RequestMethod.GET)
-	public String memberLogin(String userId, String userPwd, HttpSession session) {
 		
-		Member m = new Member();
-		m.setUserId(userId);
-		m.setUserPwd(userPwd);
-		
-		session.setAttribute("loginUser", m);
-		
-		System.out.println("임시 로그인  : "+ m);
-
-		
-		return "redirect:noticeList.no";
-	}
-	
-	@RequestMapping("noticeInsert.no") //공지사항 등록
+	@RequestMapping("noticeInsert.no") //공지사항 작성
 	public String noticeInsert(@ModelAttribute Notice n, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session) {
-		//글쓰기 완료하면 리스트로 넘어감
-		//제목, 타이틀, 업로드 파일 넣기
-		
-		System.out.println("db가기전 n:"+n);
-		if(uploadFile != null && !uploadFile.isEmpty()) { //파일이 있으면
-			//아래 만들어놓은 세이브파일 메소드 불러옴
+	
+		if(uploadFile != null && !uploadFile.isEmpty()) {
+			
 			String renameFileName = saveFile(uploadFile, request);
 			
 			if(renameFileName != null) {
@@ -94,10 +85,8 @@ public class NoticeController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String id = loginUser.getUserId();
 		
-		System.out.println("세션에서 가져온 id->"+id);
 		n.setUserId(id);
 		int result = noticeService.insertNotice(n);
-		System.out.println("db다녀온 n:"+n);
 		
 		if(result > 0) {
 			return "redirect:noticeList.no"; //DB에 저장하고나면 목록으로 이동
@@ -107,17 +96,16 @@ public class NoticeController {
 		
 	}
 	
-	
-	
+	//첨부파일 저장
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		
-		String root = request.getSession().getServletContext().getRealPath("resources"); //작은 리소시스의 위치
-		String savePath = root + "\\nuploadFiles";
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\uploadFiles";
 		
 		File folder = new File(savePath);
 		
-		if(!folder.exists()) { //폴더가 존재하지 않으면
-			folder.mkdirs(); //폴더를 만들어줘라
+		if(!folder.exists()) {
+			folder.mkdirs();
 		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -136,33 +124,121 @@ public class NoticeController {
 			e.printStackTrace();
 		}
 		
-		return renameFileName;
+		return renameFileName; //리네임 파일만 디비에 저장함 
 	}
 	
-	@RequestMapping("ndetail.no")
+	@RequestMapping("ndetail.no") //공지사항 상세조회
 	public ModelAndView noticeDetail(@RequestParam("nNo") int nNo, @RequestParam("page") int page,
 							  ModelAndView mv) {
 		
-		Notice notice = noticeService.selectNotice(nNo);
+		Notice notice = noticeService.selectNotice(nNo); //글번호 전체 내용 가져오기
 		
 		if(notice != null) {
 			// 모델엔드뷰로 보드를 보낸다.
 			mv.addObject("notice", notice)
 			  .addObject("page", page)
-			  .setViewName("noticeDetailView");//메소드 연결하는거 메소드 체이닝
+			  .setViewName("noticeDetailView");
+		}else {
+			throw new NoticeException("공지사항 상세보기에 실패했습니다.");
 		}
 		return mv;
 	}
 	
-	//수정하기 폼으로 이동
-	@RequestMapping("noticeUpdateView.no")
+	@RequestMapping("noticeUpdateView.no") //수정하기 폼으로 이동 - 수정할 글 상세조회
 	public ModelAndView noticeUpdateView(@RequestParam("nNo") int nNo, @RequestParam("page") int page, ModelAndView mv) {
 		System.out.println(nNo);
+		
 		Notice notice = noticeService.selectUpdateNotice(nNo);
 		
 		if(notice != null) {
 			mv.addObject("notice", notice).addObject("page", page).setViewName("noticeUpdateForm");
+		}else {
+			throw new NoticeException("공지사항 수정하기 폼 요청에 실패했습니다.");
 		}
 		return mv;
+	}
+	
+	@RequestMapping("noticeUpdate.no") //공지사항 업데이트
+	public ModelAndView boardUpdateForm(@ModelAttribute Notice n, @RequestParam("reloadFile") MultipartFile reloadFile,
+								  @RequestParam("page") int page, HttpServletRequest request, ModelAndView mv) {
+		
+		//업데이트 파일 있으면이 기존 파일을 삭제하고 업데이트 파일을 renameFileName에 새로 저장
+		//글 수정 시 업데이트 파일을 새로 넣지 않으면 기존파일은 유지됨
+		if(reloadFile != null && !reloadFile.isEmpty()) {
+			if(n.getRenameFileName() != null) {
+				deleteFile(n.getRenameFileName(), request);
+			}
+			
+			String renameFileName = saveFile(reloadFile, request);
+			if(renameFileName != null) {
+				n.setOriginalFileName(reloadFile.getOriginalFilename());
+				n.setRenameFileName(renameFileName);
+			}
+		}
+		
+		//공지사항 업데이트 - 파일만 업데이트(파일테이블)
+		int result_file = noticeService.updateNotice_File(n);
+		
+		//공지사항 업데이트 - 글만 업데이트(노티스테이블)
+		int result_Content = noticeService.updateNotice_Content(n);
+		
+		if(result_file > 0 || result_Content > 0) {
+			mv.addObject("page",page)
+			  .setViewName("redirect:ndetail.no?nNo="+n.getnNo());
+		}else {
+			throw new NoticeException("공지사항 수정에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	//공지사항 수정시 기존에 업로드한 파일 삭제 
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\uploadFiles";
+		
+		File f = new File(savePath + "\\" + fileName);
+		
+		if(f.exists()) {
+			f.delete();
+		}
+	}
+	
+	//댓글 리스트 가져오기
+	@RequestMapping("cList.no")
+	public void replyList(@RequestParam("nNo") int nNo, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		
+		ArrayList<Comment> clist = noticeService.noticeCommentList(nNo);
+		System.out.println("Controller cList : " + clist);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(clist, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+			
+	}
+	
+	//댓글 등록
+	@RequestMapping("addNoticeComment.no")
+	@ResponseBody //success 리턴을 위해
+	public String addReply(@ModelAttribute Comment nc, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String ncUserId = loginUser.getUserId();
+		
+		nc.setrUserId(ncUserId);
+		
+		int result = noticeService.insertNoticeComment(nc);
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new NoticeException("댓글 등록에 실패하였습니다.");
+		}
+		
 	}
 }
