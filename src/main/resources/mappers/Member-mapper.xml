@@ -57,4 +57,204 @@
 		SELECT COUNT(*) FROM TB_USER WHERE NICKNAME=#{nick}
 	</select>
 	
+	<select id="memberAll" resultMap="MemberResult">
+		SELECT * FROM(SELECT * FROM TB_USER WHERE USER_LEVEL IN (1,2) ORDER BY ROWNUM DESC )
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER WHERE USER_DELETE='N' AND USER_LEVEL IN (1,2)
+	</select>
+	
+	<select id="selectListCount" parameterType="_int" resultType="_int" >
+		SELECT COUNT(*) FROM TB_USER WHERE USER_LEVEL IN (1,2)
+		<if test="num==1">AND ACCEPT='Y' AND USER_DELETE='N'</if>
+		<if test="num==2">AND ACCEPT='N'</if>
+		<if test="num==3">AND USER_DELETE='Y'</if>
+	</select>
+	
+	<select id="selectList" parameterType="_int" resultMap="MemberResult">
+		SELECT * FROM (SELECT * FROM TB_USER WHERE USER_LEVEL IN (1,2) ORDER BY ROWNUM DESC )
+		<where>
+			<if test="num==1">AND ACCEPT='Y' AND USER_DELETE='N'</if>
+			<if test="num==2">AND ACCEPT='N'</if>
+			<if test="num==3">AND USER_DELETE='Y'</if>
+		</where>
+	</select>
+	
+	<select id="searchListCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER WHERE USER_LEVEL IN (1,2)
+		<if test="num==0">AND (ACCEPT='Y' OR ACCEPT='N')
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+		<if test="num==1">AND ACCEPT='Y' AND USER_DELETE='N'
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+		<if test="num==2">AND ACCEPT='N'
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+		<if test="num==3">AND USER_DELETE='Y'
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+	</select>
+	
+	<select id="searchList" resultMap="MemberResult">
+		SELECT * FROM (SELECT * FROM TB_USER WHERE USER_LEVEL IN (1,2) ORDER BY ROWNUM DESC )
+		<where>
+			<if test="num==0">AND (ACCEPT='Y' OR ACCEPT='N')
+				<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+				<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+				<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+				<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+				<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+			</if>
+			<if test="num==1">AND ACCEPT='Y' AND USER_DELETE='N'
+				<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+				<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+				<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+				<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+				<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+			</if>
+			<if test="num==2">AND ACCEPT='N'
+				<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+				<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+				<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+				<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+				<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+			</if>
+			<if test="num==3">AND USER_DELETE='Y'
+				<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+				<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+				<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+				<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+				<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="levelCount" resultMap="levelResult">
+		SELECT NVL(COUNT(DECODE(USER_LEVEL,'1',1,NULL)),0) LV1, NVL(COUNT(DECODE(USER_LEVEL,'2',1,NULL)),0) LV2
+		FROM TB_USER
+		WHERE ACCEPT='N'
+	</select>
+	
+	<resultMap type="LevelCount" id="levelResult">
+		<id column="LV1" property="lv1" />
+		<result column="LV2" property="lv2"/>
+	</resultMap>
+	
+	<select id="AcceptCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER WHERE ACCEPT='N'
+	</select>
+	
+	<select id="AcceptList" resultMap="MemberResult">
+		SELECT * FROM TB_USER WHERE ACCEPT='N'
+	</select>
+	
+	<select id="AcceptSelectCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER WHERE ACCEPT='N'
+		<if test="num==2">
+			AND USER_LEVEL = 2
+		</if>
+		<if test="num==3">
+			AND USER_LEVEL = 1
+		</if>
+	</select>
+	
+	<select id="AcceptSelectList" resultMap="MemberResult">
+		SELECT * FROM TB_USER WHERE ACCEPT='N'
+		<if test="num==2">
+			AND USER_LEVEL = 2
+		</if>
+		<if test="num==3">
+			AND USER_LEVEL = 1
+		</if>
+	</select>
+	
+	<select id="searchAcceptCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER WHERE ACCEPT='N'
+		<if test="num==1">
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+		<if test="num==2">AND USER_LEVEL=2
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+		<if test="num==3">AND USER_LEVEL=1
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+	</select>
+	
+	<select id="searchAcceptList" resultMap="MemberResult">
+		SELECT * FROM TB_USER WHERE ACCEPT='N'
+		<if test="num==1">
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+		<if test="num==2">AND USER_LEVEL=2
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+		<if test="num==3">AND USER_LEVEL=1
+			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		</if>
+	</select>
+	
+	<update id="MemberAccept" parameterType="map">
+		UPDATE TB_USER SET ACCEPT='Y'
+		WHERE USER_ID IN
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+	</update>
 </mapper>
