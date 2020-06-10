@@ -18,15 +18,6 @@ body{
     height: 100%;
     position: relative;
 }
-
-#icon{float: right; margin: 15px;}
-#icon .fa-sign-out-alt{font-size: 20px; color: white;}
-#pagename > a {
-	vertical-align: -18px;
-    font-size: 20px;
-    color: white;
-    text-decoration: none;
-}
 #wrapper{min-height: 480px;}
 #container{
     margin-top: 100px;
@@ -135,7 +126,7 @@ marquee>b{font-size: 20px;}
 									 <th style="width: 100px;">회원아이디</th>
 							         <th style="width: 100px;">이름</th>
 							         <th style="width: 100px;">닉네임</th>
-							         <th style="width: 60px;">전화번호</th>
+							         <th style="width: 110px;">전화번호</th>
 							         <th style="width: 60px;">이메일</th>
 							         <th style="width: 400px;">아파트</th>
 							         <th style="width: 70px;">동/호수</th>
@@ -146,6 +137,13 @@ marquee>b{font-size: 20px;}
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty mlist }">
+									<tr>
+										<td colspan="11" style="text-align: center; padding: 100px 0 !important;">
+											자료가 없습니다.
+										</td>
+									</tr>
+								</c:if>
 								<c:forEach var="m" items="${mlist}">
 									<tr>
 										<td>${m.userId}</td>
@@ -166,10 +164,9 @@ marquee>b{font-size: 20px;}
 										<td>${m.status}</td>
 									</tr>
 								</c:forEach>
-								
 							</tbody>
 						</table>
-						<div class="userlist btnList"><a>전체 회원 목록</a></div>
+						<div class="userlist btnList"><a href="MemberList.adm">전체 회원 목록</a></div>
 					</section>
 				</div>
 			
@@ -182,8 +179,8 @@ marquee>b{font-size: 20px;}
 							<thead>
 								<tr>
 									 <th scope="col" style="width: 10px;">번호</th>
-							         <th scope="col" style="width: 100px;">아파트명</th>
-							         <th scope="col" style="width: 400px;">주소</th>
+							         <th scope="col" style="width: 200px;">아파트명</th>
+							         <th scope="col" style="width: 300px;">주소</th>
 							         <th scope="col" style="width: 30px;">동(수)</th>
 							         <th scope="col" style="width: 100px;">가입일</th>
 							         <th scope="col" style="width: 100px;">전화번호</th>
@@ -192,6 +189,13 @@ marquee>b{font-size: 20px;}
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty alist }">
+									<tr>
+										<td colspan="8" style="text-align: center; padding: 100px 0 !important;">
+											자료가 없습니다.
+										</td>
+									</tr>
+								</c:if>
 								<c:forEach var="a" items="${alist}">
 									<tr>
 										<td>${a.id}</td>
@@ -214,8 +218,8 @@ marquee>b{font-size: 20px;}
 					</section>
 				</div>
 				
-			<jsp:include page="../common/Footer.jsp"/>
 		</div>
+			<jsp:include page="../common/Footer.jsp"/>
 	</div>
 </body>
 </html>

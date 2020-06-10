@@ -524,7 +524,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 					<tr>
 						<td>
 							<p><em>*</em> 전화번호</p>
-							<input type="text" id="phone" name="phone" autocomplete=off placeholder="'-'없이 입력해주세요 ex) 01022334455">
+							<input type="text" id="phone" name="phone" autocomplete=off placeholder="'-' 넣어서 입력해주세요 ex) 010-2233-4455">
 						</td>
 					</tr>
 					<tr>
@@ -660,10 +660,6 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 		  var id = $('#id').val();
 		  var check = /^[A-Za-z0-9_\-]{5,20}$/;
 		  
-		  if(id.length==0){
-			  $('#idchk').hide();
-			  $('#idchk1').val(0);
-		  }
 		  if(id.length<4){
 			  $('#idchk').show();
 			  $('#idchk').text('아이디를 5자리 이상 입력해주세요.');
@@ -685,7 +681,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 								$('#idchk1').val(1);
 							}else{
 								$('#idchk').text('이미 있는 아이디거나 탈퇴된 아이디입니다.');
-								  $('#idchk').css('color','red');
+								$('#idchk').css('color','red');
 								$('#idchk1').val(0);
 							}
 							
@@ -698,11 +694,11 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 				  $('#idchk1').val(0);
 			  }
 		  }
-		  
-          
-          
-          
+		  if(id.length==0){
+			  $('#idchk').hide();
+		  }
 	  });
+	
 	  //패스워드 중복검사
       $('#pwd').on('keyup',function(){
     	  
@@ -739,22 +735,24 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
       //닉네임 중복검사
       $('#nickName').on('keyup',function(){
     	  var nickName = $('#nickName').val();
-    	  var check = /[0-9]|[a-z]|[A-Z]|[가-힣]/;
-
-    	  if(nickName.length==0){
-			  $('#nickchkmsg').hide();
-			  $('#idchk1').val(0);
-		  }
+    	  var check = /[0-9]|[a-z]|[A-Z]|[가-힣]{2,8}$/;
+    	  console.log(nickName);
     	  if(nickName.length<2){
 			  $('#nickchkmsg').show();
 			  $('#nickchkmsg').text('닉네임을 2자리 이상 입력해주세요.');
 			  $('#nickchkmsg').css('color','red');
 			  $('#nickchk').val(0);
-		  }else{
-			  if(check.test(nickName)){
+		  }else if(nickName.length>10){
+			  $('#nickchkmsg').show();
+			  $('#nickchkmsg').text('2~10자리 입력해주세요.');
+			  $('#nickchkmsg').css('color','red');
+			  $('#nickchk').val(0);
+		  }else{if(check.test(nickName)){
+				  $('#nickchkmsg').show();
 	        	  $('#nickchkmsg').text('사용 가능합니다.');
 				  $('#nickchkmsg').css('color','green');
 				  $('#nickchk').val(1);
+				  console.log('됨');
 		    	  $.ajax({
 		    		  url: 'dupNick.do',
 		    		  data: {nick:nickName},
@@ -771,6 +769,9 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 		    		  }
 		    	  });
 			  }
+		  }
+    	  if(nickName.length==0){
+			  $('#nickchkmsg').hide();
 		  }
 	  });
       
@@ -839,11 +840,18 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
             	return false;
          }
          
+         if(aptDong == '아파트를 검색해주세요.'){
+             alert('아파트를 검색해주세요.');
+             aptDong.focus();
+            	return false;
+         }
+         
          if(aptDong == '동을 선택해주세요.'){
              alert('동을 선택해주세요.');
              aptDong.focus();
             	return false;
          }
+         
          
          if(aptNum.val() == ''){
              alert('호수를 입력해주세요.');
