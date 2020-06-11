@@ -105,4 +105,16 @@
 		insert into tb_comment
 		values(seq_reply.nextval, #{boardNo}, null, #{rUserId}, #{rContent}, sysdate, default, default)
 	</insert>
+	
+	<update id="updateFreeBoard">
+		update tb_board
+		set board_title=#{boardTitle}, board_content=#{boardContent}
+		where board_no = #{boardNo}
+	</update>
+	
+	<update id="updateFreeFile">
+		update tb_file
+		set file_name = #{fileName}
+		where board_no = #{boardNo}
+	</update>
 </mapper>

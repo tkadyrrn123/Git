@@ -63,4 +63,19 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 		return fDAO.insertReply(sqlSession, c);
 	}
 
+	@Override
+	public FreeBoard selectUpdateFreeBoard(int boardNo) {
+		return fDAO.selectFreeBoard(sqlSession, boardNo);
+	}
+
+	@Override
+	public int updateFreeBoard(FreeBoard fb) {
+		return fDAO.updateFreeBoard(sqlSession, fb);
+	}
+
+	@Override
+	public int updateFreeFile(FreeBoard fb) {
+		return fDAO.updateFreeFile(sqlSession, fb);
+	}
+
 }
