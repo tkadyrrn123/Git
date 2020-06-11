@@ -260,6 +260,7 @@ public class HomeController {
 	
 	@RequestMapping("main.do")
 	public String mainView() {
+		
 		return "/WEB-INF/views/Main";
 	}
 	
