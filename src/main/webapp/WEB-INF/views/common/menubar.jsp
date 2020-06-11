@@ -44,7 +44,7 @@
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
 	
 	<div class="menubar">
-		<a href="#">HOUSTORY</a>
+		<a href="main.do">HOUSTORY</a>
 		
 		<div class="catelist">
 			<ul>
