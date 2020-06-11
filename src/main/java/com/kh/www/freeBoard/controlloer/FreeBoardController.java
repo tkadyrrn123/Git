@@ -159,13 +159,69 @@ public class FreeBoardController {
 		}
 	}
 	
+	@RequestMapping("modifyView.fr")
+	public ModelAndView modifyFreeView(@RequestParam("boardNo") int boardNo, @RequestParam(value="page", required=false) int page,
+									ModelAndView mv) {
+		FreeBoard fb = freeService.selectUpdateFreeBoard(boardNo);
+		
+	//	System.out.println("modifyView.fr fb 오냐???? : " +fb);
+		
+		if(fb != null) {
+			mv.addObject("fb", fb).addObject("page", page).setViewName("modifyingFree");
+			return mv;
+		} else {
+			throw new FreeBoardException("수정하러 가기 실패 ");
+		}
+	}
+	
+	@RequestMapping("update.fr")
+	public ModelAndView updateFree(@ModelAttribute FreeBoard fb, @RequestParam("reloadFile") MultipartFile reloadFile,
+								@RequestParam("page") int page, HttpServletRequest request, ModelAndView mv) {
+		
+		if(reloadFile != null && !reloadFile.isEmpty()) {
+			if(fb.getFileName() != null) {
+				deleteFile(fb.getFileName(), request);
+			}
+			
+			String fileName = saveFile(reloadFile, request);
+			
+			if(fileName != null) {
+				fb.setFileName(fileName);
+			}
+		}
+		int resultFile = freeService.updateFreeFile(fb);
+		
+		int result = freeService.updateFreeBoard(fb);
+		
+		if(result > 0 || resultFile > 0) {
+			mv.addObject("page", page);
+			mv.setViewName("redirect:bdetail.fr?boardNo=" + fb.getBoardNo());
+		} else {
+			throw new FreeBoardException("수정 실패!");
+		}
+		return mv;
+	}
+	
+	private void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		
+		File f = new File(savePath + "\\" + fileName);
+		
+		if(f.exists()) {
+			f.delete();
+		}
+		
+	}
+
+
 	@RequestMapping("rList.fr")
 	public void replyList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		ArrayList<Comment> list = freeService.selectRList(boardNo);
 	//	System.out.println("댓글리스트 받아옴? "+list);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss zzz").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 		try {
 			gson.toJson(list, response.getWriter());
 		} catch (JsonIOException e) {

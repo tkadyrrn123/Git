@@ -23,5 +23,11 @@ public interface FreeBoardService {
 	ArrayList<Comment> selectRList(int boardNo);
 
 	int insertReply(Comment c);
+
+	FreeBoard selectUpdateFreeBoard(int boardNo);
+
+	int updateFreeBoard(FreeBoard fb);
+
+	int updateFreeFile(FreeBoard fb);
 	
 }

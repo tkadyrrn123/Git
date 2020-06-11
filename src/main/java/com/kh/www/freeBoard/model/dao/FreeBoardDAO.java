@@ -50,4 +50,12 @@ public class FreeBoardDAO {
 		return sqlSession.insert("freeMapper.insertReply", c);
 	}
 
+	public int updateFreeBoard(SqlSessionTemplate sqlSession, FreeBoard fb) {
+		return sqlSession.update("freeMapper.updateFreeBoard", fb);
+	}
+
+	public int updateFreeFile(SqlSessionTemplate sqlSession, FreeBoard fb) {
+		return sqlSession.update("freeMapper.updateFreeFile", fb);
+	}
+
 }

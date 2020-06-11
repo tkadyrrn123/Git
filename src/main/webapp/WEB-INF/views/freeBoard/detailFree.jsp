@@ -80,14 +80,18 @@
 				<!--수정 /삭제 선택 -->	
 		<c:url var="bdelete" value="bdelete.fr">
 			<c:param name="boardNo" value="${ fb.boardNo }"/>
-			<c:param name="page" value="${ page }"/>
 		</c:url>
-		
+		<c:url var="modifyView" value="modifyView.fr">
+			<c:param name="boardNo" value="${ fb.boardNo }" />
+			<c:param name="page" value="${ page }" />
+		</c:url>
+
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
-					<div class="pop"><label>수정</label></div>
+					<div class="pop"><label onclick="location.href='${ modifyView }'">수정</label></div>
 					<div class="pop"><label onclick="deleteMsg();">삭제</label></div>
 				</div>
+
 				<hr>
 			</div>
 		<!-- 게시글 상단부 끝  -->	
