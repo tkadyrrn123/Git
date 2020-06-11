@@ -169,4 +169,19 @@
 		<url-pattern>*.ma</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 메인화면 -->
+	<servlet>
+		<servlet-name>MainServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/Main-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>MainServlet</servlet-name>
+		<url-pattern>*.main</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

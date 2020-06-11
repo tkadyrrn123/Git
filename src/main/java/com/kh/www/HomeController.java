@@ -236,7 +236,7 @@ public class HomeController {
 			if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()) && (loginUser.getUserLevel() == 1 || loginUser.getUserLevel() == 2 )) {
 				model.addAttribute("loginUser", loginUser);
 				
-				return "/WEB-INF/views/Main";
+				return "redirect:main.do";
 			}else if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()) && loginUser.getUserLevel() == 3) {
 				model.addAttribute("loginUser", loginUser);
 				
@@ -256,6 +256,11 @@ public class HomeController {
 			
 		}
 		return "index";
+	}
+	
+	@RequestMapping("main.do")
+	public String mainView() {
+		return "/WEB-INF/views/Main";
 	}
 	
 }

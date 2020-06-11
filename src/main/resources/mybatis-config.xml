@@ -27,6 +27,7 @@
 		<mapper resource="mappers/Notice-mapper.xml"/>
 		<mapper resource="mappers/club-mapper.xml"/>
 		<mapper resource="mappers/free-mapper.xml"/>
+		<mapper resource="mappers/Main-mapper.xml"/>
 	</mappers>
 	
 
