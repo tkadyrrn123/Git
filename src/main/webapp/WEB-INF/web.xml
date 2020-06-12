@@ -177,7 +177,14 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/ClubNotice-context.xml</param-value>
-
+		</init-param>
+	</servlet>	
+	
+	<servlet-mapping>
+		<servlet-name>ClubNoticeServlet</servlet-name>
+		<url-pattern>*.cn</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 메인화면 -->
 	<servlet>
 		<servlet-name>MainServlet</servlet-name>
@@ -189,11 +196,7 @@
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ClubNoticeServlet</servlet-name>
-		<url-pattern>*.cn</url-pattern>
-
 		<servlet-name>MainServlet</servlet-name>
 		<url-pattern>*.main</url-pattern>
 	</servlet-mapping>
-	
 </web-app>
