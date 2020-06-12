@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ClubNoticeMapper">
+    
+    <!-- 동호회 공지사항 전체 글 갯수 가져오기 -->
+    <select id="getCNoticeListCount" resultType="_int">
+		select count(*)
+		from tb_club_notice
+			 join tb_board using(board_no)
+		where board_delete = 'N'
+	</select>
+  	
+  	<!--동호회 공지사항 리스트 페이지 가져오기 -->
+	<select id="selectList" resultMap="cnoticeResultSet">
+		select board_no, board_title, board_content, create_date, user_id, board_count, board_delete, club_name
+		from tb_club_notice
+		     join tb_board using(board_no)
+		where board_delete = 'N'
+		order by board_no desc
+	</select>
+	
+	<resultMap type="ClubNotice" id="cnoticeResultSet">
+		<id property="cnNo" column="board_No"/>
+		<result property="cnTitle" column="board_Title"/>
+		<result property="cnContent" column="board_Content"/>
+		<result property="cnCreateDate" column="create_Date"/>
+		<result property="userId" column="user_Id"/>
+		<result property="cnCount" column="board_Count"/>
+		<result property="cnStatus" column="board_Delete"/>
+		<result property="clubName" column="CLUB_NAME"/>
+	</resultMap>
+	
+	<!-- 동호회 공지사항 등록 -->
+	<insert id="insertClubNotice">
+		<if test="renameFileName != null">
+		insert all
+		
+		into tb_board
+		values(seq_board.nextval, #{cnTitle}, #{cnContent}, sysdate, #{userId}, default, default)	
+		into tb_club_notice
+		values(seq_board.currval, #{clubName})
+		into tb_File
+		values(seq_file.nextval, seq_board.currval, #{renameFileName}, null, null)
+
+		select * from dual	
+		</if>
+		<if test="renameFileName == null">
+		insert all
+		
+		into tb_board
+		values(seq_board.nextval, #{cnTitle}, #{cnContent}, sysdate, #{userId}, default, default)
+		into tb_club_notice
+		values(seq_board.currval, #{clubName})
+		into tb_File
+		values(seq_file.nextval, seq_board.currval, null, null, null)
+		
+		select * from dual	
+		</if>
+	</insert>
+	
+	<!-- 동호회 이름 목록 가져오기 -->
+	<select id="selectcNamelist" resultType="String">
+		select club_name
+		from tb_club
+		where end_yn = 'N'
+	</select>
+	
+	<!--동호회 공지사항 조회 카운트 -->
+	<update id="addReadCount">
+		update tb_board
+		set board_count = board_count +1
+		where board_no = #{cnNo}
+	</update>
+
+	<!--동호회 공지사항 상세조회 -->
+	<select id="selectClubNotice" resultMap="cnoticeResultSet2">
+		select board_no,c.club_name,
+		        b.board_title, b.board_content, b.create_date, b.board_count,
+		        f.file_name,
+		        u.nickname, u.user_file, user_id
+		from tb_club_notice c
+		     join tb_board b using(board_no)
+		     join tb_file f using(board_no)
+		     join tb_user u using(user_id)
+		where b.board_delete = 'N' and board_no = #{cnNo}
+	</select>
+	
+	<resultMap type="ClubNotice" id="cnoticeResultSet2">
+		<id property="cnNo" column="BOARD_NO"/>
+		<result property="clubName" column="CLUB_NAME"/>
+		<result property="cnTitle" column="BOARD_TITLE"/>
+		<result property="cnContent" column="BOARD_CONTENT"/>
+		<result property="cnCreateDate" column="CREATE_DATE"/>
+		<result property="cnCount" column="BOARD_COUNT"/>
+		<result property="renameFileName" column="FILE_NAME"/><!-- 업로드 파일 -->
+		<result property="cnoticeNickname" column="NICKNAME"/>
+		<result property="cnoticeFile" column="USER_FILE"/><!--프로필사진  -->
+		<result property="userId" column="USER_ID"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

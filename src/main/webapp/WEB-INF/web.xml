@@ -169,6 +169,15 @@
 		<url-pattern>*.ma</url-pattern>
 	</servlet-mapping>
 	
+
+	<!-- 동호회공지사항  -->
+	<servlet>
+		<servlet-name>ClubNoticeServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/ClubNotice-context.xml</param-value>
+
 	<!-- 메인화면 -->
 	<servlet>
 		<servlet-name>MainServlet</servlet-name>
@@ -180,6 +189,9 @@
 	</servlet>
 	
 	<servlet-mapping>
+		<servlet-name>ClubNoticeServlet</servlet-name>
+		<url-pattern>*.cn</url-pattern>
+
 		<servlet-name>MainServlet</servlet-name>
 		<url-pattern>*.main</url-pattern>
 	</servlet-mapping>

@@ -87,7 +87,7 @@
 	<!-- 공지사항 업데이트 / 글만 업데이트(노티스테이블)-->
 	<update id="updateNotice_tb_notice">
 		update tb_notice
-		set notice_title = #{nTitle}, notice_content = #{nContent}, notice_date = SYSDATE
+		set notice_title = #{nTitle}, notice_content = #{nContent}
 		where notice_no = #{nNo}
 	</update>
 	

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 상세보기</title>
+<title>동호회 공지사항 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 50px; padding-bottom: 50px;}
@@ -70,23 +70,23 @@
 			<br>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
 				<div class="detailTable_title">
-					<b>${ notice.nTitle }</b>
+				<div style="color:lightcoral; float: left; margin-left: 10px; margin-right: 10px;"><i class="fas fa-crown"></i>  ${ ClubNotice.clubName } </div><div>| ${ ClubNotice.cnTitle }</div>
 				</div>
 				<div id="notice_profile" style="float:left;display:inline;">
-					<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }"></div>
-				<div class="dong">${ notice.userId }</div>
-				<div style="display:inline;"><i class="far fa-clock"></i>${ notice.nCreateDate }</div>
-				<div style="display:inline;"><i class="far fa-eye"></i>${ notice.nCount }</div>
+					<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ ClubNotice.cnoticeFile }"></div>
+				<div class="dong">${ ClubNotice.cnoticeNickname }</div>
+				<div style="display:inline;"><i class="far fa-clock"></i>${ ClubNotice.cnCreateDate }</div>
+				<div style="display:inline;"><i class="far fa-eye"></i>${ ClubNotice.cnCount }</div>
 	<!-------------수정 /삭제 선택 -------------->	
-				<c:if test="${ loginUser.userId eq notice.userId }">
+				<c:if test="${ loginUser.userId eq ClubNotice.userId }">
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
-						<c:url var="nlist" value="noticeUpdateView.no">
+						<c:url var="cnlist" value="ClubNoticeUpdateView.no">
 							<c:param name="page" value="${ page }"/>
-							<c:param name="nNo" value="${ notice.nNo }"/>
+							<c:param name="cnNo" value="${ ClubNotice.cnNo }"/>
 						</c:url>
-					<div class="pop" onclick="location.href='${ nlist }'"><label>수정</label></div>
-					<div class="pop" onclick="location.href='noticeDelete.no'"><label>삭제</label></div>
+					<div class="pop" onclick="location.href='${ cnlist }'"><label>수정</label></div>
+					<div class="pop" onclick="location.href='ClubNoticeDelete.no'"><label>삭제</label></div>
 				</div>
 				</c:if>
 				<hr>
@@ -94,25 +94,25 @@
 		<!---------- 게시글 상단부 끝  ----------->	
 		<!---------- 게시글 내용  ----------->
 			<% pageContext.setAttribute("newLineChar", "\r\n"); %>
-			<div class="board_content">${ fn:replace( notice.nContent, newLineChar, "<br>") }</div>
+			<div class="board_content">${ fn:replace( ClubNotice.cnContent, newLineChar, "<br>") }</div>
 		<!---------- 게시글 내용 끝 ------------>	
 		<!-------- 첨부파일 O 때 ------------>		
-			<c:if test="${ !empty notice.renameFileName }">
+			<c:if test="${ !empty ClubNotice.renameFileName }">
 				<div>
-					<img src="${contextPath}/resources/uploadFiles/${ notice.renameFileName }" style="width: 850px; margin-left:50px;">
+					<img src="${contextPath}/resources/uploadFiles/${ ClubNotice.renameFileName }" style="width: 850px; margin-left:50px;">
 				</div>
 			</c:if>
 		<!---------- 첨부파일 O 끝  ---------->		
 			<br>
 			<hr style="width: 900px;">
 			<div class="go_list_box">
-				<input type="button" class="go_list" value="목록" onclick="location.href='noticeList.no'">
+				<input type="button" class="go_list" value="목록" onclick="location.href='clubNoticeList.cn'">
 			</div>
 			<br>
 		<!-------------댓글 작성  ------------>
 			<div class="reply1_box" id="rtb">
 				<div id="notice_profile" style="float: left; display: inline;">
-					<img id="userFile" class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
+					<img id="userFile" class="comment_img" src="${contextPath}/resources/uploadFiles/${ ClubNotice.cnoticeFile }">
 				</div>
 				<div class="dong">${ loginUser.userId }</div>
 					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
@@ -181,11 +181,11 @@
 	
 	// 댓글 리스트 불러오기
 	function getCommentList(){
-		var nNo = ${ notice.nNo };
+		var cnNo = ${ ClubNotice.cnNo };
 		
 		$.ajax({
-			url: 'cList.no',
-			data: {nNo:nNo},
+			url: 'cList.cn',
+			data: {cnNo:cnNo},
 			dataType: 'json',
 			success: function(data){
 				

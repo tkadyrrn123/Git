@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>동호회 공지사항</title>
 <style>
 	* { box-sizing: border-box; }
 	.commnuity_header { position: absolute;
@@ -55,7 +55,7 @@
 </style>
 </head>
 <body>
-	<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/clubNotice.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<h2>공지사항</h2>
@@ -65,7 +65,7 @@
             <thead>
                 <tr id="notice_tr">
                     <td style="width: 7%;">번호</td>
-                    <td class="dong" style="width: 9%;">동</td>
+                    <td class="dong" style="width: 9%;">동호회명</td>
                     <td class="btitle">제목</td>
                     <td style="width: 10%;">작성자</td>
                     <td style="width: 11%">등록일</td>
@@ -75,31 +75,29 @@
 
             <tbody>
 
-             <c:forEach var="n" items="${ list }">
+             <c:forEach var="cn" items="${ list }">
                 <tr>
-                   <td align="center">${ n.nNo }</td>
-                    <td class="dong">101동</td><!-- 동표시되어야함 -->
+                   <td align="center">${ cn.cnNo }</td>
+                    <td class="dong">${ cn.clubName }</td>
                     <td class="notice_list_td">
-						<c:url var="ndetail" value="ndetail.no">
-							<c:param name="nNo" value="${ n.nNo }"/>
+						<c:url var="cndetail" value="cndetail.cn">
+							<c:param name="cnNo" value="${ cn.cnNo }"/>
 							<c:param name="page" value="${ pi.currentPage }"/>
 						</c:url>
-						<a href="${ ndetail }">${ n.nTitle }</a>
+						<a href="${ cndetail }">${ cn.cnTitle }</a>
                     </td>
-                    <td align="center">${ n.userId }</td>
-                    <td align="center">${ n.nCreateDate }</td>
-                    <td align="center">${ n.nCount }</td>
+                    <td align="center">${ cn.cnoticeNickname }</td>
+                    <td align="center">${ cn.cnCreateDate }</td>
+                    <td align="center">${ cn.cnCount }</td>
                 </tr>
              </c:forEach>
 
             </tbody>
 
         </table>
-        
-        <div class="board_btn">
-			<button class="btn_standard" onclick="location.href='noticeInsertView.no';">글쓰기</button>
-    	</div>
-        
+	        <div class="board_btn">
+				<button class="btn_standard" onclick="location.href='cnoticeInsertView.cn';">공지작성</button>
+	    	</div>
         <!---------- 페이징 처리 -------->
 		<table id="notice_page_tb">
 			<tr align="center" height="20" id="buttonTab">
@@ -110,7 +108,7 @@
 						<button class="btn-standard">이전</button>
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="noticeList.no">
+						<c:url var="before" value="cNoticeList.cn">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
 						<button class="btn-standard" onclick="location.href='${ before }'">이전</button>
@@ -123,7 +121,7 @@
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="noticeList.no">
+							<c:url var="pagination" value="cNoticeList.cn">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
 							<button class="btn-standard" onclick="location.href='${ pagination }'">${ p }</button>
@@ -135,7 +133,7 @@
 						<button class="btn-standard">다음</button>
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="noticeList.no">
+						<c:url var="after" value="cNoticeList.cn">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
 						<button class="btn-standard" onclick="location.href='${ after }'">다음</button>

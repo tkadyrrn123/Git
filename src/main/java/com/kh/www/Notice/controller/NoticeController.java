@@ -211,9 +211,8 @@ public class NoticeController {
 		response.setContentType("application/json; charset=UTF-8");
 		
 		ArrayList<Comment> clist = noticeService.noticeCommentList(nNo);
-		System.out.println("Controller cList : " + clist);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 		try {
 			gson.toJson(clist, response.getWriter());
 		} catch (JsonIOException e) {
