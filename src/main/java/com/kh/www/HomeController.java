@@ -230,25 +230,38 @@ public class HomeController {
 						Model model, HttpServletResponse response) throws IOException {
 		
 		Member loginUser = mService.Login(id);
-		System.out.println(loginUser);
 		
-		if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()) && (loginUser.getUserLevel() == 1 || loginUser.getUserLevel() == 2 )) {
-			model.addAttribute("loginUser", loginUser);
+		if(loginUser != null) {
 			
-			return "/WEB-INF/views/Main";
-		}else if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()) && loginUser.getUserLevel() == 3) {
-			model.addAttribute("loginUser", loginUser);
-			
-			return "redirect:adminMain.adm";
+			if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()) && (loginUser.getUserLevel() == 1 || loginUser.getUserLevel() == 2 )) {
+				model.addAttribute("loginUser", loginUser);
+				
+				return "redirect:main.do";
+			}else if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()) && loginUser.getUserLevel() == 3) {
+				model.addAttribute("loginUser", loginUser);
+				
+				return "redirect:adminMain.adm";
+			}else {
+				PrintWriter out = response.getWriter();
+	            out.println("<script>alert('로그인 실패'); history.go(-1);</script>");
+	            out.flush();
+			}
+		
 		}else {
 			response.setContentType("text/html; charset=UTF-8");
 			
             PrintWriter out = response.getWriter();
             out.println("<script>alert('로그인 실패.'); history.go(-1);</script>");
             out.flush();
-            
-			return "index";
+			
 		}
+		return "index";
+	}
+	
+	@RequestMapping("main.do")
+	public String mainView() {
+		
+		return "/WEB-INF/views/Main";
 	}
 	
 }
