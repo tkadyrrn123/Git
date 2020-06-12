@@ -66,7 +66,7 @@
 				<li class="dropdown"><label>동호회</label>
 					<ul class="sub">
 						<li onclick="location.href='clubList.cb'">동호회 목록</li>
-						<li>동호회 공지</li>
+						<li onclick="location.href='clubNoticeList.cn'">동호회 공지</li>
 					</ul>
 				</li>
 			</ul>
