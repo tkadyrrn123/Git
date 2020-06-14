@@ -39,7 +39,6 @@
 	
 	
 	.cTitle{margin-left: 170px; font-size: 30px; font-weight:bold; margin-top: 40px;}
-	#intro{} 
  	.textarea{margin-top: 40px; width: 80%; margin-left: 190px; min-height: 200px; border:none; font-size: 16px;}
  	
  	
@@ -71,7 +70,7 @@
  	
  	#reply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; }  
  	#rreply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; }  
- 	#rContent{width: 75%; margin: 20px 0px 0px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
+ 	#content4 textarea{width: 75%; margin: 20px 0px 0px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
  	#rUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 500px;}  
  	#rDeleteBtn{width: 70px;  vertical-align: middle; margin-top: 20px;}  
  	#rUpdateBtn2{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 457px;}  
@@ -129,13 +128,17 @@
 				
 				<div id="name">작성자  </div>		
 					
-				<div id="nameInput">송도훈</div>
+				<div id="nameInput">${ c.nickName }</div>
 					
 				<div id="count">총 모집 인원  </div>
 				
 				<textarea  name="maxPeople"  id="countInput">${ c.maxPeople }</textarea>
+				
 				<c:url var="apply" value="ClubApply.cb">
 					<c:param name="clubName" value="${ c.clubName }"></c:param>
+					<c:param name="userId" value="${ loginUser.userId }"></c:param>
+					<c:param name="boardNo" value="${ c.boardNo }"></c:param>
+					
 				</c:url>
 				<button type="button" class="btn" id="applyBtn" onclick="location.href='${apply}'">가입 신청하기</button> 
 			</div>
@@ -147,20 +150,20 @@
 			<div id="line2"></div>
 		<div id="content2">
 			<div class="cTitle" id="intro">동호회 소개</div>
-			<textarea name="clubIntro" class="textarea" id="introInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+			<textarea name="clubIntro" class="textarea" id="introInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required readonly>
 ${ c.clubIntro }
 			</textarea>
 			
 			<div class="cTitle" id="plan">동호회 활동 계획</div>
-			<textarea name="clubPlan"  class="textarea" id="planInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+			<textarea name="clubPlan"  class="textarea" id="planInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required readonly>
 ${ c.clubPlan }
 			</textarea>
 			<div class="cTitle" id="loction">동호회 활동 장소</div>
-			<textarea name="clubPlace"  class="textarea" id="locationInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+			<textarea name="clubPlace"  class="textarea" id="locationInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required readonly>
 ${ c.clubPlace }
 			</textarea>
 			<div class="cTitle" id="etc">기타 사항</div>
-			<textarea name="clubEtc"  class="textarea" id="etcInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
+			<textarea name="clubEtc"  class="textarea" id="etcInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required readonly>
 ${ c.clubEtc }
 			</textarea>
 			
@@ -172,8 +175,10 @@ ${ c.clubEtc }
 		<div id="line3"></div>
 		
 		<div id="btn">
+			<c:if test="${ c.nickName eq loginUser.nickName }">
 				<button class="btn" id="updateBtn">수정</button>
 				<button type="button" class="btn" id="deleteBtn">삭제</button>
+			</c:if>	
 				<c:url var="cList" value="clubList.cb">
 					<c:param name="page" value="${ page }"></c:param>
 				</c:url>
@@ -187,8 +192,8 @@ ${ c.clubEtc }
 			<div id="replyInput">
 				<div id="info">
 					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
-					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="rHo">(202호)</div>
+					<div class="info"  id="rWriter">${ loginUser.nickName }</div>
+					<div class="info"  id="rHo">${ loginUser.aptDong }</div>
 				</div>
 				<button class="btn" id="insertBtn">댓글 등록</button>
 
@@ -196,35 +201,44 @@ ${ c.clubEtc }
 				<span style="color:#aaa;" id="counter">(0 / 최대 200자)</span>
 			</div>
 		</div> 
+
 		
 		
-		
-		<!--  댓글   -->
-		 <div id="content4">
-			<div id="reply">
-				<div id="info2">
-					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
-					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="rHo">(202호)</div>
-					<div class="info"  id="replyDate">2020-05-27 03:03</div>
-					<button class="btn" id="rUpdateBtn">수정</button> 
-					<button class="btn" id="rDeleteBtn">삭제</button> 
-				</div>
-				<div width="100%">
-					<textarea id="rContent"  readonly>010-1234-5678 쪽으로 연락 주세요</textarea>
-				</div> 
-				<div>
-					<button class="btn" id="replyBtn">답글</button>
-					<div class="likeBtn" id="likeBtn1">
-						<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like.png">
+		<div id="content4">
+			<c:forEach var="b" items="${comment}" varStatus="status">
+				<div id="reply">
+					<div id="info2">
+						<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
+						<div class="info"  id="rWriter">${b.nickname}</div>
+						<div class="info"  id="replyDate">${b.rCreateDate}</div>
+						<button class="btn" id="rUpdateBtn">수정</button> 
+						<button class="btn" id="rDeleteBtn">삭제</button>
 					</div>
-					<div class="likeBtn2" id="likeBtn2">
-						<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like2.png">
+
+						<textarea class="rContent${ status.index }" onkeydown="resize(this);" >${b.rContent}</textarea>
+ 
+					<div> 
+						<button class="btn" id="replyBtn">답글</button>
+						<div class="likeBtn" id="likeBtn1">
+							<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like.png">
+						</div>
+						<div class="likeBtn2" id="likeBtn2">
+							<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like2.png">
+						</div>
+						<div class="likeCount">0</div>
 					</div>
-					<div class="likeCount">0</div>
 				</div>
-			</div>
+ 				<script>
+				$(function () {
+					
+					  $('.rContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 20  );	
+					});
+				</script> 
+			</c:forEach>
 		</div>
+
+			
+		</div>		
 		
 		<div id="content5">
 			<div id="rreply">
@@ -295,24 +309,99 @@ ${ c.clubEtc }
 			
 		  $('.textarea').height(1).height( $('.textarea').prop('scrollHeight') - 10  );	
 		});
+
 		
-		/** 댓글 창 높이 자동 조절 **/
-		$(function () {
-			
-			  $('#rContent').height(1).height( $('#rContent').prop('scrollHeight') - 20  );	
-			});
+		function resize(obj) {
+			  obj.style.height = "1px";
+			  obj.style.height = (12+obj.scrollHeight)+"px";
+			}
+
 		
-		$('.likeBtn').click(function(){
+
+		
+   		/* 삭제  */
+   		$('#deleteBtn').on('click', function(){
+   			if(confirm("게시물을 삭제하시겠습니까?")){
+   				location.href="deleteClub.cb";
+   			}
+   		});
+   		
+   		$('#insertBtn').on('click', function(){
+   			var userId = '${ loginUser.userId }' 
+   			var boardNo = ${ c.boardNo }
+   			var content = $('#rWrite').val();
+   			$.ajax({
+   				url: 'insertComment.cb',
+   				data: {userId:userId, boardNo:boardNo, content:content},
+   				success: function(data){
+   					$replyTable = $('#content4');
+					$replyTable.html("");
+					
+					for(var i = 0; i < data.length; i++){
+						var $reply = $('<div>').attr('id', 'reply');
+						var $div = $('<div>').attr('id', 'info2');
+						var $profile = $('<div>').text(data[i].userFile).attr('class','info').attr('id','rProfile');
+						var $writer = $('<div>').text(data[i].nickname).attr('class','info').attr('id','rWriter');
+						var $date = $('<div>').text(data[i].rCreateDate).attr('class','info').attr('id','repltDate');
+						var $rubtn = $('<button>').text("수정").attr('class','btn').attr('id','rUpdateBtn');
+						var $rdbtn = $('<button>').text("삭제").attr('class','btn').attr('id','rDeleteBtn');
+
+						var $content = $('<textarea>').text(data[i].rContent);	
+						
+						var $divv = $('<div>');
+						var $rreply = $('<button>').text("답글").attr('class','btn').attr('id','replyBtn');
+						var $like1 = $('<div>').attr('class','likeBtn3').attr('id','likeBtn3');
+						var $img1 = $('<img>').attr('id','likeImg').attr('src', '${ pageContext.servletContext.contextPath }/resources/images/like.png');
+						var $like2 = $('<div>').attr('class','likeBtn4').attr('id','likeBtn4');
+						var $img2 = $('<img>').attr('id','likeImg2').attr('src', '${ pageContext.servletContext.contextPath }/resources/images/like2.png');
+						var $count = $('<div>').text("0").attr('class','likeCount');
+						
+						$div.append($profile);
+						$div.append($writer);
+						$div.append($date);
+						$div.append($rubtn);
+						$div.append($rdbtn);
+						$reply.append($div);
+						$reply.append($content);
+						$divv.append($rreply);
+						$like1.append($img1);
+						$like2.append($img2);
+						$divv.append($like1)
+						$divv.append($like2)
+						$divv.append($count)
+						$reply.append($divv);
+
+						$replyTable.append($reply);
+						console.log(data);
+						var aaa = $content.prop('scrollHeight');
+						$content.height(aaa + 20);
+
+					}
+
+					$('#rWrite').val("");
+   				}
+   			})
+   		})
+		
+   		$('.likeBtn').click(function(){
 			$(this).parent().children('.likeBtn2').css('display','inline-block');
 			$(this).css('display','none');
 			var count = $(this).parent().children('.likeCount').text(); 
 			count *= 1;
 			count = count + 1;
 			$(this).parent().children('.likeCount').text(count);
-		});
+		}); 
+   		
+   		$(document).on('click', '.likeBtn3',function(){
+			$(this).parent().children('.likeBtn4').css('display','inline-block');
+			$(this).css('display','none');
+			var count = $(this).parent().children('.likeCount').text(); 
+			count *= 1;
+			count = count + 1;
+			$(this).parent().children('.likeCount').text(count);
+		}); 
 		
-// 		$("#btn").eq(n);
-//  	$("ul li:nth-child(2)").append("<span> - 2nd!</span>");
+		
 
 		
 		$('.likeBtn2').click(function(){
@@ -324,16 +413,16 @@ ${ c.clubEtc }
 			$(this).parent().children('.likeCount').text(count);
 		});
 		
+		$(document).on('click', '.likeBtn4', function(){
+			$(this).parent().children('.likeBtn3').css('display','inline-block');
+			$(this).css('display','none');
+			var count = $(this).parent().children('.likeCount').text();
+			count *= 1;
+			count = count - 1;
+			$(this).parent().children('.likeCount').text(count);
+		});
 
-		
-   		/* 삭제  */
-   		$('#deleteBtn').on('click', function(){
-   			if(confirm("게시물을 삭제하시겠습니까?")){
-   				location.href="deleteClub.cb";
-   			}
-   		});
-		
-		
+   		
 	</script> 
 
 </body>

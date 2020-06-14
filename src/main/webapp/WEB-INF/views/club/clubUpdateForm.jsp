@@ -102,10 +102,6 @@
 			<div id="infoBox">
 				<textarea name="clubName"  id="title" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; " required>누구나 손쉽게 따라하는 재즈 피아노 동호회</textarea>
 				<div id="line4"></div>
-				
-				<div id="name">작성자  </div>		
-					
-				<div id="nameInput">송도훈</div>
 					
 				<div id="count">총 모집 인원  </div>
 				
