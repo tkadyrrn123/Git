@@ -19,6 +19,8 @@ public class FreeBoard {
 	private String userFile;
 	private String userLevel;
 	
+	
+	
 	public FreeBoard() {}
 
 	

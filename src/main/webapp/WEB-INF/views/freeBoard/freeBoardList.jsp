@@ -211,7 +211,7 @@
                     	</c:url>
                     	<a href="${ bdetail }" class="fbTitle">${ fb.boardTitle}</a>
                     </td>
-                    <td>${ fb.userId }</td>
+                    <td>${ fb.nickname }</td>
                     <td>${ fb.createDate}</td>
                     <td>${ fb.boardCount }</td>
                 </tr>

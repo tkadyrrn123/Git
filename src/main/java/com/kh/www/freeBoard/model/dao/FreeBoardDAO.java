@@ -18,16 +18,16 @@ public class FreeBoardDAO {
 		return sqlSession.insert("freeMapper.insertBoard", fb);					
 	}
 
-	public int getListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("freeMapper.getListCount");
+	public int getListCount(SqlSessionTemplate sqlSession, String aptName) {
+		return sqlSession.selectOne("freeMapper.getListCount", aptName);
 	}
 
-	public ArrayList<FreeBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<FreeBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi, String aptName) {
 		
 		int offset = (pi.getCurrentPage() -1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("freeMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("freeMapper.selectList", aptName, rowBounds);
 	}
 
 	public int addReadCount(SqlSessionTemplate sqlSession, int boardNo) {
@@ -56,6 +56,10 @@ public class FreeBoardDAO {
 
 	public int updateFreeFile(SqlSessionTemplate sqlSession, FreeBoard fb) {
 		return sqlSession.update("freeMapper.updateFreeFile", fb);
+	}
+
+	public int updateComment(SqlSessionTemplate sqlSession, Comment comment) {
+		return sqlSession.update("freeMapper.updateComment", comment);
 	}
 
 }
