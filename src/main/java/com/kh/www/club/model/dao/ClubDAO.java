@@ -45,8 +45,8 @@ public class ClubDAO {
 		return sqlSession.insert("clubMapper.insertFile", renameFileName);
 	}
 
-	public int deleteClub(SqlSessionTemplate sqlSession) {
-		return sqlSession.update("clubMapper.deleteClub");
+	public int deleteClub(SqlSessionTemplate sqlSession, Integer boardNo) {
+		return sqlSession.update("clubMapper.deleteClub", boardNo);
 	}
 
 	public Club selectClub(SqlSessionTemplate sqlSession, String clubName) {
@@ -63,6 +63,14 @@ public class ClubDAO {
 
 	public ArrayList<Comment> selectComment(SqlSessionTemplate sqlSession, int boardNo) {
 		return (ArrayList)sqlSession.selectList("clubMapper.selectComment", boardNo);
+	}
+
+	public int updateClub(SqlSessionTemplate sqlSession, Club c) {
+		return sqlSession.update("clubMapper.updateClub", c);
+	}
+
+	public int updateClubMember(SqlSessionTemplate sqlSession, Club c) {
+		return sqlSession.update("clubMapper.updateClubMember", c);
 	}
 
 }

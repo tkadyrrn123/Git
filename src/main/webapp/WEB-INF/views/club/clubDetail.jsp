@@ -20,7 +20,7 @@
 	#content2{width: 80%; margin-left:100px;}
 	#content3{width: 65%; margin-left:100px;}
 	#content4{width: 65%; margin-left:100px;} 
-	#content5{width: 61.8%; margin-left:150px;} 
+	#content5{width: 61.8%; margin-left:150px; margin-bottom:30px;} 
 
 	
 	#sellPic{width: 42%; height: 500px; margin-left: 140px; margin-top: 30px; display: inline-block;}
@@ -39,7 +39,7 @@
 	
 	
 	.cTitle{margin-left: 170px; font-size: 30px; font-weight:bold; margin-top: 40px;}
- 	.textarea{margin-top: 40px; width: 80%; margin-left: 190px; min-height: 200px; border:none; font-size: 16px;}
+ 	.textarea{margin-top: 40px; width: 80%; margin-left: 190px; min-height: 100px; border:none; font-size: 16px;}
  	
  	
 
@@ -60,8 +60,10 @@
  	#replyInput{width:80% ; margin: 100px 0px 0px 200px; border: 1px solid black; height: 184px; } 
  	#rWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px;}  
  	 
- 	#rProfile{width: 40px; hieght:40px;}
- 	#rImg{ border-radius: 10%;  width: 100%; height:100%; }  
+ 	#rProfile{width: 40px; height:40px; margin-top: 10px;}
+ 	#rImg{ border-radius: 50%;  width: 100%; height:100%; }  
+ 	#rWriter{vertical-align: middle; margin-top: -28px; margin-right: 30px; margin-left:10px;width:5%;}
+ 	#rHo{vertical-align: middle; margin-top: -28px;}
  	#info{display: inline-block;  height:50px; margin-left: 30px; width:80%;}
  	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
  	.info{display: inline-block;} 
@@ -73,16 +75,18 @@
  	#content4 textarea{width: 75%; margin: 20px 0px 0px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
  	#rUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 500px;}  
  	#rDeleteBtn{width: 70px;  vertical-align: middle; margin-top: 20px;}  
+ 	#rUpdateBtnAjax{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 517px;}  
+ 	#rDeleteBtnAjax{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 15px;}  
  	#rUpdateBtn2{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 457px;}  
- 	#replyDate{width: 12%; font-size: 12px; color: gray; /**margin-left: 70px; margin-top: -20px ;**/}
+ 	#replyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px; margin-top: -30px ;}
  	#replyBtn{margin: 10px 0 10px 60px;}
  	.likeBtn{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
  	.likeBtn2{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display:none;} 
  	
- 	#likeBtn3{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
- 	#likeBtn4{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display:none;}  
+ 	#likeBtn3{margin-left: 753px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}   
+ 	#likeBtn4{margin-left: 753px; width: 3%; height:3%; vertical-align: middle; display:none;}  
  	#likeImg{width: 100%; height:100%; }  
- 	#likeImg2{width:100%; height:100%;}  
+ 	#likeImg2{width:100%; height:100%;}    
  	.likeCount{display: inline-block;    vertical-align: sub; margin-left: 10px;}
  	.img{filter: brightness(70%);
      width: 100%;
@@ -119,6 +123,8 @@
 			
 			<div id=sellPic>
 				<img id=img src="${ pageContext.servletContext.contextPath }/resources/clubFiles/${ c.fileName }"/>
+				<input type="hidden" name="fileName" value="${ c.fileName }">
+				<input type="hidden" name="boardNo" value="${c.boardNo }">
 			</div>
 			
 			
@@ -129,11 +135,16 @@
 				<div id="name">작성자  </div>		
 					
 				<div id="nameInput">${ c.nickName }</div>
+				<input type="hidden" name="nickName" value="${ c.nickName }">
 					
-				<div id="count">총 모집 인원  </div>
+				<div id="count"> 모집 인원  </div>
 				
 				<textarea  name="maxPeople"  id="countInput">${ c.maxPeople }</textarea>
+
+				<div id="count"> 현재 인원  </div>
 				
+				<textarea  name="clubPeople"  id="countInput">${ c.clubPeople }</textarea>
+
 				<c:url var="apply" value="ClubApply.cb">
 					<c:param name="clubName" value="${ c.clubName }"></c:param>
 					<c:param name="userId" value="${ loginUser.userId }"></c:param>
@@ -191,31 +202,42 @@ ${ c.clubEtc }
 		<div id="content3">
 			<div id="replyInput">
 				<div id="info">
-					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
+					<c:if test="${!empty loginUser.userFile }">
+					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${loginUser.userFile}"></div>
+					</c:if>
+					<c:if test="${empty loginUser.userFile }">
+					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+					</c:if>
 					<div class="info"  id="rWriter">${ loginUser.nickName }</div>
-					<div class="info"  id="rHo">${ loginUser.aptDong }</div>
 				</div>
 				<button class="btn" id="insertBtn">댓글 등록</button>
 
-				<textarea id="rWrite" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
+				<textarea id="rWrite" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal;" required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
 				<span style="color:#aaa;" id="counter">(0 / 최대 200자)</span>
 			</div>
 		</div> 
 
 		
-		
+		<!--  댓글   -->
 		<div id="content4">
 			<c:forEach var="b" items="${comment}" varStatus="status">
 				<div id="reply">
 					<div id="info2">
-						<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
+						<c:if test="${!empty b.userFile }">
+							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${b.userFile}"></div>
+						</c:if>
+						<c:if test="${empty b.userFile }">
+							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+						</c:if>
 						<div class="info"  id="rWriter">${b.nickname}</div>
 						<div class="info"  id="replyDate">${b.rCreateDate}</div>
+						<c:if test="${loginUser.userId eq b.rUserId }">
 						<button class="btn" id="rUpdateBtn">수정</button> 
 						<button class="btn" id="rDeleteBtn">삭제</button>
+						</c:if>
 					</div>
 
-						<textarea class="rContent${ status.index }" onkeydown="resize(this);" >${b.rContent}</textarea>
+						<textarea class="rContent${ status.index }" >${b.rContent}</textarea>
  
 					<div> 
 						<button class="btn" id="replyBtn">답글</button>
@@ -231,7 +253,7 @@ ${ c.clubEtc }
  				<script>
 				$(function () {
 					
-					  $('.rContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 20  );	
+					  $('.rContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 32  );	
 					});
 				</script> 
 			</c:forEach>
@@ -245,7 +267,6 @@ ${ c.clubEtc }
 				<div id="info2">
 					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
 					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="rHo">(202호)</div>
 					<div class="info"  id="replyDate">2020-05-27 03:03</div>
 					<button class="btn" id="rUpdateBtn2">수정</button> 
 					<button class="btn" id="rDeleteBtn">삭제</button> 
@@ -311,18 +332,19 @@ ${ c.clubEtc }
 		});
 
 		
-		function resize(obj) {
-			  obj.style.height = "1px";
-			  obj.style.height = (12+obj.scrollHeight)+"px";
-			}
+
+
 
 		
 
 		
    		/* 삭제  */
    		$('#deleteBtn').on('click', function(){
+			<c:url var="cDelete" value="deleteClub.cb">
+				<c:param name="boardNo" value="${ c.boardNo }"></c:param>
+			</c:url>
    			if(confirm("게시물을 삭제하시겠습니까?")){
-   				location.href="deleteClub.cb";
+   				location.href="${cDelete}";
    			}
    		});
    		
@@ -336,26 +358,32 @@ ${ c.clubEtc }
    				success: function(data){
    					$replyTable = $('#content4');
 					$replyTable.html("");
-					
 					for(var i = 0; i < data.length; i++){
 						var $reply = $('<div>').attr('id', 'reply');
 						var $div = $('<div>').attr('id', 'info2');
-						var $profile = $('<div>').text(data[i].userFile).attr('class','info').attr('id','rProfile');
+						var $profile = $('<div>').attr('class','info').attr('id','rProfile');
+						
+						if(data[i].userFile == null){
+							var $img = $('<img>').attr('src', '${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg').attr('class','info').attr('id','rImg');
+						} else {
+							var $img = $('<img>').attr('src', '${ pageContext.servletContext.contextPath }/resources/uploadFiles/' + data[i].userFile).attr('class','info').attr('id','rImg');
+						}
 						var $writer = $('<div>').text(data[i].nickname).attr('class','info').attr('id','rWriter');
-						var $date = $('<div>').text(data[i].rCreateDate).attr('class','info').attr('id','repltDate');
-						var $rubtn = $('<button>').text("수정").attr('class','btn').attr('id','rUpdateBtn');
-						var $rdbtn = $('<button>').text("삭제").attr('class','btn').attr('id','rDeleteBtn');
+						var $date = $('<div>').text(data[i].rCreateDate).attr('class','info').attr('id','replyDate');
+						var $rubtn = $('<button>').text("수정").attr('class','btn').attr('id','rUpdateBtnAjax');
+						var $rdbtn = $('<button>').text("삭제").attr('class','btn').attr('id','rDeleteBtnAjax');
 
 						var $content = $('<textarea>').text(data[i].rContent);	
 						
 						var $divv = $('<div>');
 						var $rreply = $('<button>').text("답글").attr('class','btn').attr('id','replyBtn');
 						var $like1 = $('<div>').attr('class','likeBtn3').attr('id','likeBtn3');
-						var $img1 = $('<img>').attr('id','likeImg').attr('src', '${ pageContext.servletContext.contextPath }/resources/images/like.png');
+						var $img1 = $('<img>').attr('id','likeImg3').attr('src', '${ pageContext.servletContext.contextPath }/resources/images/like.png');
 						var $like2 = $('<div>').attr('class','likeBtn4').attr('id','likeBtn4');
-						var $img2 = $('<img>').attr('id','likeImg2').attr('src', '${ pageContext.servletContext.contextPath }/resources/images/like2.png');
+						var $img2 = $('<img>').attr('id','likeImg4').attr('src', '${ pageContext.servletContext.contextPath }/resources/images/like2.png');
 						var $count = $('<div>').text("0").attr('class','likeCount');
 						
+						$profile.append($img);
 						$div.append($profile);
 						$div.append($writer);
 						$div.append($date);
@@ -421,8 +449,14 @@ ${ c.clubEtc }
 			count = count - 1;
 			$(this).parent().children('.likeCount').text(count);
 		});
+		
+		
+		$(document).on('click', '#rDeleteBtnAjax', function(){
+			if(confirm("댓글을 삭제하시겠습니까?")){
+   				location.href="deleteClub.cb";
+   			}
+		});
 
-   		
 	</script> 
 
 </body>

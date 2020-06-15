@@ -11,7 +11,7 @@ public class Club {
 	private String endYn;
 	private String fileName;
 	private String nickName;
-	
+	private int clubPeople;
 	public Club() {}
 	
 	
@@ -32,6 +32,36 @@ public class Club {
 	}
 
 	
+
+	public int getClubPeople() {
+		return clubPeople;
+	}
+
+
+
+	public void setClubPeople(int clubPeople) {
+		this.clubPeople = clubPeople;
+	}
+
+
+
+	public Club(String clubName, int boardNo, String clubIntro, String clubPlan, String clubPlace, String clubEtc,
+			int maxPeople, String endYn, String fileName, String nickName, int clubPeople) {
+		super();
+		this.clubName = clubName;
+		this.boardNo = boardNo;
+		this.clubIntro = clubIntro;
+		this.clubPlan = clubPlan;
+		this.clubPlace = clubPlace;
+		this.clubEtc = clubEtc;
+		this.maxPeople = maxPeople;
+		this.endYn = endYn;
+		this.fileName = fileName;
+		this.nickName = nickName;
+		this.clubPeople = clubPeople;
+	}
+
+
 
 	public String getClubName() {
 		return clubName;
@@ -125,7 +155,8 @@ public class Club {
 	public String toString() {
 		return "Club [clubName=" + clubName + ", boardNo=" + boardNo + ", clubIntro=" + clubIntro + ", clubPlan="
 				+ clubPlan + ", clubPlace=" + clubPlace + ", clubEtc=" + clubEtc + ", maxPeople=" + maxPeople
-				+ ", endYn=" + endYn + ", fileName=" + fileName + ", nickName=" + nickName + "]";
+				+ ", endYn=" + endYn + ", fileName=" + fileName + ", nickName=" + nickName + ", clubPeople="
+				+ clubPeople + "]";
 	}
 
 	

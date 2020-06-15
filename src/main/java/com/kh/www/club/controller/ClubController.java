@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
 import com.kh.www.club.model.exception.ClubException;
 import com.kh.www.club.model.service.ClubService;
 import com.kh.www.club.model.vo.Club;
@@ -49,7 +46,7 @@ public class ClubController {
 		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
 		
 		ArrayList<Club> list = cService.selectList(pi);
-		
+		System.out.println(list);
 		
 		if(list != null) {
 			mv.addObject("list",list);
@@ -66,7 +63,7 @@ public class ClubController {
 	public ModelAndView clubDetail(@RequestParam("clubName") String clubName, @RequestParam(value="page", required=false) Integer page, @RequestParam("boardNo") int boardNo, ModelAndView mv) {
 		Club club = cService.selectClub(clubName);
 		ArrayList<Comment> comment = cService.selectComment(boardNo);
-
+		System.out.println(comment);
 		if(club != null) {
 			mv.addObject("c", club);
 			mv.addObject("page", page);
@@ -79,9 +76,25 @@ public class ClubController {
 	}
 	
 	@RequestMapping("clubUpdateForm.cb")
-	public String clubUpdate() {
-		return "clubUpdateForm";
+	public ModelAndView clubUpdateForm(@ModelAttribute Club c, HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+		System.out.println(c);
+		mv.addObject("c", c);
+		mv.setViewName("clubUpdateForm");
+		return mv;
 	}
+
+	@RequestMapping("updateClub.cb")
+	public String clubUpdate(@ModelAttribute Club c, HttpServletRequest request, HttpServletResponse response, Model mv) {
+		System.out.println(c);
+		int result = cService.updateClub(c);
+
+		mv.addAttribute("clubName", c.getClubName());
+		mv.addAttribute("boardNo", c.getBoardNo());
+
+		return "redirect:clubDetail.cb";
+	}	
+	
+	
 	
 	@RequestMapping("clubInsertForm.cb")
 	public String clubInsertForm() {
@@ -143,8 +156,8 @@ public class ClubController {
 		return renameFileName;
 	}
 	@RequestMapping("deleteClub.cb")
-	public String clubDelte() {
-		int result = cService.deleteClub();
+	public String clubDelte(@RequestParam("boardNo") Integer boardNo) {
+		int result = cService.deleteClub(boardNo);
 		
 		if(result > 0 ) {
 			return "redirect:clubList.cb";
@@ -172,7 +185,7 @@ public class ClubController {
 	
 	@RequestMapping(value="insertComment.cb")
 	@ResponseBody
-	public void insertComments(@RequestParam("userId") String userId, @RequestParam("boardNo") int boardNo, @RequestParam("content") String content, HttpServletResponse response) {
+	public ArrayList<Comment> insertComments(@RequestParam("userId") String userId, @RequestParam("boardNo") int boardNo, @RequestParam("content") String content, HttpServletResponse response) {
 		Comment c = new Comment();
 		c.setBoardNo(boardNo);
 		c.setrContent(content);
@@ -182,15 +195,8 @@ public class ClubController {
 		
 		if(result > 0) {
 			ArrayList<Comment> comment = cService.selectComment(boardNo);
+			return comment;
 			
-			response.setContentType("application/json");
-			
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-			try {
-				gson.toJson(comment, response.getWriter());
-			} catch (JsonIOException | IOException e) {
-				e.printStackTrace();
-			}
 		}else {
 			throw new ClubException("댓글 등록에 실패했습니다.");
 		}
