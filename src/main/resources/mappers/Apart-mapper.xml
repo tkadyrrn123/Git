@@ -30,7 +30,7 @@
     </select>
 	
 	<select id="apartList" resultMap="ApartResultMap">
-		select * from tb_apart
+		SELECT * FROM(SELECT * FROM TB_APART WHERE APT_ACCEPT = 'N' ORDER BY ROWNUM DESC ) WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
 	
 	<select id="aptCount" resultMap="aptCount">

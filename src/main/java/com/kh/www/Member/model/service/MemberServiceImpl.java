@@ -137,4 +137,19 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.MemberDelete(sqlSession, chkId);
 	}
 
+	@Override
+	public int createCount(String aptName) {
+		return mDAO.createCount(sqlSession, aptName);
+	}
+
+	@Override
+	public MemberCount AptMemberCount(String aptName) {
+		return mDAO.AptMemberCount(sqlSession, aptName);
+	}
+
+	@Override
+	public ArrayList<Member> AptMemberfiveList(String aptName) {
+		return mDAO.AptMemberfiveList(sqlSession, aptName);
+	}
+
 }

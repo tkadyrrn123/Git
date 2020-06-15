@@ -69,7 +69,7 @@
 						
 						if(data.length == 0){
 							$li = $('<li>').text("불러올 목록이 없습니다.");
-							$freeUlBody.append($li);
+							$noticeUlBody.append($li);
 						}else{
 							for(var i=0; i<data.length; i++){
 								$li = $('<li>');

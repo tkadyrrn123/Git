@@ -102,16 +102,16 @@ marquee>b{font-size: 20px;}
 </style>
 </head>
 <body>
-	<jsp:include page="AdminMenubar.jsp"/>
+	<jsp:include page="AptAdminMenubar.jsp"/>
 		<div id="wrapper">
 		<div id="container">
 			<h1 id="container_title">관리자 페이지</h1>
 				<div>
 					<c:choose>
-						<c:when test="${newCount[0] ne 0 or newCount[1] ne 0}">
-						<marquee behavior=alternate>총 신청건수 <b>${newCount[0]+newCount[1]}</b>건 ( 관리자 회원가입 : <b>${newCount[0]}</b>건, 아파트 신청 : <b>${newCount[1]}</b>건) </marquee>
+						<c:when test="${cCount ne 0}">
+						<marquee behavior=alternate>총 신청건수 : ${ cCount }건  </marquee>
 						</c:when>
-						<c:when test="${newCount[0] eq 0 and newCount[1] eq 0}">
+						<c:when test="${cCount eq 0}">
 						<marquee behavior=alternate>신청한 회원이나 아파트가 없습니다.</marquee>
 						</c:when>
 					</c:choose>
@@ -119,7 +119,7 @@ marquee>b{font-size: 20px;}
 				<div class="container_content">
 					<section>
 						<h2>최근 회원가입 5건</h2>
-						<div class="all_list2 all_list">총 회원 ${mall.allMember}명 중 승인회원 ${mall.accept-mall.delete}명, 미승인회원 ${mall.disaccept}명, 탈퇴회원 ${mall.delete}명</div>
+						<div class="all_list2 all_list">총 회원 ${mCount.allMember}명 중 승인회원 ${mCount.accept-mCount.delete}명, 미승인회원 ${mCount.disaccept}명, 탈퇴회원 ${mCount.delete}명</div>
 						<table>
 							<thead>
 								<tr>

@@ -146,6 +146,18 @@ public class MemberDAO {
 	public int MemberDelete(SqlSessionTemplate sqlSession, String[] chkId) {
 		return sqlSession.delete("memberMapper.MemberDelete", chkId);
 	}
+//========================== 관리사무소 =========================================
+	public int createCount(SqlSessionTemplate sqlSession, String aptName) {
+		return sqlSession.selectOne("memberMapper.createCount", aptName);
+	}
+
+	public MemberCount AptMemberCount(SqlSessionTemplate sqlSession, String aptName) {
+		return sqlSession.selectOne("memberMapper.AptMemberCount", aptName);
+	}
+
+	public ArrayList<Member> AptMemberfiveList(SqlSessionTemplate sqlSession, String aptName) {
+		return (ArrayList)sqlSession.selectList("memberMapper.AptMemberfiveList", aptName);
+	}
 	
 	
 	

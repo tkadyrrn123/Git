@@ -37,7 +37,7 @@
 	
 	<select id="memberCount" resultMap="MemberCount">
 		SELECT COUNT(*) ALLP, NVL(COUNT(DECODE(ACCEPT,'Y',1,NULL)),0) ACCP,
-       NVL(COUNT(DECODE(ACCEPT,'N',1,NULL)),0) DISACC, NVL(COUNT(DECODE(USER_DELETE,'Y',1,NULL)),0) DELP
+               NVL(COUNT(DECODE(ACCEPT,'N',1,NULL)),0) DISACC, NVL(COUNT(DECODE(USER_DELETE,'Y',1,NULL)),0) DELP
 		FROM TB_USER 
 		WHERE USER_LEVEL IN ('1','2')
 	</select>
@@ -50,7 +50,7 @@
 	</resultMap>
 	
 	<select id="memberList" resultMap="MemberResult">
-		SELECT * FROM(SELECT * FROM TB_USER WHERE USER_LEVEL IN (1,2) ORDER BY ROWNUM DESC ) WHERE ROWNUM BETWEEN 1 AND 5
+		SELECT * FROM(SELECT * FROM TB_USER WHERE USER_LEVEL IN (1,2) AND ACCEPT = 'N' ORDER BY ROWNUM DESC ) WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
 	
 	<select id="dupNick" resultType="_int">
@@ -268,4 +268,20 @@
             #{item}
         </foreach>
 	</delete>
+<!-- 관리사무소 시작 -->
+	<select id="createCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER WHERE ACCEPT = 'N' AND APT_NAME = #{aptName}
+	</select>	
+	
+	<select id="AptMemberCount" resultMap="MemberCount">
+		SELECT COUNT(*) ALLP, NVL(COUNT(DECODE(ACCEPT,'Y',1,NULL)),0) ACCP,
+               NVL(COUNT(DECODE(ACCEPT,'N',1,NULL)),0) DISACC, NVL(COUNT(DECODE(USER_DELETE,'Y',1,NULL)),0) DELP
+		FROM TB_USER 
+		WHERE USER_LEVEL = 1 AND APT_NAME = #{aptName}
+	</select>
+	
+	<select id="AptMemberfiveList" resultMap="MemberResult">
+		SELECT * FROM(SELECT * FROM TB_USER WHERE USER_LEVEL IN 1 AND ACCEPT = 'N' AND APT_NAME = #{aptName} ORDER BY ROWNUM DESC ) WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
+	
 </mapper>
