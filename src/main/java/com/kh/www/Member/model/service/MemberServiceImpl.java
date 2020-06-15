@@ -127,4 +127,14 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.MemberAccept(sqlSession, chkId);
 	}
 
+	@Override
+	public int InsertAdmin(Member m) {
+		return mDAO.InsertAdmin(sqlSession, m);
+	}
+
+	@Override
+	public int MemberDelete(String[] chkId) {
+		return mDAO.MemberDelete(sqlSession, chkId);
+	}
+
 }

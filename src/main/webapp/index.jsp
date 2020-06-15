@@ -198,6 +198,7 @@ h2 {
 .modal .modal-content input:focus{background: white;}
 .modal .modal-content input[name=aptName]{width: 45%;}
 .modal .modal-content input[name=aptNum]{width: 30%;}
+.modal .modal-content input[name=adminaptName]{width: 45%;}
 .modal .modal-content .close{float: left;}
 .modal .modal-content .member_join{float: right; margin: 25px;}
 .modal .modal-content em{color: red;}
@@ -229,6 +230,16 @@ h2 {
 }
 .btn:active {background: #fff;}
 #SearchApt{
+	outline: none;
+    background-color: #2f3640;
+    border: none;
+    font-size: 15px;
+    padding: 3px 8px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#adminSearchApt{
 	outline: none;
     background-color: #2f3640;
     border: none;
@@ -443,10 +454,90 @@ h2 {
 }
 
 div.postcodify_popup_layer input.keyword:focus{outline: none;}
+/* 관리자 파일 미리보기  */
+/*프로필 사진 css */
+.where {
+  display: block;
+  margin: 25px 15px;
+  font-size: 11px;
+  color: #000;
+  text-decoration: none;
+  font-family: verdana;
+  font-style: italic;
+} 
+
+.filebox2 input[type="file"] {
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip:rect(0,0,0,0);
+	border: 0;
+}
+
+.filebox2 label {
+	display: inline-block;
+	padding: 3px 7px;
+	line-height: normal;
+	font-size: 16px;
+	vertical-align: middle;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+/* named upload */
+.filebox2 .upload-name2 {
+	display: inline-block;
+	vertical-align: middle;
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* imaged preview */
+.filebox2 .upload-display2 {
+	margin-bottom: 5px;
+}
+
+@media(min-width: 768px) {
+	.filebox2 .upload-display2 {
+		display: inline-block;
+		margin-right: 5px;
+		margin-bottom: 0;
+	}
+}
+
+.filebox2 .upload-thumb-wrap2 {
+	display: inline-block;
+	width: 60px;
+    height: 60px;
+	padding: 2px;
+	vertical-align: middle;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+.filebox2 .upload-display2 img {
+	display: block;
+	width: 100%;
+    height: 100%;
+    border-radius: 70%;
+}
+
+.filebox2.bs3-primary2 label {
+    color: #fff;
+    background-color: #2f3640;
+    border-color: #2f3640;
+}
+
+div.postcodify_popup_layer input.keyword:focus{outline: none;}
+
 
 /* 관리사무소/입주민 버튼  */
 #selectdiv {
-  position: absolute;
+    position: absolute;
     top: 53px;
     left: 26%;
     display: flex;
@@ -706,7 +797,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 				<button type="button" class="close btn">뒤로가기</button>
 				<button type="button" class="member_join btn" onclick="jnform();">회원가입</button>
 			</form>
-			<form id="adminjoinForm" name="adminjoinForm" style="display: none;">
+			<form method="post" action="adminInsert.do" id="adminjoinForm" name="adminjoinForm" enctype="Multipart/form-data" style="display: none;">
 				<table style="width: 100%;">
 					<tr>
 						<td><h1>회원가입</h1></td>
@@ -759,21 +850,21 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 						<td>
 							<p><em>*</em> 아파트명</p>
 							<input type="text" id="adminaptName" name="adminaptName" autocomplete=off>
-							<button type="button" id="SearchApt" onclick="searchApt();">검색</button>
+							<button type="button" id="adminSearchApt" onclick="searchApt();">검색</button>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<p>프로필 사진</p>
-							<div class="filebox bs3-primary preview-image">
-								<input class="upload-name" value="파일선택" disabled="disabled" style="width: 30%;">
-								<label for="input_file">업로드</label> 
-							  	<input type="file" name="adminprofile_img" id="input_file" class="upload-hidden"> 
+							<div class="filebox2 bs3-primary2 preview-image2">
+								<input class="upload-name2" value="파일선택" disabled="disabled" style="width: 30%;">
+								<label for="input_file2">업로드</label> 
+							  	<input type="file" name="adminprofile_img" id="input_file2" class="upload-hidden2"> 
 							</div>
 							<script>
 							// 파일 미리보기 기능
 							$(document).ready(function(){
-								   var fileTarget = $('.filebox .upload-hidden');
+								   var fileTarget = $('.filebox2 .upload-hidden2');
 							
 								    fileTarget.on('change', function(){
 								        if(window.FileReader){
@@ -786,15 +877,15 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 								            var filename = $(this).val().split('/').pop().split('\\').pop();
 								        };
 							
-								        $(this).siblings('.upload-name').val(filename);
+								        $(this).siblings('.upload-name2').val(filename);
 								    });
 							
 								    //preview image 
-								    var imgTarget = $('.preview-image .upload-hidden');
+								    var imgTarget = $('.preview-image2 .upload-hidden2');
 							
 								    imgTarget.on('change', function(){
 								        var parent = $(this).parent();
-								        parent.children('.upload-display').remove();
+								        parent.children('.upload-display2').remove();
 							
 								        if(window.FileReader){
 								            //image 파일만
@@ -803,7 +894,8 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 								            var reader = new FileReader();
 								            reader.onload = function(e){
 								                var src = e.target.result;
-								                parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+								                console.log(src);
+								                parent.prepend('<div class="upload-display2"><div class="upload-thumb-wrap2"><img src="'+src+'" class="upload-thumb2"></div></div>');
 								            }
 								            reader.readAsDataURL($(this)[0].files[0]);
 								        }
@@ -812,9 +904,9 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 								            $(this)[0].select();
 								            $(this)[0].blur();
 								            var imgSrc = document.selection.createRange().text;
-								            parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+								            parent.prepend('<div class="upload-display2"><div class="upload-thumb-wrap2"><img class="upload-thumb2"></div></div>');
 							
-								            var img = $(this).siblings('.upload-display').find('img');
+								            var img = $(this).siblings('.upload-display2').find('img');
 								            img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
 								        }
 								    });
@@ -824,6 +916,8 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 						</td>
 					</tr>
 				</table>
+				<button type="button" class="close btn">뒤로가기</button>
+				<button type="button" class="member_join btn" onclick="adjnform();">회원가입</button>
 			</form>
 		</div>
 		<div class="modal-layer"></div>
@@ -922,6 +1016,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
          }
          
       });
+	  
       //패스워드 확인란 검사
       $('#pwd2').on('keyup',function(){
 	  	  var pwd = $('#pwd').val();
@@ -938,6 +1033,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 	      }
 	        
 	    });
+      
       //닉네임 중복검사
       $('#nickName').on('keyup',function(){
     	  var nickName = $('#nickName').val();
@@ -1099,6 +1195,215 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
          }   
        	 
 		}
+      //=====================================관리자=========================================
+    	  //아이디 중복검사(관리자)
+	  $('#adminid').on('keyup',function(){
+		  var id = $('#adminid').val();
+		  var check = /^[A-Za-z0-9_\-]{5,20}$/;
+		  
+		  if(id.length<4){
+			  $('#adminidchk').show();
+			  $('#adminidchk').text('아이디를 5자리 이상 입력해주세요.');
+			  $('#adminidchk').css('color','red');
+			  $('#adminidchk1').val(0);
+		  }else{
+			  if(check.test(id)){
+	        	  $('#adminidchk').text('사용 가능합니다.');
+				  $('#adminidchk').css('color','green');
+				  $('#adminidchk1').val(1);
+				  
+				  $.ajax({
+						url: 'dupid.do',
+						data: {id:id},
+						success: function(data){
+							console.log(data);
+							
+							if(data == 'true'){
+								$('#adminidchk1').val(1);
+							}else{
+								$('#adminidchk').text('이미 있는 아이디거나 탈퇴된 아이디입니다.');
+								$('#adminidchk').css('color','red');
+								$('#adminidchk1').val(0);
+							}
+							
+						}
+		          });
+				  
+			  }else{
+				  $('#adminidchk').text('5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.');
+				  $('#adminidchk').css('color','red');
+				  $('#adminidchk1').val(0);
+			  }
+		  }
+		  if(id.length==0){
+			  $('#adminidchk').hide();
+		  }
+	  });
+      
+	//패스워드 중복검사(관리자)
+      $('#adminpwd').on('keyup',function(){
+    	  
+         var pwd = $('#adminpwd').val();
+         var check = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+       
+         if(check.test(pwd)){
+            $('#adminpwdmsg').text('사용 가능');
+            $('#adminpwdmsg').css({'color' : 'green', 'font-size' : 'x-small'});
+            $('#adminpwdchk').val(1);
+         } else {
+            $('#adminpwdmsg').text('대/소문자, 특수문자, 숫자 포함하여 8자리 이상 입력해주세요.');
+            $('#adminpwdmsg').css({'color' : 'red', 'font-size' : 'x-small'});
+            $('#adminpwdchk').val(0);
+         }
+         
+      });
+	  
+      //패스워드 확인란 검사
+      $('#adminpwd2').on('keyup',function(){
+	  	  var pwd = $('#adminpwd').val();
+	  	  var pwd2 = $('#adminpwd2').val();
+	  	  
+	      if(pwd == pwd2){
+	      	  	$('#adminpwdchkmsg').text('일치');
+	            $('#adminpwdchkmsg').css({'color' : 'green', 'font-size' : 'x-small'});
+	            $('#adminpwdchk2').val(1);
+	      } else {
+	            $('#adminpwdchkmsg').text('불일치');
+	            $('#adminpwdchkmsg').css({'color' : 'red', 'font-size' : 'x-small'});
+	            $('#adminpwdchk2').val(0);
+	      }
+	        
+	    });
+      
+      //닉네임 중복검사
+      $('#adminnickName').on('keyup',function(){
+    	  var nickName = $('#adminnickName').val();
+    	  var check = /[0-9]|[a-z]|[A-Z]|[가-힣]{2,8}$/;
+    	  console.log(nickName);
+    	  if(nickName.length<2){
+			  $('#adminnickchkmsg').show();
+			  $('#adminnickchkmsg').text('닉네임을 2자리 이상 입력해주세요.');
+			  $('#adminnickchkmsg').css('color','red');
+			  $('#adminnickchk').val(0);
+		  }else if(nickName.length>10){
+			  $('#adminnickchkmsg').show();
+			  $('#adminnickchkmsg').text('2~10자리 입력해주세요.');
+			  $('#adminnickchkmsg').css('color','red');
+			  $('#adminnickchk').val(0);
+		  }else{
+			  if(check.test(nickName)){
+	        	  $('#adminnickchkmsg').text('사용 가능합니다.');
+				  $('#adminnickchkmsg').css('color','green');
+				  $('#adminnickchk').val(1);
+		    	  $.ajax({
+		    		  url: 'dupNick.do',
+		    		  data: {nick:nickName},
+		    		  success: function(data){
+		    			  console.log(data);
+							
+							if(data == 'true'){
+								$('#adminnickchk').val(1);
+							}else{
+								$('#adminnickchkmsg').text('이미 있는 아이디거나 탈퇴된 아이디입니다.');
+								$('#adminnickchkmsg').css('color','red');
+								$('#adminnickchk').val(0);
+							}
+		    		  }
+		    	  });
+			  }
+		  }
+    	  if(nickName.length==0){
+			  $('#adminnickchk').hide();
+		  }
+	  });
+      function adjnform(){
+          var userId = $('#adminjoinForm #adminid');
+          var userPwd = $('#adminjoinForm #adminpwd');
+          var userPwdChk = $('#adminjoinForm #adminpwd2');
+          var nickname = $('#adminjoinForm #adminnickName');
+          var email = $('#adminjoinForm #adminemail');
+          var phone = $('#adminjoinForm #adminphone');
+          var aptName = $('#adminjoinForm #adminaptName');
+          var bool = true;
+        	  
+          
+       	if(userId.val() == ''){
+            alert("아이디를 입력해주세요.");
+            userId.focus();
+            return false;
+         }
+          
+         if(userPwd.val() == ''){
+            alert("비밀번호를 입력해주세요.");
+            userPwd.focus();
+            return false;
+         }
+         
+         if(userPwdChk.val() == ''){
+            alert('비밀번호 확인을 입력해주세요.');
+            userCh.focus();
+            return false;
+         }
+         
+         if(nickname.val() == ''){
+             alert('닉네임을 입력해주세요.');
+             nickname.focus();
+            return false;
+          }
+         
+         if(email.val() == ''){
+             alert('이메일을 입력해주세요.');
+             email.focus();
+            	return false;
+          }
+         
+         if(phone.val() == ''){
+            alert('핸드폰 번호를 입력해주세요.');
+            phone.focus();
+       		return false;
+         }
+        
+         if(aptName.val() == ''){
+             alert('아파트명을 입력해주세요.');
+             aptName.focus();
+            	return false;
+         }
+         
+         if($('#adminidchk1').val() == 0 ){
+             alert('사용가능한 아이디를 입력해주세요.');
+             userId.focus();
+             return false;
+         }
+         
+         if($('#adminpwdchk').val() == 0 ){
+             alert('사용가능한 비밀번호를 입력해주세요.');
+             $('#pwd').focus();
+             return false;
+         }
+         
+         if($('#adminpwdchk2').val() == 0 ){
+             alert('입력했던 비밀번호와 같이 입력해주세요.');
+             $('#pwd2').focus();
+             return false;
+         }
+         
+         if($('#adminnickchk').val() == 0 ){
+             alert('사용가능한 닉네임을 입력해주세요.');
+             userId.focus();
+             return false;
+         }
+         
+         if(phone.val().indexOf('-')<=0){
+        	 alert("'-'를 입력해주세요.");
+        	 phone.focus();
+	         return false;
+        }
+       	 if(bool){
+          		 $('#adminjoinForm').submit();
+          		 $(".modal").fadeOut();
+         }   
+       	 
+	   }
     </script>
     
     

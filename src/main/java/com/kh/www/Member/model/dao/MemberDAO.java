@@ -138,6 +138,14 @@ public class MemberDAO {
 		System.out.println("dao: " + Arrays.toString(chkId));
 		return sqlSession.update("memberMapper.MemberAccept",chkId);
 	}
+
+	public int InsertAdmin(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.insert("memberMapper.InsertAdmin", m);
+	}
+
+	public int MemberDelete(SqlSessionTemplate sqlSession, String[] chkId) {
+		return sqlSession.delete("memberMapper.MemberDelete", chkId);
+	}
 	
 	
 	

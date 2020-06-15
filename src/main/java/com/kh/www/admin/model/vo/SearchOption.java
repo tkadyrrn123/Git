@@ -7,10 +7,12 @@ public class SearchOption {
 	private String phone;
 	private String email;
 	private String aptName;
+	private String address;
 	
 	public SearchOption() {}
 
-	public SearchOption(String userId, String nickName, String userName, String phone, String email, String aptName) {
+	public SearchOption(String userId, String nickName, String userName, String phone, String email, String aptName,
+			String address) {
 		super();
 		this.userId = userId;
 		this.nickName = nickName;
@@ -18,6 +20,7 @@ public class SearchOption {
 		this.phone = phone;
 		this.email = email;
 		this.aptName = aptName;
+		this.address = address;
 	}
 
 	public String getUserId() {
@@ -68,10 +71,20 @@ public class SearchOption {
 		this.aptName = aptName;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchOption [userId=" + userId + ", nickName=" + nickName + ", userName=" + userName + ", phone="
-				+ phone + ", email=" + email + ", aptName=" + aptName + "]";
+				+ phone + ", email=" + email + ", aptName=" + aptName + ", address=" + address + "]";
 	}
+
+	
 	
 }

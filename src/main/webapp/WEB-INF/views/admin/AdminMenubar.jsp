@@ -104,8 +104,8 @@
 			</li>
 			<li class="dropdown"><label>아파트 관리</label>
 				<ul class="sub" >
-					<li>- 전체 아파트 목록</li>
-					<li>- 아파트 신청 목록</li>
+					<li onclick="location.href='ApartList.adm'">- 전체 아파트 목록</li>
+					<li onclick="location.href='ApartAccept.adm'">- 아파트 신청 목록</li>
 				</ul>
 			</li>
 		</ul>

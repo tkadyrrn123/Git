@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
- 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +37,6 @@ body,html{
     background: #fff;
     z-index: 99;
 }
-
 table{
 	clear: both;
     width: 100%;
@@ -61,6 +60,10 @@ tbody td{
     line-height: 22px;
 }
 tbody tr:nth-child(even){background:#f3f9ef}
+
+#container.container_small{padding-left: 250px;}
+#container.container_small #container_title{padding-left: 280px;}
+.container_content{padding: 20px;}
 a:link, a:link{color: #000; text-decoration: none;}
 a{cursor: pointer;}
 
@@ -118,7 +121,6 @@ textarea, select{
     vertical-align: top;
     margin-left: 5px;
 }
-
 #pageBtn{
 	clear: both;
     margin: 0 0 20px;
@@ -175,10 +177,6 @@ textarea, select{
     overflow: hidden;
     padding: 0;
     }
-/*이 2개의 스타일은  토글*/
-#container.container_small{padding-left: 250px;}
-#container.container_small #container_title{padding-left: 280px;}
-.container_content{padding: 20px;}
 
 </style>
 </head>
@@ -186,68 +184,63 @@ textarea, select{
 	<jsp:include page="AdminMenubar.jsp"/>
 	<div id="wrapper">
 		<div id="container">
-				<h1 id="container_title">전체 회원 목록</h1>
-				<div class="container_content">
-					<section>
-						<div><h2 style="margin: 10px 0;">전체 회원 조회</h2></div>
-						<div id="button">
-							<a class="btn_01" onclick="textlist(1);">
-								<span class="text">총회원수</span>
-								<span class="num">${mall.allMember}명</span>
-							</a>
-							<a class="btn_01" onclick="textlist(2);">
-								<span class="text">승인</span>
-								<span class="num">${mall.accept-mall.delete}명</span>
-							</a>
-							<a class="btn_01" onclick="textlist(3);">
-								<span class="text">미승인</span>
-								<span class="num">${mall.disaccept}명</span>
-							</a>
-							<a class="btn_01" onclick="textlist(4);">
-								<span class="text">탈퇴</span>
-								<span class="num">${mall.delete}명</span>
-							</a>
-							
-							<script>
-							$(function(){
-									var num = ${num};
-									$(".text").css('background', '#9ec6a3');
-									if(num==1){
-										$(".btn_01:nth(1)").find('.text').css('background', '#2f9f6b');
-									}else if(num==2){
-										$(".btn_01:nth(2)").find('.text').css('background', '#2f9f6b');
-									}else if(num==3){
-										$(".btn_01:nth(3)").find('.text').css('background', '#2f9f6b');
-									}else{
-										$(".btn_01:nth(0)").find('.text').css('background', '#2f9f6b');
-									}
-							});
-							function textlist(num){
-								if(num==1){
-									location.href="MemberList.adm";
-								}else if(num==2){
-									location.href="selectList.adm?num=1";
-								}else if(num==3){
-									location.href="selectList.adm?num=2";
-								}else{
-									location.href="selectList.adm?num=3";
-								}
-							}
-							</script>
-						</div>
+			<h1 id="container_title">전체 아파트 목록</h1>
+			<div class="container_content">
+				<section>
+					<div><h2 style="margin: 10px 0;">전체 아파트 조회</h2></div>
+					<div id="button">
+						<a class="btn_01" onclick="textlist(1);">
+							<span class="text">총 아파트</span>
+							<span class="num">${aptall.allMember}명</span>
+						</a>
+						<a class="btn_01" onclick="textlist(2);">
+							<span class="text">승인</span>
+							<span class="num">${aptall.accept-aptall.delete}명</span>
+						</a>
+						<a class="btn_01" onclick="textlist(3);">
+							<span class="text">미승인</span>
+							<span class="num">${aptall.disaccept}명</span>
+						</a>
+						<a class="btn_01" onclick="textlist(4);">
+							<span class="text">탈퇴</span>
+							<span class="num">${aptall.delete}명</span>
+						</a>
 						
-						<form id="search" action="searchMember.adm" onsubmit="return searchChk();">
+						<script>
+						$(function(){
+								var num = ${num};
+								$(".text").css('background', '#9ec6a3');
+								if(num==1){
+									$(".btn_01:nth(0)").find('.text').css('background', '#2f9f6b');
+								}else if(num==2){
+									$(".btn_01:nth(1)").find('.text').css('background', '#2f9f6b');
+								}else if(num==3){
+									$(".btn_01:nth(2)").find('.text').css('background', '#2f9f6b');
+								}else{
+									$(".btn_01:nth(3)").find('.text').css('background', '#2f9f6b');
+								}
+						});
+						function textlist(num){
+							if(num==1){
+								location.href="ApartList.adm";
+							}else if(num==2){
+								location.href="ApartList.adm?num=2";
+							}else if(num==3){
+								location.href="ApartList.adm?num=3";
+							}else{
+								location.href="ApartList.adm?num=4";
+							}
+						}
+						</script>
+					</div>
+					
+					<form id="search" action="searchApart.adm" onsubmit="return searchChk();">
 							<select id="searchOption" name="searchOption">
-								<option>회원아이디</option>
-								<option>닉네임</option>
-								<option>이름</option>
+								<option>아파트명</option>
 								<option>전화번호</option>
-								<option>이메일</option>
-								<option>아파트</option>
 							</select>
-							<input type="hidden" name="num" value="${num}">
 							<input type="text" id="searchText" name="searchText">
-							<input type="submit" id="btn_submit" name="btn_submit">
+							<input type="button" id="btn_submit" name="btn_submit" onclick="searchMember();">
 							<script>
 								function searchChk(){
 									if($('#searchText').val('')){
@@ -261,45 +254,37 @@ textarea, select{
 						<table>
 							<thead>
 								<tr>
-									 <th style="width: 100px;">회원아이디</th>
-							         <th style="width: 100px;">이름</th>
-							         <th style="width: 100px;">닉네임</th>
-							         <th style="width: 110px;">전화번호</th>
-							         <th style="width: 100px;">이메일</th>
-							         <th style="width: 400px;">아파트</th>
-							         <th style="width: 100px;">동/호수</th>
-							         <th style="width: 50px;">권한</th>
-							         <th style="width: 100px;">가입일</th>
-							         <th style="width: 50px;">승인현황</th>
-							         <th style="width: 50px;">탈퇴여부</th>
+									<th scope="col" style="width: 10px;">번호</th>
+							        <th scope="col" style="width: 200px;">아파트명</th>
+							        <th scope="col" style="width: 300px;">주소</th>
+							        <th scope="col" style="width: 30px;">동(수)</th>
+							        <th scope="col" style="width: 100px;">가입일</th>
+							        <th scope="col" style="width: 100px;">전화번호</th>
+							        <th scope="col" style="width: 30px;">승인여부</th>
+							        <th scope="col" style="width: 30px;">탈퇴여부</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty mlist }">
+								<c:if test="${empty alist }">
 									<tr>
 										<td colspan="11" style="text-align: center; padding: 100px 0 !important;">
 											자료가 없습니다.
 										</td>
 									</tr>
 								</c:if>
-								<c:forEach var="m" items="${mlist}">
+								<c:forEach var="a" items="${alist}">
 									<tr>
-										<td>${m.userId}</td>
-										<td>${m.userName}</td>
-										<td>${m.nickName}</td>
-										<td>${m.phone}</td>
-										<td>${m.email}</td>
-										<td>${m.aptName}</td>
-										<td>${m.aptDong}/${m.aptHosu}</td>
-										<c:if test="${m.userLevel eq 1}">
-											<td>입주민</td>
-										</c:if>
-										<c:if test="${m.userLevel eq 2}">
-											<td>관리사무소</td>
-										</c:if>
-										<td>${m.createDate}</td>
-										<td>${m.ACCEPT}</td>
-										<td>${m.status}</td>
+										<td>${a.id}</td>
+										<td>${a.name}</td>
+										<td>${a.address}</td>
+										<td>
+											<c:set var="dongs" value="${fn:split(a.dong, ',')}" />
+											${fn:length(dongs)}
+										</td>
+										<td>${a.createdate}</td>
+										<td>${a.tel}</td>
+										<td>${a.accept}</td>
+										<td>${a.delete}</td>
 									</tr>
 								</c:forEach>
 							</tbody>							
@@ -374,10 +359,10 @@ textarea, select{
 								<a class="pg_btn pg_end" href="${ end }">마지막</a>
 							</c:if>							
 						</span>
-					</div>
-				</div>
+					</div>	
 			</div>
-		<jsp:include page="../common/Footer.jsp"/>
+		</div>
+		<jsp:include page="../common/Footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

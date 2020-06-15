@@ -172,6 +172,25 @@ a{cursor: pointer;}
     overflow: hidden;
     padding: 0;
     }
+#btn_fixed{
+	position: fixed;
+    top: 60px;
+    right: 10px;
+    z-index: 100;
+}
+.accept_btn{
+	cursor:pointer;
+	background: #9ec6a3;
+    color: #fff;
+    height: 30px;
+    border: 0;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-weight: bold;
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+.accept_btn:hover{background: #2f9f6b;}
 </style>
 </head>
 <body>
@@ -218,7 +237,7 @@ a{cursor: pointer;}
 							}
 							</script>
 						</div>
-						<div id="search">
+						<form id="search" action="searchApart.adm" onsubmit="return searchChk();">
 							<select id="searchOption" name="searchOption">
 								<option>회원아이디</option>
 								<option>닉네임</option>
@@ -227,21 +246,22 @@ a{cursor: pointer;}
 								<option>이메일</option>
 								<option>아파트</option>
 							</select>
+							<input type="hidden" name="num" value="${num}">
 							<input type="text" id="searchText" name="searchText">
 							<input type="button" id="btn_submit" name="btn_submit" onclick="searchMember();">
 							<script>
-								function searchMember(){
-									var searchOption = $("#searchOption").val();
-									var searchText = $("#searchText").val();
-									var num = ${num};
-									
-									location.href="searchAccept.adm?searchOption="+searchOption+"&searchText="+searchText+"&num="+num;
+								function searchChk(){
+									if($('#searchText').val('')){
+										alert('검색어를 입력해주세요');
+										return false;
+									}
+									return true;
 								}
 							</script>
-						</div>
-						<form action="MemberAccept.adm">
+						</form>
+						<form action="MemberAccept.adm" onsubmit="return Memberlist_submit();" >
 							<input type="hidden" name="num" value="${num}">
-							<input type="submit" id="accept"value="선택승인">
+							
 							<table>
 								<thead>
 									<tr>
@@ -290,6 +310,10 @@ a{cursor: pointer;}
 									</c:forEach>
 								</tbody>
 							</table>
+							<div id="btn_fixed">
+								<input type="submit" name="accept" class="accept_btn" value="선택승인" onclick="javascript: document.pressed=this.value">
+								<input type="submit" name="delete" class="accept_btn" value="선택삭제" onclick="javascript: document.pressed=this.value">
+							</div>
 						</form>
 						<script>
 							$("#allCheck").click(function(){
@@ -306,6 +330,21 @@ a{cursor: pointer;}
 								  $("#allCheck").prop("checked", false);
 							});
 							
+							function Memberlist_submit(){
+								console.log(document.pressed);
+							    if ($('input[name="chkId"]').is(":checked")==false) {
+							        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+							        return false;
+							    }
+
+							    if(document.pressed == "선택삭제") {
+							        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+							            return false;
+							        }
+							    }
+
+							    return true;
+							 }
 							
 						</script>
 						<!--페이징-->	
@@ -315,10 +354,10 @@ a{cursor: pointer;}
 							<c:if test="${ pi.currentPage > 1 }">
 								<c:url var="start" value="${ loc }">
 									<c:param name="page" value="1"/>
+									<c:param name="num" value="${num}"/>
 									<c:if test="${ searchText ne null }">
 										<c:param name="searchOption" value="${searchOption}"/>
 										<c:param name="searchText" value="${searchText}"/>
-										<c:param name="num" value="${num}"/>
 									</c:if>
 								</c:url>
 								<a class="pg_btn pg_start" href="${ start }">처음</a>
@@ -327,10 +366,10 @@ a{cursor: pointer;}
 							<c:if test="${ pi.currentPage > 10 }">
 								<c:url var="prev" value="${ loc }">
 									<c:param name="page" value="${pi.startPage - 10}"/>
+									<c:param name="num" value="${num}"/>
 									<c:if test="${ searchText ne null }">
 										<c:param name="searchOption" value="${searchOption}"/>
 										<c:param name="searchText" value="${searchText}"/>
-										<c:param name="num" value="${num}"/>
 									</c:if>
 								</c:url>
 								<a class="pg_btn pg_prev" href="${ prev }">처음</a>
@@ -343,11 +382,11 @@ a{cursor: pointer;}
 								<c:if test="${ p ne pi.currentPage }">
 									<c:url var="pagination" value="${ loc }">
 										<c:param name="page" value="${ p }"/>
-										<c:if test="${ searchText ne null }">
-										<c:param name="searchOption" value="${searchOption}"/>
-										<c:param name="searchText" value="${searchText}"/>
 										<c:param name="num" value="${num}"/>
-									</c:if>
+										<c:if test="${ searchText ne null }">
+											<c:param name="searchOption" value="${searchOption}"/>
+											<c:param name="searchText" value="${searchText}"/>
+										</c:if>
 									</c:url>
 									<a class="pg_btn" href="${ pagination }">${ p }</a> &nbsp;
 								</c:if>
@@ -356,10 +395,10 @@ a{cursor: pointer;}
 							<c:if test="${ pi.currentPage > 1 and pi.maxPage > 10}">
 								<c:url var="next" value="${ loc }">
 									<c:param name="page" value="${pi.endPage + 1 }"/>
+									<c:param name="num" value="${num}"/>
 									<c:if test="${ searchText ne null }">
 										<c:param name="searchOption" value="${searchOption}"/>
 										<c:param name="searchText" value="${searchText}"/>
-										<c:param name="num" value="${num}"/>
 									</c:if>
 								</c:url>
 								<a class="pg_btn pg_next" href="${ next }">처음</a>
@@ -368,10 +407,10 @@ a{cursor: pointer;}
 							<c:if test="${ pi.currentPage < pi.maxPage }">
 								<c:url var="end" value="${ loc }">
 									<c:param name="page" value="${ pi.maxPage }"/>
+									<c:param name="num" value="${num}"/>
 									<c:if test="${ searchText ne null }">
 										<c:param name="searchOption" value="${searchOption}"/>
 										<c:param name="searchText" value="${searchText}"/>
-										<c:param name="num" value="${num}"/>
 									</c:if>
 								</c:url> 
 								<a class="pg_btn pg_end" href="${ end }">마지막</a>
