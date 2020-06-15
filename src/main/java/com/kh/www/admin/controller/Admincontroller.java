@@ -70,7 +70,7 @@ public class Admincontroller {
 	}
 	//회원 전체 목록 리스트
 	@RequestMapping("MemberList.adm")
-	public String memberList(Model model,@RequestParam(value="page", required = false) Integer page, HttpSession session) {
+	public String memberList(Model model,@RequestParam(value="page", required = false) Integer page) {
 		
 		int currentPage = 1;
 		int num = 0;
@@ -419,7 +419,24 @@ public class Admincontroller {
 		
 		return "redirect:ApartAccept.adm";
 	}
-	
+//=================================================아파트 어드민==============================================
+	@RequestMapping("AptAdminMain.adm")
+	public String AptAdminMain(HttpSession session,  Model model) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName= loginUser.getAptName();
+		//회원가입 들어온 횟수
+		int createCount = mService.createCount(aptName);
+		//총 멤버 인원수
+		MemberCount memberCount = mService.AptMemberCount(aptName);
+		//멤버 리스트
+		ArrayList<Member> mList = mService.AptMemberfiveList(aptName);
+		
+		model.addAttribute("cCount", createCount)
+		     .addAttribute("mCount", memberCount)
+		     .addAttribute("mlist", mList);
+		
+		return "AptAdminMain";
+	}
 	
 	
 	

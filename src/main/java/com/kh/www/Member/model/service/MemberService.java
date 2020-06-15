@@ -55,5 +55,11 @@ public interface MemberService {
 	int InsertAdmin(Member m);
 	//승인 삭제
 	int MemberDelete(String[] chkId);
+	//회원가입 카운트
+	int createCount(String aptName);
+	//아파트에 속한 총 회원수
+	MemberCount AptMemberCount(String aptName);
+	//아파트에 속한 회원 리스트 5건
+	ArrayList<Member> AptMemberfiveList(String aptName);
 
 }
