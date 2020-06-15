@@ -177,19 +177,55 @@ public class HomeController {
 		}
 		
 		int result = mService.InsertMember(m);
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		
 		if(result>0) {
-			response.setContentType("text/html; charset=UTF-8");
-			
-            PrintWriter out = response.getWriter();
             out.println("<script>alert('회원 가입이 완료되었습니다.'); history.go(-1);</script>");
             out.flush();
-
-
-			return "index";
 		}else {
-			throw new ApartException("아파트 신청이 불가능합니다.");
+			out.println("<script>alert('회원 가입에 실패했습니다.'); history.go(-1);</script>");
+            out.flush();
 		}
+		return "index";
+	}
+	
+	//관리자 회원가입
+	@RequestMapping("adminInsert.do")
+	public String InsertAdmin(@ModelAttribute Member m, @RequestParam("adminprofile_img") MultipartFile imgFile,
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
+		m.setUserId(request.getParameter("adminid"));
+		m.setNickName(request.getParameter("adminnickName"));
+		m.setPhone(request.getParameter("adminphone"));
+		m.setEmail(request.getParameter("adminemail"));
+		m.setAptName(request.getParameter("adminaptName"));
+		m.setUserLevel(Integer.parseInt(request.getParameter("user_level")));
+		
+		String encPwd = BCryptPasswordEncoder.encode(request.getParameter("adminpwd"));
+		
+		m.setUserPwd(encPwd);
+		
+		if(imgFile != null && !imgFile.isEmpty()) {
+			String renameFileName = saveFile(imgFile, request);
+			
+			if(renameFileName != null) {
+				m.setUserFile(renameFileName);
+			}
+		}
+		
+		int result = mService.InsertAdmin(m);
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		if(result>0) {
+			out.println("<script>alert('회원 가입이 완료되었습니다.'); history.go(-1);</script>");
+			out.flush();
+		}else {
+			out.println("<script>alert('회원 가입에 실패했습니다.'); history.go(-1);</script>");
+			out.flush();
+		}
+		
+		return "index";
 	}
 	
 	

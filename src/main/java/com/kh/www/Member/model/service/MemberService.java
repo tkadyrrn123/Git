@@ -51,5 +51,9 @@ public interface MemberService {
 	ArrayList<Member> searchAcceptlist(PageInfo pi, SearchOption so, int num);
 	//멤버 승인
 	int MemberAccept(String[] chkId);
+	//관리자 회원가입
+	int InsertAdmin(Member m);
+	//승인 삭제
+	int MemberDelete(String[] chkId);
 
 }

@@ -78,7 +78,8 @@ public class Admincontroller {
 		if(page != null) {
 			currentPage = page;
 		}
-		
+		//회원 상태
+		MemberCount memberall = mService.memberCount();
 		// 회원 수
 		int listCount = mService.getListCount();
 		//회원 페이징
@@ -88,6 +89,7 @@ public class Admincontroller {
 		
 		
 		model.addAttribute("mlist", mAllList)
+			 .addAttribute("mall",memberall)
 			 .addAttribute("pi",pi)
 			 .addAttribute("num",num);
 		
@@ -109,7 +111,8 @@ public class Admincontroller {
 		//회원 리스트
 		ArrayList<Member> mAllList = mService.memberAllList(pi,num);
 		
-		System.out.println(listCount);
+		System.out.println(pi);
+		
 		model.addAttribute("mlist", mAllList)
 			 .addAttribute("pi",pi)
 			 .addAttribute("num",num);
@@ -176,7 +179,7 @@ public class Admincontroller {
 		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
 		//회원 리스트
 		ArrayList<Member> mAllList = mService.AcceptList(pi);
-		
+		System.out.println(pi);
 		model.addAttribute("lvCnt", levCount)
 		     .addAttribute("mlist", mAllList)
 			 .addAttribute("pi", pi)
@@ -193,6 +196,8 @@ public class Admincontroller {
 		if(page != null) {
 			currentPage = page;
 		}
+		//승인 대기 인원수
+		LevelCount levCount = mService.levelCount();
 		// 회원 수
 		int listCount = mService.AcceptSelectCount(num);
 		//페이징
@@ -203,6 +208,7 @@ public class Admincontroller {
 		
 		model.addAttribute("pi", pi)
 		     .addAttribute("mlist", mAllList)
+		     .addAttribute("lvCnt", levCount)
 		     .addAttribute("num", num);
 		
 		return "AdminAccept";
@@ -243,8 +249,6 @@ public class Admincontroller {
 		//리스트
 		ArrayList<Member> mAllList = mService.searchAcceptlist(pi, so, num);
 		
-		System.out.println(pi);
-		
 		model.addAttribute("pi", pi)
 		     .addAttribute("mlist", mAllList)
 		     .addAttribute("num", num)
@@ -255,14 +259,20 @@ public class Admincontroller {
 	}
 	
 	@RequestMapping("MemberAccept.adm")
-	public String MemberAccept(@RequestParam(value="chkId", required = false) String[] chkId, @RequestParam("num") int num
+	public String MemberAccept(@RequestParam(value="accept", required = false) String accept, @RequestParam(value="delete", required = false) String delete,
+							   @RequestParam(value="chkId", required = false) String[] chkId, @RequestParam("num") int num
 			                   ,Model model) {
 		
-		
+		System.out.println(chkId);
+		System.out.println(accept);
+		System.out.println(delete);
 		System.out.println(num);
-		System.out.println(Arrays.toString(chkId));
 		
-		mService.MemberAccept(chkId);
+		if(accept!=null) {
+			mService.MemberAccept(chkId);
+		}else if(delete != null) {
+			mService.MemberDelete(chkId);
+		}
 		
 		LevelCount levCount = mService.levelCount();
 		
@@ -278,10 +288,137 @@ public class Admincontroller {
 		}
 	}
 	
+	@RequestMapping("ApartList.adm")
+	public String ApartList(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="num", required = false) Integer num,
+							Model model) {
+		int Num = 1;
+		
+		if(num != null) {
+			Num = num;
+		}
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		//아파트 카운트
+		MemberCount aptall = aptService.aptCount();
+		
+		//아파트 리스트 카운트
+		int listCount = aptService.aptlistCount(Num);
+		//페이징
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		//리스트
+		ArrayList<Apart> apartList = aptService.apartAllList(pi, num); 
+		
+		
+		model.addAttribute("aptall", aptall)
+			 .addAttribute("alist", apartList)
+			 .addAttribute("pi", pi)
+			 .addAttribute("num", Num);
+		
+		return "AdminApartList";
+	}
+	//아파트 승인 관리 페이지
+	@RequestMapping("ApartAccept.adm")
+	public String ApartAccept(@RequestParam(value="page", required = false) Integer page, Model model) {
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = aptService.acceptlistCount();
+		
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		
+		ArrayList<Apart> alist = aptService.aptAcceptList(pi);
+		
+		model.addAttribute("pi", pi)
+			 .addAttribute("alist", alist);
+		
+		return "AdminApartAccept";
+	}
+	@RequestMapping("searchApart.adm")
+	public String searchApart(@RequestParam("searchOption") String searchOption, @RequestParam("searchText") String text,
+					          @RequestParam(value="page", required = false) Integer page, @RequestParam("num") int num,
+						      Model model) {
+		
+		SearchOption so = new SearchOption();
+		if(searchOption.equals("아파트명")) {
+			so.setAptName(text);
+		}else if(searchOption.equals("전화번호")) {
+			so.setPhone(text);
+		}
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		MemberCount aptall = aptService.aptCount();
 	
+		int listCount = aptService.searchApartCount(so, num);
+		
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		
+		ArrayList<Apart> alist = aptService.SearchApartList(pi, so, num);
+		
+		model.addAttribute("pi", pi)
+		     .addAttribute("alist", alist)
+		     .addAttribute("aptall", aptall)
+		     .addAttribute("num", num);
+		
+		return "AdminApartList";
+	}
 	
+	@RequestMapping("searchAptAccept.adm")
+	public String searchAptAccept(@RequestParam("searchOption") String searchOption, @RequestParam("searchText") String text,
+						          @RequestParam(value="page", required = false) Integer page,
+							      Model model) {
+		
+		SearchOption so = new SearchOption();
+		if(searchOption.equals("아파트명")) {
+			so.setAptName(text);
+		}else if(searchOption.equals("전화번호")) {
+			so.setPhone(text);
+		}
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = aptService.searchAptAcceptCount(so);
+		
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		
+		ArrayList<Apart> alist = aptService.searchAptAcceptList(pi, so);
+		
+		model.addAttribute("pi", pi)
+	         .addAttribute("alist", alist);
+		
+		return "AdminApartAccept";
+	}
 	
-	
+	@RequestMapping("ApartAcceptexe.adm")
+	public String ApartAccept(@RequestParam(value="chkId", required = false) String[] chkId,@RequestParam(value="accept", required = false) String accept, @RequestParam(value="delete", required = false) String delete,
+            				  Model model) {
+		System.out.println(chkId);
+		System.out.println(delete);
+		System.out.println(accept);
+		if(accept != null) {
+			aptService.ApartAccept(chkId);
+		}else if(delete != null) {
+			aptService.ApartDelete(chkId);
+		}
+		
+		return "redirect:ApartAccept.adm";
+	}
 	
 	
 	

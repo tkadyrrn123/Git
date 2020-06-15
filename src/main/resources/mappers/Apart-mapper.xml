@@ -45,5 +45,107 @@
 		<result column="DISACC" property="disaccept"/>
 		<result column="DELP" property="delete"/>
 	</resultMap>
-
+	
+	<select id="aptlistCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_APART
+		<where>
+			<if test="num==1"></if>
+			<if test="num==2">AND APT_ACCEPT = 'Y' AND APT_DELETE='N'</if>
+			<if test="num==3">AND APT_ACCEPT = 'N' AND APT_DELETE='N'</if>
+			<if test="num==4">AND APT_ACCEPT = 'Y' AND APT_DELETE='Y'</if>
+		</where>
+	</select>
+	
+	<select id="aptAlllist" resultMap="ApartResultMap">
+		SELECT * FROM TB_APART
+		<where>
+			<if test="num==1"></if>
+			<if test="num==2">AND APT_ACCEPT = 'Y' AND APT_DELETE='N'</if>
+			<if test="num==3">AND APT_ACCEPT = 'N' AND APT_DELETE='N'</if>
+			<if test="num==4">AND APT_ACCEPT = 'Y' AND APT_DELETE='Y'</if>
+		</where>
+	</select>
+	
+	<select id="acceptlistCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_APART WHERE APT_ACCEPT='N'
+	</select>
+	
+	<select id="aptAcceptList" resultMap="ApartResultMap">
+		SELECT * FROM TB_APART WHERE APT_ACCEPT='N'
+	</select>
+	
+	<select id="searchApartCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_APART
+		<where>
+			<if test="num==1">
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+				<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+			</if>
+			<if test="num==2">AND APT_ACCEPT = 'Y' AND APT_DELETE='N'
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+				<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+			</if>
+			<if test="num==3">AND APT_ACCEPT = 'N' AND APT_DELETE='N'
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+				<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+			</if>
+			<if test="num==4">AND APT_ACCEPT = 'Y' AND APT_DELETE='Y'
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+				<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="searchApartList" resultMap="ApartResultMap">
+		SELECT * FROM TB_APART 
+		<where>
+			<if test="num==1">
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+				<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+			</if>
+			<if test="num==2">AND APT_ACCEPT = 'Y' AND APT_DELETE='N'
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+				<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+			</if>
+			<if test="num==3">AND APT_ACCEPT = 'N' AND APT_DELETE='N'
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+				<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+			</if>
+			<if test="num==4">AND APT_ACCEPT = 'Y' AND APT_DELETE='Y'
+				<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+				<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="searchAptAcceptCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_APART WHERE APT_ACCEPT='N'
+		<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+	</select>
+	
+	<select id="searchAptAcceptList" resultMap="ApartResultMap">
+		SELECT * FROM TB_APART WHERE APT_ACCEPT='N'
+		<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
+		<if test="so.phone != null">AND APT_TEL LIKE '%' || #{so.phone} || '%'</if>
+	</select>
+	
+	<insert id="InsertAdmin">
+		INSERT INTO TB_APART VALUES(SEQ_APT.NEXTVAL,#{name},#{dong},#{address},#{tel},default,default,default,null)
+	</insert>
+	
+	<update id="ApartAccept">
+		UPDATE TB_APART SET APT_ACCEPT ='Y'
+		WHERE APT_ID IN
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+	</update>
+	
+	<delete id="ApartDelete">
+		DELETE FROM TB_APART WHERE APT_ID IN
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+	</delete>
 </mapper>

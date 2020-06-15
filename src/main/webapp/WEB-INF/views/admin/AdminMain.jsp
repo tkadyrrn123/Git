@@ -109,7 +109,7 @@ marquee>b{font-size: 20px;}
 				<div>
 					<c:choose>
 						<c:when test="${newCount[0] ne 0 or newCount[1] ne 0}">
-						<marquee behavior=alternate>총 신청건수 <b>${newCount[0]+newCount[1]}</b>건 ( 회원가입 : <b>${newCount[0]}</b>건, 아파트 신청 : <b>${newCount[1]}</b>건) </marquee>
+						<marquee behavior=alternate>총 신청건수 <b>${newCount[0]+newCount[1]}</b>건 ( 관리자 회원가입 : <b>${newCount[0]}</b>건, 아파트 신청 : <b>${newCount[1]}</b>건) </marquee>
 						</c:when>
 						<c:when test="${newCount[0] eq 0 and newCount[1] eq 0}">
 						<marquee behavior=alternate>신청한 회원이나 아파트가 없습니다.</marquee>
@@ -119,7 +119,7 @@ marquee>b{font-size: 20px;}
 				<div class="container_content">
 					<section>
 						<h2>전체가입회원 목록</h2>
-						<div class="all_list2 all_list">총 회원 ${mall.allMember}명 중 승인회원 ${mall.accept-mall.delete}명, 미승인회원 ${mall.disaccept}명, 탈퇴 ${mall.delete}명</div>
+						<div class="all_list2 all_list">총 회원 ${mall.allMember}명 중 승인회원 ${mall.accept-mall.delete}명, 미승인회원 ${mall.disaccept}명, 탈퇴회원 ${mall.delete}명</div>
 						<table>
 							<thead>
 								<tr>
@@ -174,7 +174,7 @@ marquee>b{font-size: 20px;}
 				<div class="container_content">
 					<section>
 						<h2>전체 아파트 목록</h2>
-						<div class="all_list2 all_list">전체아파트 ${aall.allMember}개 중 승인회원 ${aall.accept-aall.delete}개, 미승인회원 ${aall.disaccept}개, 탈퇴 ${aall.delete}개</div>
+						<div class="all_list2 all_list">총 아파트 ${aall.allMember}개 중 승인아파트 ${aall.accept-aall.delete}개, 미승인아파트 ${aall.disaccept}개, 탈퇴 아파트 ${aall.delete}개</div>
 						<table>
 							<thead>
 								<tr>
@@ -209,12 +209,11 @@ marquee>b{font-size: 20px;}
 										<td>${a.tel}</td>
 										<td>${a.accept}</td>
 										<td>${a.delete}</td>
-										
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-						<div class="userlist btnList"><a>전체 아파트 목록</a></div>
+						<div class="userlist btnList"><a href='ApartList.adm'>전체 아파트 목록</a></div>
 					</section>
 				</div>
 				

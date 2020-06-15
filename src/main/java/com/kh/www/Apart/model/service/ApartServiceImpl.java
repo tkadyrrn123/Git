@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import com.kh.www.Apart.model.dao.ApartDAO;
 import com.kh.www.Apart.model.vo.Apart;
 import com.kh.www.Member.model.vo.MemberCount;
+import com.kh.www.admin.model.vo.SearchOption;
+import com.kh.www.common.model.vo.PageInfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -116,5 +118,56 @@ public class ApartServiceImpl implements ApartService{
 	public MemberCount aptCount() {
 		return aptDAO.aptCount(sqlSession);
 	}
-	
+
+	@Override
+	public int aptlistCount(int num) {
+		return aptDAO.aptlistCount(sqlSession, num);
+	}
+
+	@Override
+	public ArrayList<Apart> apartAllList(PageInfo pi, Integer num) {
+		return aptDAO.apartAllList(sqlSession, pi, num);
+	}
+
+	@Override
+	public int acceptlistCount() {
+		return aptDAO.acceptlistCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Apart> aptAcceptList(PageInfo pi) {
+		return aptDAO.aptAcceptList(sqlSession, pi);
+	}
+
+	@Override
+	public int searchApartCount(SearchOption so, int num) {
+		return aptDAO.searchApartCount(sqlSession, so, num);
+	}
+
+	@Override
+	public ArrayList<Apart> SearchApartList(PageInfo pi, SearchOption so, int num) {
+		return aptDAO.SearchApartList(sqlSession, pi, so, num);
+	}
+
+	@Override
+	public int searchAptAcceptCount(SearchOption so) {
+		return aptDAO.searchAptAcceptCount(sqlSession, so);
+	}
+
+	@Override
+	public ArrayList<Apart> searchAptAcceptList(PageInfo pi, SearchOption so) {
+		return aptDAO.searchAptAcceptList(sqlSession, pi, so);
+	}
+
+	@Override
+	public int ApartAccept(String[] chkId) {
+		return aptDAO.ApartAccept(sqlSession, chkId);
+		
+	}
+
+	@Override
+	public int ApartDelete(String[] chkId) {
+		return aptDAO.ApartDelete(sqlSession, chkId);
+	}
+
 }

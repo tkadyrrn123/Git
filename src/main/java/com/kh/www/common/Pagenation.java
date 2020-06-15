@@ -37,7 +37,7 @@ public class Pagenation {
 		int endPage;
 		int boardLimit = 15;
 		
-		maxPage = (int)((double)listCount / boardLimit + 1);
+		maxPage = (int)((double)listCount / boardLimit + 0.95);
 		startPage = ((int)((double)currentPage / pageLimit + 0.9) - 1) * pageLimit + 1;
 		endPage = startPage + pageLimit - 1;
 		

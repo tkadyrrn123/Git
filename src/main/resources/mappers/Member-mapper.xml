@@ -257,4 +257,15 @@
             #{item}
         </foreach>
 	</update>
+	
+	<insert id="InsertAdmin">
+		INSERT INTO TB_USER VALUES(#{userId},#{userPwd},null,#{nickName},#{phone},#{email},#{aptName},null,null,#{userFile},#{userLevel},sysdate,default,default)
+	</insert>
+	
+	<delete id="MemberDelete">
+		DELETE FROM TB_USER WHERE USER_ID IN
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+	</delete>
 </mapper>
