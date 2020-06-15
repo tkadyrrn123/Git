@@ -12,9 +12,9 @@ public interface FreeBoardService {
 
 	int insertBoard(FreeBoard fb);
 
-	int getListCount();
+	int getListCount(String aptName);
 
-	ArrayList<FreeBoard> selectList(PageInfo pi);
+	ArrayList<FreeBoard> selectList(PageInfo pi, String aptName);
 
 	FreeBoard selectFreeBoard(int boardNo);
 
@@ -29,5 +29,7 @@ public interface FreeBoardService {
 	int updateFreeBoard(FreeBoard fb);
 
 	int updateFreeFile(FreeBoard fb);
+
+	int commentModify(Comment comment);
 	
 }

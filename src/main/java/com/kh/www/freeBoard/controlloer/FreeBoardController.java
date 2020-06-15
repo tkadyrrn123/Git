@@ -39,18 +39,22 @@ public class FreeBoardController {
 	
 	
 	@RequestMapping("list.fr")
-	public ModelAndView freeBoardListView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) throws FreeBoardException{		
-
+	public ModelAndView freeBoardListView(@RequestParam(value="page", required=false) Integer page, 
+										ModelAndView mv, HttpSession session) throws FreeBoardException{		
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int listCount = freeService.getListCount();
+		int listCount = freeService.getListCount(aptName);
 		
 		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
 		
-		ArrayList<FreeBoard> list = freeService.selectList(pi);
+		ArrayList<FreeBoard> list = freeService.selectList(pi, aptName);
 		
 	//	System.out.println("list.fr "+list);
 		if(list !=null) {
@@ -221,7 +225,7 @@ public class FreeBoardController {
 		ArrayList<Comment> list = freeService.selectRList(boardNo);
 	//	System.out.println("댓글리스트 받아옴? "+list);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
 			gson.toJson(list, response.getWriter());
 		} catch (JsonIOException e) {
@@ -250,6 +254,17 @@ public class FreeBoardController {
 		
 	}
 	
+	@RequestMapping("commentModify.fr")
+    @ResponseBody
+    private int commentModify(@RequestParam int rNo, @RequestParam String rContent) {
+        
+        Comment comment = new Comment();
+        comment.setrNo(rNo);
+        comment.setrContent(rContent);
+        
+        return freeService.commentModify(comment);
+    }
+
 
 	
 }
