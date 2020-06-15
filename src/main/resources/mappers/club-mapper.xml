@@ -11,11 +11,14 @@
 	</select>
 	
 	<select id="selectList" resultMap="clubResultSet">
-		select club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name
-		from tb_club
-			join tb_board using(board_no)
-            left join tb_file using(board_no) 
+		select club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name, nickname, count(j.user_id) club_people
+		from tb_club c
+			join tb_board b using(board_no)
+            join tb_user u using(user_id)
+            left join tb_file f using(board_no) 
+            join tb_club_join j using(club_name)
 		where board_delete = 'N'
+        group by club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name, nickname
 		order by board_no desc
 	</select>
 	
@@ -30,15 +33,18 @@
 		<result property="endYn" column="END_YN"/>
 		<result property="fileName" column="FILE_NAME"/>
 		<result property="nickName" column="NICKNAME"/>
+		<result property="clubPeople" column="CLUB_PEOPLE"/>
 	</resultMap>
 	
 	<select id="selectClub" resultMap="clubResultSet">
-		select club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name , nickname
-		from tb_club
-			join tb_board using(board_no)
-            left join tb_file using(board_no)
-            join tb_user using(user_id)
-        where board_delete = 'N' and club_name = '${ clubName }'
+		select club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name , nickname, count(j.user_id) club_people
+		from tb_club c
+			join tb_board b using(board_no)
+            join tb_user u using(user_id)
+            left join tb_file f using(board_no) 
+            join tb_club_join j using(club_name)
+        where board_delete = 'N' and club_name = '수정 끝'
+        group by club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name, nickname
 	</select>
 	
 	
@@ -65,7 +71,7 @@
 	<update id="deleteClub">
 		update tb_board
 		set BOARD_DELETE = 'Y'
-		where BOARD_NO = 4
+		where BOARD_NO = #{boardNo}
 	</update>
 	
 	<insert id="insertComment">
@@ -93,6 +99,11 @@
 		<result property="nickname" column="NICKNAME"/>
 	</resultMap>
 	
+	<update id="updateClub">
+		update tb_club
+		set club_name = #{clubName}, club_intro = #{clubIntro}, club_plan = #{clubPlan}, club_place = #{clubPlace}, club_etc = #{clubEtc}, max_people = #{maxPeople}
+		where board_no = #{boardNo}
+	</update>
 	
 	
 </mapper>

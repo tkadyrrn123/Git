@@ -47,8 +47,8 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
-	public int deleteClub() {
-		return cDAO.deleteClub(sqlSession);
+	public int deleteClub(Integer boardNo) {
+		return cDAO.deleteClub(sqlSession, boardNo);
 	}
 
 	@Override
@@ -70,5 +70,13 @@ public class ClubServiceImpl implements ClubService {
 	public ArrayList<Comment> selectComment(int boardNo) {
 		return cDAO.selectComment(sqlSession, boardNo);
 	}
+
+	@Override
+	public int updateClub(Club c) {
+		return cDAO.updateClub(sqlSession, c);
+	}
+
+
+
 
 }

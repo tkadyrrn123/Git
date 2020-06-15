@@ -19,7 +19,7 @@ public interface ClubService {
 
 	int insertFile(String renameFileName);
 
-	int deleteClub();
+	int deleteClub(Integer boardNo);
 
 	Club selectClub(String clubName);
 
@@ -29,4 +29,5 @@ public interface ClubService {
 
 	ArrayList<Comment> selectComment(int boardNo);
 
+	int updateClub(Club c);
 }

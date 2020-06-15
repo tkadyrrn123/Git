@@ -415,7 +415,7 @@ body {
                            				인원수
                            			</th> 
                            			<td>
-                           				( 20 / ${ b.maxPeople } )
+                           				( ${b.clubPeople } / ${ b.maxPeople } )
                            			</td>
                            		</tr>
                            </table>
@@ -433,6 +433,7 @@ body {
         	 활동중인 동호회가 없습니다.
         	 <br><br>
         </c:if>
+        		<c:if test="${!empty list }">
         		<div class="pagingArea" align="center">
 
 				<!-- [이전] -->
@@ -472,6 +473,7 @@ body {
 				</c:if>
 
        			</div>
+       			</c:if>
        			<button id="writeBtn" class="btn-standard" onclick="location.href='clubInsertForm.cb'">동호회 만들기</button> 
         
 	</div>
