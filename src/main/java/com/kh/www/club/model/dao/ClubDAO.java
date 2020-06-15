@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.www.club.model.vo.Club;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Repository("cDAO")
@@ -36,8 +37,8 @@ public class ClubDAO {
 		return sqlSession.insert("clubMapper.insertClub", c);
 	}
 
-	public int insertBoard(SqlSessionTemplate sqlSession) {
-		return sqlSession.insert("clubMapper.insertBoard");
+	public int insertBoard(SqlSessionTemplate sqlSession, String writer) {
+		return sqlSession.insert("clubMapper.insertBoard", writer);
 	}
 
 	public int insertFile(SqlSessionTemplate sqlSession, String renameFileName) {
@@ -54,6 +55,14 @@ public class ClubDAO {
 
 	public int insertClubMember(SqlSessionTemplate sqlSession, HashMap m) {
 		return sqlSession.insert("clubMapper.insertClubMember", m);
+	}
+
+	public int insertComment(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.insert("clubMapper.insertComment", c);
+	}
+
+	public ArrayList<Comment> selectComment(SqlSessionTemplate sqlSession, int boardNo) {
+		return (ArrayList)sqlSession.selectList("clubMapper.selectComment", boardNo);
 	}
 
 }

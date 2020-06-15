@@ -99,7 +99,7 @@
                   <input name="uploadFile" type="file" accept=".gif, .jpg, .png" style="margin-left: 20px; padding: 5px;">
                      </td>
                   </tr>      
-
+				<input type="hidden" name="writer" value="${ loginUser.userId }">	
             </table><br>
               <div id="btns">
                   <button class="btn" id="cancleBtn" type="reset">취소</button>

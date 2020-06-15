@@ -1,4 +1,4 @@
-  <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
@@ -40,13 +40,13 @@ body {
 	perspective: 1500px;
 	
 } 
-
+/** 카드 돌아가는 부분 **/
 .card .content {
 		position: relative;
 		width: 80%; 
 		height: 100%;
 		transform-style: preserve-3d;
-		transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
+		transition: transform 0.5s cubic-bezier(0.75, 0, 0.85, 1);
 	}
 
 
@@ -369,6 +369,7 @@ body {
                         </label>
                         <c:url var="cdetail" value="clubDetail.cb">
 	                        <c:param name="clubName" value="${ b.clubName }"></c:param>
+	                        <c:param name="boardNo" value="${ b.boardNo }"></c:param>
 	                        <c:param name="page" value="${ pi.currentPage }"></c:param>
                         </c:url>
                         <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;" onclick="location.href='${ cdetail }'"> 
@@ -476,7 +477,7 @@ body {
 	</div>
 	<jsp:include page="../common/Footer.jsp"/>
 
-	
+
 	
 
 	</body>
