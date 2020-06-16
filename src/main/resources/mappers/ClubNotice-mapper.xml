@@ -7,16 +7,25 @@
 		select count(*)
 		from tb_club_notice
 			 join tb_board using(board_no)
-		where board_delete = 'N'
+			 join tb_user using(user_id)
+		where board_delete = 'N' and apt_name = #{aptName}
 	</select>
   	
   	<!--동호회 공지사항 리스트 페이지 가져오기 -->
 	<select id="selectList" resultMap="cnoticeResultSet">
-		select board_no, board_title, board_content, create_date, user_id, board_count, board_delete, club_name
-		from tb_club_notice
-		     join tb_board using(board_no)
-		where board_delete = 'N'
+		select board_no, b.board_title, b.board_content, b.create_date, user_id, b.board_count, b.board_delete, c.club_name, u.nickname
+		from tb_club_notice c
+		     join tb_board b using(board_no)
+		     join tb_user u using(user_id)
+		where board_delete = 'N' and apt_name = #{aptName}
 		order by board_no desc
+		
+<!-- 		select board_no, board_title, board_content, create_date, user_id, board_count, board_delete, club_name, nickname -->
+<!-- 		from tb_club_notice -->
+<!-- 		     join tb_board using(board_no) -->
+<!-- 		     join tb_user using(user_id) -->
+<!-- 		where board_delete = 'N' -->
+<!-- 		order by board_no desc -->
 	</select>
 	
 	<resultMap type="ClubNotice" id="cnoticeResultSet">
@@ -28,6 +37,7 @@
 		<result property="cnCount" column="board_Count"/>
 		<result property="cnStatus" column="board_Delete"/>
 		<result property="clubName" column="CLUB_NAME"/>
+		<result property="cnoticeNickname" column="NICKNAME"/>
 	</resultMap>
 	
 	<!-- 동호회 공지사항 등록 -->
@@ -62,7 +72,9 @@
 	<select id="selectcNamelist" resultType="String">
 		select club_name
 		from tb_club
-		where end_yn = 'N'
+			join tb_board using(board_no)
+			join tb_user using(user_id)
+		where end_yn = 'N' and apt_name =#{aptName}
 	</select>
 	
 	<!--동호회 공지사항 조회 카운트 -->
@@ -98,20 +110,80 @@
 		<result property="userId" column="USER_ID"/>
 	</resultMap>
 	
+	<!--동호회 공지사항 업데이트 / 파일이 있는 게시글의 파일만 업데이트(파일테이블)-->
+	<update id="updateClubNotice_File">
+    	update tb_file
+    	set file_name = #{renameFileName}
+		where board_no = #{cnNo}	
+	</update>
 	
+	<!--동호회 공지사항 업데이트 / 글만 업데이트(보드테이블)-->
+	<update id="updateClubNotice_Content">
+		update tb_board
+		set board_title = #{cnTitle}, board_content = #{cnContent}
+		where board_no = #{cnNo}
+	</update>
 	
+	<!--동호회 공지사항 업데이트 / 클럽명만 업데이트(클럽노티스테이블)-->
+	<update id="updateClubNotice_Name">
+		update tb_club_notice
+		set club_Name = #{clubName}
+		where board_no = #{cnNo}
+	</update>
 	
+	<!-- 동호회 공지사항 삭제  -->
+	<update id="deleteClubNotice">
+		update tb_board
+		set board_Delete = 'Y'
+		where board_no = #{cnNo}
+	</update>
 	
+	<!--동호회 공지사항 검색키워드에 따른 전체 수 가져오기-->
+	<select id="getSearchResultListCount" resultType="_int">
+		select count(*)
+		from tb_club_notice
+			 join tb_board using(board_no)
+		     join tb_user using(user_id)
+		where board_delete = 'N'
+		<if test="clubName != null">
+			and club_name = #{clubName}
+			order by board_no desc
+		</if>
+		<if test="cnoticeNickname != null">
+			and nickname = #{cnoticeNickname}
+			order by board_no desc
+		</if>
+		<if test="cnTitle != null">
+			and board_title like '%' || #{cnTitle} || '%'
+			order by board_no desc
+		</if>
+		<if test="cnContent != null">
+			and board_Content like '%' || #{cnContent} || '%'
+			order by board_no desc
+		</if>
+	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!--동호회 공지사항 검색한 리스트 가져오기 -->
+	<select id="selectSearchResultList" resultMap="cnoticeResultSet">
+		select *
+		from tb_club_notice
+			 join tb_board using(board_no)
+		     join tb_user using(user_id)
+		where board_delete = 'N'
+		<choose>
+			<when test="clubName != null">
+				and club_name = #{clubName}
+			</when>
+			<when test="cnoticeNickname != null">
+				and nickname = #{cnoticeNickname}
+			</when>
+			<when test="cnTitle != null">
+				and board_title like '%' || #{cnTitle} || '%'
+			</when>
+			<otherwise>
+				and board_Content like '%' || #{cnContent} || '%'
+			</otherwise>
+		</choose>
+		order by board_no desc
+	</select>
 </mapper>

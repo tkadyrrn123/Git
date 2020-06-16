@@ -18,7 +18,6 @@
     			  margin-top: 50px;
     			  width:100%;
     			  postion:relative;
-    			  margin-bottom: 200px;
     			  } 
     .board_wrab table{border-collapse: collapse;
     				  width: 1500px;
@@ -52,6 +51,95 @@
 	/*페이징 버튼  */
 	.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}
+	/*서치 */
+	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 200px;}
+	#selectBox{
+	  display: block;
+	  margin-left: 85%;
+	  }
+	.select-box {
+	  position: relative;
+	  display: inline-block;
+	  width: 85px;
+	  margin: 40px auto 0 auto;
+	  font-size: 0.9em;
+	  color: #60666d;
+      border: 1px solid #dad4d4;
+	  }
+	.select-box__current {
+	  position: relative;
+	  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+	  cursor: pointer;
+	  outline: none;
+	  }
+	.select-box__current:focus + .select-box__list {
+	  opacity: 1;
+	  animation-name: none;
+	  }
+	.select-box__current:focus + .select-box__list .select-box__option {
+	  cursor: pointer;
+	  }
+	.select-box__current:focus .select-box__icon {
+	  transform: translateY(-50%) rotate(180deg);
+	  }
+	.select-box__icon {
+	  position: absolute;
+	  top: 50%;
+	  right: 15px;
+	  transform: translateY(-50%);
+	  width: 15px;
+	  opacity: 0.3;
+	  transition: 0.2s ease;
+	  }
+	.select-box__value {
+	  display: flex;
+	  }
+	.select-box__input {
+	  display: none;
+	  }
+	.select-box__input:checked +.select-box__input-text {
+	  display: block;
+	  }
+	.select-box__input-text {
+	  display: none;
+	  width: 100%;
+	  margin: 0;
+	  padding: 8px;
+	  background-color: #fff;
+	  }
+	.select-box__list {
+	  position: absolute;
+	  width: 100%;
+	  padding: 0;
+	  list-style: none;
+	  opacity: 0;
+	  animation-name: HideList;
+	  animation-duration: 0.5s;
+	  animation-delay: 0.5s;
+	  animation-fill-mode: forwards;
+	  animation-timing-function: step-start;
+	  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+	  }
+	.select-box__option {
+	  display: block;
+	  padding: 8px;
+	  background-color: #fff;
+	  }
+	.select-box__option:hover, .select-box__option:focus {
+	  color: #546c84;
+	  background-color: #fbfbfb;
+	  }
+	  @keyframes HideList {
+	  from {
+	            transform: scaleY(1);
+	  }
+	  to {
+	            transform: scaleY(0);
+	  }
+	}
+	
+	.search_input{height:37px; margin:0 5px; vertical-align:bottom; border:1px solid #dad4d4;}
+	      
 </style>
 </head>
 <body>
@@ -112,11 +200,17 @@
 					<c:if test="${ pi.currentPage > 1 }">
 						<c:url var="before" value="noticeList.no">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
+	<!--검색조건 시작  ----------------------------------------------------->	
+						<c:if test="${ nSearchValue ne null }">
+							<c:param name="nSearchCondition" value="${ nSearchCondition }" />
+							<c:param name="nSearchValue" value="${ nSearchValue }" />
+						</c:if>
+	<!--검색조건  끝 ---------------------------------------------------->	
 						</c:url>
 						<button class="btn-standard" onclick="location.href='${ before }'">이전</button>
 					</c:if>
 					
-					<!-- 페이지 -->
+					<!-- [페이지] -->
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:if test="${ p eq pi.currentPage }">
 							<button class="btn-standard" style="color:red;">${ p }</button>
@@ -125,6 +219,12 @@
 						<c:if test="${ p ne pi.currentPage }">
 							<c:url var="pagination" value="noticeList.no">
 								<c:param name="page" value="${ p }"/>
+	<!--검색조건 시작 ----------------------------------------------------->	
+						<c:if test="${ nSearchValue ne null }">
+							<c:param name="nSearchCondition" value="${ nSearchCondition }" />
+							<c:param name="nSearchValue" value="${ nSearchValue }" />
+						</c:if>
+	<!--검색조건  끝 ------------------------------------------------------->
 							</c:url>
 							<button class="btn-standard" onclick="location.href='${ pagination }'">${ p }</button>
 						</c:if>
@@ -137,6 +237,12 @@
 					<c:if test="${ pi.currentPage < pi.maxPage }">
 						<c:url var="after" value="noticeList.no">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
+	<!--검색조건 시작  ------------------------------------------------------------->	
+							<c:if test="${ nSearchValue ne null }">
+								<c:param name="nSearchCondition" value="${ nSearchCondition }" />
+								<c:param name="nSearchValue" value="${ nSearchValue }" />
+							</c:if>
+	<!--검색조건  끝 --------------------------------------------------------------->	
 						</c:url> 
 						<button class="btn-standard" onclick="location.href='${ after }'">다음</button>
 					</c:if>
@@ -144,6 +250,52 @@
 			</tr>
 		</table>
     </div>
+    <!------------------------ 검색 ---------------------------------->
+    <div class="form_wrap" id="nsearchArea">
+    <form class="board_search" name="search_form" action="noticeSearch.no">
+	    <div class="select-box">
+		  <div class="select-box__current" tabindex="1">
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="nTotal" value="nTotal" name="nSearchCondition" checked="checked"/>
+		      <p class="select-box__input-text">전체</p>
+		    </div>
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="userId" value="userId" name="nSearchCondition"/>
+		      <p class="select-box__input-text">작성자</p>
+		    </div>
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="nTitle" value="nTitle" name="nSearchCondition"/>
+		      <p class="select-box__input-text">제목</p>
+		    </div>
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="nContent" value="nContent" name="nSearchCondition"/>
+		      <p class="select-box__input-text">내용</p>
+		    </div>
+		    <img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
+		  </div>
+		  <ul class="select-box__list">
+		    <li>
+		      <label class="select-box__option" for="nTotal" aria-hidden="aria-hidden">전체</label>
+		    </li>
+		    <li>
+		      <label class="select-box__option" for="userId" aria-hidden="aria-hidden">작성자</label>
+		    </li>
+		     <li>
+		      <label class="select-box__option" for="nTitle" aria-hidden="aria-hidden">제목</label>
+		    </li>
+		    <li>
+		      <label class="select-box__option" for="nContent" aria-hidden="aria-hidden">내용</label>
+		    </li>
+		  </ul>
+		</div>
+		<input class="search_input" id="nSearchValue" name="nSearchValue" type="search">
+		<button class="btn_standard" type="submit">검색</button>
+	</form>
+	</div>
+	
+	
+ <!------------------------ 검색 끝 ---------------------------------->	
+	
 	<jsp:include page="../common/Footer.jsp"/>	
 </body>
 </html>

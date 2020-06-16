@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>동호회 공지사항 작성</title>
+<title>동호회 공지사항 수정</title>
 <style type="text/css">
    #notice_write_body{margin-top: 30px; margin-bottom: 30px;}
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavenderBlush;}
@@ -17,8 +17,9 @@
    #tr2{height: 10%;}
    #tr3{height: 70%;}
    #tr4{height: 10%;}
-   #tb{width: 60%; height: 600px; margin: 0 auto; }
+   #tb{width: 60%; height: 600px; margin: 0 auto;}
    .td1{text-align: center; font-size: 11px; background: lavenderBlush;}
+   #tb a{color:rgb(139, 134, 134);}
    
    #content{width: 90%; height: 90%; border: none;}
    #btns{text-align: center;}
@@ -42,24 +43,29 @@
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div id="notice_write_body">
-         <form action="clubNoticeInsert.cn" method="post" enctype="Multipart/form-data">
+         <form action="ClubNoticeUpdate.cn" method="post" enctype="Multipart/form-data">
+	        <input type="hidden" name="page" value="${ page }">
+			<input type="hidden" name="cnNo" value="${ ClubNotice.cnNo }">
+			<input type="hidden" name="renameFileName" value="${ ClubNotice.renameFileName }">
+			
             <table id="tb">
                  <tr id="tr1">
-                   <td colspan=2 style="color: darksalmon; font-weight: bold; font-size: 30px;">동호회 공지사항 등록</td>
+                   <td colspan=2 style="color: darksalmon; font-weight: bold; font-size: 30px;">동호회 공지사항 수정</td>
                 </tr> 
                 <tr id="tr2">
                    <td class="td1">제목</td>
                      <td>
-                        <input id="titleInput" name="cnTitle" type="text" placeholder="제목을 입력하세요" size="90">
+                        <input id="titleInput" name="cnTitle" type="text" size="90" value="${ ClubNotice.cnTitle }">
                      </td>
-                 </tr>
+                </tr>
                  <tr id="tr2">
                    <td class="td1">동호회</td>
                      <td>
                      	<select name="clubName" class="clubSelect">
-						    <c:forEach var="i" begin="0" end="${cNamelist.size()}" varStatus="status">
+						    <c:forEach var="i" begin="0" end="${cNamelist.size()-1}" varStatus="status">
 						        <c:if test="${cNamelist[i] != selected}">
 								    <option value="${cNamelist[i]}" selected>${cNamelist[i]}</option>
+<%-- 								    <option value="${cNamelist[i]}" ${cNamelist[i] == clubName ? 'selected="selected"' : '' }>${cNamelist[i]}</option> --%>
 						        </c:if>
 						    </c:forEach>
 						</select>
@@ -68,20 +74,28 @@
                   <tr id="tr3">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea id="content" name="cnContent" placeholder="내용 입력하세요 " style="margin-left: 20px; resize: none;"></textarea>
+                        <textarea id="content" name="cnContent" style="margin-left: 20px; resize: none;">${ ClubNotice.cnContent }</textarea>
                      </td>
-                  </tr>      
+                  </tr>    
+                    
                   <tr id="tr4">
                      <td class="td1">첨부</td>
                      <td>
-                  <input type="file" name="uploadFile" style="margin-left: 20px; padding: 5px;">
+                 		<input type="file" name="reloadFile" style="margin-left: 20px; padding: 5px;">
+						<c:if test="${ !empty ClubNotice.renameFileName }">
+							<br><input type="button" value="기존 파일" style="margin-left: 24px;"> 
+							<a href="${ contextPath }/resources/nuploadFiles/${ ClubNotice.renameFileName }" download="${ ClubNotice.renameFileName }">
+								${  ClubNotice.renameFileName  }
+							</a>
+							<input type="hidden" name="originalFileName" value="${ ClubNotice.renameFileName }"> 
+						</c:if>
                      </td>
                   </tr>      
 
             </table><br>
               <div id="btns">
-                  <button type="button" class="btn" onclick="location.href='clubNoticeList.cn'">취소</button>
-                  <button class="btn" type="submit">등록하기</button>
+                  <button type="button" class="btn" onclick="location.href='javascript:history.go(-1);'">취소</button>
+                  <button class="btn" type="submit">수정하기</button>
             </div>
          </form>
    	</div>
