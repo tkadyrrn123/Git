@@ -183,7 +183,7 @@ textarea, select{
 </style>
 </head>
 <body>
-	<jsp:include page="AdminMenubar.jsp"/>
+	<jsp:include page="AptAdminMenubar.jsp"/>
 	<div id="wrapper">
 		<div id="container">
 				<h1 id="container_title">전체 회원 목록</h1>
@@ -236,7 +236,7 @@ textarea, select{
 							</script>
 						</div>
 						
-						<form id="search" action="searchMember.adm" onsubmit="return searchChk();">
+						<form id="search" action="AptAdminMemberSearch.adm" onsubmit="return searchChk();">
 							<select id="searchOption" name="searchOption">
 								<option>회원아이디</option>
 								<option>닉네임</option>
@@ -250,7 +250,7 @@ textarea, select{
 							<input type="submit" id="btn_submit" name="btn_submit">
 							<script>
 								function searchChk(){
-									if($('#searchText').val('')){
+									if($('#searchText').val()==''){
 										alert('검색어를 입력해주세요');
 										return false;
 									}

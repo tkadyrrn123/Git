@@ -176,6 +176,28 @@ public class MemberDAO {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.AptMemberList", hs, rowBounds);
 	}
+
+	public int AptAdminMemberSearchCount(SqlSessionTemplate sqlSession, SearchOption so, int num, String aptName) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("aptName", aptName);
+		hs.put("num", num);
+		hs.put("so", so);
+		
+		return sqlSession.selectOne("memberMapper.AptAdminMemberSearchCount", hs);
+	}
+
+	public ArrayList<Member> AptAdminMemberSearchList(SqlSessionTemplate sqlSession, PageInfo pi, SearchOption so,
+													  int num, String aptName) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("aptName", aptName);
+		hs.put("num", num);
+		hs.put("so", so);
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.AptAdminMemberSearchList", hs);
+	}
 	
 	
 	

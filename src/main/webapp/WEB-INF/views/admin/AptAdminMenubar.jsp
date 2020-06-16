@@ -98,7 +98,7 @@
 			<li><label>HOME</label></li>
 			<li class="dropdown"><label>회원 관리</label>
 				<ul class="sub" >
-					<li onclick="location.href=''">- 전체 회원 목록</li>
+					<li onclick="location.href='AptAdminMemberList.adm'">- 전체 회원 목록</li>
 					<li onclick="location.href=''">- 가입 신청 목록</li>
 				</ul>
 			</li>
