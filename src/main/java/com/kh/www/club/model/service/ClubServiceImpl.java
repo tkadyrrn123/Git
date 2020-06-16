@@ -76,6 +76,16 @@ public class ClubServiceImpl implements ClubService {
 		return cDAO.updateClub(sqlSession, c);
 	}
 
+	@Override
+	public int checkClubMember(HashMap m) {
+		return cDAO.checkClubMember(sqlSession, m);
+	}
+
+	@Override
+	public int deleteClubMember(HashMap m) {
+		return cDAO.deleteClubMember(sqlSession, m);
+	}
+
 
 
 

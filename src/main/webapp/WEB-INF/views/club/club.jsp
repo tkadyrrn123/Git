@@ -371,6 +371,7 @@ body {
 	                        <c:param name="clubName" value="${ b.clubName }"></c:param>
 	                        <c:param name="boardNo" value="${ b.boardNo }"></c:param>
 	                        <c:param name="page" value="${ pi.currentPage }"></c:param>
+	                        <c:param name="userId" value="${ loginUser.userId }"></c:param>
                         </c:url>
                         <label class="button" id="detailBtn" aria-hidden="true" style="margin-top: 20px;" onclick="location.href='${ cdetail }'"> 
                       	      상세페이지 이동
