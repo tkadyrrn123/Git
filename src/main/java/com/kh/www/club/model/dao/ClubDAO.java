@@ -19,7 +19,14 @@ public class ClubDAO {
 	}
 
 	public ArrayList<Club> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		pi.setBoardLimit(9);
+		pi.setMaxPage((int)((double)pi.getListCount() / pi.getBoardLimit() + 0.9));
+		pi.setStartPage(((int)((double)pi.getCurrentPage() / pi.getPageLimit() + 0.9) - 1) * pi.getPageLimit() + 1);
+		pi.setEndPage(pi.getStartPage() + pi.getPageLimit() - 1);
 		
+		if(pi.getMaxPage() < pi.getEndPage()) {
+			pi.setEndPage(pi.getMaxPage());
+		}
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("clubMapper.selectList", null, rowBounds);

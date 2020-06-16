@@ -30,25 +30,30 @@ import com.kh.www.myPage.model.exception.MyPageException;
 import com.kh.www.myPage.model.service.MyPageService;
 import com.kh.www.myPage.model.vo.Meal;
 import com.kh.www.myPage.model.vo.MyBoard;
-@SessionAttributes("member")
+import com.kh.www.myPage.model.vo.MyComment;
+import com.kh.www.myPage.model.vo.MyQnA;
+@SessionAttributes("loginUser")
 @Controller
 public class MyPageController {
 	
 	@Autowired
 	private MyPageService myService;
 	
+	// 프로필 페이지
 	@RequestMapping("myProfile.my")
 	public String myPageView() {
 		return "myProfile";
 	}
 	
+	// 조석식 페이지
 	@RequestMapping("breakfast.my")
 	public String breakfastView() {
 		return "breakfast";
 	}
 	
+	// 내 게시글 페이지
 	@RequestMapping("myBoard.my")
-	public ModelAndView myBoardView(@ModelAttribute Member m, @RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+	public ModelAndView myBoardView(@ModelAttribute("loginUser") Member m, @RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -72,21 +77,51 @@ public class MyPageController {
 				b.setType("동호회 공지");
 			}
 		}
-		System.out.println(blist);
 		mv.setViewName("myBoard");
+		mv.addObject("blist", blist);
+		mv.addObject("pi", pi);
 		return mv;
 	}
 	
+	// 내 댓글 페이지
 	@RequestMapping("myComment.my")
-	public String myCommentView() {
-		return "myComment";
+	public ModelAndView myCommentView(@ModelAttribute("loginUser") Member m, @RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = myService.getCommentListCount(m.getUserId());
+		
+		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+		
+		ArrayList<MyComment> clist = myService.getCommentList(m.getUserId(),pi);
+		mv.setViewName("myComment");
+		mv.addObject("clist", clist);
+		mv.addObject("pi", pi);
+		return mv;
 	}
 	
+	// 내 QNA 페이지
 	@RequestMapping("myQnA.my")
-	public String myQnAView() {
-		return "myQnA";
+	public ModelAndView myQnAView(@ModelAttribute("loginUser") Member m, @RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = myService.getQnAListCount(m.getUserId());
+		
+		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+		
+		ArrayList<MyQnA> qlist = myService.getQnAList(m.getUserId(),pi);
+		mv.addObject("qlist", qlist);
+		mv.addObject("pi", pi);
+		mv.setViewName("myQnA");
+		return mv;
 	}
 	
+	// 프로필 수정 페이지
 	@RequestMapping("updatePage.my")
     public String updatePageView() {
         return "myUpdateProfile";
@@ -94,18 +129,19 @@ public class MyPageController {
 	
 	// 내 정보 수정
 	@RequestMapping("update.my")
-    public String memberUpdate(@ModelAttribute Member m,Model model,@RequestParam("userOldPwd") String userOldPwd) {
+    public String memberUpdate(@ModelAttribute("loginUser") Member m,Model model,@RequestParam("userOldPwd") String userOldPwd) {
         int result = myService.memberUpdate(m);
         if(result > 0) {
             if(m.getUserPwd().equals("") || m.getUserPwd() == null) {
                 m.setUserPwd(userOldPwd);
-                model.addAttribute("member", m);
+                model.addAttribute("loginUser", m);
             }
         }else {
             throw new MyPageException("정보 수정에 실패하였습니다.");
         }
         return "myProfile";
     }
+	
 	// 프로필사진 수정
 	@RequestMapping("image.my")
 	public void updateImage(MultipartHttpServletRequest request, HttpServletResponse response) {
@@ -127,12 +163,12 @@ public class MyPageController {
 			
 			// 멤버 받아옴
 			HttpSession session = request.getSession();
-			Member m = (Member)session.getAttribute("member");
+			Member m = (Member)session.getAttribute("loginUser");
 			
 			if(renameFileName != null) {
 				// 세션 파일 최신화
 				m.setUserFile(renameFileName);
-				session.setAttribute("member", m);
+				session.setAttribute("loginUser", m);
 				
 				// DB에 파일 이름 저장
 				result = myService.imageUpdate(m);
@@ -154,7 +190,7 @@ public class MyPageController {
 	
 	// 조석식 예약
 	@RequestMapping("insertBreakfast.my")
-	public void insertBreak(@ModelAttribute Member m, @RequestParam("date") String date, 
+	public void insertBreak(@ModelAttribute("loginUser") Member m, @RequestParam("date") String date, 
 													  @RequestParam("time") String time,
 													  @RequestParam("option") String option,
 													  HttpServletResponse response) {
@@ -180,7 +216,7 @@ public class MyPageController {
 	
 	// 조석식 리스트 가져오기
 	@RequestMapping("breakfastList.my")
-	public void breakList(@ModelAttribute Member m, HttpServletResponse response) {
+	public void breakList(@ModelAttribute("loginUser") Member m, HttpServletResponse response) {
 		String userId = m.getUserId();
 		ArrayList<Meal> mList = myService.getBreakfastList(userId);
 		
@@ -201,10 +237,50 @@ public class MyPageController {
 		}
 		
 	}
+	
+	// QnA 입력하기
+	@RequestMapping("insertQnA.my")
+	public String insertQnA(@ModelAttribute("loginUser") Member m, MultipartHttpServletRequest request, HttpServletResponse response) {
+		String userId = m.getUserId();
+		String title = request.getParameter("QnATitle");
+		String content = request.getParameter("QnAContent");
+		MultipartFile file = request.getFile("QnAFile");
+		int page = 1;
+		if(request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		String renameFileName = "";
+		
+		MyQnA QNA = new MyQnA(userId, title, content);
+		// DB에 QNA저장
+		int result = 0;
+		if(file != null && !file.isEmpty()) {
+			// 파일 저장
+			renameFileName = saveFile(file, request);
+			
+			if(renameFileName != null) {
+				// DB에 QNA파일이름저장
+				QNA.setQNAFileName(renameFileName);
+				result = myService.insertQnAFileName(QNA);
+			}
+		}else {
+			result = myService.insertQnA(QNA);
+		}
+		
+		if(result > 0) {
+			return "redirect:myQnA.my?page=" + page;
+		}else {
+			if(renameFileName != null) {
+				deleteFile(renameFileName, request);
+			}
+			throw new MyPageException("QNA입력에 실패하였습니다.");
+		}
+	}
+	
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\images";
+		String savePath = root + "\\uploadFiles";
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -230,7 +306,7 @@ public class MyPageController {
 	
 	public void deleteFile(String fileName, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\images";
+		String savePath = root + "\\uploadFiles";
 		
 		File f = new File(savePath + "\\" + fileName);
 		

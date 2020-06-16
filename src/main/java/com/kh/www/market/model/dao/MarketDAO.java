@@ -24,8 +24,8 @@ public class MarketDAO {
 		return (ArrayList)sqlSession.selectList("marketMapper.selectList", null, rowBounds);
 	}
 
-	public int insertBoard(SqlSessionTemplate sqlSession) {
-		return sqlSession.insert("marketMapper.insertBoard");
+	public int insertBoard(SqlSessionTemplate sqlSession, Market m) {
+		return sqlSession.insert("marketMapper.insertBoard",m);
 	}
 	
 	public int writingMarket(SqlSessionTemplate sqlSession, Market m) {
@@ -34,6 +34,14 @@ public class MarketDAO {
 	
 	public int insertFile(SqlSessionTemplate sqlSession, String renameFileName) {
 		return sqlSession.insert("marketMapper.insertFile", renameFileName);
+	}
+
+	public Market selectMarketList(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("marketMapper.selectMarketList", boardNo);
+	}
+
+	public int deleteMarket(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("marketMapper.deleteMarket",boardNo);
 	}
 	
 

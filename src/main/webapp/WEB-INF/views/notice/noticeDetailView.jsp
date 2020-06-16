@@ -103,7 +103,7 @@
 		<!-------------댓글 작성  ------------>
 			<div class="reply1_box" id="rtb">
 				<div id="notice_profile" style="float: left; display: inline;">
-					<img id="userfile" class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
+					<img id="userFile" class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
 				</div>
 				<div class="dong">${ notice.userId }</div>
 					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
@@ -114,21 +114,18 @@
 			</div>
 		<!-------------댓글 작성  끝------------>
 		<!-------------댓글 가져오기 ------------>	
-			<div class="reply2_box" id="noticeComment">
-			
+			<div id="noticeComment_outer">
+				<div class="reply2_box" id="noticeComment">
+<!-- 					<div class="input-group"> -->
 <!-- 				<div id="notice_profile" style="float: left; display: inline;"> -->
 <%-- 					<img class="comment_img" src="<%=request.getContextPath()%>/css/화단사진.jpg"></div> --%>
-					
 <!-- 				<div id="notice_rUserId" class="dong">닉네임</div> -->
-				
 <!-- 				<div id="notice_rContent" style="margin-left: 10px;">댓글 내용</div> -->
-				
 <!-- 				<div id="notice_rCreateDate" style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div> -->
-
+<!-- 					</div> -->
+				</div>
 			</div>
 		<!-------------댓글 가져오기 끝------------>			
-			
-	
 		</form>
 	</div>
 	
@@ -169,40 +166,49 @@
 			dataType: 'json',
 			success: function(data){
 				
-				$noticeComment = $('#noticeComment');
-				$noticeComment.html('');
-				
+				$noticeComment_outer = $('#noticeComment_outer');
+				$noticeComment_outer.html('');
 				
 				var $div;
-				var $userfile;
+				var $userFile;
 				var $rUserId;
 				var $rContent;
 				var $rCreateDate;
+				
+				var $rModify;
+				var $rDelete;
 				
 				console.log(data);
 // 				$('#rCount').text('댓글('+data.length + ')');
 				
 				if(data.length > 0){
 					for(var i in data){
-						$div = $('<div id="commentBody">');
-						$userfile_div = $('<div id="notice_profile" style="float:left;display:inline;">');
-						$userfile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'"style="width: 50px; margin-left:50px;">');
-						$rUserId = $('<div width="100">').text(data[i].rUserId);
-						$rContent = $('<div>').text(data[i].rContent.replace(/\+/g, ' '));
-						$rCreateDate = $('<div width="100">').text(data[i].rCreateDate);
 						
-						$div.append($userfile);
+						$div = $('<div id="noticeComment" class="reply2_box">');
+						$div_userFile = $('<div style="float:left;display:inline;">');
+						$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'">');
+						
+						$rModify = $('<a onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\');"> 수정 </a>');
+						$rDelete = $('<a onclick="commentDelete('+data[i].rNo+');"> 삭제 </a> </div>');
+						
+						$rUserId = $('<div class="dong">').text(data[i].rUserId);
+						$rContent = $('<div class="rContent'+data[i].rNo+'" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;">').text(data[i].rContent.replace(/\+/g, ' '));
+						$rCreateDate = $('<div style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
+						
+						$div.append($userFile);
 						$div.append($rUserId);
+						$div.append($rModify);
+						$div.append($rDelete);
 						$div.append($rContent);
 						$div.append($rCreateDate);
-						$noticeComment.append($div);
+						$noticeComment_outer.append($div);
 					}
 				}else{
-					$div = $('<div>');
+					$div = $('<div id="noticeComment" class="reply2_box">');
 					$rContent = $('<div style="text-align: center;">').text('등록된 댓글이 없습니다.');
 					
 					$div.append($rContent);
-					$noticeComment.append($div);
+					$noticeComment_outer.append($div);
 				}
 
 			}
@@ -211,9 +217,9 @@
 	$(function(){
 		getCommentList();
 		
-		setInterval(function(){
-			getCommentList();
-		}, 1000);
+// 		setInterval(function(){
+// 			getCommentList();
+// 		}, 1000);
 	});
 	
 	//댓글 등록
@@ -235,8 +241,45 @@
 		});
 	});
 	
+	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+	function commentUpdateForm(rNo, rContent){
+	    var a ='';
+	    
+	    a += '<div class="input-group">';
+	    a += '<input type="text" class="form-control" name="rContent_'+rNo+'" value="'+rContent+'"/>';
+	    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdate('+rNo+');">수정</button> </span>';
+	    a += '</div>';
+	    
+	    $('.rContent'+rNo).html(a);
+	    
+	}
+
+	//댓글 수정
+	function commentUpdate(rNo){
+	    var updateContent = $('[name=rContent_'+rNo+']').val();
+	    
+	    $.ajax({
+	        url : 'commentUpdate.no',
+	        dataType: 'json',
+	        data : {'rContent' : updateContent, 'rNo' : rNo},
+	        success : function(data){
+	        	console.log(data);
+	            if(data == 1) getCommentList(rNo); //댓글 수정후 목록 출력 
+	        }
+	    });
+	}
 	
-	
+	//댓글 삭제 
+	function commentDelete(rNo){
+	    $.ajax({
+	        url : 'commentUpdate.no'+rNo,
+	        dataType: 'json',
+	        success : function(data){
+	            if(data == 1) getCommentList(rNo); //댓글 삭제후 목록 출력 
+	        }
+	    });
+	}
+
 	</script>
 	<jsp:include page="../common/Footer.jsp"/>
 </body>

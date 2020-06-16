@@ -14,34 +14,44 @@ import com.kh.www.market.model.vo.Market;
 public class MarketServiceImpl implements MarketService {
 
 	@Autowired
-	private MarketDAO mDAO;
+	private MarketDAO marketDAO;
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
 	public int getListCount() {
-		return mDAO.getListCount(sqlSession);
+		return marketDAO.getListCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<Market> selectList(PageInfo pi) {
-		return mDAO.selectList(sqlSession, pi);
+		return marketDAO.selectList(sqlSession, pi);
 	}
 
 	@Override
 	public int writingMarket(Market m) {
-		return mDAO.writingMarket(sqlSession, m);
+		return marketDAO.writingMarket(sqlSession, m);
 	}
 
 	@Override
-	public int insertBoard() {
-		return mDAO.insertBoard(sqlSession);
+	public int insertBoard(Market m) {
+		return marketDAO.insertBoard(sqlSession, m);
 	}
 
 	@Override
 	public int insertFile(String renameFileName) {
-		return mDAO.insertFile(sqlSession, renameFileName);
+		return marketDAO.insertFile(sqlSession, renameFileName);
 	}
-	
+
+	@Override
+	public Market selectMarketList(int boardNo) {
+		return marketDAO.selectMarketList(sqlSession, boardNo);
+	}
+
+	@Override
+	public int deleteMarket(int boardNo) {
+		return marketDAO.deleteMarket(sqlSession, boardNo);
+	}
+
 }

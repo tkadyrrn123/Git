@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.www.club.model.vo.Club;
+import com.kh.www.Member.model.vo.Member;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.market.model.exception.MarketException;
@@ -30,14 +31,14 @@ public class MarketController {
 	private MarketService marketService;
 	
 	@RequestMapping("market.ma")
-	public ModelAndView marketList(@RequestParam(value="page", required=false) Integer page,ModelAndView mv) {
-		
-		int listCount = marketService.getListCount();
+	public ModelAndView marketList(@RequestParam(value="page", required=false) Integer page,ModelAndView mv) throws MarketException {
 		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
+		
+		int listCount = marketService.getListCount();
 		
 		PageInfo pi = Pagenation.getPageInfo(currentPage,listCount);
 		
@@ -53,37 +54,37 @@ public class MarketController {
 		return mv;
 	}
 	
-	@RequestMapping("writingMarketView.ma")
-	public String writingMarketView() {
-		return "writingMarketView";
+	@RequestMapping("writingMarket.ma")
+	public String writingMarket() {
+		return "writingMarket";
 	}
 	
-	@RequestMapping("writingMarket.ma")
-	public String writingMarket(@ModelAttribute Market m, @RequestParam(value="uploadFile",required=false) MultipartFile uploadFile, HttpServletRequest request) {
+	@RequestMapping("writing.ma")
+	public String writing(@ModelAttribute Market m, @RequestParam(value="uploadFile",required=false) MultipartFile uploadFile, HttpServletRequest request,HttpSession session) throws MarketException {
 		
-		System.out.println(m);
-		System.out.println(uploadFile);
+		System.out.println("mmmm : " + m);
 		
-		int result = marketService.insertBoard();
-		int result2 = marketService.writingMarket(m);
-		
-		int result3 = 1;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			String renameFileName = saveFile(uploadFile, request);
+			
 			if(renameFileName != null) {
-				if(result2 > 0) {
-					result3 = marketService.insertFile(renameFileName);
-				}
+				m.setFileName(renameFileName);
 			}
-		}		
-		if(result2 > 0) {
+		}
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String id = loginUser.getUserId();
+		m.setUserId(id);
+		
+		System.out.println("id : " + id);
+		System.out.println(m.getUserId());
+		
+		int result = marketService.insertBoard(m);
+		
+		if(result > 0) {
 			return "redirect:market.ma";
 		} else {
-			throw new MarketException("게시글 등록에 실패했습니다.");
+			throw new MarketException("게시글 등록에 실패하였습니다.");
 		}
-		
-//			return "redirect:market.ma";
-		
 	}
 	
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
@@ -116,8 +117,31 @@ public class MarketController {
 	
 	
 	@RequestMapping("marketDetail.ma")
-	public String marketDetail() {
-		return "marketDetail";
+	public ModelAndView marketDetail(@RequestParam(value="boardNo",required=false) int boardNo, @RequestParam("page") int page, ModelAndView mv) {
+		Market ma = marketService.selectMarketList(boardNo);
+		
+		if(ma != null) {
+			mv.addObject("ma",ma)
+			  .addObject("page",page)
+			  .setViewName("marketDetail");
+		} else {
+			throw new MarketException("상세글 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("deleteMarket.ma")
+	public String deleteMarket(@RequestParam(value="boardNo",required=false) Integer boardNo) {
+		System.out.println("deleteNo : " + boardNo);
+		int result = marketService.deleteMarket(boardNo);
+		
+		if(result > 0) {
+			return "redirect:market.ma";
+		} else {
+			throw new MarketException("게시글 삭제에 실패하였습니다.");
+		}
+		
 	}
 	
 }

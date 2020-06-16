@@ -3,16 +3,17 @@
 <mapper namespace="marketMapper">
     <select id="getListCount" resultType="_int">
     	select count(*)
-    	from tb_market
-    		join tb_board using(board_no)
+    	from tb_board
     	where board_delete= 'N'
     </select>
     
     <select id="selectList" resultMap="marketResultSet">
-    	select BOARD_NO,MARKET_PRICE,SALE_YN,BOARD_TITLE,BOARD_CONTENT,CREATE_DATE,USER_ID,FILE_NAME
-    	from tb_market
-    		join tb_board using(board_no)
-    		left join tb_file using(board_no)
+    	select BOARD_NO,m.MARKET_PRICE,m.SALE_YN,b.BOARD_TITLE,b.BOARD_CONTENT,
+    		   b.CREATE_DATE,USER_ID,b.BOARD_DELETE,f.FILE_NAME,u.NICKNAME,u.USER_FILE
+    	from tb_market m
+    		join tb_board b using(board_no)
+    		join tb_file f using(board_no)
+    		join tb_user u using(user_id)
     	where board_delete = 'N'
     	order by board_no desc
     </select>
@@ -24,22 +25,63 @@
     	<result property="boardContent" column="BOARD_CONTENT"/>
     	<result property="createDate" column="CREATE_DATE"/>
     	<result property="userId" column="USER_ID"/>
+    	<result property="nickName" column="NICKNAME"/>
+    	<result property="boardDelete" column="BOARD_DELETE"/>
     	<result property="fileName" column="FILE_NAME"/>
+    	<result property="nickName" column="NICKNAME"/>
+    	<result property="userFile" column="USER_FILE"/>
     </resultMap>
     
-    <insert id="insertBoard">
-    	insert into tb_board
-    	values(SEQ_BOARD.NEXTVAL, '중고장터', '중고장터', SYSDATE, 'user01', default, default)
-    </insert>
+	<insert id="insertBoard">
+		<if test="fileName != null">
+			insert all
+			
+			into tb_board
+			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, #{userId}, default, default)	
+			into tb_market
+			values(SEQ_BOARD.CURRVAL,#{price},'Y')
+			into tb_File
+			values(seq_file.nextval, seq_board.currval, #{fileName}, null, null)
+
+			select * from dual	
+		</if>
+		<if test="fileName == null">
+			insert all
+			
+			into tb_board
+			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, #{userId}, default, default)
+			into tb_market
+			values(SEQ_BOARD.CURRVAL,#{price},'Y')
+			into tb_File
+			values(seq_file.nextval, seq_board.currval, null, null, null)
+			
+			select * from dual	
+		</if>
+	</insert>
     
-    <insert id="insertMarket">
-    	insert into tb_market
-    	values(SEQ_BOARD.CURRVAL,#{price},'Y')
-    </insert>
-    
-    <insert id="insertFile">
-    	insert into tb_file
-    	values(SEQ_FILE.NEXTVAL, SEQ_BOARD.CURRVAL, #{fileName}, NULL, NULL)
-    </insert>
-    
+    <select id="selectMarketList" resultMap="marketDetailResultSet">
+    	select board_no,market_price,b.board_title,b.board_content,b.create_date,b.board_count,f.file_name,u.nickname,u.user_file
+    	from tb_market
+    		 join tb_board b using(board_no)
+    		 join tb_file f using(board_no)
+    		 join tb_user u using(user_id)
+    	where b.board_delete = 'N' and board_no = #{boardNo}
+    </select>
+	<resultMap type="Market" id="marketDetailResultSet">
+		<id property="boardNo" column="board_No"/>
+		<result property="boardTitle" column="board_Title"/>
+		<result property="price" column="MARKET_PRICE"/>	
+		<result property="boardContent" column="board_Content"/>	
+		<result property="createDate" column="create_Date"/>	
+		<result property="boardCount" column="board_Count"/>	
+		<result property="nickName" column="nickname"/>	
+		<result property="userFile" column="user_File"/>	
+		<result property="fileName" column="file_name"/>	
+	</resultMap>
+	
+	<update id="deleteMarket">
+		update tb_board
+		set board_delete='Y'
+		where board_no = #{boardNo}
+	</update>
 </mapper>

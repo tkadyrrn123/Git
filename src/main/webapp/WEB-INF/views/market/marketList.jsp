@@ -11,12 +11,15 @@
    .wrapper{margin-top: 20px;}
 	#title{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;}
 	#line{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px;}
-	.sellAll{width: 80%; margin: 40px 0px 0px 200px; postion:relative;}
-	.sell{width: 350px;  display: inline-block; margin-left: 100px; margin-bottom:50px;}
+	.sellAll{width: 80%; margin: 40px 0px 0px 200px; postion:relative;line-height: 1.6}
+	.sell{width: 350px; display: inline-block; margin-left: 100px; margin-bottom:50px;text-align:center;
+		  border:1px solid #aaa; border-radius:5px; padding-bottom:15px;}
 	.sell:hover{cursor:pointer;}
 	.sellDiv{width: 100%; height: 300px;}
 	.sellPic{width: 100%; height: 210px;}
 	.sellName{width: 100%; height: 10%; font-size: 20px; font-weight:bold;margin-top:10px;}
+	.sellName>a{color: black !important;}
+	.sellName>a:visited{color: gray !important;}
 	.sellAddress{width: 100%; height: 10%;}
 	.sellPrice{width: 100%; height: 10%;}
 	.btn-standard {
@@ -61,7 +64,7 @@
 	<img class="img" src="resources/images/market6.jpg">
 	<div class="header_wrap">
 	<jsp:include page="../common/menubar.jsp"/>
-	<b id="headcomment">중고 장터</b>
+	<b id="headcomment">중고 장터 게시판</b>
 	</div>
 	
 	<div class="wrapper">
@@ -72,18 +75,24 @@
 		
 		<!-- 게시글 리스트 -->
 		<div class=sellAll>
-		<c:forEach var="m" items="${list}">
-			<div class=sell>
-				<div class=sellDiv>
-					<div class=sellPic><img class=sellPic src="/resources/images/ap.jpg"/></div>
-					<div class=sellName>${m.boardTitle}</div>
-					<div class=sellAddress>${m.userId}</div>
-					<div class=sellPrice>${m.price}</div>
+			<c:forEach var="m" items="${list}">
+				<div class=sell>
+					<div class=sellDiv>
+						<div class="hidden" style="display:none">${m.boardNo}</div>
+						<div class=sellPic><img class=sellPic src="resources/marketUploadFiles/${ m.fileName }"/></div>
+						<div class=sellName>
+							<c:url var="madetail" value="marketDetail.ma">
+								<c:param name="boardNo" value="${m.boardNo}"/>
+								<c:param name="page" value="${pi.currentPage}"/>
+							</c:url>
+							<a href="${madetail}">${m.boardTitle}</a>
+						</div>
+						<div class=sellAddress>${m.userId}</div>
+						<div class=sellPrice>${m.price}원</div>
+					</div>
 				</div>
-			</div>
-		</c:forEach>
+			</c:forEach>
 		</div>		
-		
 		<div class="marketFilterForm">
 		  <form class="marketFilter">
 	            <select id="marketSelect" name="marketSelect">
@@ -96,7 +105,7 @@
           </form>
 		</div>
 		
-		<button id="write-btn" class="btn-standard" type="button" value="글쓰기" onclick="location.href='writingMarketView.ma'">글쓰기</button>
+		<button id="write-btn" class="btn-standard" type="button" value="글쓰기" onclick="location.href='writingMarket.ma'">글쓰기</button>
 		
 		
 		<!-- 페이징 처리 -->
@@ -140,9 +149,9 @@
 	</div>
 	
 	<script>
-		$('.sell').on('click', function(){
-			location.href="marketDetail.ma"
-		})
+// 		$('.sell').on('click', function(){
+// 			location.href="marketDetail.ma"
+// 		});
 	</script>
 
 	

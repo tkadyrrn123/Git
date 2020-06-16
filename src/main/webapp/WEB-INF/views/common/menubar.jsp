@@ -76,7 +76,7 @@
 			<ul>
 				<li><i class="fas fa-cogs"></i></li>
 				<li><i class="fas fa-sign-out-alt"></i></li>
-				<li><i class="fas fa-user"></i></li>
+				<li><i class="fas fa-user" onclick="location.href='myProfile.my'"></i></li>
 				<li><i class="fas fa-bell"></i></li>
 			</ul>
 		</div>

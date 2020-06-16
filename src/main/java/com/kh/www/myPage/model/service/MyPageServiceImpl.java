@@ -11,6 +11,8 @@ import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.myPage.model.dao.MyPageDAO;
 import com.kh.www.myPage.model.vo.Meal;
 import com.kh.www.myPage.model.vo.MyBoard;
+import com.kh.www.myPage.model.vo.MyComment;
+import com.kh.www.myPage.model.vo.MyQnA;
 
 @Service("myService")
 public class MyPageServiceImpl implements MyPageService{
@@ -49,6 +51,36 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public ArrayList<MyBoard> getBoardList(String userId, PageInfo pi) {
 		return myDAO.getBoardList(userId, pi, sqlSession);
+	}
+
+	@Override
+	public int getCommentListCount(String userId) {
+		return myDAO.getCommentListCount(userId, sqlSession);
+	}
+
+	@Override
+	public ArrayList<MyComment> getCommentList(String userId, PageInfo pi) {
+		return myDAO.getCommentList(userId, pi, sqlSession);
+	}
+	@Override
+	public int insertQnA(MyQnA qNA) {
+		return myDAO.insertQnA(qNA, sqlSession);
+	}
+
+	@Override
+	public int insertQnAFileName(MyQnA qNA) {
+		// TODO Auto-generated method stub
+		return myDAO.insertQnAFileName(qNA, sqlSession);
+	}
+
+	@Override
+	public int getQnAListCount(String userId) {
+		return myDAO.getQnAListCount(userId, sqlSession);
+	}
+
+	@Override
+	public ArrayList<MyQnA> getQnAList(String userId, PageInfo pi) {
+		return myDAO.getQnAList(userId, pi, sqlSession);
 	}
 
 }

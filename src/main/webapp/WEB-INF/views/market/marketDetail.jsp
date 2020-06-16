@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,34 +12,37 @@
    #all{margin-top: 20px;}
 	#menu{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;}
 	#line1{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px;}
-	#line2{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 228px;}
-	#line3{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 100px;}
+	#line2{width: 80%; background: lightgray; height:2px; margin: auto;}
 	.sellAll{width: 80%; margin: 40px 0px 0px 200px;}
 
 	#content1{width: 80%; margin-left:100px;}
-	#content2{width: 80%; margin-left:100px;}
+/*  	#content2{overflow:scroll;} */
 	#content3{width: 65%; margin-left:100px;}
 	#content4{width: 65%; margin-left:100px;} 
 	#content5{width: 61.8%; margin-left:150px;} 
 
 	#title{font-size:30px; width: 50%; font-weight:bold; margin-top: 20px; display: inline-block; margin-left: 130px;} 
-	#hit{display: inline-block; width: 15%; text-align:center; } 
-	#date{display: inline-block; width: 15%; text-align:right; }
+	#hit{display: inline-block; width: 7%; float:right; margin-top: 30px; margin-right: 140px;} 
+	#date{display: inline-block; width: 8%; float:right; margin-top: 30px; margin-right: 50px;}
 	
-	#sellPic{width: 49%; height: 400px; margin-left: 70px; margin-top: 20px; display: inline-block; float:left;}
-	#img{margin-left : 100px; width: 60%} 
+	#sellPic{width: 30%; height: 400px; margin-left : 70px; margin-top: 20px; display: inline-block;}
+ 	#img{margin-left : 130px; width: 100%} 
+	#itemName{display: inline-block; font-size: 30px; font-weight:bold;margin-left: 200px;}
+/* 	#price{display: inline-block;} */
+
+	.content_wrap{display:inline-block;
+				  vertical-align:top;background-color:tomato;
+				  width: 45%;
+				  margin-top:20px;
+				  margin-left:170px;}
 	
-	
-	#itemName{display: inline-block; font-size: 30px; font-weight:bold; margin-top: 35px; margin-right: 420px;}
-	#price{display: inline-block;  margin-top:30px; width:45%; margin-left: 20px;}
-	
-	#name{display: inline-block; margin-top: 30px; margin-left: 20px;}  
- 	#sellContent{margin-left: 0px; width: 80%; margin-left: 190px; min-height: 200px; border:none; font-size: 16px;}
+	#name{display: inline-block; margin-top: 30px; float:right; margin-right: 50px;}  
+ 	#sellContent{width: 80%; min-height: 200px; border:none; font-size: 16px;}
  	textarea{ resize:none;}
  	textarea:focus {outline: none;}
  	#btn{float:right; margin: 20px 200px 0px 0px;}
  	.btn{margin-left:10px;
- 	 border: 1px solid #ccccce;
+		border: 1px solid #ccccce;
 	    border-radius: 6px;
 	    background-color: #fff;
 	    font-weight: 500;
@@ -97,74 +101,44 @@
 	<img class="img" src="resources/images/market6.jpg">
 	<div class="header_wrap">
 	<jsp:include page="../common/menubar.jsp"/>
-	<b id="headcomment">중고 장터</b>
+	<b id="headcomment">중고 장터 상세 페이지</b>
 	</div>
-	
 	<div id= all>
-		<div id="content1">
-			<div id="title">
-				물건 싸게 팔아요 S급 1번 밖에 안썼어요~~
-			</div>
-			<div id="line1"></div>
-			
-			<div id="date" >
-				게시글 등록일 : 
-			</div>
-			
-			<div id="hit">
-				조회수 : 
-			</div>
-
-			
+		<div id="content1"></div>
+			<div id="itemName">${ma.boardTitle}</div>
+			<div id="hit">조회수 : ${ ma.boardCount }</div>
+			<div id="date">등록일 : ${ ma.createDate } </div>
+			<div id="name">판매자 : ${ma.nickName}</div>
+ 			<div id="line1"></div> 
+ 			
 			<div id=sellPic>
-				<img id=img src="${ pageContext.servletContext.contextPath }/resources/images/01.png"/>
+				<img id=img src="${ pageContext.servletContext.contextPath }/resources/marketUploadFiles/${ ma.fileName }"/>
 			</div>
-			
-			
-			
-			<div id="itemName">
-				레미안 석관 아파트
+			<div class="content_wrap">
+				<div id="status">판매중 : </div>
+				<div id="price">판매가 : ${ma.price}</div>			
+				<div id="content2">
+<!-- 					<textarea id="sellContent" readonly> -->
+<%-- 						${ ma.boardContent } --%>
+<!-- 					</textarea> -->
+					${ ma.boardContent }
+				</div>
 			</div>
-			
-			<div id="price">
-				5억
-			</div>			
-			
-			<div id="name">
-				닉네임
-			</div>
-			
-			
-			
-
 		</div>
 		
-			<div id="line2"></div>
-		<div id="content2">
-			<textarea id="sellContent" readonly>
-			
-구입일 - 2020년 1월 24일
-애플케어 - 2022년 1월 24일
-외상 - X
-내부문제 - X
-셀룰러 - O
-
-댓글에 번호 또는 카톡 아이디 써주세요
-			</textarea>
-			
-			
-			
-
-		</div>
-		
-		
-			
-		<div id="line3"></div>
+		<div id="line2"></div>
+		<c:url var="deleteMarket" value="deleteMarket.ma">
+			<c:param name="boardNo" value="${ma.boardNo}"/>
+		</c:url>
+		<c:url var="updateMarket" value="updateMarket.ma">
+			<c:param name="boardNo" value="${ma.boardNo}"/>
+			<c:param name="page" value="${page}"/>
+		</c:url>
 		
 		<div id="btn">
-				<button class="btn" id="updateBtn">수정</button>
+				<button class="btn" id="updateBtn" onclick="location.href='${updateMarket}'">수정</button>
 				<button class="btn" id="deleteBtn">삭제</button>
-				<button class="btn" id="listBtn">목록</button>
+				<button class="btn" id="listBtn" onclick="location.href='market.ma'" >목록</button>
 		</div>
 		
 		
@@ -224,7 +198,7 @@
 					<button class="btn" id="rDeleteBtn">삭제</button> 
 				</div>
 				<div width="100%">
-					<p id="rContent"  readonly>010-1234-5678 쪽으로 연락 주세요</p>
+					<p id="rContent" readonly>010-1234-5678 쪽으로 연락 주세요</p>
 				</div> 
 				<div>
 					<button class="btn" id="replyBtn">답글</button>
@@ -238,22 +212,16 @@
 				</div>
 			</div>
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-	
-	
-	
 	
 	
 	<script type="text/javascript">
+	
+		$('#deleteBtn').on('click',function(){
+			if(confirm("정말 삭제하시겠습니까?")){
+				location.href="${deleteMarket}";
+			}
+		});
+	
 	
 		/** 댓글 글자수 제한 **/
 		$('#rWrite').keyup(function (e){

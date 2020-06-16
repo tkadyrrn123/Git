@@ -73,4 +73,14 @@ public class NoticeServiceImpl implements NoticeService {
 	public int insertNoticeComment(Comment nc) {
 		return nDAO.insertNoticeComment(sqlSession, nc);
 	}
+	
+	@Override //댓글 수정
+	public int commentUpdate(Comment comment) {
+		return nDAO.commentUpdate(sqlSession, comment);
+	}
+	
+	@Override //댓글 삭제
+	public int commentUpdate(int rNo) {
+		return nDAO.commentUpdate(sqlSession, rNo);
+	}
 }

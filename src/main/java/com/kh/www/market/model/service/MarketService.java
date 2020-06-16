@@ -12,7 +12,11 @@ public interface MarketService {
 
 	int writingMarket(Market m);
 
-	int insertBoard();
+	int insertBoard(Market m);
 
 	int insertFile(String renameFileName);
+
+	Market selectMarketList(int boardNo);
+
+	int deleteMarket(int boardNo);
 }

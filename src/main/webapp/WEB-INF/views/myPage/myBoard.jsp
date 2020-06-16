@@ -73,30 +73,21 @@
 			</tr>
 		</thead>
 		<tbody class="bottomBoard">
-			<tr>
-				<td>22</td>
-				<td>저녁 벙개하실분~~ 메뉴 댓달아주세여 </td>
-				<td>2020-05-09</td>
-				<td>자유</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td>저녁 벙개하실분~~ 메뉴 댓달아주세여 </td>
-				<td>2020-05-09</td>
-				<td>자유</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td>저녁 벙개하실분~~ 메뉴 댓달아주세여 </td>
-				<td>2020-05-09</td>
-				<td>자유</td>
-			</tr>
-			<tr>
-				<td>22</td>
-				<td>저녁 벙개하실분~~ 메뉴 댓달아주세여 </td>
-				<td>2020-05-09</td>
-				<td>자유</td>
-			</tr>
+			<c:if test="${blist != null && !blist.isEmpty()}">
+				<c:forEach var="i" begin="0" end="${blist.size()-1}">
+					<tr>
+						<td>${blist[i].boardNo}</td>
+						<td>${blist[i].boardTitle} </td>
+						<td>${blist[i].createDate}</td>
+						<td>${blist[i].type}</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+			<c:if test="${blist == null || blist.isEmpty()}">
+				<tr>
+					<td colspan="4">내가 쓴 글이 없습니다.</td>
+				</tr>
+			</c:if>
 		</tbody>
 		<tfoot>
 			<!-- 페이징 처리 -->
@@ -108,7 +99,7 @@
 						[이전] &nbsp;
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="">
+						<c:url var="before" value="myBoard.my">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
 						<a href="${ before }">[이전]</a> &nbsp;
@@ -121,7 +112,7 @@
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="">
+							<c:url var="pagination" value="myBoard.my">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
 							<a href="${ pagination }">${ p }</a> &nbsp;
@@ -133,7 +124,7 @@
 						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="">
+						<c:url var="after" value="myBoard.my">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
 						<a href="${ after }">[다음]</a>
