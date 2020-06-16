@@ -81,12 +81,15 @@
 				<c:if test="${ loginUser.userId eq notice.userId }">
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
-						<c:url var="nlist" value="noticeUpdateView.no">
+						<c:url var="nModify" value="noticeUpdateView.no">
 							<c:param name="page" value="${ page }"/>
 							<c:param name="nNo" value="${ notice.nNo }"/>
 						</c:url>
-					<div class="pop" onclick="location.href='${ nlist }'"><label>수정</label></div>
-					<div class="pop" onclick="location.href='noticeDelete.no'"><label>삭제</label></div>
+						<c:url var="nDelete" value="noticeDelete.no">
+							<c:param name="nNo" value="${ notice.nNo}"/>
+						</c:url>
+					<div class="pop" onclick="location.href='${ nModify }'"><label>수정</label></div>
+					<div class="pop" onclick="location.href='${ nDelete }'"><label>삭제</label></div>
 				</div>
 				</c:if>
 				<hr>
@@ -117,56 +120,20 @@
 				<div class="dong">${ loginUser.userId }</div>
 					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
 				<div style="margin-left: 10px; margin-top: 12px;">
-					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="95" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
-				<div class="counter" id="counter">(0/200자)</div>
+					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="95" rows="4" placeholder="댓글을 입력해주세요."></textarea>
+				<div class="counter" id="counter">0/200</div>
 				</div>
 			</div>
 		<!-------------댓글 작성  끝------------>
 		<!-------------댓글 가져오기 ------------>	
 			<div id="noticeComment_outer">
-<!-- 				<div class="reply2_box" id="noticeComment"> -->
-<!-- 					<div class="input-group"> -->
-<!-- 				<div id="notice_profile" style="float: left; display: inline;"> -->
-<%-- 					<img class="comment_img" src="<%=request.getContextPath()%>/css/화단사진.jpg"></div> --%>
-<!-- 				<div id="notice_rUserId" class="dong">닉네임</div> -->
-<!-- 				<div id="notice_rContent" style="margin-left: 10px;">댓글 내용</div> -->
-<!-- 				<div id="notice_rCreateDate" style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 			</div>
 		<!-------------댓글 가져오기 끝------------>			
 		</form>
 	</div>
 	
 	<script>
-	
-	// 댓글 등록 textarea 체크
-	$('.reply_TEXT').keyup(function (e){
-	    var content = $(this).val();
-	    $('#counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
-
-	    if (content.length > 200){
-	        alert("최대 200자까지 입력 가능합니다.");
-	        $(this).val(content.substring(0, 200));
-	        $('#counter').html("(200/200자)");
-	    }
-	});
-	
-	// 댓글 수정 update textarea 체크
-	$('.update_reply_TEXT').keyup(function (e){
-	    var content = $(this).val();
-	    console.log(content);
-	    $('#update_counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
-
-	    if (content.length > 200){
-	        alert("최대 200자까지 입력 가능합니다.");
-	        $(this).val(content.substring(0, 200));
-	        $('#update_counter').html("(200/200자)");
-	    }
-	});
-	
-	
-	/* 수정 삭제 보이기 */
+	/* 게시글 수정 삭제 보이기 */
 	$(".fa-ellipsis-v").click(function(){
            var submenu = $(this).next();
               // submenu 가 화면상에 보일때는 위로 보드랍게 접고 아니면 아래로 보드랍게 펼치기
@@ -178,6 +145,40 @@
       	        	submenu.hide();
       	        }
      });
+	
+//--<댓글>-------------------------------------------------------------------------------
+	// 댓글 등록 textarea 체크
+	$('.reply_TEXT').keyup(function (e){
+	    var content = $(this).val();
+	    $('#counter').html(content.length+"/200");//글자수 실시간 카운팅
+
+	    if (content.length > 200){
+	        alert("최대 200자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 200));
+	        $('#counter').html("200/200");
+	    }
+	});
+	
+	//댓글 등록
+	$('#rSubmit').on('click', function(){ //댓글등록 버튼을 누르면
+		var rContent = $("#rContent").val(); //댓글내용
+		var noticeNo = ${ notice.nNo }; //댓글이 참조하는 공지번호
+		
+				
+		$.ajax({
+			url:'addNoticeComment.no',
+			data:{rContent:rContent, noticeNo:noticeNo},
+			success: function(data){
+				
+				if(data == 'success'){ //댓글 등록을 성공하면
+					getCommentList(); //댓글 리스트 불러오기 메소드를 실행시키고
+					$("#rContent").val(''); //댓글입력창 초기화
+				}
+			}
+		});
+		$('#counter').html("0/200");
+		
+	});
 	
 	// 댓글 리스트 불러오기
 	function getCommentList(){
@@ -201,33 +202,25 @@
 				var $rModify;
 				var $rDelete;
 				
-				
 // 				console.log(data);
 // 				$('#rCount').text('댓글('+data.length + ')');
 				
 				if(data.length > 0){
 					for(var i in data){
-// 				console.log(data[i].rUserId); == user02
 						
 						$div = $('<div id="noticeComment'+data[i].rNo+'" class="reply2_box">');
 						$div_userFile = $('<div style="float:left;display:inline;">');
 						$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'">');
 						
 						if("${loginUser.userId}"== data[i].rUserId){
-// 							console.log("${loginUser.userId}"== data[i].rUserId);
-							
-							$rModify = $('<a class="update_btn" onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\');"> 수정 </a>');
-							$rDelete = $('<a class="delete_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </a> </div>');
+							$rModify = $('<div class="update_btn" onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\');"> 수정 </div>');
+							$rDelete = $('<div class="delete_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </div>');
 						}else{
 							$rModify = "";
 							$rDelete = "";
-							
 						}
-// 						console.log($rModify);
-						console.log("${loginUser.userId}"== data[i].rUserId);
-						
 						$rUserId = $('<div class="dong">').text(data[i].rUserId);
-						$rContent = $('<div class="rContent'+data[i].rNo+'" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;">').text(data[i].rContent.replace(/\+/g, ' '));
+						$rContent = $('<div class="rContent'+data[i].rNo+'" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;">').text(data[i].rContent);
 						$rCreateDate = $('<div style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
 
 						$div.append($userFile);
@@ -256,63 +249,51 @@
 		
 		setInterval(function(){
 			getCommentList();
-		}, 1000);
-	});
-	
-	//댓글 등록
-	$('#rSubmit').on('click', function(){
-		var rContent = $("#rContent").val(); //댓글내용
-		var noticeNo = ${ notice.nNo }; //댓글이 참조하는 공지번호
-		
-		
-		$.ajax({
-			url:'addNoticeComment.no',
-			data:{rContent:rContent, noticeNo:noticeNo},
-			success: function(data){
-				
-				if(data == 'success'){
-					getCommentList();
-					$('#rContent').val('');
-				}
-			}
-		});
+		}, 60000);
 	});
 	
 	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
 	function commentUpdateForm(rNo, rContent){
 	    var a ='';
 	    
-//	    a += '<div class="input-group">';
-	    a += '<div class="input-group">';
+	   //$(".update_btn").click(function(){
+	       // var rModifyMenu = $(".update_btn").next();
+	        //var rDeleteMenu = $(".delete_btn").next();
+	       // var cancelMenu = 
+	        	
+	            //if(rModifyMenu.css("display") != "none"){
+	            //	rModifyMenu.hide();
+	            //	rDeleteMenu.hide();
+	   	       // }
+	            
+		 //});
 	    
-//	    a += '<div style="margin-left: 10px; margin-top: 12px;">'
+		//$rModify = $('<a class="update_btn" onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\');"> 수정 </a>');
+		//$rDelete = $('<a class="delete_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </a> </div>');
+
 	    a += '<div>';
-//	    a += '<input type="text" name="rContent_'+rNo+'" value="'+rContent+'">';
-	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+rContent+'</textarea>';
-// 		a += '<textarea name="rContent_'+rNo+'" value="'+rContent+'" class="update_reply_TEXT" cols="100" rows="4"></textarea>';
- 	    a += '<div class="counter" id="update_counter">(0/200자)</div>';
-	    
-	    a += '<i class="fas fa-check" onclick="commentUpdate('+rNo+');"></i>';
-//  	    <button class="update_btn" type="button" onclick="commentUpdate('+rNo+');">수정</button> </span>';
-	    a += '</div>';
+	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+rContent.replace(/\+/g, ' ')+'</textarea>';
+ 	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+$({fn:replace(rContent, newLineChar, +'<br>')})+'</textarea>';
+ 	    a += '<div class="counter" id="update_counter">'+rContent.length+'/200</div>';
+ 	    a += '<i class="fas fa-check" onclick="commentUpdate('+rNo+');"></i>';
 	    
 	    $('.rContent'+rNo).html(a);
-	    
 	}
 	
-	function plus(rNo){
+	//댓글 수정시 글자 카운팅
+	 function plus(rNo){
 	    var content = $("#update_reply_TEXT_"+rNo+"").val();
 	    console.log(content);
-	    $('#update_counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
+	    $('#update_counter').html(content.length+"/200");//글자수 실시간 카운팅
 
 	    if (content.length > 200){
 	        alert("최대 200자까지 입력 가능합니다.");
 	        $(this).val(content.substring(0, 200));
-	        $('#update_counter').html("(200/200자)");
+	        $('#update_counter').html("200/200");
 	    }
-	}
+	} 
 	
-	//댓글 수정
+	//댓글 수정 저장
 	function commentUpdate(rNo){
 	    var updateContent = $('[name=rContent_'+rNo+']').val();
 	    
@@ -321,27 +302,33 @@
 	        dataType: 'json',
 	        data : {'rContent' : updateContent, 'rNo' : rNo},
 	        success : function(data){
-	        	console.log(data);
-	            if(data == 1) getCommentList(rNo); //댓글 수정후 목록 출력 
+	           
+	        	if(data == 1) getCommentList(rNo); //댓글 수정후 목록 출력 
+	            
+	            alert("댓글이 수정되었습니다.")
 	        }
 	    });
 	}
 	
 	//댓글 삭제 
 	function commentDelete(rNo){
-		 var deleteCf = confirm("정말 삭제하시겠습니까?")
+		var deleteCf = confirm("정말로 삭제하시겠습니까?")
+		console.log(deleteCf);
+		if(deleteCf == true){
 		
-	    $.ajax({
-	        url : 'commentUpdate.no'+rNo,
-	        dataType: 'json',
-	        success : function(data){
-	           
-	            if(deleteCf==true && data == 1) getCommentList(rNo); //댓글 삭제후 목록 출력 
-	            
-	        }
-	    });
+		    $.ajax({
+		        url : 'commentUpdate.no'+rNo,
+		        dataType: 'json',
+		        success : function(data){
+		        	console.log("댓글 삭제 데이터 1>"+data);
+		        	
+		            if(data == 1) getCommentList(rNo); //댓글 삭제후 목록 출력 
+		            
+		            
+		        }
+		    });
+		}
 	}
-	
 	
 	</script>
 	<jsp:include page="../common/Footer.jsp"/>

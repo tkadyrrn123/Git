@@ -19,16 +19,16 @@ public class NoticeDAO {
 	}
 	
 	//공지사항 전체 리스트 갯수 가져오기
-	public int getNoticeListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("NoticeMapper.getNoticeListCount");
+	public int getNoticeListCount(SqlSessionTemplate sqlSession,String aptName) {
+		return sqlSession.selectOne("NoticeMapper.getNoticeListCount", aptName);
 	}
 	
 	//공지사항 리스트 페이지 가져오기
-	public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, PageInfo pi, String aptName) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("NoticeMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("NoticeMapper.selectList", aptName, rowBounds);
 	}
 	
 	//상세보기 조회수 증가 체크하기 
@@ -50,6 +50,10 @@ public class NoticeDAO {
 	public int updateNotice_Content(SqlSessionTemplate sqlSession, Notice n) {
 		return sqlSession.update("NoticeMapper.updateNotice_tb_notice",n);
 	}
+	//공지사항 삭제
+	public int deleteNotice(SqlSessionTemplate sqlSession, int nNo) {
+		return sqlSession.update("NoticeMapper.deleteNotice", nNo);
+	}
 	
 	//댓글 리스트 가져오기
 	public ArrayList<Comment> NoticeCommentList(SqlSessionTemplate sqlSession, int nNo) {
@@ -70,6 +74,19 @@ public class NoticeDAO {
 	public int commentUpdate(SqlSessionTemplate sqlSession, int rNo) {
 		return sqlSession.update("NoticeMapper.deleteNoticeComment",rNo);
 	}
+
+	//공지사항 검색키워드에 따른 전체 수 가져오기
+	public int getSearchResultListCount(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.selectOne("NoticeMapper.getSearchResultListCount",n);
+	}
+
+	public ArrayList<Notice> selectSearchResultList(SqlSessionTemplate sqlSession, Notice n, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("NoticeMapper.selectSearchResultList", n, rowBounds);
+	}
+
 
 
 }

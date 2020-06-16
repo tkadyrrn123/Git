@@ -17,6 +17,7 @@
  	.detailTable_comment{margin: auto; border-bottom: 1px solid lightgray; height: 50px; background-color: lightgray; width: 800px;}
  	.detailTable_title{margin-left: 10px; font-size: 18px; padding-bottom: 10px; color:rgb(81, 143, 187);}
 	.img {filter: brightness(70%); width: 100%; height: 400px;}	
+	.clubNameview{color:lightcoral; margin-left: 60px; margin-bottom: 20px;}
 	
 /* 글내용 */
 	.board_content{width: 800px;    height: auto;    margin-left: 100px;    margin-top: 40px;    margin-bottom: 40px;}
@@ -64,29 +65,35 @@
 	<div class="outer">
 		<form>
 	<!----------- 게시글 상단부 시작  ---------->	
-			<br>
-			<h2 style="margin-left: 15px;">공지사항 상세보기</h2>
-			<hr>
-			<br>
+		<br>
+		<h2 style="margin-left: 15px;">동호회 공지사항 상세보기</h2>
+		<hr>
+		<br>
+		<div class="clubNameview"><i class="fas fa-crown"></i>  ${ ClubNotice.clubName } </div>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
-				<div class="detailTable_title">
-				<div style="color:lightcoral; float: left; margin-left: 10px; margin-right: 10px;"><i class="fas fa-crown"></i>  ${ ClubNotice.clubName } </div><div>| ${ ClubNotice.cnTitle }</div>
-				</div>
+				<div class="detailTable_title">${ ClubNotice.cnTitle }</div>
+				
 				<div id="notice_profile" style="float:left;display:inline;">
 					<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ ClubNotice.cnoticeFile }"></div>
+				
 				<div class="dong">${ ClubNotice.cnoticeNickname }</div>
+				
 				<div style="display:inline;"><i class="far fa-clock"></i>${ ClubNotice.cnCreateDate }</div>
+				
 				<div style="display:inline;"><i class="far fa-eye"></i>${ ClubNotice.cnCount }</div>
 	<!-------------수정 /삭제 선택 -------------->	
 				<c:if test="${ loginUser.userId eq ClubNotice.userId }">
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
-						<c:url var="cnlist" value="ClubNoticeUpdateView.no">
+						<c:url var="cnModify" value="ClubNoticeUpdateView.cn">
 							<c:param name="page" value="${ page }"/>
 							<c:param name="cnNo" value="${ ClubNotice.cnNo }"/>
 						</c:url>
-					<div class="pop" onclick="location.href='${ cnlist }'"><label>수정</label></div>
-					<div class="pop" onclick="location.href='ClubNoticeDelete.no'"><label>삭제</label></div>
+						<c:url var="cnDelete" value="ClubNoticeDelete.cn">
+							<c:param name="cnNo" value="${ ClubNotice.cnNo }"/>
+						</c:url>
+					<div class="pop" onclick="location.href='${ cnModify }'"><label>수정</label></div>
+					<div class="pop" onclick="location.href='${ cnDelete }'"><label>삭제</label></div>
 				</div>
 				</c:if>
 				<hr>
@@ -124,15 +131,6 @@
 		<!-------------댓글 작성  끝------------>
 		<!-------------댓글 가져오기 ------------>	
 			<div id="noticeComment_outer">
-<!-- 				<div class="reply2_box" id="noticeComment"> -->
-<!-- 					<div class="input-group"> -->
-<!-- 				<div id="notice_profile" style="float: left; display: inline;"> -->
-<%-- 					<img class="comment_img" src="<%=request.getContextPath()%>/css/화단사진.jpg"></div> --%>
-<!-- 				<div id="notice_rUserId" class="dong">닉네임</div> -->
-<!-- 				<div id="notice_rContent" style="margin-left: 10px;">댓글 내용</div> -->
-<!-- 				<div id="notice_rCreateDate" style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 			</div>
 		<!-------------댓글 가져오기 끝------------>			
 		</form>
@@ -165,7 +163,6 @@
 	    }
 	});
 	
-	
 	/* 수정 삭제 보이기 */
 	$(".fa-ellipsis-v").click(function(){
            var submenu = $(this).next();
@@ -179,168 +176,151 @@
       	        }
      });
 	
-	// 댓글 리스트 불러오기
-	function getCommentList(){
-		var cnNo = ${ ClubNotice.cnNo };
+// 	// 댓글 리스트 불러오기
+// 	function getCommentList(){
+// 		var cnNo = ${ ClubNotice.cnNo };
 		
-		$.ajax({
-			url: 'cList.cn',
-			data: {cnNo:cnNo},
-			dataType: 'json',
-			success: function(data){
+// 		$.ajax({
+// 			url: 'cList.cn',
+// 			data: {cnNo:cnNo},
+// 			dataType: 'json',
+// 			success: function(data){
 				
-				$noticeComment_outer = $('#noticeComment_outer');
-				$noticeComment_outer.html('');
+// 				$noticeComment_outer = $('#noticeComment_outer');
+// 				$noticeComment_outer.html('');
 				
-				var $div;
-				var $userFile;
-				var $rUserId;
-				var $rContent;
-				var $rCreateDate;
+// 				var $div;
+// 				var $userFile;
+// 				var $rUserId;
+// 				var $rContent;
+// 				var $rCreateDate;
 				
-				var $rModify;
-				var $rDelete;
+// 				var $rModify;
+// 				var $rDelete;
 				
-				
-// 				console.log(data);
-// 				$('#rCount').text('댓글('+data.length + ')');
-				
-				if(data.length > 0){
-					for(var i in data){
-// 				console.log(data[i].rUserId); == user02
+// 				if(data.length > 0){
+// 					for(var i in data){
 						
-						$div = $('<div id="noticeComment'+data[i].rNo+'" class="reply2_box">');
-						$div_userFile = $('<div style="float:left;display:inline;">');
-						$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'">');
+// 						$div = $('<div id="noticeComment'+data[i].rNo+'" class="reply2_box">');
+// 						$div_userFile = $('<div style="float:left;display:inline;">');
+// 						$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'">');
 						
-						if("${loginUser.userId}"== data[i].rUserId){
-// 							console.log("${loginUser.userId}"== data[i].rUserId);
-							
-							$rModify = $('<a class="update_btn" onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\');"> 수정 </a>');
-							$rDelete = $('<a class="delete_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </a> </div>');
-						}else{
-							$rModify = "";
-							$rDelete = "";
-							
-						}
-// 						console.log($rModify);
-						console.log("${loginUser.userId}"== data[i].rUserId);
+// 						if("${loginUser.userId}"== data[i].rUserId){
+// 							$rModify = $('<a class="update_btn" onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\');"> 수정 </a>');
+// 							$rDelete = $('<a class="delete_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </a> </div>');
+// 						}else{
+// 							$rModify = "";
+// 							$rDelete = "";
+// 						}
 						
-						$rUserId = $('<div class="dong">').text(data[i].rUserId);
-						$rContent = $('<div class="rContent'+data[i].rNo+'" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;">').text(data[i].rContent.replace(/\+/g, ' '));
-						$rCreateDate = $('<div style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
+// 						$rUserId = $('<div class="dong">').text(data[i].rUserId);
+// 						$rContent = $('<div class="rContent'+data[i].rNo+'" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;">').text(data[i].rContent.replace(/\+/g, ' '));
+// 						$rCreateDate = $('<div style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
 
-						$div.append($userFile);
-						$div.append($rUserId);
+// 						$div.append($userFile);
+// 						$div.append($rUserId);
 						
-						$div.append($rModify);
-						$div.append($rDelete);
+// 						$div.append($rModify);
+// 						$div.append($rDelete);
 						
-						$div.append($rContent);
-						$div.append($rCreateDate);
-						$noticeComment_outer.append($div);
-					}
-				}else{
-					$div = $('<div id="noticeComment" class="reply2_box">');
-					$rContent = $('<div style="text-align: center;">').text('등록된 댓글이 없습니다.');
+// 						$div.append($rContent);
+// 						$div.append($rCreateDate);
+// 						$noticeComment_outer.append($div);
+// 					}
+// 				}else{
+// 					$div = $('<div id="noticeComment" class="reply2_box">');
+// 					$rContent = $('<div style="text-align: center;">').text('등록된 댓글이 없습니다.');
 					
-					$div.append($rContent);
-					$noticeComment_outer.append($div);
-				}
+// 					$div.append($rContent);
+// 					$noticeComment_outer.append($div);
+// 				}
 
-			}
-		});
-	}
-	$(function(){
-		getCommentList();
+// 			}
+// 		});
+// 	}
+// 	$(function(){
+// 		getCommentList();
 		
-		setInterval(function(){
-			getCommentList();
-		}, 1000);
-	});
+// 		setInterval(function(){
+// 			getCommentList();
+// 		}, 1000);
+// 	});
 	
-	//댓글 등록
-	$('#rSubmit').on('click', function(){
-		var rContent = $("#rContent").val(); //댓글내용
-		var noticeNo = ${ notice.nNo }; //댓글이 참조하는 공지번호
+// 	//댓글 등록
+// 	$('#rSubmit').on('click', function(){
+// 		var rContent = $("#rContent").val(); //댓글내용
+// 		var noticeNo = ${ notice.nNo }; //댓글이 참조하는 공지번호
 		
 		
-		$.ajax({
-			url:'addNoticeComment.no',
-			data:{rContent:rContent, noticeNo:noticeNo},
-			success: function(data){
+// 		$.ajax({
+// 			url:'addNoticeComment.no',
+// 			data:{rContent:rContent, noticeNo:noticeNo},
+// 			success: function(data){
 				
-				if(data == 'success'){
-					getCommentList();
-					$('#rContent').val('');
-				}
-			}
-		});
-	});
+// 				if(data == 'success'){
+// 					getCommentList();
+// 					$('#rContent').val('');
+// 				}
+// 			}
+// 		});
+// 	});
 	
-	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
-	function commentUpdateForm(rNo, rContent){
-	    var a ='';
+// 	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+// 	function commentUpdateForm(rNo, rContent){
+// 	    var a ='';
 	    
-//	    a += '<div class="input-group">';
-	    a += '<div class="input-group">';
+// 	    a += '<div class="input-group">';
+// 	    a += '<div>';
+// 	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+rContent+'</textarea>';
+//  	    a += '<div class="counter" id="update_counter">(0/200자)</div>';
+// 	    a += '<i class="fas fa-check" onclick="commentUpdate('+rNo+');"></i>';
+// 	    a += '</div>';
 	    
-//	    a += '<div style="margin-left: 10px; margin-top: 12px;">'
-	    a += '<div>';
-//	    a += '<input type="text" name="rContent_'+rNo+'" value="'+rContent+'">';
-	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+rContent+'</textarea>';
-// 		a += '<textarea name="rContent_'+rNo+'" value="'+rContent+'" class="update_reply_TEXT" cols="100" rows="4"></textarea>';
- 	    a += '<div class="counter" id="update_counter">(0/200자)</div>';
+// 	    $('.rContent'+rNo).html(a);
 	    
-	    a += '<i class="fas fa-check" onclick="commentUpdate('+rNo+');"></i>';
-//  	    <button class="update_btn" type="button" onclick="commentUpdate('+rNo+');">수정</button> </span>';
-	    a += '</div>';
-	    
-	    $('.rContent'+rNo).html(a);
-	    
-	}
+// 	}
 	
-	function plus(rNo){
-	    var content = $("#update_reply_TEXT_"+rNo+"").val();
-	    console.log(content);
-	    $('#update_counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
+// 	function plus(rNo){
+// 	    var content = $("#update_reply_TEXT_"+rNo+"").val();
+// 	    console.log(content);
+// 	    $('#update_counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
 
-	    if (content.length > 200){
-	        alert("최대 200자까지 입력 가능합니다.");
-	        $(this).val(content.substring(0, 200));
-	        $('#update_counter').html("(200/200자)");
-	    }
-	}
+// 	    if (content.length > 200){
+// 	        alert("최대 200자까지 입력 가능합니다.");
+// 	        $(this).val(content.substring(0, 200));
+// 	        $('#update_counter').html("(200/200자)");
+// 	    }
+// 	}
 	
-	//댓글 수정
-	function commentUpdate(rNo){
-	    var updateContent = $('[name=rContent_'+rNo+']').val();
+// 	//댓글 수정
+// 	function commentUpdate(rNo){
+// 	    var updateContent = $('[name=rContent_'+rNo+']').val();
 	    
-	    $.ajax({
-	        url : 'commentUpdate.no',
-	        dataType: 'json',
-	        data : {'rContent' : updateContent, 'rNo' : rNo},
-	        success : function(data){
-	        	console.log(data);
-	            if(data == 1) getCommentList(rNo); //댓글 수정후 목록 출력 
-	        }
-	    });
-	}
+// 	    $.ajax({
+// 	        url : 'commentUpdate.no',
+// 	        dataType: 'json',
+// 	        data : {'rContent' : updateContent, 'rNo' : rNo},
+// 	        success : function(data){
+// 	        	console.log(data);
+// 	            if(data == 1) getCommentList(rNo); //댓글 수정후 목록 출력 
+// 	        }
+// 	    });
+// 	}
 	
-	//댓글 삭제 
-	function commentDelete(rNo){
-		 var deleteCf = confirm("정말 삭제하시겠습니까?")
+// 	//댓글 삭제 
+// 	function commentDelete(rNo){
+// 		 var deleteCf = confirm("정말 삭제하시겠습니까?")
 		
-	    $.ajax({
-	        url : 'commentUpdate.no'+rNo,
-	        dataType: 'json',
-	        success : function(data){
+// 	    $.ajax({
+// 	        url : 'commentUpdate.no'+rNo,
+// 	        dataType: 'json',
+// 	        success : function(data){
 	           
-	            if(deleteCf==true && data == 1) getCommentList(rNo); //댓글 삭제후 목록 출력 
+// 	            if(deleteCf==true && data == 1) getCommentList(rNo); //댓글 삭제후 목록 출력 
 	            
-	        }
-	    });
-	}
+// 	        }
+// 	    });
+// 	}
 	
 	
 	</script>
