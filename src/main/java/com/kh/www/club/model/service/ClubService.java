@@ -30,4 +30,8 @@ public interface ClubService {
 	ArrayList<Comment> selectComment(int boardNo);
 
 	int updateClub(Club c);
+
+	int checkClubMember(HashMap m);
+
+	int deleteClubMember(HashMap m);
 }

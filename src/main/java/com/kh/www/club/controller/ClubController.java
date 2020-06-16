@@ -35,6 +35,7 @@ public class ClubController {
 	@Autowired
 	private ClubService cService;
 	
+// 동호회 리스트 불러오기	
 	@RequestMapping("clubList.cb")
 	public ModelAndView clubList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
 		int currentPage = 1;
@@ -59,22 +60,30 @@ public class ClubController {
 		
 		return mv;
 	}
+	
+// 동호회 상세 페이지	
 	@RequestMapping("clubDetail.cb")
-	public ModelAndView clubDetail(@RequestParam("clubName") String clubName, @RequestParam(value="page", required=false) Integer page, @RequestParam("boardNo") int boardNo, ModelAndView mv) {
+	public ModelAndView clubDetail(@RequestParam("clubName") String clubName, @RequestParam(value="page", required=false) Integer page, @RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId, ModelAndView mv) {
 		Club club = cService.selectClub(clubName);
 		ArrayList<Comment> comment = cService.selectComment(boardNo);
-		System.out.println(comment);
+		HashMap m = new HashMap();
+		m.put("clubName", clubName);
+		m.put("userId", userId);
+		
+		int result = cService.checkClubMember(m);
 		if(club != null) {
 			mv.addObject("c", club);
 			mv.addObject("page", page);
 			mv.addObject("comment", comment);
+			mv.addObject("result", result);
 			mv.setViewName("clubDetail");
 		}else {
 			throw new ClubException("게시글 상세조회에 실패했습니다.");
 		}
 		return mv;
 	}
-	
+
+// 동호회 수정 폼 이동	
 	@RequestMapping("clubUpdateForm.cb")
 	public ModelAndView clubUpdateForm(@ModelAttribute Club c, HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
 		System.out.println(c);
@@ -83,6 +92,7 @@ public class ClubController {
 		return mv;
 	}
 
+// 동호회 수정	
 	@RequestMapping("updateClub.cb")
 	public String clubUpdate(@ModelAttribute Club c, HttpServletRequest request, HttpServletResponse response, Model mv) {
 		System.out.println(c);
@@ -95,12 +105,13 @@ public class ClubController {
 	}	
 	
 	
-	
+// 동호회 등록 폼 이동	
 	@RequestMapping("clubInsertForm.cb")
 	public String clubInsertForm() {
 		return "clubInsertForm";
 	}
-	
+
+// 동호회 등록	
 	@RequestMapping("clubInsert.cb")
 	public String clubInsert(@RequestParam(value="writer", required=false) String writer ,@ModelAttribute Club c, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
 		int result1 = cService.insertBoard(writer);
@@ -125,7 +136,9 @@ public class ClubController {
 			throw new ClubException("게시물 등록에 실패했습니다.");
 		}
 	}
+
 	
+// 파일 업로드	
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\clubFiles";
@@ -155,6 +168,8 @@ public class ClubController {
 		
 		return renameFileName;
 	}
+	
+// 동호회 삭제	
 	@RequestMapping("deleteClub.cb")
 	public String clubDelte(@RequestParam("boardNo") Integer boardNo) {
 		int result = cService.deleteClub(boardNo);
@@ -166,23 +181,46 @@ public class ClubController {
 		}
 
 	}
-	
-	@RequestMapping("ClubApply.cb")
-	public String clubApply(@RequestParam("clubName") String clubName, @RequestParam("userId") String userId, @RequestParam("boardNo") Integer boardNo, Model mv) {
-		HashMap m = new HashMap();
-		m.put("clubName", clubName);
-		m.put("user", userId);
-		int result = cService.insertClubMember(m);
-		
-		if(result > 0 ) {
-			mv.addAttribute("clubName", clubName);
-			mv.addAttribute("boardNo", boardNo);
-			return "redirect:clubDetail.cb";
-		}else {
-			throw new ClubException("동호회 가입에 실패했습니다.");
+
+	// 동호회 가입하기	
+		@RequestMapping("ClubApply.cb")
+		public String clubApply(@RequestParam("clubName") String clubName, @RequestParam("userId") String userId, @RequestParam("boardNo") Integer boardNo, Model mv) {
+			HashMap m = new HashMap();
+			m.put("clubName", clubName);
+			m.put("user", userId);
+			int result = cService.insertClubMember(m);
+			
+			if(result > 0 ) {
+				mv.addAttribute("clubName", clubName);
+				mv.addAttribute("boardNo", boardNo);
+				mv.addAttribute("userId", userId);
+				return "redirect:clubDetail.cb";
+			}else {
+				throw new ClubException("동호회 가입에 실패했습니다.");
+			}
 		}
-	}
+		
+// 동호회 탈퇴	
+		@RequestMapping("ClubOut.cb")
+		public String clubOut(@RequestParam("clubName") String clubName, @RequestParam("userId") String userId, @RequestParam("boardNo") Integer boardNo, Model mv) {
+			System.out.println(clubName + "     " + userId);
+			HashMap m = new HashMap();
+			m.put("clubName", clubName);
+			m.put("userId", userId);
+			int result = cService.deleteClubMember(m);
+			System.out.println(result);
+			if(result > 0 ) {
+				mv.addAttribute("clubName", clubName);
+				mv.addAttribute("boardNo", boardNo);
+				mv.addAttribute("userId", userId);
+				return "redirect:clubDetail.cb";
+			}else {
+				throw new ClubException("동호회 탈퇴에 실패했습니다.");
+			}
+		}		
+
 	
+// 동호회 댓글 추가	
 	@RequestMapping(value="insertComment.cb")
 	@ResponseBody
 	public ArrayList<Comment> insertComments(@RequestParam("userId") String userId, @RequestParam("boardNo") int boardNo, @RequestParam("content") String content, HttpServletResponse response) {
