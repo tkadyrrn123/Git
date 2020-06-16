@@ -152,4 +152,14 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.AptMemberfiveList(sqlSession, aptName);
 	}
 
+	@Override
+	public int AptMemberlistCount(String aptName, int num) {
+		return mDAO.AptMemberlistCount(sqlSession, aptName, num);
+	}
+
+	@Override
+	public ArrayList<Member> AptMemberList(PageInfo pi, String aptName, int num) {
+		return mDAO.AptMemberList(sqlSession, pi, aptName, num);
+	}
+
 }

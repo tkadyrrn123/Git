@@ -438,8 +438,43 @@ public class Admincontroller {
 		return "AptAdminMain";
 	}
 	
-	
-	
+	@RequestMapping("AptAdminMemberList.adm")
+	public String AptAdminMemberList(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="num", required = false) Integer num,
+									 HttpSession session,  Model model) {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int Num = 1;
+		
+		if(num != null) {
+			Num = num;
+		}
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName= loginUser.getAptName();
+		
+		//총 멤버 인원수
+		MemberCount memberCount = mService.AptMemberCount(aptName);
+		//리스트 카운트
+		int listCount = mService.AptMemberlistCount(aptName, Num);
+		//페이징
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		//리스트 
+		ArrayList<Member> mlist = mService.AptMemberList(pi, aptName, Num);
+		
+		System.out.println(Num);
+		
+		model.addAttribute("mCount", memberCount)
+			 .addAttribute("num", Num)
+			 .addAttribute("mlist", mlist);
+		
+		
+		
+		return "AptAdminMemberList";
+	}
 	
 	
 	

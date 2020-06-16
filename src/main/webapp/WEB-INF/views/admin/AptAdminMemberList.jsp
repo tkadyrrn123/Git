@@ -193,19 +193,19 @@ textarea, select{
 						<div id="button">
 							<a class="btn_01" onclick="textlist(1);">
 								<span class="text">총회원수</span>
-								<span class="num">${mall.allMember}명</span>
+								<span class="num">${mCount.allMember}명</span>
 							</a>
 							<a class="btn_01" onclick="textlist(2);">
 								<span class="text">승인</span>
-								<span class="num">${mall.accept-mall.delete}명</span>
+								<span class="num">${mCount.accept-mCount.delete}명</span>
 							</a>
 							<a class="btn_01" onclick="textlist(3);">
 								<span class="text">미승인</span>
-								<span class="num">${mall.disaccept}명</span>
+								<span class="num">${mCount.disaccept}명</span>
 							</a>
 							<a class="btn_01" onclick="textlist(4);">
 								<span class="text">탈퇴</span>
-								<span class="num">${mall.delete}명</span>
+								<span class="num">${mCount.delete}명</span>
 							</a>
 							
 							<script>
@@ -213,24 +213,24 @@ textarea, select{
 									var num = ${num};
 									$(".text").css('background', '#9ec6a3');
 									if(num==1){
-										$(".btn_01:nth(1)").find('.text').css('background', '#2f9f6b');
-									}else if(num==2){
-										$(".btn_01:nth(2)").find('.text').css('background', '#2f9f6b');
-									}else if(num==3){
-										$(".btn_01:nth(3)").find('.text').css('background', '#2f9f6b');
-									}else{
 										$(".btn_01:nth(0)").find('.text').css('background', '#2f9f6b');
+									}else if(num==2){
+										$(".btn_01:nth(1)").find('.text').css('background', '#2f9f6b');
+									}else if(num==3){
+										$(".btn_01:nth(2)").find('.text').css('background', '#2f9f6b');
+									}else{
+										$(".btn_01:nth(3)").find('.text').css('background', '#2f9f6b');
 									}
 							});
 							function textlist(num){
 								if(num==1){
-									location.href="MemberList.adm";
+									location.href="AptAdminMemberList.adm";
 								}else if(num==2){
-									location.href="selectList.adm?num=1";
+									location.href="AptAdminMemberList.adm?num=2";
 								}else if(num==3){
-									location.href="selectList.adm?num=2";
+									location.href="AptAdminMemberList.adm?num=3";
 								}else{
-									location.href="selectList.adm?num=3";
+									location.href="AptAdminMemberList.adm?num=4";
 								}
 							}
 							</script>

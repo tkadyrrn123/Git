@@ -284,4 +284,19 @@
 		SELECT * FROM(SELECT * FROM TB_USER WHERE USER_LEVEL IN 1 AND ACCEPT = 'N' AND APT_NAME = #{aptName} ORDER BY ROWNUM DESC ) WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
 	
+	<select id="AptMemberlistCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER WHERE APT_NAME = #{aptName} AND USER_LEVEL = 1
+			<if test="num == 1"></if>
+			<if test="num == 2">AND ACCEPT = 'Y'</if>
+			<if test="num == 3">AND ACCEPT = 'N'</if>
+			<if test="num == 4">AND USER_DELETE = 'Y'</if>
+	</select>
+	
+	<select id="AptMemberList" resultMap="MemberResult">
+		SELECT * FROM TB_USER WHERE APT_NAME = #{aptName} AND USER_LEVEL = 1
+		<if test="num == 1"></if>
+		<if test="num == 2">AND ACCEPT = 'Y'</if>
+		<if test="num == 3">AND ACCEPT = 'N'</if>
+		<if test="num == 4">AND USER_DELETE = 'Y'</if>
+	</select>
 </mapper>

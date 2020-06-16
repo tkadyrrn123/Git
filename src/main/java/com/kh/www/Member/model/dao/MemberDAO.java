@@ -158,6 +158,24 @@ public class MemberDAO {
 	public ArrayList<Member> AptMemberfiveList(SqlSessionTemplate sqlSession, String aptName) {
 		return (ArrayList)sqlSession.selectList("memberMapper.AptMemberfiveList", aptName);
 	}
+
+	public int AptMemberlistCount(SqlSessionTemplate sqlSession, String aptName, int num) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("aptName", aptName);
+		hs.put("num", num);
+		return sqlSession.selectOne("memberMapper.AptMemberlistCount", hs);
+	}
+
+	public ArrayList<Member> AptMemberList(SqlSessionTemplate sqlSession, PageInfo pi, String aptName, int num) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("aptName", aptName);
+		hs.put("num", num);
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.AptMemberList", hs, rowBounds);
+	}
 	
 	
 	

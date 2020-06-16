@@ -61,5 +61,9 @@ public interface MemberService {
 	MemberCount AptMemberCount(String aptName);
 	//아파트에 속한 회원 리스트 5건
 	ArrayList<Member> AptMemberfiveList(String aptName);
+	//아파트에 속한 리스트 카운트
+	int AptMemberlistCount(String aptName, int num);
+	//아파트에 속한 멤버 리스트
+	ArrayList<Member> AptMemberList(PageInfo pi, String aptName, int num);
 
 }

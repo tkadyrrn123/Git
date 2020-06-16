@@ -89,7 +89,7 @@
 <body>
 	<div id="top">
 		<button id="menuBtn"></button>
-		<div id="pagename"><a href="adminMain.adm">ADMINPAGE</a></div>
+		<div id="pagename"><a href="AptAdminMain.adm">ADMINPAGE</a></div>
 		<div id="icon"><i class="fas fa-sign-out-alt"></i></div>
 	</div>
 	

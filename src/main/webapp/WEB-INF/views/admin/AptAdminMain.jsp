@@ -109,7 +109,7 @@ marquee>b{font-size: 20px;}
 				<div>
 					<c:choose>
 						<c:when test="${cCount ne 0}">
-						<marquee behavior=alternate>총 신청건수 : ${ cCount }건  </marquee>
+						<marquee behavior=alternate>회원가입 신청 ${ cCount }건이 있습니다.  </marquee>
 						</c:when>
 						<c:when test="${cCount eq 0}">
 						<marquee behavior=alternate>신청한 회원이나 아파트가 없습니다.</marquee>
@@ -166,7 +166,7 @@ marquee>b{font-size: 20px;}
 								</c:forEach>
 							</tbody>
 						</table>
-						<div class="userlist btnList"><a href="MemberList.adm">전체 회원 목록</a></div>
+						<div class="userlist btnList"><a href="AptAdminMemberList.adm">전체 회원 목록</a></div>
 					</section>
 				</div>
 			
