@@ -162,4 +162,14 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.AptMemberList(sqlSession, pi, aptName, num);
 	}
 
+	@Override
+	public int AptAdminMemberSearchCount(SearchOption so, int num, String aptName) {
+		return mDAO.AptAdminMemberSearchCount(sqlSession, so, num, aptName);
+	}
+
+	@Override
+	public ArrayList<Member> AptAdminMemberSearchList(PageInfo pi, SearchOption so, int num, String aptName) {
+		return mDAO.AptAdminMemberSearchList(sqlSession, pi, so, num, aptName);
+	}
+
 }

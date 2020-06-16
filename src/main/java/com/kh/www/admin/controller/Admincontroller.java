@@ -2,17 +2,14 @@ package com.kh.www.admin.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -25,9 +22,6 @@ import com.kh.www.Member.model.vo.MemberCount;
 import com.kh.www.admin.model.vo.SearchOption;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.PageInfo;
-
-import oracle.sql.ARRAY;
-import sun.security.krb5.internal.PAData;
 
 @SessionAttributes({"mall","lvCnt"})
 @Controller
@@ -469,6 +463,7 @@ public class Admincontroller {
 		
 		model.addAttribute("mCount", memberCount)
 			 .addAttribute("num", Num)
+			 .addAttribute("pi", pi)
 			 .addAttribute("mlist", mlist);
 		
 		
@@ -476,7 +471,53 @@ public class Admincontroller {
 		return "AptAdminMemberList";
 	}
 	
-	
+	@RequestMapping("AptAdminMemberSearch.adm")
+	public String AptAdminMemberSearch(@RequestParam("searchOption") String searchOption, @RequestParam("searchText") String text,
+							           @RequestParam(value="page", required = false) Integer page, @RequestParam("num") int num,
+								       Model model, HttpSession session) {
+		
+		SearchOption so = new SearchOption();
+		if(searchOption.equals("회원아이디")) {
+			so.setUserId(text);
+		}else if(searchOption.equals("닉네임")) {
+			so.setNickName(text);
+		}else if(searchOption.equals("이름")) {
+			so.setUserName(text);
+		}else if(searchOption.equals("전화번호")) {
+			so.setPhone(text);
+		}else if(searchOption.equals("이메일")) {
+			so.setEmail(text);
+		}else if(searchOption.equals("아파트")) {
+			so.setAptName(text);
+		}
+		
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName= loginUser.getAptName();
+		
+		MemberCount memberCount = mService.AptMemberCount(aptName);
+		int listCount = mService.AptAdminMemberSearchCount(so, num, aptName);
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		ArrayList<Member> mlist = mService.AptAdminMemberSearchList(pi, so, num, aptName);
+		
+		System.out.println("컨트롤러 : " + pi);
+		
+		model.addAttribute("mCount", memberCount)
+			 .addAttribute("searchOption", searchOption)
+		     .addAttribute("searchText", text)
+		     .addAttribute("num", num)
+		     .addAttribute("pi", pi)
+		     .addAttribute("mlist", mlist);
+		
+		return "AptAdminMemberList";
+		
+	}
 	
 	
 	

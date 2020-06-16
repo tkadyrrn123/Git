@@ -79,10 +79,10 @@
 					<li><i class="fas fa-user" onclick="location.href='myProfile.my'"></i></li>
 					<li><i class="fas fa-bell"></i></li>
 				</c:if>
+				
 				<c:if test="${ loginUser.userLevel == 2 }">
 					<li><i class="fas fa-sign-out-alt"></i></li>
 					<li><i class="fas fa-cogs" onclick="location.href='AptAdminMain.adm'"></i></li>
-					
 				</c:if>
 			</ul>
 		</div>
