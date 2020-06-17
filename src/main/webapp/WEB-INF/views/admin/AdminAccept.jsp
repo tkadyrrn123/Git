@@ -248,10 +248,10 @@ a{cursor: pointer;}
 							</select>
 							<input type="hidden" name="num" value="${num}">
 							<input type="text" id="searchText" name="searchText">
-							<input type="button" id="btn_submit" name="btn_submit" onclick="searchMember();">
+							<input type="submit" id="btn_submit" name="btn_submit">
 							<script>
 								function searchChk(){
-									if($('#searchText').val('')){
+									if($('#searchText').val()==''){
 										alert('검색어를 입력해주세요');
 										return false;
 									}

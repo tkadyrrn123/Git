@@ -487,8 +487,6 @@ public class Admincontroller {
 			so.setPhone(text);
 		}else if(searchOption.equals("이메일")) {
 			so.setEmail(text);
-		}else if(searchOption.equals("아파트")) {
-			so.setAptName(text);
 		}
 		
 		
@@ -519,9 +517,80 @@ public class Admincontroller {
 		
 	}
 	
+	@RequestMapping("AptAdminAcceptList.adm")
+	public String AptAdminAcceptList(@RequestParam(value="page", required = false) Integer page,
+		                             Model model, HttpSession session) {
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		
+		int listCount = mService.AptAdminAcceptCount(aptName);
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		ArrayList<Member> mlist = mService.AptAdminAcceptList(pi, aptName);
+		
+		model.addAttribute("mlist", mlist)
+		     .addAttribute("pi", pi);
+		
+		return "AptAdminAccept";
+	}
 	
+	@RequestMapping("AptAdminAccept.adm")
+	public String AptAdminAccept(@RequestParam(value="accept", required = false) String accept, @RequestParam(value="delete", required = false) String delete,
+			                     @RequestParam(value="chkId", required = false) String[] chkId,Model model) {
+		
+		if(accept != null) {
+			mService.AptAdminAccept(chkId);
+		}else if(delete != null) {
+			mService.AptAdminDelete(chkId);
+		}
+		
+		return "redirect:AptAdminAcceptList.adm";
+	}
 	
-	
+	@RequestMapping("AptAdminAcceptSearch.adm")
+	public String AptAdminAcceptSearch(@RequestParam("searchOption") String searchOption, @RequestParam("searchText") String text,
+							           @RequestParam(value="page", required = false) Integer page,
+								       Model model, HttpSession session) {
+		
+		SearchOption so = new SearchOption();
+		if(searchOption.equals("회원아이디")) {
+			so.setUserId(text);
+		}else if(searchOption.equals("닉네임")) {
+			so.setNickName(text);
+		}else if(searchOption.equals("이름")) {
+			so.setUserName(text);
+		}else if(searchOption.equals("전화번호")) {
+			so.setPhone(text);
+		}else if(searchOption.equals("이메일")) {
+			so.setEmail(text);
+		}
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName= loginUser.getAptName();
+		
+		int listCount = mService.AptAdminSearchCount(so, aptName);
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		ArrayList<Member> mlist = mService.AptAdminSearchList(pi, so, aptName);
+		
+		model.addAttribute("searchOption", searchOption)
+		     .addAttribute("searchText", text)
+		     .addAttribute("pi", pi)
+		     .addAttribute("mlist", mlist);
+		
+		return "AptAdminAccept";
+	}
 	
 	
 }

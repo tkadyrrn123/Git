@@ -175,6 +175,16 @@ textarea, select{
     overflow: hidden;
     padding: 0;
     }
+#popup_info{
+	background: white;
+    width: 25%;
+    height: 20%;
+    position: fixed;
+    top: 31%;
+    left: 36%;
+    border-radius: 10px;
+	
+}
 /*이 2개의 스타일은  토글*/
 #container.container_small{padding-left: 250px;}
 #container.container_small #container_title{padding-left: 280px;}
@@ -304,6 +314,23 @@ textarea, select{
 								</c:forEach>
 							</tbody>							
 						</table>
+						<div id="popup_layer" style="position: fixed; 
+                    top: 0; left: 0; 
+                    width: 100%; height: 100%; 
+                    background: rgba(0,0,0,0.5); z-index: 1001; display: none;">
+							<div id="popup_info" >
+								<b></b><p style="display: inline-block;">님을 탈퇴 시키겠습니까?</p>
+								<button style="margin: 0px auto;">탈퇴</button>
+							</div>
+						</div>
+						<script>
+							$('tbody tr').click(function(){
+								var id = $(this).find('td').eq(0).text();
+								$('#popup_info b').text(id);
+								$('#popup_layer').fadeIn();
+								console.log(id);
+							})
+						</script>
 					</section>
 					<!--페이징-->	
 					<div id="pageBtn">
