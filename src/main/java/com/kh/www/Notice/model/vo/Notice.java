@@ -20,6 +20,7 @@ public class Notice {
 	
 	private String nTotal; //전체검색 키워드
 	private String nDong; // 관리자 동 키워드
+	private String aptName; //아파트이름
 	
 	public Notice() {}
 
@@ -56,13 +57,14 @@ public class Notice {
 		this.noticeFile = noticeFile;
 	}
 	
-	public Notice(String userId, String nTitle, String nContent, String nTotal, String nDong) {
+	public Notice(String userId, String nTitle, String nContent, String nTotal, String nDong, String aptName) {
 		super();
 		this.userId = userId;
 		this.nTitle = nTitle;
 		this.nContent = nContent;
 		this.nTotal = nTotal;
 		this.nDong = nDong;
+		this.aptName = aptName;
 	}
 
 	public int getnNo() {
@@ -144,7 +146,7 @@ public class Notice {
 	public void setRenameFileName(String renameFileName) {
 		this.renameFileName = renameFileName;
 	}
-	
+
 	public String getNoticeNickname() {
 		return noticeNickname;
 	}
@@ -160,8 +162,7 @@ public class Notice {
 	public void setNoticeFile(String noticeFile) {
 		this.noticeFile = noticeFile;
 	}
-	
-	
+
 	public String getnTotal() {
 		return nTotal;
 	}
@@ -178,13 +179,21 @@ public class Notice {
 		this.nDong = nDong;
 	}
 
+	public String getAptName() {
+		return aptName;
+	}
+
+	public void setAptName(String aptName) {
+		this.aptName = aptName;
+	}
+
 	@Override
 	public String toString() {
 		return "Notice [nNo=" + nNo + ", userId=" + userId + ", nTitle=" + nTitle + ", nContent=" + nContent
 				+ ", nCount=" + nCount + ", nCreateDate=" + nCreateDate + ", nModifyDate=" + nModifyDate + ", nStatus="
 				+ nStatus + ", originalFileName=" + originalFileName + ", renameFileName=" + renameFileName
 				+ ", noticeNickname=" + noticeNickname + ", noticeFile=" + noticeFile + ", nTotal=" + nTotal
-				+ ", nDong=" + nDong + "]";
+				+ ", nDong=" + nDong + ", aptName=" + aptName + "]";
 	}
 
 }

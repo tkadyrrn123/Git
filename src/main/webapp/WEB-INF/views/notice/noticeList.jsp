@@ -26,7 +26,7 @@
     .board_wrab td{border-bottom: 1px solid #aaa; 
     				padding:15px;}
 	#notice_tr{border-top: 2px solid black;}
-	.dong{color: #7d6451}
+
     .btitle{white-space: nowrap; 
     		overflow: hidden; 
     		text-overflow: ellipsis;}
@@ -139,7 +139,11 @@
 	}
 	
 	.search_input{height:37px; margin:0 5px; vertical-align:bottom; border:1px solid #dad4d4;}
-	      
+	
+	/* 동선택 */
+	.dong{border: 0; color: #7d6451;}
+
+	  
 </style>
 </head>
 <body>
@@ -148,6 +152,46 @@
 	<div class="commnuity_header">
 	<h2>공지사항</h2>
 	</div>
+	
+<!--동 정렬 시작--------------------------------------------------------------------------------------------------  -->
+	<div class="select-box" id="selectBox">
+		  <div class="select-box__current" tabindex="1">
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="latest" value="latest" name="Ben" checked="checked"/>
+		      <p class="select-box__input-text">최신순</p>
+		    </div>
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="hits" value="hist" name="Ben"/>
+		      <p class="select-box__input-text">조회순</p>
+		    </div>
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="like" value="content" name="Ben"/>
+		      <p class="select-box__input-text">추천순</p>
+		    </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
+		  </div>
+		  <ul class="select-box__list" style="display:hidden">
+		    <li>
+		      <label class="select-box__option" for="latest" aria-hidden="aria-hidden">최신순</label>
+		    </li>
+		    <li>
+		      <label class="select-box__option" for="hits" aria-hidden="aria-hidden">조회순</label>
+		    </li>
+		    <li>
+		      <label class="select-box__option" for="like" aria-hidden="aria-hidden">추천순</label>
+		    </li>
+		  </ul>
+	</div>
+<!--정렬 끝---------------------------------------------------------------------------------------------------->	
+<!-- 	                    <select class="dong" name="nDong"> -->
+<!-- 	                    	<option value="전체 공지" selected>전체 공지</option> -->
+<%-- 						    <c:forEach var="i" begin="0" end="${nDonglist.size()}" varStatus="status"> --%>
+<%-- 						        <c:if test="${nDonglist[i] != selected}"> --%>
+<%-- 								    <option value="${nDonglist[i]}">${nDonglist[i]}</option> --%>
+<%-- 						        </c:if> --%>
+<%-- 						    </c:forEach> --%>
+<!-- 						</select> -->
+<!--                     </td> -->
+
 	<div class="board_wrab">
         <table id="notice_list_tb">
             <thead>
@@ -160,13 +204,12 @@
                     <td style="width: 7%;">조회수</td>
                 </tr>
             </thead>   
-
             <tbody>
 
              <c:forEach var="n" items="${ list }">
                 <tr>
                    <td align="center">${ n.nNo }</td>
-                    <td class="dong">101동</td><!-- 동표시되어야함 -->
+                    <td class="dong">${ n.nDong }</td>
                     <td class="notice_list_td">
 						<c:url var="ndetail" value="ndetail.no">
 							<c:param name="nNo" value="${ n.nNo }"/>
@@ -179,14 +222,14 @@
                     <td align="center">${ n.nCount }</td>
                 </tr>
              </c:forEach>
-
             </tbody>
-
         </table>
         
-        <div class="board_btn">
-			<button class="btn_standard" onclick="location.href='noticeInsertView.no';">글쓰기</button>
-    	</div>
+        <c:if test="${ loginUser.userLevel eq '2' }">
+	        <div class="board_btn">
+				<button class="btn_standard" onclick="location.href='noticeInsertView.no';">공지작성</button>
+	    	</div>
+    	</c:if>
         
         <!---------- 페이징 처리 -------->
 		<table id="notice_page_tb">
@@ -260,9 +303,9 @@
 		      <p class="select-box__input-text">전체</p>
 		    </div>
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="userId" value="userId" name="nSearchCondition"/>
-		      <p class="select-box__input-text">작성자</p>
-		    </div>
+		      <input class="select-box__input" type="radio" id="nDong" value="nDong" name="nSearchCondition"/>
+		      <p class="select-box__input-text">동</p>
+		    </div>		    
 		    <div class="select-box__value">
 		      <input class="select-box__input" type="radio" id="nTitle" value="nTitle" name="nSearchCondition"/>
 		      <p class="select-box__input-text">제목</p>
@@ -278,7 +321,7 @@
 		      <label class="select-box__option" for="nTotal" aria-hidden="aria-hidden">전체</label>
 		    </li>
 		    <li>
-		      <label class="select-box__option" for="userId" aria-hidden="aria-hidden">작성자</label>
+		      <label class="select-box__option" for="nDong" aria-hidden="aria-hidden">동</label>
 		    </li>
 		     <li>
 		      <label class="select-box__option" for="nTitle" aria-hidden="aria-hidden">제목</label>
@@ -292,8 +335,6 @@
 		<button class="btn_standard" type="submit">검색</button>
 	</form>
 	</div>
-	
-	
  <!------------------------ 검색 끝 ---------------------------------->	
 	
 	<jsp:include page="../common/Footer.jsp"/>	

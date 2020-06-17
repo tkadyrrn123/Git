@@ -36,6 +36,8 @@
     .img {filter: brightness(70%);
 		    width: 100%;
 		    height: 400px;}	
+	.apt_dong_Select{height: 60%; border: 1px solid lavenderBlush; margin-left: 20px; width: 50%;}	    
+		    
 </style>
 </head>
 <body>
@@ -56,7 +58,22 @@
                      <td>
                         <input id="titleInput" name="nTitle" type="text" size="90" value="${ notice.nTitle }">
                      </td>
+                </tr>
+                <!-- ----------------------------------------------- -->
+                <tr id="tr2">
+                   <td class="td1">동</td>
+                     <td>
+                     	<select name="nDong" class="apt_dong_Select">
+						    <option value="전체 공지" selected>전체 공지</option>
+						    <c:forEach var="i" begin="0" end="${nDonglist.size()}" varStatus="status">
+						        <c:if test="${nDonglist[i] != selected}">
+								    <option value="${nDonglist[i]}">${nDonglist[i]}</option>
+						        </c:if>
+						    </c:forEach>
+						</select>
+                     </td>
                  </tr>
+ <!-- ----------------------------------------------- -->
                   <tr id="tr3">
                      <td class="td1">내용</td>
                      <td>
