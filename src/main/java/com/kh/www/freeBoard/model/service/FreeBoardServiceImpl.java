@@ -1,6 +1,7 @@
 package com.kh.www.freeBoard.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.dao.FreeBoardDAO;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
+import com.kh.www.freeBoard.model.vo.SearchCondition;
 
 @Service("freeService")
 public class FreeBoardServiceImpl implements FreeBoardService{
@@ -82,5 +84,17 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	public int commentModify(Comment comment) {
 		return fDAO.updateComment(sqlSession, comment);
 	}
+
+	@Override
+	public int getSearchResultListCount(HashMap hm) {
+		return fDAO.getSearchResultListCount(sqlSession, hm);
+	}
+
+	@Override
+	public ArrayList<FreeBoard> selectSearchResultList(HashMap hm, PageInfo pi) {
+		return fDAO.selectSearchResultList(sqlSession, hm, pi);
+	}
+
+
 
 }

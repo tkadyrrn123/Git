@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.exception.FreeBoardException;
 import com.kh.www.freeBoard.model.service.FreeBoardService;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
+import com.kh.www.freeBoard.model.vo.SearchCondition;
 
 
 @Controller
@@ -68,6 +70,53 @@ public class FreeBoardController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping("search.fr")
+	public ModelAndView searchFree(@RequestParam(value="page", required=false) Integer page, HttpSession session, ModelAndView mv,
+							@RequestParam(value="searchValue") String searchValue, @RequestParam(value="condition") String condition) {
+
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		
+		SearchCondition sc = new SearchCondition();
+
+		if(condition.equals("writer")) {
+			sc.setWriter(searchValue);
+		} else if(condition.equals("title")) {
+			sc.setTitle(searchValue);
+		} else if(condition.equals("content")) {
+			sc.setContent(searchValue);
+		}
+		System.out.println("search.fr 의 sc : "+sc);
+		
+		HashMap hm = new HashMap();
+		hm.put("aptName", aptName);		
+		hm.put("sc", sc);
+		
+		int currentPage = 1;
+		if( page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = freeService.getSearchResultListCount(hm);
+
+		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+		
+		ArrayList<FreeBoard> list = freeService.selectSearchResultList(hm, pi);
+
+		System.out.println("search.fr의 list : "+list);
+		if(list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.addObject("condition", condition);
+			mv.addObject("searchValue", searchValue);
+			mv.setViewName("freeBoardList");
+		} else {
+			throw new FreeBoardException("자유게시판 검색 실패!");
+		}
+		
+			return mv;
 	}
 	
 	
@@ -265,6 +314,6 @@ public class FreeBoardController {
         return freeService.commentModify(comment);
     }
 
-
+	
 	
 }

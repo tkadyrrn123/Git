@@ -157,6 +157,7 @@
 </style>
 </head>
 <body>
+
 	<img class="img" src="resources/images/myPageImage.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
@@ -165,15 +166,15 @@
 	<div class="select-box" id="selectBox">
 		  <div class="select-box__current" tabindex="1">
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="latest" value="latest" name="Ben" checked="checked"/>
+		      <input class="select-box__input" type="radio" id="latest" value="latest" name="sortCondition" checked="checked"/>
 		      <p class="select-box__input-text">최신순</p>
 		    </div>
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="hits" value="hist" name="Ben"/>
+		      <input class="select-box__input" type="radio" id="hits" value="hist" name="sortCondition"/>
 		      <p class="select-box__input-text">조회순</p>
 		    </div>
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="like" value="content" name="Ben"/>
+		      <input class="select-box__input" type="radio" id="like" value="content" name="sortCondition"/>
 		      <p class="select-box__input-text">추천순</p>
 		    </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
 		  </div>
@@ -183,9 +184,6 @@
 		    </li>
 		    <li>
 		      <label class="select-box__option" for="hits" aria-hidden="aria-hidden">조회순</label>
-		    </li>
-		    <li>
-		      <label class="select-box__option" for="like" aria-hidden="aria-hidden">추천순</label>
 		    </li>
 		  </ul>
 	</div>
@@ -236,8 +234,13 @@
 					[이전] &nbsp;
 				</c:if>
 				<c:if test="${ pi.currentPage > 1 }">
-					<c:url var="before" value="list.fr">
+<%-- 				<c:url var="before" value="list.fr"> --%>
+					<c:url var="before" value="${ loc }">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
+						<c:if test="${ searchValue ne null }">
+							<c:param name="condition" value="${ condition }"/>
+							<c:param name="searchValue" value="${ searchValue }"/>
+						</c:if>
 					</c:url>
 					<a href="${ before }" id="prev">[이전]</a> &nbsp;
 				</c:if>
@@ -249,8 +252,12 @@
 					</c:if>
 					
 					<c:if test="${ p ne pi.currentPage }">
-						<c:url var="pagenation" value="list.fr">
+						<c:url var="pagenation" value="${ loc }">
 							<c:param name="page" value="${ p }"/>
+						<c:if test="${ searchValue ne null }">
+							<c:param name="condition" value="${ condition }"/>
+							<c:param name="searchValue" value="${ searchValue }"/>
+						</c:if>
 						</c:url>
 						<a href="${ pagenation }" id="present">${ p }</a> &nbsp;
 					</c:if>
@@ -261,12 +268,16 @@
 					[다음]
 				</c:if>
 				<c:if test="${ pi.currentPage < pi.maxPage }">
-					<c:url var="after" value="list.fr">
+					<c:url var="after" value="${ loc }">
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+						<c:if test="${ searchValue ne null }">
+							<c:param name="condition" value="${ condition }"/>
+							<c:param name="searchValue" value="${ searchValue }"/>
+						</c:if>						
 					</c:url> 
 					<a href="${ after }" id="next">[다음]</a>
 				</c:if>
-    
+				
     </div>
     <!-- 
     <div class="board_btn">
@@ -274,25 +285,25 @@
     </div>
      -->
     <div class="form_wrap">
-    <form class="board_search" name="search_form" action="get">
+    <form class="board_search" name="search_form" action="search.fr">
 	    <div class="select-box">
 		  <div class="select-box__current" tabindex="1">
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="total" value="total" name="Ben" checked="checked"/>
-		      <p class="select-box__input-text">전체</p>
+		      <input class="select-box__input" type="radio" id="total" value="title" name="condition" checked="checked"/>
+		      <p class="select-box__input-text">제목</p>
 		    </div>
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="writer" value="writer" name="Ben"/>
+		      <input class="select-box__input" type="radio" id="writer" value="writer" name="condition"/>
 		      <p class="select-box__input-text">작성자</p>
 		    </div>
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="content" value="content" name="Ben"/>
+		      <input class="select-box__input" type="radio" id="content" value="content" name="condition"/>
 		      <p class="select-box__input-text">내용</p>
 		    </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
 		  </div>
 		  <ul class="select-box__list">
 		    <li>
-		      <label class="select-box__option" for="total" aria-hidden="aria-hidden">전체</label>
+		      <label class="select-box__option" for="total" aria-hidden="aria-hidden">제목</label>
 		    </li>
 		    <li>
 		      <label class="select-box__option" for="writer" aria-hidden="aria-hidden">작성자</label>
@@ -302,9 +313,10 @@
 		    </li>
 		  </ul>
 		</div>
-		<input class="search_input" name="text" type="text">
+		<input class="search_input" name="searchValue" type="text">
 		<button class="btn_standard" type="submit">검색</button>
 	</form>
 	</div>
+	<jsp:include page="../common/Footer.jsp"/>	
 </body>
 </html>
