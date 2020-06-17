@@ -111,10 +111,16 @@
 		where club_name = #{clubName} and user_id = #{userId}
 	</select>
 	
-	<delete id="clubMapper.deleteClubMember">
+	<delete id="deleteClubMember">
 		delete  from tb_club_join
 		where club_name= #{clubName} and user_id = #{userId}
 	</delete>
+	
+	<update id="updateComment">
+		update tb_comment
+		set comment_date = sysdate, reply_content = #{rContent}
+		where reply_no = #{rNo}
+	</update>
 	
 	
 </mapper>

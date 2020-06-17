@@ -34,4 +34,6 @@ public interface ClubService {
 	int checkClubMember(HashMap m);
 
 	int deleteClubMember(HashMap m);
+
+	int updateComment(Comment c);
 }

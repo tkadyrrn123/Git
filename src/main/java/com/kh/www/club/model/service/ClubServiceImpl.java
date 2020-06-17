@@ -86,6 +86,11 @@ public class ClubServiceImpl implements ClubService {
 		return cDAO.deleteClubMember(sqlSession, m);
 	}
 
+	@Override
+	public int updateComment(Comment c) {
+		return cDAO.updateComment(sqlSession, c);
+	}
+
 
 
 
