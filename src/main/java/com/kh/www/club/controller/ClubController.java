@@ -47,7 +47,6 @@ public class ClubController {
 		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
 		
 		ArrayList<Club> list = cService.selectList(pi);
-		System.out.println(list);
 		
 		if(list != null) {
 			mv.addObject("list",list);
@@ -221,7 +220,7 @@ public class ClubController {
 
 	
 // 동호회 댓글 추가	
-	@RequestMapping(value="insertComment.cb")
+	@RequestMapping("insertComment.cb")
 	@ResponseBody
 	public ArrayList<Comment> insertComments(@RequestParam("userId") String userId, @RequestParam("boardNo") int boardNo, @RequestParam("content") String content, HttpServletResponse response) {
 		Comment c = new Comment();
@@ -241,8 +240,26 @@ public class ClubController {
 		
 	}
 	
-	
-	
-	
+//	동호회 댓글 수정
+	@RequestMapping("updateComment.cb")
+	@ResponseBody
+	public ArrayList<Comment> updateComments(@RequestParam("boardNo") int boardNo, @RequestParam("content") String content, @RequestParam("rNo") int rNo, HttpServletResponse response) {
+		Comment c = new Comment();
+		c.setrNo(rNo);
+		c.setBoardNo(boardNo);
+		c.setrContent(content);
+		System.out.println(c);
+		
+		int result = cService.updateComment(c);
+		
+		if(result > 0) {
+			ArrayList<Comment> comment = cService.selectComment(boardNo);
+			return comment;
+			
+		}else {
+			throw new ClubException("댓글 수정에 실패했습니다.");
+		}
+		
+	}
 
 }
