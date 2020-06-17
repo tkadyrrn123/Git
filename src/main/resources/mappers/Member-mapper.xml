@@ -308,7 +308,6 @@
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
-			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
 		</if>
 		<if test="num == 2">AND ACCEPT = 'Y'
 			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
@@ -316,7 +315,6 @@
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
-			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
 		</if>
 		<if test="num == 3">AND ACCEPT = 'N'
 			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
@@ -324,7 +322,6 @@
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
-			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
 		</if>
 		<if test="num == 4">AND USER_DELETE = 'Y'
 			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
@@ -332,7 +329,6 @@
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
-			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
 		</if>
 	</select>
 	
@@ -344,7 +340,6 @@
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
-			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
 		</if>
 		<if test="num == 2">AND ACCEPT = 'Y'
 			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
@@ -352,7 +347,6 @@
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
-			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
 		</if>
 		<if test="num == 3">AND ACCEPT = 'N'
 			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
@@ -360,7 +354,6 @@
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
-			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
 		</if>
 		<if test="num == 4">AND USER_DELETE = 'Y'
 			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
@@ -368,8 +361,52 @@
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
-			<if test="so.aptName != null">AND APT_NAME LIKE '%' || #{so.aptName} || '%'</if>
 		</if>
 	</select>
 	
+	<select id="AptAdminAcceptCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER 
+		WHERE ACCEPT = 'N' AND USER_LEVEL = 1 AND APT_NAME = #{aptName} 
+	</select>
+	
+	<select id="AptAdminAcceptList" resultMap="MemberResult">
+		SELECT * FROM TB_USER
+		WHERE ACCEPT = 'N' AND USER_LEVEL = 1 AND APT_NAME = #{aptName}
+	</select>
+	
+	<update id="AptAdminAccept">
+		UPDATE TB_USER SET ACCEPT = 'Y' 
+		WHERE USER_ID IN 
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+	</update>
+	
+	<delete id="AptAdminDelete">
+		DELETE FROM TB_USER 
+		WHERE USER_ID IN
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+	</delete>
+	
+	<select id="AptAdminSearchCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_USER
+		WHERE APT_NAME = #{aptName}
+		<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+		<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+		<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+		<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+		<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+	</select>
+	
+	<select id="AptAdminSearchList" resultMap="MemberResult">
+		SELECT * FROM TB_USER
+		WHERE APT_NAME = #{aptName}
+		<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+		<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
+		<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
+		<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
+		<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
+	</select>
 </mapper>
