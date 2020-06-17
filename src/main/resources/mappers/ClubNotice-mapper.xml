@@ -144,13 +144,19 @@
 		from tb_club_notice
 			 join tb_board using(board_no)
 		     join tb_user using(user_id)
-		where board_delete = 'N'
+		where board_delete = 'N' and apt_name = #{aptName}
+		<if test="cnTotal != null">
+				and (club_name like '%' || #{cnTotal} || '%'
+				or nickname like '%' || #{cnTotal} || '%'
+				or board_title like '%' || #{cnTotal} || '%'
+				or board_Content like '%' || #{cnTotal} || '%')
+		</if>
 		<if test="clubName != null">
-			and club_name = #{clubName}
+			and club_name like '%' || #{clubName} || '%'
 			order by board_no desc
 		</if>
 		<if test="cnoticeNickname != null">
-			and nickname = #{cnoticeNickname}
+			and nickname like '%' || #{cnoticeNickname} || '%'
 			order by board_no desc
 		</if>
 		<if test="cnTitle != null">
@@ -169,13 +175,19 @@
 		from tb_club_notice
 			 join tb_board using(board_no)
 		     join tb_user using(user_id)
-		where board_delete = 'N'
+		where board_delete = 'N' and apt_name = #{aptName}
 		<choose>
+			<when test="cnTotal != null">
+				and (club_name like '%' || #{cnTotal} || '%'
+				or nickname like '%' || #{cnTotal} || '%'
+				or board_title like '%' || #{cnTotal} || '%'
+				or board_Content like '%' || #{cnTotal} || '%')
+			</when>
 			<when test="clubName != null">
-				and club_name = #{clubName}
+				and club_name like '%' || #{clubName} || '%'
 			</when>
 			<when test="cnoticeNickname != null">
-				and nickname = #{cnoticeNickname}
+				and nickname like '%' || #{cnoticeNickname} || '%'
 			</when>
 			<when test="cnTitle != null">
 				and board_title like '%' || #{cnTitle} || '%'

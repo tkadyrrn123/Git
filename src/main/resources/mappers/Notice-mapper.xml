@@ -6,7 +6,7 @@
     <!-- 공지사항 작성 / 파일이 있을 경우-->
 	    <if test="renameFileName != null">
 	    	insert all 
-	    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT)
+	    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT, #{nDong})
 	    	into tb_file values(SEQ_FILE.nextval, NULL, #{renameFileName}, SEQ_notice.currval, NULL)
 	    	select *
 	   		 	from dual
@@ -14,7 +14,7 @@
 	<!-- 공지사항 작성 / 파일이 없을 경우 -->
 	     <if test="renameFileName == null">
 	    	insert all 
-	    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT)
+	    	into tb_notice values(SEQ_NOTICE.nextval, #{userId}, #{nTitle}, #{nContent}, SYSDATE, DEFAULT, DEFAULT, #{nDong})
 	    	into tb_file values(SEQ_FILE.nextval, NULL, NULL, SEQ_notice.currval, NULL)
 	    	select *
 	   		 	from dual
@@ -46,6 +46,7 @@
 		<result property="nCreateDate" column="NOTICE_DATE"/>
 		<result property="nStatus" column="NOTICE_DELETE"/>
 		<result property="nCount" column="NOTICE_COUNT"/>
+		<result property="nDong" column="NOTICE_DONG"/>
 <!-- 		<result property="renameFileName" column="FILE_NAME"/> -->
 <!-- 		<result property="nModifyDate" column="?"/> -->
 <!-- 		<result property="originalFileName" column="?"/> -->
@@ -60,7 +61,7 @@
 	
 	<!-- 공지사항 상세조회 -->
 	<select id="selectNotice" resultMap="noticeResultSet2">
-		select notice_no, user_id, notice_title, notice_content, notice_date, notice_count, nickname, user_file, file_name
+		select notice_no, user_id, notice_title, notice_content, notice_date, notice_count, nickname, user_file, file_name, notice_dong
 		from tb_notice
            join tb_user using(user_id)
            join tb_file using(notice_no)
@@ -77,6 +78,7 @@
 		<result property="noticeNickname" column="NICKNAME"/>
 		<result property="renameFileName" column="FILE_NAME"/><!-- 업로드 파일 -->
 		<result property="noticeFile" column="USER_FILE"/><!--프로필사진  -->
+		<result property="nDong" column="NOTICE_DONG"/>
 	</resultMap>
 	
 	<!-- 공지사항 업데이트 / 파일이 있는 게시글의 파일만 업데이트(파일테이블)-->
@@ -89,7 +91,7 @@
 	<!-- 공지사항 업데이트 / 글만 업데이트(노티스테이블)-->
 	<update id="updateNotice_tb_notice">
 		update tb_notice
-		set notice_title = #{nTitle}, notice_content = #{nContent}
+		set notice_title = #{nTitle}, notice_content = #{nContent}, notice_dong = #{nDong}
 		where notice_no = #{nNo}
 	</update>
 	
@@ -146,15 +148,21 @@
 		select count(*)
 		from tb_notice 
 			join tb_user using(user_id)
-		where notice_delete = 'N'
-		<if test="userId != null">
-			and user_id = #{userId}
+		where notice_delete = 'N' and apt_name = #{aptName}
+		<if test="nTotal != null">
+			and (user_id like '%' || #{nTotal} || '%'
+			or notice_title like '%' || #{nTotal} || '%'
+			or notice_Content like '%' || #{nTotal} || '%'
+			or notice_dong like '%' || #{nTotal} || '%')
 		</if>
 		<if test="nTitle != null">
 			and notice_title like '%' || #{nTitle} || '%'
 		</if>
 		<if test="nContent != null">
 			and notice_Content like '%' || #{nContent} || '%'
+		</if>
+		<if test="nDong != null">
+			and notice_dong like '%' || #{nDong} || '%'
 		</if>
 	</select>
 	
@@ -163,13 +171,19 @@
 		select *
 		from tb_notice
 			join tb_user using(user_id)
-		where notice_delete = 'N'
+		where notice_delete = 'N' and apt_name = #{aptName}
 		<choose>
-			<when test="userId != null">
-				and user_id = #{userId}
+			<when test="nTotal != null">
+				and (user_id like '%' || #{nTotal} || '%'
+				or notice_title like '%' || #{nTotal} || '%'
+				or notice_Content like '%' || #{nTotal} || '%'
+				or notice_dong like '%' || #{nTotal} || '%')
 			</when>
 			<when test="nTitle != null">
 				and notice_title like '%' || #{nTitle} || '%'
+			</when>
+			<when test="nDong != null">
+				and notice_dong like '%' || #{nDong} || '%'
 			</when>
 			<otherwise>
 				and notice_Content like '%' || #{nContent} || '%'
@@ -177,5 +191,13 @@
 		</choose>
 		order by notice_no desc
 	</select>
+	
+	<!-- 아파트 동 목록 가져오기 -->
+	<select id="selectcDonglist" resultType="String">
+		select apt_dong
+		from tb_apart
+		where apt_delete = 'N' and apt_name =#{aptName}
+	</select>
+	
 	
 </mapper>

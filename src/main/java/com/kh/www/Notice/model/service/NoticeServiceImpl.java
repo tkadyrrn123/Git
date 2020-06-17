@@ -98,4 +98,10 @@ public class NoticeServiceImpl implements NoticeService {
 	public ArrayList<Notice> selectSearchResultList(Notice n, PageInfo pi) {
 		return nDAO.selectSearchResultList(sqlSession, n, pi);
 	}
+	
+	@Override //아파트 동 전체 리스트 가져오기
+	public String selectcDonglist(String aptName) {
+		return nDAO.selectcDonglist(sqlSession, aptName);
+
+	}
 }

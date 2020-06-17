@@ -76,9 +76,8 @@ public class clubNoticeController {
 		String aptName = loginUser.getAptName();
 		
 		
-		System.out.println("작성폼 누르면 1 : " + aptName);
-		ArrayList<String[]> cNamelist = new ArrayList<>();
-		cNamelist = ClubNoticeService.selectcNamelist(aptName);
+		System.out.println("작성폼 누르면 아파트이름 뽑아서 네임리스트 에 넣을 것임: " + aptName);
+		ArrayList<String[]> cNamelist = ClubNoticeService.selectcNamelist(aptName);
 		
 		System.out.println("Controller에서 뽑아보는 cNameList : " + cNamelist);
 		
@@ -257,7 +256,7 @@ public class clubNoticeController {
 	private ModelAndView boardSearch(@RequestParam(value="page", required=false) Integer page,
 			@RequestParam String cnSearchCondition, @RequestParam String cnSearchValue, 
 			@ModelAttribute ClubNotice cn, HttpServletRequest request, HttpServletResponse response, 
-			ModelAndView mv) {
+			ModelAndView mv, HttpSession session) {
 		
 		if(cnSearchCondition.equals("cnoticeNickname")) {
 			cn.setCnoticeNickname(cnSearchValue);
@@ -267,6 +266,8 @@ public class clubNoticeController {
 			cn.setClubName(cnSearchValue);
 		}else if(cnSearchCondition.equals("cnContent")) {
 			cn.setCnContent(cnSearchValue);
+		}else if(cnSearchCondition.equals("cnTotal")) {
+			cn.setCnTotal(cnSearchValue);
 		}
 		
 		System.out.println("controller에서 뽑아보는 cn : "+ cn);
@@ -275,6 +276,11 @@ public class clubNoticeController {
 		if(page != null) {
 			currentPage = page;
 		}
+		
+		//세션에서 아파트이름 가져오기
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		cn.setAptName(aptName);
 		
 		//동호회 공지사항 검색키워드에 따른 전체 수 가져오기
 		int listCount = ClubNoticeService.getSearchResultListCount(cn);

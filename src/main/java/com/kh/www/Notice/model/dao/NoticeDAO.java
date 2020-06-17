@@ -87,6 +87,11 @@ public class NoticeDAO {
 		return (ArrayList)sqlSession.selectList("NoticeMapper.selectSearchResultList", n, rowBounds);
 	}
 
+	//아파트 동 전체 리스트 가져오기
+	public String selectcDonglist(SqlSessionTemplate sqlSession, String aptName) {
+		return sqlSession.selectOne("NoticeMapper.selectcDonglist", aptName);
+	}
+
 
 
 }

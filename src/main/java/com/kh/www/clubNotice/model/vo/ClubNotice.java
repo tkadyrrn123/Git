@@ -18,7 +18,8 @@ public class ClubNotice {
 	private String cnoticeNickname;//유저테이블 닉네임
 	private String cnoticeFile;//유저테이블 프로필 사진
 	
-	private String cnTotal; //전체검색 키워드
+	private String cnTotal; //전체검색 키워드 
+	private String aptName; //아파트이름
 	
 	public ClubNotice() {}
 
@@ -57,10 +58,9 @@ public class ClubNotice {
 		this.cnoticeFile = cnoticeFile;
 	}
 
-	
 	public ClubNotice(int cnNo, String clubName, String userId, String cnTitle, String cnContent, int cnCount,
 			Date cnCreateDate, Date cnModifyDate, String cnStatus, String originalFileName, String renameFileName,
-			String cnoticeNickname, String cnoticeFile, String cnTotal) {
+			String cnoticeNickname, String cnoticeFile, String cnTotal, String aptName) {
 		super();
 		this.cnNo = cnNo;
 		this.clubName = clubName;
@@ -76,6 +76,7 @@ public class ClubNotice {
 		this.cnoticeNickname = cnoticeNickname;
 		this.cnoticeFile = cnoticeFile;
 		this.cnTotal = cnTotal;
+		this.aptName = aptName;
 	}
 
 	public int getCnNo() {
@@ -190,13 +191,20 @@ public class ClubNotice {
 		this.cnTotal = cnTotal;
 	}
 
+	public String getAptName() {
+		return aptName;
+	}
+
+	public void setAptName(String aptName) {
+		this.aptName = aptName;
+	}
+
 	@Override
 	public String toString() {
 		return "ClubNotice [cnNo=" + cnNo + ", clubName=" + clubName + ", userId=" + userId + ", cnTitle=" + cnTitle
 				+ ", cnContent=" + cnContent + ", cnCount=" + cnCount + ", cnCreateDate=" + cnCreateDate
 				+ ", cnModifyDate=" + cnModifyDate + ", cnStatus=" + cnStatus + ", originalFileName=" + originalFileName
 				+ ", renameFileName=" + renameFileName + ", cnoticeNickname=" + cnoticeNickname + ", cnoticeFile="
-				+ cnoticeFile + ", cnTotal=" + cnTotal + "]";
+				+ cnoticeFile + ", cnTotal=" + cnTotal + ", aptName=" + aptName + "]";
 	}
-
 }
