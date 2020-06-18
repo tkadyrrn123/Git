@@ -202,7 +202,7 @@
 						
 						$rCreateDate = $('<div class="rCreateDate">').text(data[i].rCreateDate);
 						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="수정">');
-						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +');" value="삭제">');
+						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="삭제">');
 						
 						$div.append($profileImg);
 						$div.append($nickname);
@@ -284,9 +284,23 @@ function commentModify(rNo){
         }
     });
 }
+	// 댓글 삭제
+	function deleteR(rNo, rContent){
+		console.log(rContent);
+		
+		$.ajax({
+			url: 'deleteReply.fr',
+			data: {rNo:rNo, rContent:rContent},
+			success: function(data){
+				if(data == 'success'){
+					alert('확인을 누르면 삭제가 완료됩니다.');
+					getReplyList();
+				}
+			}
+		});
+	}
 	
-	// 댓글 등록  ////////////////////////////////////////////////////////////////////////////////////
-	
+	// 댓글 등록	
 	$('#rSubmit').on('click', function(){
 		var rContent = $('#rContent').val();
 		var boardNo = ${ fb.boardNo};

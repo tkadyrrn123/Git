@@ -95,6 +95,15 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 		return fDAO.selectSearchResultList(sqlSession, hm, pi);
 	}
 
+	@Override
+	public ArrayList<FreeBoard> selectSortResultList(HashMap hm) {
+		return fDAO.selectSortResultList(sqlSession, hm);
+	}
+
+	@Override
+	public int deleteReply(int rNo) {
+		return fDAO.deleteReply(sqlSession, rNo);
+	}
 
 
 }
