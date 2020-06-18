@@ -85,6 +85,10 @@ public class ClubDAO {
 		return sqlSession.update("clubMapper.updateComment", c);
 	}
 
+	public int deleteComment(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("clubMapper.deleteComment", rNo);
+	}
+
 }
 
 
