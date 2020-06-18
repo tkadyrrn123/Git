@@ -59,6 +59,9 @@
 </style>
 </head>
 <body>
+<script>
+	cCheck = true;
+</script>
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
@@ -198,8 +201,8 @@
 						$rContent = $('<div class="rContent'+data[i].rNo+'">').html(data[i].rContent);
 						
 						$rCreateDate = $('<div class="rCreateDate">').text(data[i].rCreateDate);
-						$rMBtn = $('<input type="button" class="mdBtn" onclick="modifyR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="수정">');
-						$rDBtn = $('<input type="button" class="mdBtn" onclick="deleteR('+ data[i].rNo +');" value="삭제">');
+						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="수정">');
+						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="삭제">');
 						
 						$div.append($profileImg);
 						$div.append($nickname);
@@ -225,17 +228,28 @@
 		var a ='';
 		var content = rContent.replace('<br>', '\n');
 		
-		a += '<div>';
-		
-	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+content
-	    		+'</textarea>';
-	    
-	    a += '<div class="counter" id="update_counter">'+rContent.length+'/200</div>';
-	    a += '<i class="fas fa-check" onclick="commentModify('+rNo+');"></i>';
-	    a += '</div>';
-	    
-	    $('.rContent'+rNo).html(a);
-	
+		if(cCheck){
+			$mBtn = $('#mBtn');
+			$mBtn.val('완료');
+			
+			a += '<div>';
+			
+		    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+
+		    content+'</textarea>';
+		    
+		    a += '<div class="counter" id="update_counter">'+rContent.length+'/200</div>';
+		    a += '<i class="fas fa-check" onclick="commentModify('+rNo+');"></i>';
+		    a += '</div>';
+		    
+		    $('.rContent'+rNo).append(a);
+		    
+		    cCheck = false;
+		} else{
+			
+			
+			
+			cCheck = true;
+		}
 	}
 
 //댓글 수정시 글자 카운팅
@@ -253,7 +267,8 @@
 
 //댓글 수정 저장
 function commentModify(rNo){
-    var updateContent = $('[name=rContent_'+rNo+']').val();
+    var updateContent = $('name=rContent_'+rNo+'').val();
+    var mBtn = $('')
     
 //     updateContent = updateContent.replace(/(?:\r\n|\r|\n)/g, '<br>');
     
@@ -265,17 +280,27 @@ function commentModify(rNo){
            
            if(data == 1) getReplyList(rNo); //댓글 수정후 목록 출력 
             
-            alert("댓글이 수정되었습니다.")
+            alert("확인을 클릭하면 수정이 완료됩니다.")
         }
     });
 }
-
+	// 댓글 삭제
+	function deleteR(rNo, rContent){
+		console.log(rContent);
+		
+		$.ajax({
+			url: 'deleteReply.fr',
+			data: {rNo:rNo, rContent:rContent},
+			success: function(data){
+				if(data == 'success'){
+					alert('확인을 누르면 삭제가 완료됩니다.');
+					getReplyList();
+				}
+			}
+		});
+	}
 	
-	
-	
-	
-	// 댓글 수정 끝 ////////////////////////////////////////////////////////////////////////////////////
-	
+	// 댓글 등록	
 	$('#rSubmit').on('click', function(){
 		var rContent = $('#rContent').val();
 		var boardNo = ${ fb.boardNo};

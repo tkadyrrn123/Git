@@ -49,6 +49,9 @@ public interface NoticeService {
 
 	//공지사항 검색한 리스트 가져오기
 	ArrayList<Notice> selectSearchResultList(Notice n, PageInfo pi);
+	
+	//아파트 동 전체 리스트 가져오기
+	String selectcDonglist(String aptName);
 
 	
 }

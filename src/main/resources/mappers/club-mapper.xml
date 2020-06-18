@@ -43,7 +43,7 @@
             join tb_user u using(user_id)
             left join tb_file f using(board_no) 
             join tb_club_join j using(club_name)
-        where board_delete = 'N' and club_name = '수정 끝'
+        where board_delete = 'N' and club_name = #{clubName}
         group by club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name, nickname
 	</select>
 	
@@ -103,6 +103,23 @@
 		update tb_club
 		set club_name = #{clubName}, club_intro = #{clubIntro}, club_plan = #{clubPlan}, club_place = #{clubPlace}, club_etc = #{clubEtc}, max_people = #{maxPeople}
 		where board_no = #{boardNo}
+	</update>
+	
+	<select id="checkClubMember" resultType="_int">
+		select count(*)
+		from tb_club_join
+		where club_name = #{clubName} and user_id = #{userId}
+	</select>
+	
+	<delete id="deleteClubMember">
+		delete  from tb_club_join
+		where club_name= #{clubName} and user_id = #{userId}
+	</delete>
+	
+	<update id="updateComment">
+		update tb_comment
+		set comment_date = sysdate, reply_content = #{rContent}
+		where reply_no = #{rNo}
 	</update>
 	
 	

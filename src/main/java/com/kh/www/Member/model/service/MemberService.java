@@ -65,5 +65,23 @@ public interface MemberService {
 	int AptMemberlistCount(String aptName, int num);
 	//아파트에 속한 멤버 리스트
 	ArrayList<Member> AptMemberList(PageInfo pi, String aptName, int num);
+	//아파트에 속한 멤버 검색 리스트 카운트
+	int AptAdminMemberSearchCount(SearchOption so, int num, String aptName);
+	//아파트에 속한 멤버 검색 리스트
+	ArrayList<Member> AptAdminMemberSearchList(PageInfo pi, SearchOption so, int num, String aptName);
+	//아파트에 속한 멤버 승인 리스트 카운트
+	int AptAdminAcceptCount(String aptName);
+	//아파트에 속한 멤버 승인 리스트
+	ArrayList<Member> AptAdminAcceptList(PageInfo pi, String aptName);
+	//아파트에 속한 멤버 승인 
+	int AptAdminAccept(String[] chkId);
+	//아파트에 속한 멤버 승인 삭제
+	int AptAdminDelete(String[] chkId);
+	//아파트에 속한 승인 검색 카운트
+	int AptAdminSearchCount(SearchOption so, String aptName);
+	//아파트에 속한 승인 검색 리스트
+	ArrayList<Member> AptAdminSearchList(PageInfo pi, SearchOption so, String aptName);
+	// 멤버 탈퇴(관리자)
+	int AdminAptMemberDelete(String userId);
 
 }

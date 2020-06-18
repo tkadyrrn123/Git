@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +59,8 @@ public class NoticeController {
 		//공지사항 리스트 페이지 가져오기
 		ArrayList<Notice> list = noticeService.selectList(pi, aptName);
 		
+		System.out.println("1Controller에서 뽑아보는 목록 list : " + list);
+		
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
@@ -68,9 +72,35 @@ public class NoticeController {
 		return mv;
 	}
 	
-	@RequestMapping("noticeInsertView.no")//공지사항 신규 작성으로 이동
-	public String boardinsertView() {
-		return "noticeInsertForm";
+	//공지사항 신규 작성으로 이동 및 아파트 동 전체 리스트 가져오기
+	@RequestMapping("noticeInsertView.no")
+	public ModelAndView boardinsertView(ModelAndView mv, HttpSession session) {
+
+		//아파트 동 전체 리스트 가져오기
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		
+		String nDong = null; 
+		List<String> nDonglist = new ArrayList<String>();
+		
+		if(aptName != null) {
+			nDong = noticeService.selectcDonglist(aptName);
+			
+			String[] splitnDong = nDong.split(",");		
+
+			for(int i = 0; i < splitnDong.length; i++) {
+				nDonglist.add(splitnDong[i]);
+			}
+			
+			System.out.println("2Controller에서 뽑아보는 nDonglist : " + nDonglist);
+			mv.addObject("nDonglist", nDonglist).setViewName("noticeInsertForm");
+			
+		}else {
+			throw new NoticeException("공지사항 작성폼 이동에 실패했습니다.");
+		}
+		
+		return mv;
+		
 	}
 		
 	@RequestMapping("noticeInsert.no") //공지사항 작성
@@ -149,13 +179,33 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("noticeUpdateView.no") //수정하기 폼으로 이동 - 수정할 글 상세조회
-	public ModelAndView noticeUpdateView(@RequestParam("nNo") int nNo, @RequestParam("page") int page, ModelAndView mv) {
-		System.out.println(nNo);
+	public ModelAndView noticeUpdateView(@RequestParam("nNo") int nNo, @RequestParam("page") int page, 
+			ModelAndView mv, HttpSession session) {
 		
 		Notice notice = noticeService.selectUpdateNotice(nNo);
 		
+		//아파트 동 전체 리스트 가져오기
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		
+		String nDong = null; 
+		List<String> nDonglist = new ArrayList<String>();
+		
+		if(aptName != null) {
+			nDong = noticeService.selectcDonglist(aptName);
+			System.out.println("1Controller에서 뽑아보는 nDong : " + nDong);
+			
+			String[] splitnDong = nDong.split(",");		
+
+			for(int i = 0; i < splitnDong.length; i++) {
+				nDonglist.add(splitnDong[i]);
+			}
+			
+			System.out.println("2Controller에서 뽑아보는 nDonglist : " + nDonglist);
+		}	
+		
 		if(notice != null) {
-			mv.addObject("notice", notice).addObject("page", page).setViewName("noticeUpdateForm");
+			mv.addObject("notice", notice).addObject("page", page).addObject("nDonglist", nDonglist).setViewName("noticeUpdateForm");
 		}else {
 			throw new NoticeException("공지사항 수정하기 폼 요청에 실패했습니다.");
 		}
@@ -284,14 +334,38 @@ public class NoticeController {
 	private ModelAndView boardSearch(@RequestParam(value="page", required=false) Integer page,
 			@RequestParam String nSearchCondition, @RequestParam String nSearchValue, 
 			@ModelAttribute Notice n, HttpServletRequest request, HttpServletResponse response, 
-			ModelAndView mv) {
+			ModelAndView mv, HttpSession session) {
 		
-		if(nSearchCondition.equals("userId")) {
-			n.setUserId(nSearchValue);
+		//세션에서 아파트이름 가져오기
+		//아파트 동 전체 리스트 가져오기
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		
+		String nDong = null; 
+		List<String> nDonglist = new ArrayList<String>();
+		
+		if(aptName != null) {
+			nDong = noticeService.selectcDonglist(aptName);
+			System.out.println("1Controller에서 뽑아보는 nDong : " + nDong);
+			
+			String[] splitnDong = nDong.split(",");		
+
+			for(int i = 0; i < splitnDong.length; i++) {
+				nDonglist.add(splitnDong[i]);
+			}
+			
+			System.out.println("2Controller에서 뽑아보는 nDonglist : " + nDonglist);
+		}	
+		
+		//키워드 가져오기	
+		if(nSearchCondition.equals("nTotal")) {
+			n.setnTotal(nSearchValue);
 		}else if(nSearchCondition.equals("nTitle")) {
 			n.setnTitle(nSearchValue);
 		}else if(nSearchCondition.equals("nContent")) {
 			n.setnContent(nSearchValue);
+		}else if(nSearchCondition.equals("nDong")) {
+			n.setnDong(nSearchValue);
 		}
 		
 		int currentPage = 1;
@@ -301,6 +375,7 @@ public class NoticeController {
 		}
 		
 		//공지사항 검색키워드에 따른 전체 수 가져오기
+		n.setAptName(aptName);
 		int listCount = noticeService.getSearchResultListCount(n);
 		
 		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
@@ -314,6 +389,7 @@ public class NoticeController {
 			mv.addObject("pi", pi);
 			mv.addObject("nSearchCondition", nSearchCondition);
 			mv.addObject("nSearchValue", nSearchValue);
+			mv.addObject("nDonglist", nDonglist);
 			
 			mv.setViewName("noticeList");
 		}else {	

@@ -73,6 +73,18 @@ public class ClubDAO {
 		return sqlSession.update("clubMapper.updateClubMember", c);
 	}
 
+	public int checkClubMember(SqlSessionTemplate sqlSession, HashMap m) {
+		return sqlSession.selectOne("clubMapper.checkClubMember", m);
+	}
+
+	public int deleteClubMember(SqlSessionTemplate sqlSession, HashMap m) {
+		return sqlSession.delete("clubMapper.deleteClubMember", m);
+	}
+
+	public int updateComment(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.update("clubMapper.updateComment", c);
+	}
+
 }
 
 

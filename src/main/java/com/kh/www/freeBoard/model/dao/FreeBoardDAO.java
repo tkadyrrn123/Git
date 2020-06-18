@@ -1,6 +1,7 @@
 package com.kh.www.freeBoard.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
+import com.kh.www.freeBoard.model.vo.SearchCondition;
 
 @Repository
 public class FreeBoardDAO {
@@ -61,5 +63,29 @@ public class FreeBoardDAO {
 	public int updateComment(SqlSessionTemplate sqlSession, Comment comment) {
 		return sqlSession.update("freeMapper.updateComment", comment);
 	}
+
+	public int getSearchResultListCount(SqlSessionTemplate sqlSession, HashMap hm) {
+		return sqlSession.selectOne("freeMapper.selectSearchResultCount", hm);
+	}
+
+	public ArrayList<FreeBoard> selectSearchResultList(SqlSessionTemplate sqlSession, HashMap hm, PageInfo pi) {
+		hm.put("pi", pi);
+		System.out.println("selectSearchResultList : " + hm);
+		return (ArrayList)sqlSession.selectList("freeMapper.selectSearchResultList", hm);
+	}
+
+	public ArrayList<FreeBoard> selectSortResultList(SqlSessionTemplate sqlSession, HashMap hm) {
+		System.out.println("selectSortResultList : " + hm);
+		return (ArrayList)sqlSession.selectList("freeMapper.selectSortResultList", hm);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("freeMapper.deleteReply", rNo);
+	}
+
+
+
+
+
 
 }

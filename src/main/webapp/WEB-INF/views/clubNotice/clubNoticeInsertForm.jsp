@@ -57,6 +57,7 @@
                    <td class="td1">동호회</td>
                      <td>
                      	<select name="clubName" class="clubSelect">
+                     		<option value="전체 동호회" selected>전체 동호회</option>
 						    <c:forEach var="i" begin="0" end="${cNamelist.size()}" varStatus="status">
 						        <c:if test="${cNamelist[i] != selected}">
 								    <option value="${cNamelist[i]}" selected>${cNamelist[i]}</option>

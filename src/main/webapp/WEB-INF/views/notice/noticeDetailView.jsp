@@ -17,6 +17,7 @@
  	.detailTable_comment{margin: auto; border-bottom: 1px solid lightgray; height: 50px; background-color: lightgray; width: 800px;}
  	.detailTable_title{margin-left: 10px; font-size: 18px; padding-bottom: 10px; color:rgb(81, 143, 187);}
 	.img {filter: brightness(70%); width: 100%; height: 400px;}	
+	.nDongview{color:lightcoral; margin-left: 60px; margin-bottom: 20px;}
 	
 /* 글내용 */
 	.board_content{width: 800px;    height: auto;    margin-left: 100px;    margin-top: 40px;    margin-bottom: 40px;}
@@ -68,6 +69,7 @@
 			<h2 style="margin-left: 15px;">공지사항 상세보기</h2>
 			<hr>
 			<br>
+			<div class="nDongview"><i class="fas fa-crown"></i>  ${ notice.nDong } </div>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
 				<div class="detailTable_title">
 					<b>${ notice.nTitle }</b>
@@ -273,9 +275,9 @@
 
 	    a += '<div>';
 	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+rContent.replace(/\+/g, ' ')+'</textarea>';
- 	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+$({fn:replace(rContent, newLineChar, +'<br>')})+'</textarea>';
+//  	a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+rContent+'<br></textarea>';
  	    a += '<div class="counter" id="update_counter">'+rContent.length+'/200</div>';
- 	    a += '<i class="fas fa-check" onclick="commentUpdate('+rNo+');"></i>';
+ 	    a += '<i class="fas fa-check" onclick="commentUpdate('+rNo+');"></i>'; /* 수정 */
 	    
 	    $('.rContent'+rNo).html(a);
 	}

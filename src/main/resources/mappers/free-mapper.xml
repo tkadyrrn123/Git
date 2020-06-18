@@ -88,6 +88,12 @@
 		where board_no=#{boardNo}
 	</update>
 	
+	<update id="deleteReply">
+		update tb_comment
+		set comments_delete='Y'
+		where reply_no = #{rNo}
+	</update>
+	
 	<select id="getReplyList" resultMap="replyResultSet">
 		select reply_no, board_no, reply_content, comment_date,
 		        nickname, user_file
@@ -127,4 +133,56 @@
 		set reply_content=#{rContent}, comment_date = sysdate
 		where reply_no=#{rNo}
 	</update>
+	
+	<select id="selectSearchResultCount" resultType="_int">
+		select count(*)
+		from tb_free
+			join tb_board using(board_no)
+            join tb_user using(user_id)
+		where board_delete = 'N' and apt_name = #{aptName} 
+		<if test="writer != null">
+			and nickname = #{writer}
+		</if>
+		<if test="content != null">
+			and board_content like '%'|| #{content} || '%'
+		</if>
+		<if test="title != null">
+			and board_title like '%'|| #{title} || '%'
+		</if>
+	</select>
+	
+	<select id="selectSearchResultList" resultMap="boardResultSet">
+		select *
+		from tb_free
+			join tb_board using(board_no)
+			join tb_user using(user_id)
+		where board_delete='N' and apt_name = #{aptName}
+			<if test="sc.writer != null">
+				and nickname = #{sc.writer}
+			</if>
+			<if test="sc.content != null">
+				and board_content like '%' || #{sc.content} || '%'
+			</if>
+			<if test="sc.title != null">
+				and board_title like '%'|| #{sc.title} || '%'
+			</if>
+			order by board_no desc
+	</select>
+	
+	<select id="selectSortResultList" resultMap="boardResultSet">
+		select *
+		from tb_free
+			join tb_board using(board_no)
+			join tb_user using(user_id)
+		where board_delete = 'N' and apt_name = #{aptName}
+		<if test="sc == 'hits'">
+			order by board_count desc		
+		</if>
+		<if test="sc == 'latest'">
+			order by board_no desc
+		</if>
+	</select>
+	
+	
+
 </mapper>

@@ -176,6 +176,73 @@ public class MemberDAO {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.AptMemberList", hs, rowBounds);
 	}
+
+	public int AptAdminMemberSearchCount(SqlSessionTemplate sqlSession, SearchOption so, int num, String aptName) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("aptName", aptName);
+		hs.put("num", num);
+		hs.put("so", so);
+		
+		return sqlSession.selectOne("memberMapper.AptAdminMemberSearchCount", hs);
+	}
+
+	public ArrayList<Member> AptAdminMemberSearchList(SqlSessionTemplate sqlSession, PageInfo pi, SearchOption so,
+													  int num, String aptName) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("aptName", aptName);
+		hs.put("num", num);
+		hs.put("so", so);
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.AptAdminMemberSearchList", hs);
+	}
+
+	public int AptAdminAcceptCount(SqlSessionTemplate sqlSession, String aptName) {
+		return sqlSession.selectOne("memberMapper.AptAdminAcceptCount", aptName);
+	}
+
+	public ArrayList<Member> AptAdminAcceptList(SqlSessionTemplate sqlSession, PageInfo pi, String aptName) {
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.AptAdminAcceptList", aptName, rowBounds);
+	}
+
+	public int AptAdminAccept(SqlSessionTemplate sqlSession, String[] chkId) {
+		return sqlSession.update("memberMapper.AptAdminAccept", chkId);
+	}
+
+	public int AptAdminDelete(SqlSessionTemplate sqlSession, String[] chkId) {
+		return sqlSession.delete("memberMapper.AptAdminDelete", chkId);
+	}
+
+	public int AptAdminSearchCount(SqlSessionTemplate sqlSession, SearchOption so, String aptName) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("so", so);
+		hs.put("aptName", aptName);
+		
+		return sqlSession.selectOne("memberMapper.AptAdminSearchCount", hs);
+	}
+
+	public ArrayList<Member> AptAdminSearchList(SqlSessionTemplate sqlSession, PageInfo pi, SearchOption so,
+												String aptName) {
+		
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("so", so);
+		hs.put("aptName", aptName);
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.AptAdminSearchList", hs, rowBounds);
+	}
+
+	public int AdminAptMemberDelete(SqlSessionTemplate sqlSession, String userId) {
+		return sqlSession.update("memberMapper.AdminAptMemberDelete", userId);
+	}
 	
 	
 	

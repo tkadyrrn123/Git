@@ -38,7 +38,6 @@ public class ClubNoticeServiceImpl implements ClubNoticeService {
 
 	@Override //동호회-이름목록 받아오기
 	public ArrayList<String[]> selectcNamelist(String aptName) {
-		System.out.println(aptName);
 		return cnDAO.selectcNamelist(sqlSession, aptName);
 	}
 	

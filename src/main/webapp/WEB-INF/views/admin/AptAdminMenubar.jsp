@@ -80,8 +80,11 @@
 /* 슬라이드 메뉴 토글클래스 */
 .slidetoggle{display: block;}
 #icon{cursor: pointer;}
-
-
+.fa-home{
+	color: white;
+    font-size: 20px;
+    margin-right: 10px;
+}
 </style>
 </head>
 
@@ -90,7 +93,10 @@
 	<div id="top">
 		<button id="menuBtn"></button>
 		<div id="pagename"><a href="AptAdminMain.adm">ADMINPAGE</a></div>
-		<div id="icon"><i class="fas fa-sign-out-alt"></i></div>
+		<div id="icon">
+		<i class="fa fa-home"></i>
+		<i class="fas fa-sign-out-alt"></i>
+		</div>
 	</div>
 	
 	<div class="slide_menu">
@@ -98,8 +104,8 @@
 			<li><label>HOME</label></li>
 			<li class="dropdown"><label>회원 관리</label>
 				<ul class="sub" >
-					<li onclick="location.href=''">- 전체 회원 목록</li>
-					<li onclick="location.href=''">- 가입 신청 목록</li>
+					<li onclick="location.href='AptAdminMemberList.adm'">- 전체 회원 목록</li>
+					<li onclick="location.href='AptAdminAcceptList.adm'">- 가입 신청 목록</li>
 				</ul>
 			</li>
 		</ul>
@@ -128,8 +134,12 @@
 		
 	});
 	
-	$('#icon').click(function(){
+	$('.fa-sign-out-alt').click(function(){
 		location.href="logout.adm";
+	});
+	
+	$('.fa-home').click(function(){
+		location.href="main.do";
 	});
 </script>	
 </body>
