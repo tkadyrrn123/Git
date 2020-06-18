@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.www.club.model.dao.ClubDAO;
 import com.kh.www.club.model.vo.Club;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Service("cService")
@@ -94,6 +95,11 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public int deleteComment(int rNo) {
 		return cDAO.deleteComment(sqlSession, rNo);
+	}
+
+	@Override
+	public ArrayList<Comment2> selectComment2() {
+		return cDAO.selectComment2(sqlSession);
 	}
 
 

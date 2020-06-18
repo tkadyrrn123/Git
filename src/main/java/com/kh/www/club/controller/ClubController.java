@@ -25,6 +25,7 @@ import com.kh.www.club.model.service.ClubService;
 import com.kh.www.club.model.vo.Club;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 
@@ -65,6 +66,9 @@ public class ClubController {
 	public ModelAndView clubDetail(@RequestParam("clubName") String clubName, @RequestParam(value="page", required=false) Integer page, @RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId, ModelAndView mv) {
 		Club club = cService.selectClub(clubName);
 		ArrayList<Comment> comment = cService.selectComment(boardNo);
+		ArrayList<Comment2> comment2 = cService.selectComment2();
+
+		
 		HashMap m = new HashMap();
 		m.put("clubName", clubName);
 		m.put("userId", userId);
@@ -74,6 +78,7 @@ public class ClubController {
 			mv.addObject("c", club);
 			mv.addObject("page", page);
 			mv.addObject("comment", comment);
+			mv.addObject("comment2", comment2);
 			mv.addObject("result", result);
 			mv.setViewName("clubDetail");
 		}else {

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.www.club.model.vo.Club;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Repository("cDAO")
@@ -87,6 +88,10 @@ public class ClubDAO {
 
 	public int deleteComment(SqlSessionTemplate sqlSession, int rNo) {
 		return sqlSession.update("clubMapper.deleteComment", rNo);
+	}
+
+	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("clubMapper.selectComment2");
 	}
 
 }
