@@ -39,18 +39,22 @@ public class FreeBoardController {
 	
 	
 	@RequestMapping("list.fr")
-	public ModelAndView freeBoardListView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) throws FreeBoardException{		
-
+	public ModelAndView freeBoardListView(@RequestParam(value="page", required=false) Integer page, 
+										ModelAndView mv, HttpSession session) throws FreeBoardException{		
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int listCount = freeService.getListCount();
+		int listCount = freeService.getListCount(aptName);
 		
 		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
 		
-		ArrayList<FreeBoard> list = freeService.selectList(pi);
+		ArrayList<FreeBoard> list = freeService.selectList(pi, aptName);
 		
 	//	System.out.println("list.fr "+list);
 		if(list !=null) {
@@ -159,13 +163,69 @@ public class FreeBoardController {
 		}
 	}
 	
+	@RequestMapping("modifyView.fr")
+	public ModelAndView modifyFreeView(@RequestParam("boardNo") int boardNo, @RequestParam(value="page", required=false) int page,
+									ModelAndView mv) {
+		FreeBoard fb = freeService.selectUpdateFreeBoard(boardNo);
+		
+	//	System.out.println("modifyView.fr fb 오냐???? : " +fb);
+		
+		if(fb != null) {
+			mv.addObject("fb", fb).addObject("page", page).setViewName("modifyingFree");
+			return mv;
+		} else {
+			throw new FreeBoardException("수정하러 가기 실패 ");
+		}
+	}
+	
+	@RequestMapping("update.fr")
+	public ModelAndView updateFree(@ModelAttribute FreeBoard fb, @RequestParam("reloadFile") MultipartFile reloadFile,
+								@RequestParam("page") int page, HttpServletRequest request, ModelAndView mv) {
+		
+		if(reloadFile != null && !reloadFile.isEmpty()) {
+			if(fb.getFileName() != null) {
+				deleteFile(fb.getFileName(), request);
+			}
+			
+			String fileName = saveFile(reloadFile, request);
+			
+			if(fileName != null) {
+				fb.setFileName(fileName);
+			}
+		}
+		int resultFile = freeService.updateFreeFile(fb);
+		
+		int result = freeService.updateFreeBoard(fb);
+		
+		if(result > 0 || resultFile > 0) {
+			mv.addObject("page", page);
+			mv.setViewName("redirect:bdetail.fr?boardNo=" + fb.getBoardNo());
+		} else {
+			throw new FreeBoardException("수정 실패!");
+		}
+		return mv;
+	}
+	
+	private void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		
+		File f = new File(savePath + "\\" + fileName);
+		
+		if(f.exists()) {
+			f.delete();
+		}
+		
+	}
+
+
 	@RequestMapping("rList.fr")
 	public void replyList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		ArrayList<Comment> list = freeService.selectRList(boardNo);
 	//	System.out.println("댓글리스트 받아옴? "+list);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss zzz").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
 			gson.toJson(list, response.getWriter());
 		} catch (JsonIOException e) {
@@ -194,6 +254,17 @@ public class FreeBoardController {
 		
 	}
 	
+	@RequestMapping("commentModify.fr")
+    @ResponseBody
+    private int commentModify(@RequestParam int rNo, @RequestParam String rContent) {
+        
+        Comment comment = new Comment();
+        comment.setrNo(rNo);
+        comment.setrContent(rContent);
+        
+        return freeService.commentModify(comment);
+    }
+
 
 	
 }

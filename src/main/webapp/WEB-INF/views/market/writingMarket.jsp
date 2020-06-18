@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <style type="text/css">
    #body{margin-top: 20px;}
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavender;}
@@ -20,7 +20,7 @@
    #tb{width: 60%; height: 600px; margin: 0 auto; }
    .td1{text-align: center; font-size: 11px; background: lavender;}
    
-   #content{width: 90%; height: 90%; border: none;}
+   #content{border: none; margin-left: 20px; resize:none; overflow:scroll;}
    #btns{text-align: center;}
    .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: lavender;}
  
@@ -64,7 +64,7 @@
                   <tr id="tr4">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea name="boardContent" id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;"></textarea>
+                        <textarea cols="107"rows="24" name="boardContent" id="content" placeholder="내용 입력하세요 "></textarea>
                      </td>
                   </tr>      
                   <tr id="tr5">

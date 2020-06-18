@@ -31,14 +31,18 @@
 	<select id="getListCount" resultType="_int">
 		select count(*)
 		from tb_board
-		where board_delete = 'N'
+                join tb_user using(user_id)
+		where board_delete = 'N' and apt_name=#{aptName}
 	</select>
 	
 	<select id="selectList" resultMap="boardResultSet">
-		select board_no, board_title, board_content, create_date, user_id, board_count, board_delete
-		from tb_free
-		     join tb_board using(board_no)
-		where board_delete = 'N'
+		select board_no, 
+		        b1.board_title, b1.board_content, b1.create_date, b1.board_count, b1.board_delete,
+		        u1.nickname
+		from tb_free f1
+		    join tb_board b1 using(board_no)
+		    join tb_user u1 using(user_id)
+		where board_delete = 'N' and apt_name=#{aptName}
 		order by board_no desc
 	</select>
 	<resultMap type="FreeBoard" id="boardResultSet">
@@ -46,9 +50,9 @@
 		<result property="boardTitle" column="board_Title"/>
 		<result property="boardContent" column="board_Content"/>
 		<result property="createDate" column="create_Date"/>
-		<result property="userId" column="user_Id"/>
 		<result property="boardCount" column="board_Count"/>
 		<result property="boardDelete" column="board_Delete"/>
+		<result property="nickname" column="nickname"/>
 	</resultMap>
 
 	<select id="selectFreeBoard" resultMap="fdetailResultSet">
@@ -105,4 +109,22 @@
 		insert into tb_comment
 		values(seq_reply.nextval, #{boardNo}, null, #{rUserId}, #{rContent}, sysdate, default, default)
 	</insert>
+	
+	<update id="updateFreeBoard">
+		update tb_board
+		set board_title=#{boardTitle}, board_content=#{boardContent}
+		where board_no = #{boardNo}
+	</update>
+	
+	<update id="updateFreeFile">
+		update tb_file
+		set file_name = #{fileName}
+		where board_no = #{boardNo}
+	</update>
+	
+	<update id="updateComment">
+		update tb_comment
+		set reply_content=#{rContent}, comment_date = sysdate
+		where reply_no=#{rNo}
+	</update>
 </mapper>

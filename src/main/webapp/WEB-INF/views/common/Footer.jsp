@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<!DOCTYPE html>
+    
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
 <Style>
 footer{
 	background-color: #292c2f;
@@ -62,7 +58,7 @@ footer .footer-right a{
 	line-height: 35px;
 	margin-left: 3px;
 }
-
+footer .container_small{padding-left: 250px;}
 </Style>
 </head>
 <body>

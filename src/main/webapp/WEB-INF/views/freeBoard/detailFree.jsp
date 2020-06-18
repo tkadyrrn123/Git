@@ -38,7 +38,7 @@
 	.go_list{width:70px; height:25px; background-color:lightgray; border:0; outline:0; border-radius:0.34em; cursor: pointer;}		
 
 /* 댓글작성 */
-	.reply1_box{width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
+	.reply1_box{width: 800px; height: 180px; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
 	.profileImg{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
 	.dong{line-height: 50px; display: inline; margin-left: 10px; margin-right: 10px;}
 	.reply1_btn{float:right; width:70px; height:25px; background-color: navy; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
@@ -52,6 +52,7 @@
 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
 	.rOuter{border-color: red;}
 	.nickname{display: inline-block;}
+	.mdBtn{border: none; color: gray; margin-right: 5px;}
 /* 대댓글  */	
 	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
  	
@@ -80,14 +81,18 @@
 				<!--수정 /삭제 선택 -->	
 		<c:url var="bdelete" value="bdelete.fr">
 			<c:param name="boardNo" value="${ fb.boardNo }"/>
-			<c:param name="page" value="${ page }"/>
 		</c:url>
-		
+		<c:url var="modifyView" value="modifyView.fr">
+			<c:param name="boardNo" value="${ fb.boardNo }" />
+			<c:param name="page" value="${ page }" />
+		</c:url>
+
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
-					<div class="pop"><label>수정</label></div>
+					<div class="pop"><label onclick="location.href='${ modifyView }'">수정</label></div>
 					<div class="pop"><label onclick="deleteMsg();">삭제</label></div>
 				</div>
+
 				<hr>
 			</div>
 		<!-- 게시글 상단부 끝  -->	
@@ -121,8 +126,8 @@
 					<input type="button" class="reply1_btn" value="댓글등록" id="rSubmit">
 				<div style="margin-left: 10px; margin-top: 12px;">
 					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="105" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
-				<div style="color:#aaa; float: right; margin-top: 45px;" id="counter">(0/200자)</div>
 				</div>
+				<div style="color:#aaa; float: right;" id="counter">(0/200자)</div>
 			</div>
 			<!--원 댓글  -->
 			<div class="rOuter">
@@ -143,7 +148,7 @@
 			<!-- 대 댓글 -->
 			<div class="reply3_box">
 				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="profileImg"src="<%=request.getContextPath()%>/css/화단사진.jpg">
+					<img class="profileImg"src="${ contextPath }/resources/images/로고.png">
 				</div>
 				<div class="dong">뾰로롱(201동)</div>
 					<input type="button" value="삭제" class="reply2_box_btn">
@@ -182,19 +187,26 @@
 				var $nickname;
 				var $rContent;
 				var $rCreateDate;
+			
 				 
 				if(data.length > 0){
 					for(var i in data){
 						$div = $('<div class="reply2_box">');
 						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+ data[i].userFile +'">');
 						$nickname = $('<div class="nickname" id="nickname">').text(data[i].nickname);
-						$rContent = $('<div class="rContent">').text(data[i].rContent);
+						
+						$rContent = $('<div class="rContent'+data[i].rNo+'">').html(data[i].rContent);
+						
 						$rCreateDate = $('<div class="rCreateDate">').text(data[i].rCreateDate);
+						$rMBtn = $('<input type="button" class="mdBtn" onclick="modifyR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="수정">');
+						$rDBtn = $('<input type="button" class="mdBtn" onclick="deleteR('+ data[i].rNo +');" value="삭제">');
 						
 						$div.append($profileImg);
 						$div.append($nickname);
 						$div.append($rContent);
 						$div.append($rCreateDate);
+						$div.append($rMBtn);
+						$div.append($rDBtn);
 						$rOuter.append($div);						
 					}
 				} else{
@@ -208,11 +220,71 @@
 		});
 	}
 	
+	// 댓글 수정
+	function modifyR(rNo, rContent){
+		var a ='';
+		var content = rContent.replace('<br>', '\n');
+		
+		a += '<div>';
+		
+	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+content
+	    		+'</textarea>';
+	    
+	    a += '<div class="counter" id="update_counter">'+rContent.length+'/200</div>';
+	    a += '<i class="fas fa-check" onclick="commentModify('+rNo+');"></i>';
+	    a += '</div>';
+	    
+	    $('.rContent'+rNo).html(a);
+	
+	}
+
+//댓글 수정시 글자 카운팅
+ function plus(rNo){
+    var content = $("#update_reply_TEXT_"+rNo+"").val();
+    console.log(content);
+    $('#update_counter').html(content.length+"/200");//글자수 실시간 카운팅
+
+    if (content.length > 200){
+        alert("최대 200자까지 입력 가능합니다.");
+        $(this).val(content.substring(0, 200));
+        $('#update_counter').html("200/200");
+    }
+} 
+
+//댓글 수정 저장
+function commentModify(rNo){
+    var updateContent = $('[name=rContent_'+rNo+']').val();
+    
+//     updateContent = updateContent.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    
+    $.ajax({
+        url : 'commentModify.fr',
+        dataType: 'json',
+        data : {'rContent' : updateContent, 'rNo' : rNo},
+        success : function(data){
+           
+           if(data == 1) getReplyList(rNo); //댓글 수정후 목록 출력 
+            
+            alert("댓글이 수정되었습니다.")
+        }
+    });
+}
+
+	
+	
+	
+	
+	// 댓글 수정 끝 ////////////////////////////////////////////////////////////////////////////////////
+	
 	$('#rSubmit').on('click', function(){
 		var rContent = $('#rContent').val();
 		var boardNo = ${ fb.boardNo};
 		
-		$.ajax({
+		rContent = rContent.replace(/(?:\r\n|\r|\n)/g, '<br>');
+		
+		console.log(rContent);
+		
+ 		$.ajax({
 			url: 'addReply.fr',
 			data: {rContent:rContent, boardNo:boardNo},
 			success: function(data){
@@ -221,7 +293,7 @@
 					$('#rContent').val('');
 				}
 			}
-		});
+		}); 
 		
 	});
 	

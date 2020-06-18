@@ -183,11 +183,17 @@ html ,body{margin: 0; padding: 0; height: 100%; }
 	
 	<script>
 		$(function(){
-			document.getElementById('searchText').value = opener.document.memberjoinForm.aptName.value;	
+			if(opener.document.memberjoinForm.aptName.value != null){
+				document.getElementById('searchText').value = opener.document.memberjoinForm.aptName.value;	
+			}
+			if(opener.document.adminjoinForm.adminaptName.value != null){
+				document.getElementById('searchText').value = opener.document.adminjoinForm.adminaptName.value;	
+			}
 		});
 		
 		$('#search_content tbody tr').click(function(){
 			opener.document.memberjoinForm.aptName.value = $(this).children().eq(0).text();
+			opener.document.adminjoinForm.adminaptName.value = $(this).children().eq(0).text();
 			self.close();
 		});
 	</script>

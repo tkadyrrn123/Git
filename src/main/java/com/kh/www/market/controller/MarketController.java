@@ -141,7 +141,60 @@ public class MarketController {
 		} else {
 			throw new MarketException("게시글 삭제에 실패하였습니다.");
 		}
+	}
+	
+	@RequestMapping("updateView.ma")
+	public ModelAndView updateView(@RequestParam("boardNo") int boardNo, @RequestParam(value="page", required=false) int page, ModelAndView mv) {
 		
+		Market ma = marketService.selectUpdateMarket(boardNo);
+		
+		if(ma != null) {
+			mv.addObject("ma", ma).addObject("page", page).setViewName("updateMarketView");
+			return mv;
+		} else {
+			throw new MarketException("게시글 수정 폼 요청에 실패하였습니다.");
+		}
+		
+	}
+	
+	@RequestMapping("updateMarket.ma")
+	public ModelAndView updateMarket(@ModelAttribute Market ma, @RequestParam("reloadFile") MultipartFile reloadFile,@RequestParam("page") int page, HttpServletRequest request, ModelAndView mv ) {
+		if(reloadFile != null && reloadFile.isEmpty()) {
+			if(ma.getFileName() != null) {
+				deleteFile(ma.getFileName(), request);
+			}
+			
+			String fileName = saveFile(reloadFile, request);
+			
+			if(fileName != null) {
+				ma.setFileName(fileName);
+			}
+		}
+//		int resultFile = marketService.updateMarketFile(ma);
+		
+		int result = marketService.updateMarket(ma);
+		int result2 = marketService.updatePrice(ma);
+		
+		
+		if(result > 0 || result2 > 0){
+			mv.addObject("page",page);
+			mv.setViewName("redirect:marketDetail.ma?boardNo=" + ma.getBoardNo());
+		} else {
+			throw new MarketException("게시글 수정에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	private void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "/marketUploadFiles";
+		
+		File f = new File(savePath + '/' + fileName);
+		
+		if(f.exists()) {
+			f.delete();
+		}
 	}
 	
 }

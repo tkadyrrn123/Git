@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
    .wrapper{margin-top: 20px;}
@@ -22,27 +22,113 @@
 	.sellName>a:visited{color: gray !important;}
 	.sellAddress{width: 100%; height: 10%;}
 	.sellPrice{width: 100%; height: 10%;}
-	.btn-standard {
-	   border: 1px solid #ccccce;
+	.btn_standard {
+	   border: 1px solid #dad4d4;
 	    border-radius: 6px;
 	    background-color: #fff;
 	    font-weight: 500;
 	    color: #666;
 	    cursor: pointer;
 	    font-size: 12px;
-	    padding: 7px;
+	    padding: 10px;
 	}
 
-	.marketFilterForm{position:absolute; width: 300px; display:inline-block; left:44%;}
+/* 	.marketFilterForm{position:absolute; width: 300px; display:inline-block; left:44%;} */
+/* 	.marketSelect>option{padding: 5px;} */
+	.form_wrap{margin:30px auto 0 auto; width: 340px;}
+	#selectBox{
+	  display: block;
+	  margin-left: 85%;
+	  }
+	.select-box {
+	  position: relative;
+	  display: inline-block;
+	  width: 85px;
+	  margin: 40px auto 0 auto;
+	  font-size: 0.9em;
+	  color: #60666d;
+      border: 1px solid #dad4d4;
+	  }
+	.select-box__current {
+	  position: relative;
+	  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+	  cursor: pointer;
+	  outline: none;
+	  }
+	.select-box__current:focus + .select-box__list {
+	  opacity: 1;
+	  animation-name: none;
+	  }
+	.select-box__current:focus + .select-box__list .select-box__option {
+	  cursor: pointer;
+	  }
+	.select-box__current:focus .select-box__icon {
+	  transform: translateY(-50%) rotate(180deg);
+	  }
+	.select-box__icon {
+	  position: absolute;
+	  top: 50%;
+	  right: 15px;
+	  transform: translateY(-50%);
+	  width: 15px;
+	  opacity: 0.3;
+	  transition: 0.2s ease;
+	  }
+	.select-box__value {
+	  display: flex;
+	  }
+	.select-box__input {
+	  display: none;
+	  }
+	.select-box__input:checked +.select-box__input-text {
+	  display: block;
+	  }
+	.select-box__input-text {
+	  display: none;
+	  width: 100%;
+	  margin: 0;
+	  padding: 8px;
+	  background-color: #fff;
+	  }
+	.select-box__list {
+	  position: absolute;
+	  width: 100%;
+	  padding: 0;
+	  list-style: none;
+	  opacity: 0;
+	  animation-name: HideList;
+	  animation-duration: 0.5s;
+	  animation-delay: 0.5s;
+	  animation-fill-mode: forwards;
+	  animation-timing-function: step-start;
+	  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+	  }
+	.select-box__option {
+	  display: block;
+	  padding: 8px;
+	  background-color: #fff;
+	  }
+	.select-box__option:hover, .select-box__option:focus {
+	  color: #546c84;
+	  background-color: #fbfbfb;
+	  }
 	
-	#write-btn{color:white;
-			   background-color:black; 
-/* 			   position:absolute; */
-/* 			   top:30px; */
-/* 			   right: 344px; */
-				float: right;
-				margin-right: 344px;
-			   }	
+	@keyframes HideList {
+	  from {
+	            transform: scaleY(1);
+	  }
+	  to {
+	            transform: scaleY(0);
+	  }
+	}
+	
+ 	.search_input{height:37px; margin:0 5px; vertical-align:bottom; border:1px solid #dad4d4;} 
+	
+/* 	#btn_search{board:1px solid black; } */
+	
+/* 	#write-btn{float: right; */
+/* 				margin-right: 344px; */
+/* 			   }	 */
 	.pagingArea{margin-top: 90px;}	
 	
 	.img{width:100%; height:400px;}
@@ -93,19 +179,39 @@
 				</div>
 			</c:forEach>
 		</div>		
-		<div class="marketFilterForm">
-		  <form class="marketFilter">
-	            <select id="marketSelect" name="marketSelect">
-	                <option value="total">전체</option>
-	                <option value="writer">작성자</option>
-	                <option value="text">내용</option>
-	            </select>
-				<input type="text" id="text">
-				<button type="button" id="schButton"><img src="<%= request.getContextPath() %>/resources/images/search_icon.png"></button>
-          </form>
+		<div class="form_wrap">
+    <form class="board_search" name="search_form" action="get">
+	    <div class="select-box">
+		  <div class="select-box__current" tabindex="1">
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="total" value="total" name="Ben" checked="checked"/>
+		      <p class="select-box__input-text">전체</p>
+		    </div>
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="writer" value="writer" name="Ben"/>
+		      <p class="select-box__input-text">작성자</p>
+		    </div>
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="content" value="content" name="Ben"/>
+		      <p class="select-box__input-text">내용</p>
+		    </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
+		  </div>
+		  <ul class="select-box__list">
+		    <li>
+		      <label class="select-box__option" for="total" aria-hidden="aria-hidden">전체</label>
+		    </li>
+		    <li>
+		      <label class="select-box__option" for="writer" aria-hidden="aria-hidden">작성자</label>
+		    </li>
+		    <li>
+		      <label class="select-box__option" for="content" aria-hidden="aria-hidden">내용</label>
+		    </li>
+		  </ul>
 		</div>
+		<input class="search_input" name="text" type="text">
+		<button class="btn_standard" type="submit">검색</button>
 		
-		<button id="write-btn" class="btn-standard" type="button" value="글쓰기" onclick="location.href='writingMarket.ma'">글쓰기</button>
+		<button id="write-btn" class="btn_standard" type="button" value="글쓰기" onclick="location.href='writingMarket.ma'">글쓰기</button>
 		
 		
 		<!-- 페이징 처리 -->
@@ -150,7 +256,7 @@
 	
 	<script>
 // 		$('.sell').on('click', function(){
-// 			location.href="marketDetail.ma"
+// 			location.href="marketDetail.ma?boardNo=${m.boardNo}&page=${ page }"
 // 		});
 	</script>
 

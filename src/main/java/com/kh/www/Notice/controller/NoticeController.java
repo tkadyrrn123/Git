@@ -2,9 +2,9 @@ package com.kh.www.Notice.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,7 +38,10 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	@RequestMapping("noticeList.no") //공지사항 리스트
-	public ModelAndView noticeList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+	public ModelAndView noticeList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpSession session) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
 		
 		int currentPage = 1;
 	
@@ -47,12 +50,12 @@ public class NoticeController {
 		}
 		
 		//공지사항 전체 리스트 갯수 가져오기
-		int listCount = noticeService.getNoticeListCount(); 
+		int listCount = noticeService.getNoticeListCount(aptName); 
 
 		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
 		
 		//공지사항 리스트 페이지 가져오기
-		ArrayList<Notice> list = noticeService.selectList(pi);
+		ArrayList<Notice> list = noticeService.selectList(pi, aptName);
 		
 		if(list != null) {
 			mv.addObject("list", list);
@@ -205,15 +208,28 @@ public class NoticeController {
 		}
 	}
 	
+	//공지사항 삭제
+	@RequestMapping("noticeDelete.no")
+	public String deleteBoard(@RequestParam("nNo") int nNo) {
+		int result = noticeService.deleteNotice(nNo);
+		
+		if(result > 0) {
+			return "redirect:noticeList.no";
+		
+		}else {
+			throw new NoticeException("공지사항 삭제에 실패하였습니다.");
+		}
+	}
+	
+	
+	
 	//댓글 리스트 가져오기
 	@RequestMapping("cList.no")
 	public void replyList(@RequestParam("nNo") int nNo, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		
 		ArrayList<Comment> clist = noticeService.noticeCommentList(nNo);
-		System.out.println("Controller cList : " + clist);
-		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 		try {
 			gson.toJson(clist, response.getWriter());
 		} catch (JsonIOException e) {
@@ -262,5 +278,48 @@ public class NoticeController {
         
         return noticeService.commentUpdate(rNo);
     }
-
+	
+	//공지사항 검색
+	@RequestMapping("noticeSearch.no")
+	private ModelAndView boardSearch(@RequestParam(value="page", required=false) Integer page,
+			@RequestParam String nSearchCondition, @RequestParam String nSearchValue, 
+			@ModelAttribute Notice n, HttpServletRequest request, HttpServletResponse response, 
+			ModelAndView mv) {
+		
+		if(nSearchCondition.equals("userId")) {
+			n.setUserId(nSearchValue);
+		}else if(nSearchCondition.equals("nTitle")) {
+			n.setnTitle(nSearchValue);
+		}else if(nSearchCondition.equals("nContent")) {
+			n.setnContent(nSearchValue);
+		}
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		//공지사항 검색키워드에 따른 전체 수 가져오기
+		int listCount = noticeService.getSearchResultListCount(n);
+		
+		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+		
+		//공지사항 검색한 리스트 가져오기
+		ArrayList<Notice> list = noticeService.selectSearchResultList(n, pi);
+		System.out.println("controller에서 뽑아보는  list : "+ list);
+		
+		if(list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.addObject("nSearchCondition", nSearchCondition);
+			mv.addObject("nSearchValue", nSearchValue);
+			
+			mv.setViewName("noticeList");
+		}else {	
+			throw new NoticeException("공지사항 검색에 실패했습니다.");
+		}	
+		return mv;
+	}
+	
 }

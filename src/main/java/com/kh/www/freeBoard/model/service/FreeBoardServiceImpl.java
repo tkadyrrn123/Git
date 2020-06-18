@@ -26,14 +26,14 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	}
 
 	@Override
-	public int getListCount() {
+	public int getListCount(String aptName) {
 
-		return fDAO.getListCount(sqlSession);
+		return fDAO.getListCount(sqlSession, aptName);
 	}
 
 	@Override
-	public ArrayList<FreeBoard> selectList(PageInfo pi) {
-		return fDAO.selectList(sqlSession, pi);
+	public ArrayList<FreeBoard> selectList(PageInfo pi, String aptName) {
+		return fDAO.selectList(sqlSession, pi, aptName);
 	}
 
 	@Override
@@ -61,6 +61,26 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	@Override
 	public int insertReply(Comment c) {
 		return fDAO.insertReply(sqlSession, c);
+	}
+
+	@Override
+	public FreeBoard selectUpdateFreeBoard(int boardNo) {
+		return fDAO.selectFreeBoard(sqlSession, boardNo);
+	}
+
+	@Override
+	public int updateFreeBoard(FreeBoard fb) {
+		return fDAO.updateFreeBoard(sqlSession, fb);
+	}
+
+	@Override
+	public int updateFreeFile(FreeBoard fb) {
+		return fDAO.updateFreeFile(sqlSession, fb);
+	}
+
+	@Override
+	public int commentModify(Comment comment) {
+		return fDAO.updateComment(sqlSession, comment);
 	}
 
 }

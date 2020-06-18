@@ -12,10 +12,10 @@ public interface NoticeService {
 	int insertNotice(Notice n);
 	
 	//공지사항 전체 리스트 갯수 가져오기
-	int getNoticeListCount();
+	int getNoticeListCount(String aptName);
 	
 	//공지사항 리스트 페이지 가져오기
-	ArrayList<Notice> selectList(PageInfo pi);
+	ArrayList<Notice> selectList(PageInfo pi, String aptName);
 	
 	//공지사항 상세조회
 	Notice selectNotice(int nNo);
@@ -40,6 +40,15 @@ public interface NoticeService {
 	
 	//댓글 삭제
 	int commentUpdate(int rNo);
+
+	//공지사항 삭제
+	int deleteNotice(int nNo);
+
+	//공지사항 검색키워드에 따른 전체 수 가져오기
+	int getSearchResultListCount(Notice n);
+
+	//공지사항 검색한 리스트 가져오기
+	ArrayList<Notice> selectSearchResultList(Notice n, PageInfo pi);
 
 	
 }

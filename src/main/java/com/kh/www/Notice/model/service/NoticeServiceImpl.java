@@ -26,13 +26,13 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	
 	 @Override //공지사항 전체 리스트 갯수 가져오기
-	public int getNoticeListCount() { 
-		return nDAO.getNoticeListCount(sqlSession);
+	public int getNoticeListCount(String aptName) { 
+		return nDAO.getNoticeListCount(sqlSession, aptName);
 	}
 	 
 	 @Override //공지사항 리스트 페이지 가져오기
-	public ArrayList<Notice> selectList(PageInfo pi) {
-		return nDAO.selectList(sqlSession, pi);
+	public ArrayList<Notice> selectList(PageInfo pi, String aptName) {
+		return nDAO.selectList(sqlSession, pi, aptName);
 	}
 	
 	@Override //공지사항 상세조회
@@ -64,6 +64,11 @@ public class NoticeServiceImpl implements NoticeService {
 		return nDAO.updateNotice_Content(sqlSession, n);
 	}
 	
+	@Override //공지사항 삭제
+	public int deleteNotice(int nNo) {
+		return nDAO.deleteNotice(sqlSession, nNo);
+	}
+	
 	@Override //댓글 리스트 가져오기
 	public ArrayList<Comment> noticeCommentList(int nNo) {
 		return nDAO.NoticeCommentList(sqlSession, nNo);
@@ -82,5 +87,15 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override //댓글 삭제
 	public int commentUpdate(int rNo) {
 		return nDAO.commentUpdate(sqlSession, rNo);
+	}
+	
+	@Override //공지사항 검색키워드에 따른 전체 수 가져오기
+	public int getSearchResultListCount(Notice n) {
+		return  nDAO.getSearchResultListCount(sqlSession, n);
+	}
+	
+	@Override //공지사항 검색한 리스트 가져오기
+	public ArrayList<Notice> selectSearchResultList(Notice n, PageInfo pi) {
+		return nDAO.selectSearchResultList(sqlSession, n, pi);
 	}
 }

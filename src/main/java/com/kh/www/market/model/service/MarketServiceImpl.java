@@ -46,12 +46,34 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public Market selectMarketList(int boardNo) {
-		return marketDAO.selectMarketList(sqlSession, boardNo);
+		
+		Market ma = null;
+		int result = marketDAO.upCount(sqlSession, boardNo);
+		
+		if(result > 0) {
+			ma = marketDAO.selectMarketList(sqlSession, boardNo);
+		}
+		return ma;
 	}
 
 	@Override
 	public int deleteMarket(int boardNo) {
 		return marketDAO.deleteMarket(sqlSession, boardNo);
+	}
+
+	@Override
+	public Market selectUpdateMarket(int boardNo) {
+		return marketDAO.selectUpdateMarket(sqlSession, boardNo);
+	}
+
+	@Override
+	public int updateMarket(Market ma) {
+		return marketDAO.updateMarket(sqlSession, ma);
+	}
+
+	@Override
+	public int updatePrice(Market ma) {
+		return marketDAO.updatePrice(sqlSession, ma);
 	}
 
 }

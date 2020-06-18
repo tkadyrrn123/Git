@@ -40,7 +40,7 @@
 	
 	.cTitle{margin-left: 170px; font-size: 30px; font-weight:bold; margin-top: 40px;}
 	#etc{display: inline-block;} 
- 	.textarea{margin-top: 40px; width: 80%; margin-left: 190px; min-height: 200px; border:none; font-size: 16px;}
+ 	.textarea{margin-top: 40px; width: 80%; margin-left: 190px; min-height: 100px; border:none; font-size: 16px;} 
  	
  	 textarea{ resize:none;}
 
@@ -69,8 +69,12 @@
 	top: 220px;
 	color: white;
 	font-size: 1.5em;
+	
 }
-
+	#updatebtn{margin-left: 855px;width:90px;}
+	#canclebtn{margin-bottom:30px;}
+	#curPeople{readonly; background:none; border:none; margin-left: 52px; margin-top: 20px; font-size:30px; height:40px;}
+	#curPeople:focus {outline: none;}
 </style> 
  
   
@@ -85,7 +89,7 @@
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">동호회 수정 페이지</b>
 	<div id= all>
-		<form action="updateClub" method="POST">
+		<form action="updateClub.cb" method="POST">
 		<div id= menu>
 			동호회 수정 페이지
 		</div>
@@ -95,23 +99,30 @@
 
 			
 			<div id=sellPic>
-				<img id=img src="${ pageContext.servletContext.contextPath }/resources/images/01.png"/>
+				<img id=img src="${ pageContext.servletContext.contextPath }/resources/clubFiles/${ c.fileName }"/>
+				<input type="hidden" name="fileName" value="${ c.fileName }">
+				<input type="hidden" name="boardNo" value="${c.boardNo }">
 			</div>
 			
 			
 			<div id="infoBox">
-				<textarea name="clubName"  id="title" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; " required>누구나 손쉽게 따라하는 재즈 피아노 동호회</textarea>
+				<textarea name="clubName"  id="title" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; " required>${ c.clubName }</textarea>
 				<div id="line4"></div>
 				
 				<div id="name">작성자  </div>		
 					
-				<div id="nameInput">송도훈</div>
+				<div id="nameInput">${ c.nickName }</div>
+				<input type="hidden" name="nickName" value="${ c.nickName }">
 					
 				<div id="count">총 모집 인원  </div>
 				
-				<textarea  name="maxPeople"  id="countInput">20</textarea>
-				
+				<textarea  name="maxPeople"  id="countInput">${ c.maxPeople }</textarea>
 
+				
+				<div id="count"> 현재 인원  </div>
+				
+				<textarea  name="clubPeople"  id="curPeople" readonly >${ c.clubPeople }</textarea>
+				
 			</div>
 			
 			
@@ -121,84 +132,19 @@
 			<div id="line2"></div>
 		<div id="content2">
 			<div class="cTitle" id="intro">동호회 소개</div>
-			<textarea name="clubIntro" class="textarea" id="introInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
-'듣고 싶은 음악을 다른 사람이 아니라,
-
-자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
-
-그 생각 하나로 피아노 클래스를 준비했습니다.
-
-한 곡, 두 곡 피아노 연주를 완성시켜 나가며 느끼는 뿌듯함과 행복을 여러분께 전해드리고 싶습니다
-
-피아노에 대해, 악보를 보는 법에 대해 전혀 몰라도 괜찮아요.
-어떤 걸 배우나요?
-악보를 읽는 법부터 시작합니다
-클래스를 통해 제이엠의 자작곡 6가지를 함께 연주해봅니다. 이 때에 모든 곡은 같은 과정을 거쳐 익혀볼 거예요.
-
-피아노를 처음 시작하는 분들의 눈높이에 맞추어 배우는 클래스인만큼, 악보는 화음 및 어려운 운지가 많이 빠지고 멜로디와 간단한 반주 위주 구성으로 선정했습니다.
-건반을 두드리는 모습을 보며 천천히 익힙니다
-			</textarea>
-			
+			<textarea name="clubIntro" class="textarea" id="introInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>${ c.clubIntro }</textarea>			
 			<div class="cTitle" id="plan">동호회 활동 계획</div>
-			<textarea name="clubPlan"  class="textarea" id="planInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
-'듣고 싶은 음악을 다른 사람이 아니라,
-
-자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
-
-그 생각 하나로 피아노 클래스를 준비했습니다.
-
-한 곡, 두 곡 피아노 연주를 완성시켜 나가며 느끼는 뿌듯함과 행복을 여러분께 전해드리고 싶습니다
-
-피아노에 대해, 악보를 보는 법에 대해 전혀 몰라도 괜찮아요.
-어떤 걸 배우나요?
-악보를 읽는 법부터 시작합니다
-클래스를 통해 제이엠의 자작곡 6가지를 함께 연주해봅니다. 이 때에 모든 곡은 같은 과정을 거쳐 익혀볼 거예요.
-
-피아노를 처음 시작하는 분들의 눈높이에 맞추어 배우는 클래스인만큼, 악보는 화음 및 어려운 운지가 많이 빠지고 멜로디와 간단한 반주 위주 구성으로 선정했습니다.
-건반을 두드리는 모습을 보며 천천히 익힙니다
-			</textarea>
+			<textarea name="clubPlan"  class="textarea" id="planInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>${ c.clubPlan }</textarea>
 			<div class="cTitle" id="loction">동호회 활동 장소</div>
-			<textarea name="clubPlace"  class="textarea" id="locationInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
-'듣고 싶은 음악을 다른 사람이 아니라,
-
-자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
-
-그 생각 하나로 피아노 클래스를 준비했습니다.
-
-한 곡, 두 곡 피아노 연주를 완성시켜 나가며 느끼는 뿌듯함과 행복을 여러분께 전해드리고 싶습니다
-
-피아노에 대해, 악보를 보는 법에 대해 전혀 몰라도 괜찮아요.
-어떤 걸 배우나요?
-악보를 읽는 법부터 시작합니다
-클래스를 통해 제이엠의 자작곡 6가지를 함께 연주해봅니다. 이 때에 모든 곡은 같은 과정을 거쳐 익혀볼 거예요.
-
-피아노를 처음 시작하는 분들의 눈높이에 맞추어 배우는 클래스인만큼, 악보는 화음 및 어려운 운지가 많이 빠지고 멜로디와 간단한 반주 위주 구성으로 선정했습니다.
-건반을 두드리는 모습을 보며 천천히 익힙니다
-			</textarea>
+			<textarea name="clubPlace"  class="textarea" id="locationInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>${ c.clubPlace }</textarea>
 			<div class="cTitle" id="etc">기타 사항</div>
-			<textarea name="clubEtc"  class="textarea" id="etcInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>
-'듣고 싶은 음악을 다른 사람이 아니라,
-
-자신의 손으로 직접 연주할 수 있도록 돕고 싶다.'
-
-그 생각 하나로 피아노 클래스를 준비했습니다.
-
-한 곡, 두 곡 피아노 연주를 완성시켜 나가며 느끼는 뿌듯함과 행복을 여러분께 전해드리고 싶습니다
-
-피아노에 대해, 악보를 보는 법에 대해 전혀 몰라도 괜찮아요.
-어떤 걸 배우나요?
-악보를 읽는 법부터 시작합니다
-클래스를 통해 제이엠의 자작곡 6가지를 함께 연주해봅니다. 이 때에 모든 곡은 같은 과정을 거쳐 익혀볼 거예요.
-
-피아노를 처음 시작하는 분들의 눈높이에 맞추어 배우는 클래스인만큼, 악보는 화음 및 어려운 운지가 많이 빠지고 멜로디와 간단한 반주 위주 구성으로 선정했습니다.
-건반을 두드리는 모습을 보며 천천히 익힙니다
-			</textarea>
+			<textarea name="clubEtc"  class="textarea" id="etcInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required>${ c.clubEtc }</textarea>
 			
 
 		</div>
-		
+		<button type="submit" class="btn" id="updatebtn">수정 완료</button>
 		<button type="button" class="btn" id="canclebtn">취소</button>
-		<button type="submit" class="btn" id="updatebtn">수정</button>
+		
 
 
 		</form>
@@ -212,8 +158,12 @@
 		});
 		
 		$('#canclebtn').on('click',function(){
+			<c:url var="can" value="clubDetail.cb">
+				<c:param name="boardNo" value="${ c.boardNo }"></c:param>
+				<c:param name="clubName" value="${ c.clubName }"></c:param>
+			</c:url>
 			if(confirm("수정을 중단하고 이전 페이지로 이동하시겠습니까?")){
-   				location.href="clubDetail.cb";
+   				location.href="${ can }";
 			}
 		});
 

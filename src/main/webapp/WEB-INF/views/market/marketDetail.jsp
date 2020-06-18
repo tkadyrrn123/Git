@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
    #all{margin-top: 20px;}
@@ -16,7 +16,7 @@
 	.sellAll{width: 80%; margin: 40px 0px 0px 200px;}
 
 	#content1{width: 80%; margin-left:100px;}
-/*  	#content2{overflow:scroll;} */
+  	#content2{overflow:scroll; white-space:pre-wrap;} 
 	#content3{width: 65%; margin-left:100px;}
 	#content4{width: 65%; margin-left:100px;} 
 	#content5{width: 61.8%; margin-left:150px;} 
@@ -117,26 +117,20 @@
 			<div class="content_wrap">
 				<div id="status">판매중 : </div>
 				<div id="price">판매가 : ${ma.price}</div>			
-				<div id="content2">
-<!-- 					<textarea id="sellContent" readonly> -->
-<%-- 						${ ma.boardContent } --%>
-<!-- 					</textarea> -->
-					${ ma.boardContent }
-				</div>
+				<div id="content2">${ ma.boardContent }</div>
 			</div>
-		</div>
 		
 		<div id="line2"></div>
 		<c:url var="deleteMarket" value="deleteMarket.ma">
 			<c:param name="boardNo" value="${ma.boardNo}"/>
 		</c:url>
-		<c:url var="updateMarket" value="updateMarket.ma">
+		<c:url var="updateView" value="updateView.ma">
 			<c:param name="boardNo" value="${ma.boardNo}"/>
 			<c:param name="page" value="${page}"/>
 		</c:url>
 		
 		<div id="btn">
-				<button class="btn" id="updateBtn" onclick="location.href='${updateMarket}'">수정</button>
+				<button class="btn" id="updateBtn" onclick="location.href='${updateView}'">수정</button>
 				<button class="btn" id="deleteBtn">삭제</button>
 				<button class="btn" id="listBtn" onclick="location.href='market.ma'" >목록</button>
 		</div>
@@ -212,6 +206,7 @@
 				</div>
 			</div>
 		</div>
+		<jsp:include page="../common/Footer.jsp"/>
 	
 	
 	<script type="text/javascript">

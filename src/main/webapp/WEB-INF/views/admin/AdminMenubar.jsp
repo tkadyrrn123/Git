@@ -23,6 +23,22 @@
     background: #3fb574;
     z-index: 1000;
 }
+#icon{float: right; margin: 15px;}
+#icon .fa-sign-out-alt{font-size: 20px; color: white;}
+#pagename{
+	background: #2f409f;
+    height: 100%;
+    float: left;
+    width: 200px;
+    padding: 0 0 0 50px;
+    text-align: center;
+}
+#pagename > a {
+	vertical-align: -18px;
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+}
 #menuBtn{
 	background: url(resources/images/menu-cl.png) 50% 50% no-repeat #22905d;
     width: 50px;
@@ -59,7 +75,7 @@
     box-shadow: 2px 0 2px rgba(150,150,150,0.5);
     z-index: 999;
 }
-.slide_menu li{text-align: center; line-height: 60px; border-bottom: 1px solid rgb(255,255,255,0.5);}
+.slide_menu li{text-align: center; line-height: 60px; border-bottom: 1px solid rgb(255,255,255,0.5); cursor: pointer;}
 .slide_menu label{cursor: pointer; font-weight: 900; font-size: 15px;}
 /* 슬라이드 메뉴 토글클래스 */
 .slidetoggle{display: block;}
@@ -73,7 +89,7 @@
 <body>
 	<div id="top">
 		<button id="menuBtn"></button>
-		<div id="pagename"><a href="#">ADMINPAGE</a></div>
+		<div id="pagename"><a href="adminMain.adm">ADMINPAGE</a></div>
 		<div id="icon"><i class="fas fa-sign-out-alt"></i></div>
 	</div>
 	
@@ -82,14 +98,14 @@
 			<li><label>HOME</label></li>
 			<li class="dropdown"><label>회원 관리</label>
 				<ul class="sub" >
-					<li>- 전체 회원 목록</li>
-					<li>- 가입 신청 목록</li>
+					<li onclick="location.href='MemberList.adm'">- 전체 회원 목록</li>
+					<li onclick="location.href='AcceptList.adm'">- 가입 신청 목록</li>
 				</ul>
 			</li>
 			<li class="dropdown"><label>아파트 관리</label>
 				<ul class="sub" >
-					<li>- 전체 아파트 목록</li>
-					<li>- 아파트 신청 목록</li>
+					<li onclick="location.href='ApartList.adm'">- 전체 아파트 목록</li>
+					<li onclick="location.href='ApartAccept.adm'">- 아파트 신청 목록</li>
 				</ul>
 			</li>
 		</ul>
@@ -113,6 +129,7 @@
 		$('#menuBtn').click(function(){
 			$('.slide_menu').toggleClass('slidetoggle');
 			$('#container').toggleClass('container_small');
+			$('.footer-limiter').toggleClass('container_small');
 		});
 		
 	});

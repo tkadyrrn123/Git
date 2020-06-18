@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.www.club.model.dao.ClubDAO;
 import com.kh.www.club.model.vo.Club;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Service("cService")
@@ -36,8 +37,8 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
-	public int insertBoard() {
-		return cDAO.insertBoard(sqlSession);
+	public int insertBoard(String writer) {
+		return cDAO.insertBoard(sqlSession, writer);
 	}
 
 	@Override
@@ -46,8 +47,8 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
-	public int deleteClub() {
-		return cDAO.deleteClub(sqlSession);
+	public int deleteClub(Integer boardNo) {
+		return cDAO.deleteClub(sqlSession, boardNo);
 	}
 
 	@Override
@@ -59,5 +60,23 @@ public class ClubServiceImpl implements ClubService {
 	public int insertClubMember(HashMap m) {
 		return cDAO.insertClubMember(sqlSession, m);
 	}
+
+	@Override
+	public int insertComment(Comment c) {
+		return cDAO.insertComment(sqlSession, c);
+	}
+
+	@Override
+	public ArrayList<Comment> selectComment(int boardNo) {
+		return cDAO.selectComment(sqlSession, boardNo);
+	}
+
+	@Override
+	public int updateClub(Club c) {
+		return cDAO.updateClub(sqlSession, c);
+	}
+
+
+
 
 }

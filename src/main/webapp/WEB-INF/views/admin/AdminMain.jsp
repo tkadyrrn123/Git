@@ -18,15 +18,6 @@ body{
     height: 100%;
     position: relative;
 }
-
-#icon{float: right; margin: 15px;}
-#icon .fa-sign-out-alt{font-size: 20px; color: white;}
-#pagename > a {
-	vertical-align: -18px;
-    font-size: 20px;
-    color: white;
-    text-decoration: none;
-}
 #wrapper{min-height: 480px;}
 #container{
     margin-top: 100px;
@@ -118,7 +109,7 @@ marquee>b{font-size: 20px;}
 				<div>
 					<c:choose>
 						<c:when test="${newCount[0] ne 0 or newCount[1] ne 0}">
-						<marquee behavior=alternate>총 신청건수 <b>${newCount[0]+newCount[1]}</b>건 ( 회원가입 : <b>${newCount[0]}</b>건, 아파트 신청 : <b>${newCount[1]}</b>건) </marquee>
+						<marquee behavior=alternate>총 신청건수 <b>${newCount[0]+newCount[1]}</b>건 ( 관리자 회원가입 : <b>${newCount[0]}</b>건, 아파트 신청 : <b>${newCount[1]}</b>건) </marquee>
 						</c:when>
 						<c:when test="${newCount[0] eq 0 and newCount[1] eq 0}">
 						<marquee behavior=alternate>신청한 회원이나 아파트가 없습니다.</marquee>
@@ -127,15 +118,15 @@ marquee>b{font-size: 20px;}
 				</div>
 				<div class="container_content">
 					<section>
-						<h2>전체가입회원 목록</h2>
-						<div class="all_list2 all_list">총 회원 ${mall.allMember}명 중 승인회원 ${mall.accept-mall.delete}명, 미승인회원 ${mall.disaccept}명, 탈퇴 ${mall.delete}명</div>
+						<h2>최근 회원가입 5건</h2>
+						<div class="all_list2 all_list">총 회원 ${mall.allMember}명 중 승인회원 ${mall.accept-mall.delete}명, 미승인회원 ${mall.disaccept}명, 탈퇴회원 ${mall.delete}명</div>
 						<table>
 							<thead>
 								<tr>
 									 <th style="width: 100px;">회원아이디</th>
 							         <th style="width: 100px;">이름</th>
 							         <th style="width: 100px;">닉네임</th>
-							         <th style="width: 60px;">전화번호</th>
+							         <th style="width: 110px;">전화번호</th>
 							         <th style="width: 60px;">이메일</th>
 							         <th style="width: 400px;">아파트</th>
 							         <th style="width: 70px;">동/호수</th>
@@ -146,6 +137,13 @@ marquee>b{font-size: 20px;}
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty mlist }">
+									<tr>
+										<td colspan="11" style="text-align: center; padding: 100px 0 !important;">
+											자료가 없습니다.
+										</td>
+									</tr>
+								</c:if>
 								<c:forEach var="m" items="${mlist}">
 									<tr>
 										<td>${m.userId}</td>
@@ -166,24 +164,23 @@ marquee>b{font-size: 20px;}
 										<td>${m.status}</td>
 									</tr>
 								</c:forEach>
-								
 							</tbody>
 						</table>
-						<div class="userlist btnList"><a>전체 회원 목록</a></div>
+						<div class="userlist btnList"><a href="MemberList.adm">전체 회원 목록</a></div>
 					</section>
 				</div>
 			
 			
 				<div class="container_content">
 					<section>
-						<h2>전체 아파트 목록</h2>
-						<div class="all_list2 all_list">전체아파트 ${aall.allMember}개 중 승인회원 ${aall.accept-aall.delete}개, 미승인회원 ${aall.disaccept}개, 탈퇴 ${aall.delete}개</div>
+						<h2>최근 아파트가입 5건</h2>
+						<div class="all_list2 all_list">총 아파트 ${aall.allMember}개 중 승인아파트 ${aall.accept-aall.delete}개, 미승인아파트 ${aall.disaccept}개, 탈퇴 아파트 ${aall.delete}개</div>
 						<table>
 							<thead>
 								<tr>
 									 <th scope="col" style="width: 10px;">번호</th>
-							         <th scope="col" style="width: 100px;">아파트명</th>
-							         <th scope="col" style="width: 400px;">주소</th>
+							         <th scope="col" style="width: 200px;">아파트명</th>
+							         <th scope="col" style="width: 300px;">주소</th>
 							         <th scope="col" style="width: 30px;">동(수)</th>
 							         <th scope="col" style="width: 100px;">가입일</th>
 							         <th scope="col" style="width: 100px;">전화번호</th>
@@ -192,6 +189,13 @@ marquee>b{font-size: 20px;}
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty alist }">
+									<tr>
+										<td colspan="8" style="text-align: center; padding: 100px 0 !important;">
+											자료가 없습니다.
+										</td>
+									</tr>
+								</c:if>
 								<c:forEach var="a" items="${alist}">
 									<tr>
 										<td>${a.id}</td>
@@ -205,17 +209,16 @@ marquee>b{font-size: 20px;}
 										<td>${a.tel}</td>
 										<td>${a.accept}</td>
 										<td>${a.delete}</td>
-										
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-						<div class="userlist btnList"><a>전체 아파트 목록</a></div>
+						<div class="userlist btnList"><a href='ApartList.adm'>전체 아파트 목록</a></div>
 					</section>
 				</div>
 				
-			<jsp:include page="../common/Footer.jsp"/>
 		</div>
+			<jsp:include page="../common/Footer.jsp"/>
 	</div>
 </body>
 </html>

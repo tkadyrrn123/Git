@@ -79,9 +79,51 @@
 		<result property="fileName" column="file_name"/>	
 	</resultMap>
 	
+	<update id="upCount">
+		update tb_board
+		set board_count = board_count + 1
+		where board_no = #{boardNo}
+	</update>
+	
+	
 	<update id="deleteMarket">
 		update tb_board
 		set board_delete='Y'
 		where board_no = #{boardNo}
+	</update>
+	
+	<select id="selectUpdateMarket" resultMap="maUpdateViewResultSet">
+		select board_no, b.board_title, b.board_content, m.market_price, m.sale_yn, b.create_date,b.board_count,f.file_name,
+				u.nickname, u.user_file
+		from tb_market m
+			 join tb_board b using(board_no)
+			 join tb_file f using(board_no)
+			 join tb_user u using(user_id)
+		where b.board_delete ='N' and board_no = #{boardNo}
+	</select>
+	
+	<resultMap type="Market" id="maUpdateViewResultSet">
+		<id property="boardNo" column="board_no"/>
+		<result property="boardTitle" column="board_title"/>
+		<result property="boardContent" column="board_content"/>
+		<result property="price" column="market_price"/>
+		<result property="saleStatus" column="SALE_YN"/>
+		<result property="createDate" column="create_date"/>
+		<result property="boardCount" column="board_count"/>
+		<result property="fileName" column="file_name"/>
+		<result property="nickName" column="nickname"/>
+		<result property="userFile" column="user_file"/>
+	</resultMap>
+	
+	<update id="updateMarket">
+		update tb_board  
+		set board_title=#{boardTitle}, board_content=#{boardContent}
+		where board_no=#{boardNo}
+	</update>
+	
+	<update id="updatePrice">
+		update tb_market
+		set market_price=#{price}
+		where board_no=#{boardNo}
 	</update>
 </mapper>

@@ -25,14 +25,16 @@
     <select id="getNoticeListCount" resultType="_int">
 		select count(*)
 		from tb_notice
-		where notice_delete = 'N'
+			  join tb_user using(user_id)
+		where notice_delete = 'N' and apt_name = #{aptName}
 	</select>
 	
 	<!-- 공지사항 리스트 페이지 가져오기 -->
 	<select id="selectList" resultMap="noticeResultSet">
 		select *
 		from tb_notice
-		where notice_delete = 'N'
+			 join tb_user using(user_id)
+		where notice_delete = 'N' and apt_name = #{aptName}
 		order by notice_no desc
 	</select>
 	
@@ -87,23 +89,23 @@
 	<!-- 공지사항 업데이트 / 글만 업데이트(노티스테이블)-->
 	<update id="updateNotice_tb_notice">
 		update tb_notice
-		set notice_title = #{nTitle}, notice_content = #{nContent}, notice_date = SYSDATE
+		set notice_title = #{nTitle}, notice_content = #{nContent}
 		where notice_no = #{nNo}
 	</update>
 	
-	<!-- 공지사항 삭제 아직! -->
-<!-- 	<update id="deleteBoard"> -->
-<!-- 		update board -->
-<!-- 		set b_status = 'N' -->
-<!-- 		where bId=#{bId} -->
-<!-- 	</update> -->
+	<!-- 공지사항 삭제 -->
+	<update id="deleteNotice">
+		update tb_notice
+		set NOTICE_DELETE = 'Y'
+		where NOTICE_NO = #{nNo}
+	</update>
 	
 	<!-- 댓글리스트 불러오기 -->
 	<select id="NoticeCommentList" resultMap="replyResultSet">
 		select reply_no, notice_no, user_id, reply_content, comment_date, decyn, nickname, user_file
 		from tb_comment
            join tb_user using(user_id)
-		where notice_no = #{nNo} and comments_delete = 'N'  
+		where notice_no = #{nNo} and comments_delete = 'N'
         order by reply_no desc
 	</select>
 	
@@ -138,5 +140,42 @@
 		set COMMENTS_DELETE = 'Y'
 		where REPLY_NO = #{rNo}
 	</update>
+	
+	<!-- 공지사항 검색키워드에 따른 전체 수 가져오기-->
+	<select id="getSearchResultListCount" resultType="_int">
+		select count(*)
+		from tb_notice 
+			join tb_user using(user_id)
+		where notice_delete = 'N'
+		<if test="userId != null">
+			and user_id = #{userId}
+		</if>
+		<if test="nTitle != null">
+			and notice_title like '%' || #{nTitle} || '%'
+		</if>
+		<if test="nContent != null">
+			and notice_Content like '%' || #{nContent} || '%'
+		</if>
+	</select>
+	
+	<!-- 공지사항 검색한 리스트 가져오기 -->
+	<select id="selectSearchResultList" resultMap="noticeResultSet">
+		select *
+		from tb_notice
+			join tb_user using(user_id)
+		where notice_delete = 'N'
+		<choose>
+			<when test="userId != null">
+				and user_id = #{userId}
+			</when>
+			<when test="nTitle != null">
+				and notice_title like '%' || #{nTitle} || '%'
+			</when>
+			<otherwise>
+				and notice_Content like '%' || #{nContent} || '%'
+			</otherwise>
+		</choose>
+		order by notice_no desc
+	</select>
 	
 </mapper>

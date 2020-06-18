@@ -18,6 +18,9 @@ public class Notice {
 	private String noticeNickname;//유저테이블 닉네임
 	private String noticeFile;//유저테이블 프로필 사진
 	
+	private String nTotal; //전체검색 키워드
+	private String nDong; // 관리자 동 키워드
+	
 	public Notice() {}
 
 	public Notice(int nNo, String userId, String nTitle, String nContent, int nCount, Date nCreateDate,
@@ -51,6 +54,15 @@ public class Notice {
 		this.renameFileName = renameFileName;
 		this.noticeNickname = noticeNickname;
 		this.noticeFile = noticeFile;
+	}
+	
+	public Notice(String userId, String nTitle, String nContent, String nTotal, String nDong) {
+		super();
+		this.userId = userId;
+		this.nTitle = nTitle;
+		this.nContent = nContent;
+		this.nTotal = nTotal;
+		this.nDong = nDong;
 	}
 
 	public int getnNo() {
@@ -148,12 +160,31 @@ public class Notice {
 	public void setNoticeFile(String noticeFile) {
 		this.noticeFile = noticeFile;
 	}
+	
+	
+	public String getnTotal() {
+		return nTotal;
+	}
+
+	public void setnTotal(String nTotal) {
+		this.nTotal = nTotal;
+	}
+
+	public String getnDong() {
+		return nDong;
+	}
+
+	public void setnDong(String nDong) {
+		this.nDong = nDong;
+	}
 
 	@Override
 	public String toString() {
 		return "Notice [nNo=" + nNo + ", userId=" + userId + ", nTitle=" + nTitle + ", nContent=" + nContent
 				+ ", nCount=" + nCount + ", nCreateDate=" + nCreateDate + ", nModifyDate=" + nModifyDate + ", nStatus="
 				+ nStatus + ", originalFileName=" + originalFileName + ", renameFileName=" + renameFileName
-				+ ", noticeNickname=" + noticeNickname + ", noticeFile=" + noticeFile + "]";
+				+ ", noticeNickname=" + noticeNickname + ", noticeFile=" + noticeFile + ", nTotal=" + nTotal
+				+ ", nDong=" + nDong + "]";
 	}
+
 }

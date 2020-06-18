@@ -19,4 +19,10 @@ public interface MarketService {
 	Market selectMarketList(int boardNo);
 
 	int deleteMarket(int boardNo);
+
+	Market selectUpdateMarket(int boardNo);
+
+	int updateMarket(Market ma);
+
+	int updatePrice(Market ma);
 }

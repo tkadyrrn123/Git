@@ -40,9 +40,27 @@ public class MarketDAO {
 		return sqlSession.selectOne("marketMapper.selectMarketList", boardNo);
 	}
 
+	public int upCount(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("marketMapper.upCount", boardNo);
+	}
+	
 	public int deleteMarket(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.update("marketMapper.deleteMarket",boardNo);
 	}
+
+	public Market selectUpdateMarket(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("marketMapper.selectUpdateMarket", boardNo);
+	}
+
+	public int updateMarket(SqlSessionTemplate sqlSession, Market ma) {
+		return sqlSession.update("marketMapper.updateMarket", ma);
+	}
+
+	public int updatePrice(SqlSessionTemplate sqlSession, Market ma) {
+		return sqlSession.update("marketMapper.updatePrice", ma);
+	}
+
+
 	
 
 }

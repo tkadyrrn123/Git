@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mainMapper">
+	<select id="getRealNoticeList" resultMap="noticeResultSet">
+		<![CDATA[
+		select *
+		from
+		(select *
+		from tb_notice
+		order by notice_date desc)
+		where rownum < 6 and notice_delete = 'N'
+		]]>
+	</select>
+	<select id="getRealFreeBoard" resultMap="boardResultSet">
+		<![CDATA[
+		select *
+		from
+		(select board_no, board_title, board_content, create_date, user_id, board_count, board_delete
+		from tb_free
+		     join tb_board using(board_no)
+		where board_delete = 'N'
+		order by create_date desc)
+		where rownum < 6
+		]]>
+	</select>
+	<select id="getRealClub" resultMap="clubResultSet">
+		<![CDATA[
+		select *
+		from
+		(select club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name
+		from tb_club
+			join tb_board using(board_no)
+            left join tb_file using(board_no) 
+		where board_delete = 'N'
+		order by create_date desc)
+		where rownum < 6
+		]]>
+	</select>
+	<resultMap type="Notice" id="noticeResultSet">
+		<id property="nNo" column="NOTICE_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="nTitle" column="NOTICE_TITLE"/>
+		<result property="nContent" column="NOTICE_CONTENT"/>
+		<result property="nCreateDate" column="NOTICE_DATE"/>
+		<result property="nStatus" column="NOTICE_DELETE"/>
+		<result property="nCount" column="NOTICE_COUNT"/>
+ 		<result property="renameFileName" column="FILE_NAME"/>
+	</resultMap>
+	<resultMap type="FreeBoard" id="boardResultSet">
+		<id property="boardNo" column="board_No"/>
+		<result property="boardTitle" column="board_Title"/>
+		<result property="boardContent" column="board_Content"/>
+		<result property="createDate" column="create_Date"/>
+		<result property="userId" column="user_Id"/>
+		<result property="boardCount" column="board_Count"/>
+		<result property="boardDelete" column="board_Delete"/>
+	</resultMap>
+	<resultMap type="Club" id="clubResultSet">
+		<id property="clubName" column="CLUB_NAME"/>
+		<result property="boardNo" column="BOARD_NO"/>
+		<result property="clubIntro" column="CLUB_INTRO"/>
+		<result property="clubPlan" column="CLUB_PLAN"/>
+		<result property="clubPlace" column="CLUB_PLACE"/>
+		<result property="clubEtc" column="CLUB_ETC"/>
+		<result property="maxPeople" column="MAX_PEOPLE"/>
+		<result property="endYn" column="END_YN"/>
+		<result property="fileName" column="FILE_NAME"/>
+	</resultMap>
+</mapper>
