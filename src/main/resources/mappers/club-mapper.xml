@@ -16,7 +16,7 @@
 			join tb_board b using(board_no)
             join tb_user u using(user_id)
             left join tb_file f using(board_no) 
-            join tb_club_join j using(club_name)
+            left join tb_club_join j using(club_name)
 		where board_delete = 'N'
         group by club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name, nickname
 		order by board_no desc
@@ -42,7 +42,7 @@
 			join tb_board b using(board_no)
             join tb_user u using(user_id)
             left join tb_file f using(board_no) 
-            join tb_club_join j using(club_name)
+            left join tb_club_join j using(club_name)
         where board_delete = 'N' and club_name = #{clubName}
         group by club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name, nickname
 	</select>
@@ -97,6 +97,7 @@
 		<result property="rState" column="COMMENTS_DELETE"/>
 		<result property="userFile" column="USER_FILE"/>
 		<result property="nickname" column="NICKNAME"/>
+		<result property="rState" column="COMMENTS_DELETE"/>
 	</resultMap>
 	
 	<update id="updateClub">
@@ -121,6 +122,14 @@
 		set comment_date = sysdate, reply_content = #{rContent}
 		where reply_no = #{rNo}
 	</update>
+	
+	<update id="clubMapper.deleteComment">
+		update tb_comment
+		set comments_delete = 'Y'
+		where reply_no = #{rNo}
+	</update>
+	
+	
 	
 	
 </mapper>
