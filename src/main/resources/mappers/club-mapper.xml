@@ -129,7 +129,25 @@
 		where reply_no = #{rNo}
 	</update>
 	
+	<select id="clubMapper.selectComment2" resultMap="Comment2ResultSet">
+		select REPLY_NO, REREPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
+		from tb_comment_comment
+			join tb_user using(user_ID)
+		where comments_delete = 'N'
+		order by REPLY_NO DESC
+	</select>
 	
-	
+		<resultMap type="Comment" id="Comment2ResultSet">
+		<id property="rrNo" column="REREPLY_NO"/>
+		<result property="rNo" column="REPLY_NO"/>
+		<result property="noticeNo" column="NOTICE_NO"/>
+		<result property="rUserId" column="USER_ID"/>
+		<result property="rContent" column="REPLY_CONTENT"/>
+		<result property="rCreateDate" column="COMMENT_DATE"/>
+		<result property="rDecYN" column="DECYN"/>
+		<result property="rDecYN" column="COMMENTS_DELETE"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="userFile" column="USER_FILE"/>
+	</resultMap>
 	
 </mapper>

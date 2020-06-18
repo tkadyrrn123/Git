@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.www.club.model.vo.Club;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 public interface ClubService {
@@ -38,4 +39,6 @@ public interface ClubService {
 	int updateComment(Comment c);
 
 	int deleteComment(int rNo);
+
+	ArrayList<Comment2> selectComment2();
 }

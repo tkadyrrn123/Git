@@ -60,6 +60,9 @@
 	.btn:hover{background:skyblue;}
  	#replyInput{width:80% ; margin: 100px 0px 0px 200px; border: 1px solid black; height: 184px; } 
  	#rWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px;}  
+ 	
+ 	#replyInput2{width:72% ; margin: 10px 0px 0px 300px; border: 1px solid black; height: 204px; background:skyblue;} 
+ 	#rrWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px; background:skyblue;}  
  	 
  	#rProfile{width: 40px; height:40px; margin-top: 10px;}
  	#rImg{ border-radius: 50%;  width: 100%; height:100%; }  
@@ -71,13 +74,11 @@
  	#insertBtn{width: 70px;  margin-top: 20px;} 
  	
  	
- 	.reply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; }  
-
- 	
- 	#rreply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; }  
+ 
  	
  	#content4 textarea{width: 75%; margin: 20px 0px 0px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
- 	
+ 	 	.reply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; }  
+ 	.rreply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; } 
 /*  	#rUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 500px;}  
  	#rDeleteBtn{width: 70px;  vertical-align: middle; margin-top: 20px;}  */ 
  	
@@ -228,7 +229,7 @@ ${ c.clubEtc }
 				</div>
 				<button class="btn" id="insertBtn">댓글 등록</button>
 
-				<textarea id="rWrite" style="overflow: hidden; overflow-wrap: break-word; resize: none;" required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
+				<textarea class="rWrite" id="rWrite" style="overflow: hidden; overflow-wrap: break-word; resize: none;" required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
 				<span style="color:#aaa;" id="counter">(0 / 최대 200자)</span>
 			</div>
 		</div> 
@@ -288,9 +289,12 @@ ${ c.clubEtc }
 					</div>
 
 						<textarea class="rrContent${ status.index }" style="border: 1px solid black;">${b.rContent}</textarea>
- 
-
 				</div>
+				
+	
+				
+				
+				
   				<script>
 				$(function () {
 					$('.rContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 32  );
@@ -324,36 +328,44 @@ ${ c.clubEtc }
 	
 			   		
 				</script>
+				
+				
+		<!-- 대댓글 -->
+		<div id="content5">
+			<c:forEach var="a" items="${comment2}" varStatus="status">
+			<div class="rreply" id="rreply${ status.index }">
+				<div id="info2">
+					<c:if test="${!empty b.userFile }">
+						<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${a.userFile}"></div>
+					</c:if>
+					<c:if test="${empty b.userFile }"> 
+						<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+					</c:if>
+					<div class="info"  id="rWriter">${a.nickname}</div>
+					<div class="info"  id="replyDate">${a.rCreateDate}</div>
+					<c:if test="${loginUser.userId eq a.rUserId }">
+						<button type="button" class="btn" id="rrUpdateBtn${ status.index }">수정</button> 
+						<button type="button" class="btn" id="rrDeleteBtn${ status.index }">삭제</button>
+						<div style="display:none">${a.rNo}</div>
+					</c:if> 
+				</div>
+
+				<textarea class="rContent${ status.index }" readonly >${a.rContent}</textarea>
+			</div>
+			</c:forEach>
+		</div>		
+				
+				
 			</c:forEach>
 		</div>
-				
+	</div>		
 			
-		</div>		
-		
-		<div id="content5">
-			<div id="rreply">
-				<div id="info2">
-					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
-					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="replyDate">2020-05-27 03:03</div>
-					<button class="btn" id="rrUpdateBtn">수정</button> 
-					<button class="btn" id="rrDeleteBtn">삭제</button> 
-				</div>
-				<div width="100%">
-					<p id="rContent" readonly>010-1234-5678 쪽으로 연락 주세요</p>
-				</div> 
-				<div>
-					<button class="btn" id="replyBtn">답글</button>
-					<div class="likeBtn" id="likeBtn3">
-						<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like3.png">
-					</div>
-					<div class="likeBtn2" id="likeBtn4">
-						<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like4.png">
-					</div>
-						<div class="likeCount">0</div>
-				</div>
-			</div>
-		</div>
+	
+
+
+
+
+						
 		
 		
 		
@@ -361,9 +373,7 @@ ${ c.clubEtc }
 		
 		
 		
-		
-		
-	</div>
+
 	
 		<jsp:include page="../common/Footer.jsp"/>
 	
@@ -372,23 +382,25 @@ ${ c.clubEtc }
 	<script type="text/javascript">
 	
 		/** 댓글 글자수 제한 **/
-		$('#rWrite').keyup(function (e){
+		$(document).on('keyup','.rWrite', function (e){
 		    var content = $(this).val();
-		    $('#counter').html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
+		    $(this).next().html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
 	
 		    if (content.length > 200){
 		        alert("최대 200자까지 입력 가능합니다.");
 		        $(this).val(content.substring(0, 200));
-		        $('#counter').html("(200 / 최대 200자)");
+		        $(this).next().html("(200 / 최대 200자)");
 		    }
-		}).keydown(function (e){
+		});
+		
+		$(document).on('keydown','.rWrite', function (e){
 			var content = $(this).val();
-		    $('#counter').html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
+		    $(this).next().html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
 	
 		    if (content.length > 200){
 		        alert("최대 200자까지 입력 가능합니다.");
 		        $(this).val(content.substring(0, 200));
-		        $('#counter').html("(200 / 최대 200자)");
+		        $(this).next().html("(200 / 최대 200자)");
 		    }
 		});
 		
@@ -692,11 +704,6 @@ ${ c.clubEtc }
   							
   							var aaaa = $ccontent.prop('scrollHeight');
   							$ccontent.height(aaaa + 110);
-
-  							
-  	 	
-  					
-
   						}
 
   						$('#rWrite').val("");
@@ -705,8 +712,25 @@ ${ c.clubEtc }
    		}
 		
 
-   		
-   		
+   		/* 대댓글 입력창  */
+   		$(document).on('click','#replyBtn', function(){
+   			var $rreplyInsertTable = $(this).parent().parent();
+   			var rreplys = '<div id="replyInput2">' +
+					 '	<div id="info">' +
+					 '		<c:if test="${!empty loginUser.userFile }">' +
+					 '			<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${loginUser.userFile}"></div>' +
+					 '		</c:if>' +
+					 '		<c:if test="${empty loginUser.userFile }">' +
+					 '			<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>' +
+					 '	 	</c:if>' +
+					 '			<div class="info"  id="rWriter">${ loginUser.nickName }</div>' +
+					 '	</div>' +
+					 '	<button class="btn" id="insertBtn">댓글 등록</button>' +
+					 '	<textarea class="rWrite" id="rrWrite" style="border:1px solid black; overflow: hidden; overflow-wrap: break-word; resize: none;" required  placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>'  +
+					 '	<span style="color:#aaa;" id="counter">(0 / 최대 200자)</span>' +
+					 '</div>'
+   			$rreplyInsertTable.after(rreplys);		 
+   		});
 
    		
    		
