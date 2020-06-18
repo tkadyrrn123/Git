@@ -72,6 +72,48 @@ public class FreeBoardController {
 		return mv;
 	}
 	
+	@RequestMapping("sort.fr")
+	public ModelAndView sortFree(HttpSession session, @RequestParam("sortCondition") String sortCondition, 
+							@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		HashMap hm = new HashMap();
+		hm.put("sc", sortCondition);
+		hm.put("aptName", aptName);
+		
+		System.out.println("sort.fr의 hm : "+hm);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = freeService.getListCount(aptName);
+		
+		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+		
+		hm.put("pi", pi);
+		ArrayList<FreeBoard> list = freeService.selectSortResultList(hm);
+		
+		System.out.println("sort.fr의 정렬된 목록 : "+list);
+		
+		if(list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.setViewName("freeBoardList");		
+		} else {
+			throw new FreeBoardException("정렬 실패!");
+		}
+		
+//		if(sortCondition.equals("hits")) {
+//			
+//		}else {
+//			
+//		}
+		return mv;
+	}
+	
 	@RequestMapping("search.fr")
 	public ModelAndView searchFree(@RequestParam(value="page", required=false) Integer page, HttpSession session, ModelAndView mv,
 							@RequestParam(value="searchValue") String searchValue, @RequestParam(value="condition") String condition) {
@@ -88,7 +130,7 @@ public class FreeBoardController {
 		} else if(condition.equals("content")) {
 			sc.setContent(searchValue);
 		}
-		System.out.println("search.fr 의 sc : "+sc);
+	//	System.out.println("search.fr 의 sc : "+sc);
 		
 		HashMap hm = new HashMap();
 		hm.put("aptName", aptName);		
@@ -105,7 +147,7 @@ public class FreeBoardController {
 		
 		ArrayList<FreeBoard> list = freeService.selectSearchResultList(hm, pi);
 
-		System.out.println("search.fr의 list : "+list);
+	//	System.out.println("search.fr의 list : "+list);
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
@@ -305,7 +347,7 @@ public class FreeBoardController {
 	
 	@RequestMapping("commentModify.fr")
     @ResponseBody
-    private int commentModify(@RequestParam int rNo, @RequestParam String rContent) {
+    public int commentModify(@RequestParam int rNo, @RequestParam String rContent) {
         
         Comment comment = new Comment();
         comment.setrNo(rNo);
@@ -314,6 +356,18 @@ public class FreeBoardController {
         return freeService.commentModify(comment);
     }
 
-	
+	@RequestMapping("deleteReply.fr")
+	@ResponseBody
+	public String deleteReply(@RequestParam int rNo) {
+		
+		int result = freeService.deleteReply(rNo);
+		
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new FreeBoardException("댓글 삭제 실패!");
+		}
+		
+	}
 	
 }

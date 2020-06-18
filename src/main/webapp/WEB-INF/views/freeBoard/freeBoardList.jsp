@@ -164,13 +164,14 @@
 	<h2>자유 게시판</h2>
 	</div>
 	<div class="select-box" id="selectBox">
+	
 		  <div class="select-box__current" tabindex="1">
 		    <div class="select-box__value">
 		      <input class="select-box__input" type="radio" id="latest" value="latest" name="sortCondition" checked="checked"/>
 		      <p class="select-box__input-text">최신순</p>
 		    </div>
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="hits" value="hist" name="sortCondition"/>
+		      <input class="select-box__input" type="radio" id="hits" value="hits" name="sortCondition"/>
 		      <p class="select-box__input-text">조회순</p>
 		    </div>
 		    <div class="select-box__value">
@@ -178,6 +179,7 @@
 		      <p class="select-box__input-text">추천순</p>
 		    </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
 		  </div>
+		  
 		  <ul class="select-box__list" style="display:hidden">
 		    <li>
 		      <label class="select-box__option" for="latest" aria-hidden="aria-hidden">최신순</label>
@@ -187,6 +189,12 @@
 		    </li>
 		  </ul>
 	</div>
+	<script>
+		$('.select-box__input').click(function(){
+			var sortCondition = $(this).val();
+			location.href="sort.fr?sortCondition="+sortCondition;
+		});
+	</script>
 	<div class="board_wrab">
         <table>
             <thead>

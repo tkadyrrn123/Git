@@ -37,5 +37,11 @@ public interface FreeBoardService {
 	int getSearchResultListCount(HashMap hm);
 
 	ArrayList<FreeBoard> selectSearchResultList(HashMap hm, PageInfo pi);
+
+	ArrayList<FreeBoard> selectSortResultList(HashMap hm);
+
+	int deleteReply(int rNo);
+
+
 	
 }

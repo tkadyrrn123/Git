@@ -70,8 +70,22 @@ public class FreeBoardDAO {
 
 	public ArrayList<FreeBoard> selectSearchResultList(SqlSessionTemplate sqlSession, HashMap hm, PageInfo pi) {
 		hm.put("pi", pi);
+		System.out.println("selectSearchResultList : " + hm);
 		return (ArrayList)sqlSession.selectList("freeMapper.selectSearchResultList", hm);
 	}
+
+	public ArrayList<FreeBoard> selectSortResultList(SqlSessionTemplate sqlSession, HashMap hm) {
+		System.out.println("selectSortResultList : " + hm);
+		return (ArrayList)sqlSession.selectList("freeMapper.selectSortResultList", hm);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("freeMapper.deleteReply", rNo);
+	}
+
+
+
+
 
 
 }
