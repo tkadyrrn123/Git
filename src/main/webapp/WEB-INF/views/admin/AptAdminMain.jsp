@@ -94,8 +94,9 @@ marquee {
 	background: #4e905f; 
 	color: white;
 	margin-top: 15px;
-	height: 30px;
-	font-size: 16px;
+	height: 28px;
+    font-size: 16px;
+    padding-top: 7px;
 	
 }
 marquee>b{font-size: 20px;}

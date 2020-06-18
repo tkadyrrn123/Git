@@ -287,7 +287,7 @@
 	<select id="AptMemberlistCount" resultType="_int">
 		SELECT COUNT(*) FROM TB_USER WHERE APT_NAME = #{aptName} AND USER_LEVEL = 1
 			<if test="num == 1"></if>
-			<if test="num == 2">AND ACCEPT = 'Y'</if>
+			<if test="num == 2">AND ACCEPT = 'Y' AND USER_DELETE = 'N'</if>
 			<if test="num == 3">AND ACCEPT = 'N'</if>
 			<if test="num == 4">AND USER_DELETE = 'Y'</if>
 	</select>
@@ -295,7 +295,7 @@
 	<select id="AptMemberList" resultMap="MemberResult">
 		SELECT * FROM TB_USER WHERE APT_NAME = #{aptName} AND USER_LEVEL = 1
 		<if test="num == 1"></if>
-		<if test="num == 2">AND ACCEPT = 'Y'</if>
+		<if test="num == 2">AND ACCEPT = 'Y' AND USER_DELETE = 'N'</if>
 		<if test="num == 3">AND ACCEPT = 'N'</if>
 		<if test="num == 4">AND USER_DELETE = 'Y'</if>
 	</select>
@@ -309,7 +309,7 @@
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
 		</if>
-		<if test="num == 2">AND ACCEPT = 'Y'
+		<if test="num == 2">AND ACCEPT = 'Y' AND USER_DELETE = 'N'
 			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
 			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
@@ -341,7 +341,7 @@
 			<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 			<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
 		</if>
-		<if test="num == 2">AND ACCEPT = 'Y'
+		<if test="num == 2">AND ACCEPT = 'Y' AND USER_DELETE = 'N'
 			<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
 			<if test="so.nickName != null">AND NICKNAME LIKE '%' || #{so.nickName} || '%'</if>
 			<if test="so.userName != null">AND USER_NAME LIKE '%' || #{so.userName} || '%'</if>
@@ -409,4 +409,9 @@
 		<if test="so.phone != null">AND PHONE LIKE '%' || #{so.phone} || '%'</if>
 		<if test="so.email != null">AND EMAIL LIKE '%' || #{so.email} || '%'</if>
 	</select>
+	
+	<update id="AdminAptMemberDelete">
+		UPDATE TB_USER SET USER_DELETE='Y'
+		WHERE USER_ID = #{userId}
+	</update>
 </mapper>

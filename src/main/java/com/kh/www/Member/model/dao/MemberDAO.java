@@ -239,6 +239,10 @@ public class MemberDAO {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.AptAdminSearchList", hs, rowBounds);
 	}
+
+	public int AdminAptMemberDelete(SqlSessionTemplate sqlSession, String userId) {
+		return sqlSession.update("memberMapper.AdminAptMemberDelete", userId);
+	}
 	
 	
 	

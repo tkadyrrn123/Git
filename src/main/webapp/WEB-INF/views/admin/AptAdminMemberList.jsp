@@ -6,8 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <title>Insert title here</title>
 <style>
+
 body,html{
 	margin: 0;
     padding: 0;
@@ -60,6 +62,7 @@ tbody td{
     text-align: center;
     line-height: 22px;
 }
+
 tbody tr:nth-child(even){background:#f3f9ef}
 a:link, a:link{color: #000; text-decoration: none;}
 a{cursor: pointer;}
@@ -178,13 +181,66 @@ textarea, select{
 #popup_info{
 	background: white;
     width: 25%;
-    height: 20%;
+    height: 22%;
     position: fixed;
     top: 31%;
     left: 36%;
     border-radius: 10px;
+	text-align: center;
 	
 }
+#popup_layer{
+	position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.5);
+    z-index: 1001; 
+    display: none;
+}
+#popup_info #deleteMsg{
+	margin-top: 10%;
+    font-size: 16px;
+}
+#popup_info .member_btn{
+	box-shadow: 0px 10px 14px -7px #3e7327;
+	background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+	background-color:#77b55a;
+	border-radius:4px;
+	border:1px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #5b8a3c;
+}
+.member_btn:hover {
+	background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+	background-color:#72b352;
+}
+.member_btn:active {
+	position:relative;
+	top:1px;
+}
+#popup_info .left_btn{    
+	margin-right: 6%;
+    margin-top: 4%;
+}
+#popup_info #topbar{
+	background: #2f9f6b;
+    height: 16%;
+    color: white;
+    font-size: 18px;
+    padding-top: 1%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-weight: bold;
+}
+
+
 /*이 2개의 스타일은  토글*/
 #container.container_small{padding-left: 250px;}
 #container.container_small #container_title{padding-left: 280px;}
@@ -314,22 +370,38 @@ textarea, select{
 								</c:forEach>
 							</tbody>							
 						</table>
-						<div id="popup_layer" style="position: fixed; 
-                    top: 0; left: 0; 
-                    width: 100%; height: 100%; 
-                    background: rgba(0,0,0,0.5); z-index: 1001; display: none;">
+						<div id="popup_layer" >
 							<div id="popup_info" >
-								<b></b><p style="display: inline-block;">님을 탈퇴 시키겠습니까?</p>
-								<button style="margin: 0px auto;">탈퇴</button>
+								<div id="topbar">회원 탈퇴</div>
+								<p id="deleteMsg"><b></b>님을 탈퇴 시키겠습니까?</p>
+								<button class="member_btn left_btn">탈퇴</button>
+								<button class="member_btn right_btn">취소</button>
 							</div>
 						</div>
 						<script>
-							$('tbody tr').click(function(){
-								var id = $(this).find('td').eq(0).text();
-								$('#popup_info b').text(id);
-								$('#popup_layer').fadeIn();
-								console.log(id);
-							})
+							
+							if(${num}==2){
+								
+								$('tbody tr').css('cursor', 'pointer');
+								
+								$('tbody tr').click(function(){
+									var num = ${num};
+									var id = $(this).find('td').eq(0).text();
+									$('#popup_info b').text(id);
+									$('#popup_layer').fadeIn();
+									console.log(id);
+									
+									$('.left_btn').click(function(){
+										location.href='AdminAptMemberDelete.adm?id='+id+'&num='+num;
+									});
+									
+									$('.right_btn').click(function(){
+										$('#popup_layer').fadeOut();
+									});
+								});
+							}
+							
+							
 						</script>
 					</section>
 					<!--페이징-->	
