@@ -592,5 +592,14 @@ public class Admincontroller {
 		return "AptAdminAccept";
 	}
 	
+	@RequestMapping("AdminAptMemberDelete.adm")
+	public String AdminAptMemberDelete(@RequestParam("id") String userId, @RequestParam("num") String num,
+									   Model model) {
+		System.out.println(num);
+		mService.AdminAptMemberDelete(userId);
+		
+		model.addAttribute("num", num);
+		return "redirect:AptAdminMemberList.adm";
+	}
 	
 }

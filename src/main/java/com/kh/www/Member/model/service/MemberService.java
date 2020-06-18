@@ -81,5 +81,7 @@ public interface MemberService {
 	int AptAdminSearchCount(SearchOption so, String aptName);
 	//아파트에 속한 승인 검색 리스트
 	ArrayList<Member> AptAdminSearchList(PageInfo pi, SearchOption so, String aptName);
+	// 멤버 탈퇴(관리자)
+	int AdminAptMemberDelete(String userId);
 
 }

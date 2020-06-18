@@ -59,16 +59,19 @@ footer .footer-right a{
 	margin-left: 3px;
 }
 footer .container_small{padding-left: 250px;}
+.footer-right p {margin-bottom: 0;}
+.text{font-size: 20px;}
+.tleft{color: #92a8d1;}
+.tright{margin-left: 20px; color: #f7cac9;}
 </Style>
 </head>
 <body>
 	<footer>
 		<div class="footer-limiter">
 			<div class="footer-right">
-				<a href="#"><i class="fa fa-facebook"></i></a>
-				<a href="#"><i class="fa fa-twitter"></i></a>
-				<a href="#"><i class="fa fa-linkedin"></i></a>
-				<a href="#"><i class="fa fa-github"></i></a>
+				<p><b class="text tleft">이종훈</b> <b class="text tright">임연화</b></p>
+				<p><b class="text tleft">박근오</b> <b class="text tright">김민주</b></p>
+				<p><b class="text tleft">송도훈</b> <b class="text tright">정무지개</b></p>
 			</div>
 
 			<div class="footer-left">

@@ -202,4 +202,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.AptAdminSearchList(sqlSession, pi, so, aptName);
 	}
 
+	@Override
+	public int AdminAptMemberDelete(String userId) {
+		return mDAO.AdminAptMemberDelete(sqlSession, userId);
+	}
+	
+	
+
 }
