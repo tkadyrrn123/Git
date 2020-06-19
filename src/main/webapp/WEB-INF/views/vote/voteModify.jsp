@@ -113,7 +113,7 @@
             	num = ${num+1};
             }
 				function addlist(){
-					const str = '<li>' + num + '. <input type="text" class="vclist" name="vclist"></li>'
+					const str = '<li>' + num + '. <input type="text" class="vclist" name="vclist"></li>';
 					num++;
 					$("#list").append(str); 
 				}
