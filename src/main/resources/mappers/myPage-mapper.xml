@@ -69,13 +69,35 @@
     <resultMap type="MyComment" id="MyCommentResultSet">
     	<id property="replyNo" column="reply_no"/>
     	<result property="boardNo" column="board_no"/>
+    	<result property="noticeNo" column="notice_no"/>
+    	<result property="voteId" column="vote_id"/>
     	<result property="replyContent" column="reply_content"/>
     	<result property="commentDate" column="comment_date"/>
+    	<result property="type" column="type"/>
     </resultMap>
     <select id="getCommentList" resultMap="MyCommentResultSet">
-    	select reply_no, board_no, reply_content, comment_date
-    	from tb_comment
-    	where user_id = #{userId} and comments_delete = 'N'
+    	select c.reply_no, c.board_no, c.notice_no, c.vote_id, c.reply_content, c.comment_date, CASE 
+                                                                WHEN f.board_no != null THEN '자유'
+                                                                WHEN m.board_no != null THEN '중고장터'
+                                                                WHEN cl.board_no != null THEN '동호회'
+                                                                WHEN cn.board_no != null THEN '동호회 공지'
+                                                                WHEN nc.notice_no != null THEN '공지'
+                                                                WHEN v.vote_id != null THEN '투표'
+                                                                END as type
+		from tb_comment c
+		LEFT JOIN tb_free f
+		    ON(c.board_no = f.board_no)
+		LEFT JOIN tb_market m
+		    ON(c.board_no = m.board_no)
+		LEFT JOIN tb_club cl
+		    ON(c.board_no = cl.board_no)
+		LEFT JOIN tb_club_notice cn
+		    ON(c.board_no = cn.board_no)
+		LEFT JOIN tb_notice nc
+		    ON(c.notice_no = nc.notice_no)
+		LEFT JOIN tb_vote v
+		    ON(c.vote_id = v.vote_id)
+		where c.user_id = #{userId} and c.comments_delete = 'N'
     </select>
     <insert id="insertQnA">
     	insert into tb_qna
