@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="voteMapper">
+	<select id="getListCount" resultType="_int">
+		select count(*)
+		from tb_vote v
+		join tb_user u on(v.user_id = u.user_id)
+		where v.delete_yn = 'N' and u.apt_name = #{apt}
+		<if test='sOption == "content"'>
+		and v.vote_name like ('%${search}%')
+		</if>
+		<if test='sOption == "total"'>
+		and (v.vote_name like ('%${search}%') or v.vote_content like ('%${search}%') or v.user_id like ('%${search}%'))
+		</if>
+	</select>
+	<select id="getVoteList" resultMap="VoteResultSet">
+		select *
+		from tb_vote v
+		join tb_user u on(v.user_id = u.user_id)
+		where v.delete_yn = 'N' and u.apt_name = #{apt}
+		<if test='sOption == "content"'>
+		and v.vote_content like ('%${search}%')
+		</if>
+		<if test='sOption == "total"'>
+		and (v.vote_name like ('%${search}%') or v.vote_content like ('%${search}%') or v.user_id like ('%${search}%'))
+		</if>
+		<if test='option == "continue"'>
+		<![CDATA[
+		order by CASE WHEN v.end_date > sysdate THEN 0 ELSE 1 END, v.create_date desc
+		]]>
+		</if>
+		<if test='option == "finish"'>
+		order by v.end_date desc
+		</if>
+		<if test='option == "latest"'>
+		order by v.create_date desc
+		</if>
+	</select>
+	<insert id="insertVote" parameterType="Vote">
+		<selectKey keyProperty="vId" resultType="_int" order="BEFORE">
+			select seq_vote.NEXTVAL from dual
+		</selectKey>
+		insert into tb_vote
+		values(#{vId}, #{userId}, #{vName}, #{vContent}, #{endDate}, default, default, 
+		<if test="overlapYN == null">
+		default
+		</if>
+		<if test="overlapYN != null">
+		'Y'
+		</if>
+		, default)
+	</insert>
+	<insert id="insertVChoice">
+	<!-- 얘는 insert all 써야함 검색하셈 -->
+		insert all 
+		<foreach collection="list" item="vChoice">
+			into tb_vchoice values (GET_SEQ_VCHOICE, #{vChoice.vId}, #{vChoice.vcName})
+		</foreach>
+		select * from dual
+	</insert>
+	<update id="updateCount">
+		update tb_vote
+		set count = count+1
+		where vote_id = #{vId}
+	</update>
+	<select id="selectVote" resultMap="VoteResultSet">
+		select *
+		from tb_vote
+		where vote_id = #{vId}
+	</select>
+	<select id="selectVChoiceList" resultMap="VChoiceResultSet">
+		select *
+		from tb_vchoice
+		where vote_id = #{vId}
+	</select>
+	<select id="selectVInvoteList" resultMap="VInvoteResultSet">
+		select *
+		from tb_invote
+		where 
+		<foreach collection="list" item="vcIdList" separator=" or ">
+			vchoice_id = #{vcIdList}
+		</foreach>
+	</select>
+	<select id="selectWriteUser" resultMap="MemberResultSet">
+		select *
+		from tb_user
+		where user_id = #{userId}
+	</select>
+	<insert id="insertVInvote">
+		insert all
+		<foreach collection="list" item="vInvote">
+			into tb_invote values (#{vInvote.userId}, #{vInvote.vcId})
+		</foreach>
+		select * from dual
+	</insert>
+	<delete id="deleteVInvote">
+		delete from tb_invote
+		where 
+		<foreach collection="list" item="vc" separator=" or ">
+			vchoice_id = #{vc.vcId}
+		</foreach>
+	</delete>
+	<delete id="deleteVChoice">
+		delete from tb_vchoice
+		where vote_id = #{vId}
+	</delete>
+	<delete id="deleteVote">
+		delete from tb_vote
+		where vote_id = #{vId}
+	</delete>
+	<update id="updateVote">
+		update tb_vote
+		set vote_name = #{vName}, vote_content = #{vContent}, end_date = #{endDate}, overlap_yn = #{overlapYN}
+		where vote_id = #{vId}
+	</update>
+	<resultMap type="Vote" id="VoteResultSet">
+		<id property="vId" column="vote_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="vName" column="vote_name"/>
+		<result property="vContent" column="vote_content"/>
+		<result property="createDate" column="create_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="fileName" column="file_name"/>
+		<result property="overlapYN" column="overlap_yn"/>
+		<result property="vCount" column="count"/>
+	</resultMap>
+	<resultMap type="VChoice" id="VChoiceResultSet">
+		<id property="vcId" column="vchoice_id"/>
+		<result property="vId" column="vote_id"/>
+		<result property="vcName" column="vchoice_name"/>
+	</resultMap>
+	<resultMap type="VInvote" id="VInvoteResultSet">
+		<id property="userId" column="user_id"/>
+		<id property="vcId" column="vchoice_id"/>
+	</resultMap>
+	<resultMap type="Member" id="MemberResultSet">
+		<id property="userId" column="USER_ID"/>
+		<result property="userPwd" column="USER_PWD"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="nickName" column="NICKNAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="aptName" column="APT_NAME"/>
+		<result property="aptDong" column="APT_DONG"/>
+		<result property="aptHosu" column="APT_HOSU"/>
+		<result property="userFile" column="USER_FILE"/>
+		<result property="userLevel" column="USER_LEVEL"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="ACCEPT" column="ACCEPT"/>
+		<result property="status" column="USER_DELETE"/>
+	</resultMap>
+</mapper>

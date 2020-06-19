@@ -55,8 +55,11 @@
 						<li onclick="location.href='information.apt'">아파트 위치</li>
 					</ul>
 				</li>
-				<li class="dropdown" onclick="location.href='noticeList.no'"><label>공지사항</label>
-	
+				<li class="dropdown"><label>공지사항</label>
+					<ul class="sub">
+						<li onclick="location.href='noticeList.no'">공지사항</li>
+						<li onclick="location.href='voteList.vo'">주민투표</li>
+					</ul>
 				</li>
 				<li class="dropdown"><label>커뮤니티</label>
 					<ul class="sub">

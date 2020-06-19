@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +37,10 @@
       <h2>&nbsp;투표</h2>
       <hr style="width: 80%; margin-left: 11%"><br>
 
-         <form action="writeVote.vo" method="post" onsubmit="return check();">
+         <form action="voteModify.vo" method="post" onsubmit="return check();">
+         	<!-- vId값, page값 -->
+         	<input type="hidden" name="vId" value="${Vote.vId}">
+         	<input type="hidden" name="page" value="${page }">
             <table id="tb">
                 <tr id="tr1">
                    <td colspan=2 style="color: darksalmon; font-weight: bold;">작성하기</td>
@@ -44,30 +48,46 @@
                 <tr id="tr2">
                    <td class="td1">제목</td>
                    <td>
-                      <input id="titleInput" name="vTitle" type="text" placeholder="제목을 입력하세요" size="60">
+                      <input id="titleInput" name="vTitle" type="text" placeholder="제목을 입력하세요" size="60" value="${Vote.vName}">
                    </td>
 
                 </tr>
                 <tr id="tr3">
                    <td class="td1">투표기간</td>                   
                    <td>
-                      <input id="vStart" class="inputs" name="vStart" type="date" readonly>부터<input id="vEnd" class="inputs" name="vEnd" type="date">까지&ensp;<b id="sum"></b>
+                      <input id="vStart" class="inputs" name="vStart" type="date" value="${Vote.createDate}" readonly>부터<input id="vEnd" class="inputs" name="vEnd" type="date" value="${Vote.endDate}">까지&ensp;<b id="sum"></b>
                    </td>                
                 </tr>
                   <tr id="tr4">
                      <td class="td1">투표내용</td>
                      <td colspan=3>
-                        <textarea id="content" class="content" name="vContent" placeholder="투표내용을 입력하시오" style="margin-left: 20px;"></textarea>
+                        <textarea id="content" class="content" name="vContent" placeholder="투표내용을 입력하시오" style="margin-left: 20px;">${Vote.vContent }</textarea>
                      </td>
                   </tr>      
                   <tr id="tr5">
                      <td class="td1">투표후보</td>
                      <td colspan=3>
                      	<div id="addCandidate">
-                     		<input type="checkbox" name="overlab" value="Y"><label>중복 선택 허용</label><br>
+                     		<c:if test="${Vote.overlapYN == 'Y' }">
+                     			<input type="checkbox" name="overlab" value="Y" checked>
+                     		</c:if>
+                     		<c:if test="${Vote.overlapYN == 'N' }">
+                     			<input type="checkbox" name="overlab" value="Y">
+                     		</c:if>
+                     		<label>중복 선택 허용</label>
+                     		<br>
                      		<ol id="list" type='1'>
-                     			<li>1. <input type="text" class="vclist" name="vclist"></li>
-                     			<li>2. <input type="text" class="vclist" name="vclist"></li>
+                     			<c:set var="num" value="0"/>
+                     			<c:if test="${vclist != null && !vclist.isEmpty()}">
+	                     			<c:forEach var="i" begin="0" end="${vclist.size()-1}">
+	                     			<li>${i+1}. <input type="text" class="vclist" name="vclist" value="${vclist[i].vcName}"></li>
+	                     			<c:set var="num" value="${num+1}"/>
+	                     			</c:forEach>
+	                     		</c:if>
+	                     		<c:if test="${vclist == null || vclist.isEmpty()}">
+	                     			<li>1. <input type="text" class="vclist" name="vclist"></li>
+                     				<li>2. <input type="text" class="vclist" name="vclist"></li>
+	                     		</c:if>
                      		</ol>
                      		<button type="button" id="add" onclick="addlist();" style="background-color: lavender; border-radius: 5px;">
                      			후보 추가
@@ -88,7 +108,10 @@
                   </tr>    -->   
             </table><br>
             <script type="text/javascript">
-            var num = 3;
+            var num = 0;
+            if(${num} > 1){
+            	num = ${num+1};
+            }
 				function addlist(){
 					const str = '<li>' + num + '. <input type="text" class="vclist" name="vclist"></li>'
 					num++;
@@ -103,9 +126,7 @@
 					}
 				}
 				$(function(){
-					var date = new Date();
 					var mdate = new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000);
-					document.getElementById('vStart').value = date.toISOString().substring(0, 10);
 					document.getElementById('vEnd').min = mdate.toISOString().substring(0, 10);
 				});
 				$('#vEnd').change(function(){
@@ -134,16 +155,22 @@
 					}
 					for(var i = 0; i<length; i++){
 						if(!$('.vclist')[i].value){
-							alert("후보 목록을 빈 곳 없이 전부 입력해주세요.");
+							alert("빈 곳 없이 전부 입력해주세요.");
 							return false;
 						}
 					}
-					return true;
+					var result = confirm("정말로 수정하시겠습니까? \n수정하실경우 지금껏 했던 투표가 초기화됩니다.");
+					if(result){
+						return true;
+					}else{
+						alert("수정이 취소되었습니다.");
+						return false;
+					}
 				}
 			</script>
             <div id="btns">
                   <button class="btn" type="button" onclick="javascript:history.back();">취소</button>
-                  <input type="submit" value="작성완료" class="btn"/>
+                  <input type="submit" value="수정완료" class="btn"/>
             </div>
          </form>
    </div><br>
