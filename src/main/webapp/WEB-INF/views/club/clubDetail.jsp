@@ -88,9 +88,9 @@
  	#rUpdateBtnAjax{margin-left: 29px;}  
  	#rDeleteBtnAjax{margin-left: 16px;}  
  	
- 	#rrUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 457px;}  
- 	#replyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px; margin-top: -30px ; margin-right:500px;}
- 	#rreplyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px; margin-top: -30px ; margin-right: 372px;}
+ 	#rrUpdateBtn{width: 70px; margin-left: 617px;}  
+ 	#replyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px; margin-top: 29px; margin-right:500px;}
+ 	#rreplyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px;     margin-top: 29px; margin-right: 372px; vertical-align: top;}
  	#rrContent{background: skyblue;}
  	
  	
@@ -353,10 +353,11 @@ ${ c.clubEtc }
 					<div class="info"  id="rWriter">${a.nickname}</div>
 					<div class="info"  id="rreplyDate">${a.rCreateDate}</div>
 					<c:if test="${loginUser.userId eq a.rUserId }">
-						<button type="button" class="btn" id="rrUpdateBtn${ status.index }">수정</button> 
+						<button type="button" class="btn" id="rrUpdateBtn">수정</button> 
 						<button type="button" class="btn" id="rrDeleteBtn">삭제</button>
 						<div style="display:none">${a.rNo}</div>
 						<div style="display:none">${a.rrNo}</div>
+						<div style="display:none">${ status.index }</div>
 					</c:if> 
 				</div>
 
@@ -732,6 +733,7 @@ ${ c.clubEtc }
    		/* 대댓글 입력창  */
    		$(document).on('click','#replyBtn', function(){
    			var $rreplyInsertTable = $(this).parent().parent().next(); /* 댓글 수정 창 */
+   			$rreplyInsertTable.next().css('display','none');
    			var rreplys = '<div id="replyInput2">' +
 						 '	<div id="info">' +
 						 '		<c:if test="${!empty loginUser.userFile }">' +
@@ -747,6 +749,7 @@ ${ c.clubEtc }
 						 '	<textarea class="rWrite" id="rrWrite" style="border:1px solid black; overflow: hidden; overflow-wrap: break-word; resize: none;" required  placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>'  +
 						 '	<span style="color:black;" id="counter">(0 / 최대 200자)</span>' +
 						 '</div>'
+						 
    			$rreplyInsertTable.after(rreplys);		 
    		});
 		
@@ -778,7 +781,9 @@ ${ c.clubEtc }
 						if(data[i].rUserId == userId){
 							var $table4 = '<button type="button" class="btn" id="rrUpdateBtn' + i + '">수정</button> ' +
 										  '<button type="button" class="btn" id="rrDeleteBtn">삭제</button>' +
-										  '<div style="display:none">' +data[i].rNo +'</div>';
+										  '<div style="display:none">' +data[i].rNo +'</div>' + 
+										  '<div style="display:none">' + data[i].rrNo + '</div>' + 
+										  '<div style="display:none">' + i + '</div>';
 						}	
 							var $table5 =   '</div>' +
 											'<textarea class="rContent${ status.index }" id="rrContent" readonly >' + data[i].rContent +'</textarea>' +
@@ -797,20 +802,41 @@ ${ c.clubEtc }
    			}) 
    		})
    		
-   		/* 대댓글 삭제  */
+   		/* 대댓글 수정창  */
+   		$(document).on('click','#rrUpdateBtn', function(){
+   			var rrNo = $(this).next().next().next().text();
+   			var i = $(this).next().next().next().next().text();
+   			var $textarea = '<textarea class="rContent'+ i +'" id="rrContent" style="border:1px solid black; min-height:100px;" >'+$(this).parent().next().text() + '</textarea>';
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 취소</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 완료</button>')
+
+   			
+
+   			
+   			$(this).parent().next().remove();
+   			$(this).parent().next().css('display','none'); 
+   			$(this).parent().parent().append($textarea);
+   			var content = $(this).parent().next().next().text();
+   			$(this).next().next().next().remove();
+   			$(this).remove();
+   		   	});
+   		
+ 		/* 대댓글 삭제  */
    		$(document).on('click','#rrDeleteBtn', function(){
    			var rrNo = $(this).next().next().text();
+   			var i = $(this).next().next().next().text();
    				if(confirm("댓글을 삭제하시겠습니까?")){
    					$.ajax({
    		   				url: 'deleteComment3.cb',
    		   				data: {rrNo:rrNo},
    		   				success: function(data){
-   		   					$(this).parent().parent.hide();
+   		   					$rreply = $('#rreply' + i);
+   		   					$rreply.html("");
+							$rreply.css('display', 'none');
    		   				}
    					}); 
    		   		}	
-   		   	});
-   		
+   		   	}); 		
    		
    		
    		$('.likeBtn').click(function(){

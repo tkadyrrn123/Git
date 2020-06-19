@@ -106,6 +106,10 @@ public class ClubDAO {
 		return sqlSession.update("clubMapper.updateComment2", rrNo);
 	}
 
+	public int updateComment(SqlSessionTemplate sqlSession, Comment2 c) {
+		return sqlSession.update("clubMapper.updateComment23", c);
+	}
+
 }
 
 
