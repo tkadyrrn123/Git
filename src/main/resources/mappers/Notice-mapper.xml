@@ -199,5 +199,17 @@
 		where apt_delete = 'N' and apt_name =#{aptName}
 	</select>
 	
+	<select id="selectSortCondition" resultMap="noticeResultSet">
+		select *
+		from tb_notice
+			join tb_user using(user_id)
+		where notice_delete = 'N' and apt_name = #{aptName}
+		<if test = "nSortCondition == 'hits'">
+			order by notice_count desc
+		</if>
+		<if test = "nSortCondition == 'latest'">
+			order by notice_no desc
+		</if>		
+	</select>
 	
 </mapper>

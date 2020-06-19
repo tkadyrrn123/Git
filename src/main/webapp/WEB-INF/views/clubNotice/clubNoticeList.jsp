@@ -15,7 +15,7 @@
 						font-size: 1.5em;}
     .board_wrab {text-align: center; 
     			  color:rgb(94, 92, 92);
-    			  margin-top: 50px;
+    			  margin-top: 20px;
     			  width:100%;
     			  postion:relative;
     			  } 
@@ -66,6 +66,7 @@
 	  font-size: 0.9em;
 	  color: #60666d;
       border: 1px solid #dad4d4;
+      margin-top: 20px;
 	  }
 	.select-box__current {
 	  position: relative;
@@ -149,6 +150,30 @@
 	<div class="commnuity_header">
 	<h2>동호회 공지사항</h2>
 	</div>
+<!--동 정렬 시작--------------------------------------------------------------------------------------------------  -->
+	<div class="select-box" id="selectBox">
+		  <div class="select-box__current" tabindex="1">
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="latest" value="latest" name="Ben" checked="checked"/>
+		      <p class="select-box__input-text">최신순</p>
+		    </div>
+		    <div class="select-box__value">
+		      <input class="select-box__input" type="radio" id="hits" value="hist" name="Ben"/>
+		      <p class="select-box__input-text">조회순</p>
+		    </div>
+		    <img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
+		  </div>
+		  <ul class="select-box__list" style="display:hidden">
+		    <li>
+		      <label class="select-box__option" for="latest" aria-hidden="aria-hidden">최신순</label>
+		    </li>
+		    <li>
+		      <label class="select-box__option" for="hits" aria-hidden="aria-hidden">조회순</label>
+		    </li>
+		  </ul>
+	</div>
+<!--정렬 끝---------------------------------------------------------------------------------------------------->		
+	
 	<div class="board_wrab">
         <table id="notice_list_tb">
             <thead>

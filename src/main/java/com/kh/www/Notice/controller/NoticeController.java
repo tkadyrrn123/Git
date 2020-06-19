@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,8 +59,6 @@ public class NoticeController {
 		//공지사항 리스트 페이지 가져오기
 		ArrayList<Notice> list = noticeService.selectList(pi, aptName);
 		
-		System.out.println("1Controller에서 뽑아보는 목록 list : " + list);
-		
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
@@ -71,6 +69,7 @@ public class NoticeController {
 
 		return mv;
 	}
+	
 	
 	//공지사항 신규 작성으로 이동 및 아파트 동 전체 리스트 가져오기
 	@RequestMapping("noticeInsertView.no")
@@ -92,7 +91,6 @@ public class NoticeController {
 				nDonglist.add(splitnDong[i]);
 			}
 			
-			System.out.println("2Controller에서 뽑아보는 nDonglist : " + nDonglist);
 			mv.addObject("nDonglist", nDonglist).setViewName("noticeInsertForm");
 			
 		}else {
@@ -193,15 +191,12 @@ public class NoticeController {
 		
 		if(aptName != null) {
 			nDong = noticeService.selectcDonglist(aptName);
-			System.out.println("1Controller에서 뽑아보는 nDong : " + nDong);
 			
 			String[] splitnDong = nDong.split(",");		
 
 			for(int i = 0; i < splitnDong.length; i++) {
 				nDonglist.add(splitnDong[i]);
 			}
-			
-			System.out.println("2Controller에서 뽑아보는 nDonglist : " + nDonglist);
 		}	
 		
 		if(notice != null) {
@@ -271,7 +266,113 @@ public class NoticeController {
 		}
 	}
 	
+	//공지사항 검색
+	@RequestMapping("noticeSearch.no")
+	private ModelAndView boardSearch(@RequestParam(value="page", required=false) Integer page,
+			@RequestParam String nSearchCondition, @RequestParam String nSearchValue, 
+			@ModelAttribute Notice n, ModelAndView mv, HttpSession session) {
+		
+		//세션에서 아파트이름 가져오기
+		//아파트 동 전체 리스트 가져오기
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		
+		String nDong = null; 
+		List<String> nDonglist = new ArrayList<String>();
+		
+		if(aptName != null) {
+			nDong = noticeService.selectcDonglist(aptName);
+			
+			String[] splitnDong = nDong.split(",");		
+
+			for(int i = 0; i < splitnDong.length; i++) {
+				nDonglist.add(splitnDong[i]);
+			}
+		}	
+		
+		//키워드 가져오기	
+		if(nSearchCondition.equals("nTotal")) {
+			n.setnTotal(nSearchValue);
+		}else if(nSearchCondition.equals("nTitle")) {
+			n.setnTitle(nSearchValue);
+		}else if(nSearchCondition.equals("nContent")) {
+			n.setnContent(nSearchValue);
+		}else if(nSearchCondition.equals("nDong")) {
+			n.setnDong(nSearchValue);
+		}
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		//공지사항 검색키워드에 따른 전체 수 가져오기
+		n.setAptName(aptName);
+		int listCount = noticeService.getSearchResultListCount(n);
+		
+		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+		
+		//공지사항 검색한 리스트 가져오기
+		ArrayList<Notice> list = noticeService.selectSearchResultList(n, pi);
+		
+		if(list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.addObject("nSearchCondition", nSearchCondition);
+			mv.addObject("nSearchValue", nSearchValue);
+			mv.addObject("nDonglist", nDonglist);
+			
+			mv.setViewName("noticeList");
+		}else {	
+			throw new NoticeException("공지사항 검색에 실패했습니다.");
+		}	
+		return mv;
+	}
 	
+	
+	//공지사항 정렬 검색
+	@RequestMapping("nSortCondition.no")
+	private ModelAndView boardSearch(@RequestParam(value="page", required=false) Integer page,
+			@RequestParam String nSortCondition, @ModelAttribute Notice n, HttpServletRequest request, 
+			ModelAndView mv, HttpSession session) {
+		
+		//세션에서 아파트이름 가져오기
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName = loginUser.getAptName();
+		n.setAptName(aptName);
+		
+		HashMap map = new HashMap();
+		map.put("nSortCondition", nSortCondition);
+		map.put("aptName", aptName);
+		map.put("notice", n);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		//공지사항 검색키워드에 따른 전체 수 가져오기
+		int listCount = noticeService.getSearchResultListCount(n);
+		
+		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+		
+		map.put("pi", pi);
+		
+		//공지사항 검색한 리스트 가져오기
+		ArrayList<Notice> list = noticeService.selectSortCondition(map);
+		
+		if(list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.addObject("nSortCondition", nSortCondition);
+			mv.setViewName("noticeList");
+		}else {	
+			throw new NoticeException("공지사항 정렬에 실패했습니다.");
+		}	
+		return mv;
+	}
+
 	
 	//댓글 리스트 가져오기
 	@RequestMapping("cList.no")
@@ -328,74 +429,9 @@ public class NoticeController {
         
         return noticeService.commentUpdate(rNo);
     }
-	
-	//공지사항 검색
-	@RequestMapping("noticeSearch.no")
-	private ModelAndView boardSearch(@RequestParam(value="page", required=false) Integer page,
-			@RequestParam String nSearchCondition, @RequestParam String nSearchValue, 
-			@ModelAttribute Notice n, HttpServletRequest request, HttpServletResponse response, 
-			ModelAndView mv, HttpSession session) {
-		
-		//세션에서 아파트이름 가져오기
-		//아파트 동 전체 리스트 가져오기
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		String aptName = loginUser.getAptName();
-		
-		String nDong = null; 
-		List<String> nDonglist = new ArrayList<String>();
-		
-		if(aptName != null) {
-			nDong = noticeService.selectcDonglist(aptName);
-			System.out.println("1Controller에서 뽑아보는 nDong : " + nDong);
-			
-			String[] splitnDong = nDong.split(",");		
-
-			for(int i = 0; i < splitnDong.length; i++) {
-				nDonglist.add(splitnDong[i]);
-			}
-			
-			System.out.println("2Controller에서 뽑아보는 nDonglist : " + nDonglist);
-		}	
-		
-		//키워드 가져오기	
-		if(nSearchCondition.equals("nTotal")) {
-			n.setnTotal(nSearchValue);
-		}else if(nSearchCondition.equals("nTitle")) {
-			n.setnTitle(nSearchValue);
-		}else if(nSearchCondition.equals("nContent")) {
-			n.setnContent(nSearchValue);
-		}else if(nSearchCondition.equals("nDong")) {
-			n.setnDong(nSearchValue);
-		}
-		
-		int currentPage = 1;
-		
-		if(page != null) {
-			currentPage = page;
-		}
-		
-		//공지사항 검색키워드에 따른 전체 수 가져오기
-		n.setAptName(aptName);
-		int listCount = noticeService.getSearchResultListCount(n);
-		
-		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
-		
-		//공지사항 검색한 리스트 가져오기
-		ArrayList<Notice> list = noticeService.selectSearchResultList(n, pi);
-		System.out.println("controller에서 뽑아보는  list : "+ list);
-		
-		if(list != null) {
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.addObject("nSearchCondition", nSearchCondition);
-			mv.addObject("nSearchValue", nSearchValue);
-			mv.addObject("nDonglist", nDonglist);
-			
-			mv.setViewName("noticeList");
-		}else {	
-			throw new NoticeException("공지사항 검색에 실패했습니다.");
-		}	
+	@RequestMapping("test2.no")
+	public ModelAndView test(ModelAndView mv, HttpSession session) {
+		mv.setViewName("test2");
 		return mv;
 	}
-	
 }
