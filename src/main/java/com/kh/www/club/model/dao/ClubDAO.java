@@ -94,6 +94,18 @@ public class ClubDAO {
 		return (ArrayList)sqlSession.selectList("clubMapper.selectComment2");
 	}
 
+	public int insertComment2(SqlSessionTemplate sqlSession, Comment2 c) {
+		return sqlSession.insert("clubMapper.insertComment2", c);
+	}
+
+	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession, int rNo) {
+		return (ArrayList)sqlSession.selectList("clubMapper.selectComment23",rNo);
+	}
+
+	public int updateComment2(SqlSessionTemplate sqlSession, int rrNo) {
+		return sqlSession.update("clubMapper.updateComment2", rrNo);
+	}
+
 }
 
 

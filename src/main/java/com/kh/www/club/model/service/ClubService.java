@@ -41,4 +41,10 @@ public interface ClubService {
 	int deleteComment(int rNo);
 
 	ArrayList<Comment2> selectComment2();
+
+	int insertComment2(Comment2 c);
+
+	ArrayList<Comment2> selectComment2(int rNo);
+
+	int deleteComment3(int rrNo);
 }

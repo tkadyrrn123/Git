@@ -3,9 +3,8 @@ package com.kh.www.common.model.vo;
 import java.sql.Date;
 
 public class Comment2 {
-	private int rNo; //댓글번호
 	private int rrNo; //게시글 번호
-	private int noticeNo; //공지사항 번호
+	private int rNo; //댓글번호
 	private String rUserId; //댓글 작성자 Id
 	private String rContent;//댓글내용
 	private Date rCreateDate; //댓글 생성 날짜
@@ -17,25 +16,11 @@ public class Comment2 {
 	
 	public Comment2() {}
 
-	public Comment2(int rNo, int rrNo, int noticeNo, String rUserId, String rContent, Date rCreateDate, String rDecYN,
-			String rState) {
+	public Comment2(int rrNo, int rNo, String rUserId, String rContent, Date rCreateDate, String rDecYN, String rState,
+			String nickname, String userFile) {
 		super();
-		this.rNo = rNo;
 		this.rrNo = rrNo;
-		this.noticeNo = noticeNo;
-		this.rUserId = rUserId;
-		this.rContent = rContent;
-		this.rCreateDate = rCreateDate;
-		this.rDecYN = rDecYN;
-		this.rState = rState;
-	}
-
-	public Comment2(int rNo, int rrNo, int noticeNo, String rUserId, String rContent, Date rCreateDate, String rDecYN,
-			String rState, String nickname, String userFile) {
-		super();
 		this.rNo = rNo;
-		this.rrNo = rrNo;
-		this.noticeNo = noticeNo;
 		this.rUserId = rUserId;
 		this.rContent = rContent;
 		this.rCreateDate = rCreateDate;
@@ -45,28 +30,20 @@ public class Comment2 {
 		this.userFile = userFile;
 	}
 
+	public int getRrNo() {
+		return rrNo;
+	}
+
+	public void setRrNo(int rrNo) {
+		this.rrNo = rrNo;
+	}
+
 	public int getrNo() {
 		return rNo;
 	}
 
 	public void setrNo(int rNo) {
 		this.rNo = rNo;
-	}
-
-	public int getrrNo() {
-		return rrNo;
-	}
-
-	public void setrrNo(int rrNo) {
-		this.rrNo = rrNo;
-	}
-
-	public int getNoticeNo() {
-		return noticeNo;
-	}
-
-	public void setNoticeNo(int noticeNo) {
-		this.noticeNo = noticeNo;
 	}
 
 	public String getrUserId() {
@@ -108,8 +85,7 @@ public class Comment2 {
 	public void setrState(String rState) {
 		this.rState = rState;
 	}
-	
-	
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -128,9 +104,10 @@ public class Comment2 {
 
 	@Override
 	public String toString() {
-		return "Comment2 [rNo=" + rNo + ", rrNo=" + rrNo + ", noticeNo=" + noticeNo + ", rUserId=" + rUserId
-				+ ", rContent=" + rContent + ", rCreateDate=" + rCreateDate + ", rDecYN=" + rDecYN + ", rState="
-				+ rState + ", nickname=" + nickname + ", userFile=" + userFile + "]";
+		return "Comment2 [rrNo=" + rrNo + ", rNo=" + rNo + ", rUserId=" + rUserId + ", rContent=" + rContent
+				+ ", rCreateDate=" + rCreateDate + ", rDecYN=" + rDecYN + ", rState=" + rState + ", nickname="
+				+ nickname + ", userFile=" + userFile + "]";
 	}
+
 	
 }
