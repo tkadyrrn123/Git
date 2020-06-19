@@ -108,10 +108,10 @@
                   </tr>    -->   
             </table><br>
             <script type="text/javascript">
-            var num = 0;
-            if(${num} > 1){
-            	num = ${num+1};
-            }
+	            var num = 0;
+	            if(${num} > 1){
+	            	num = ${num+1};
+	            }
 				function addlist(){
 					const str = '<li>' + num + '. <input type="text" class="vclist" name="vclist"></li>';
 					num++;
