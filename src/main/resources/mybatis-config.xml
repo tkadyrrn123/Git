@@ -19,6 +19,9 @@
 		<typeAlias type="com.kh.www.myPage.model.vo.MyComment" alias="MyComment"/>
 		<typeAlias type="com.kh.www.myPage.model.vo.MyQnA" alias="MyQnA"/>
 		<typeAlias type="com.kh.www.clubNotice.model.vo.ClubNotice" alias="ClubNotice"/>
+		<typeAlias type="com.kh.www.Vote.model.vo.VChoice" alias="VChoice"/>
+		<typeAlias type="com.kh.www.Vote.model.vo.VInvote" alias="VInvote"/>
+		<typeAlias type="com.kh.www.Vote.model.vo.Vote" alias="Vote"/>
 	</typeAliases>
 	
 	<mappers>
@@ -30,6 +33,7 @@
 		<mapper resource="mappers/free-mapper.xml"/>
 		<mapper resource="mappers/ClubNotice-mapper.xml"/>
 		<mapper resource="mappers/Main-mapper.xml"/>
+		<mapper resource="mappers/Vote-mapper.xml"/>
 	</mappers>
 	
 
