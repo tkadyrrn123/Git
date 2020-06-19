@@ -41,7 +41,10 @@
 	.reply1_btn{margin-right: 15px; float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
 	.reply_TEXT{margin-right: 15px; border-radius:0.34em; border-color: lightgrey; resize:none;}
 	.update_reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
-
+	.fa-comment-dots{margin-left: 7px; color: #62b3b6;}
+	.Reply_list_title{margin-left: 120px; color: #62b3b6; margin-top: 10px; margin-bottom: 10px;}
+	#rCount{margin-left: 5px;}
+	
 /* 원댓글  */	
 	.reply2_box{width: 800px; height: auto; margin-left: 100px; margin-top: 8px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: solid; border-color: rgb(201, 232, 255);}
 	
@@ -72,15 +75,19 @@
 		<div class="clubNameview"><i class="fas fa-crown"></i>  ${ ClubNotice.clubName } </div>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
 				<div class="detailTable_title">${ ClubNotice.cnTitle }</div>
-				
 				<div id="notice_profile" style="float:left;display:inline;">
-					<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ ClubNotice.cnoticeFile }"></div>
-				
+					<c:if test="${!empty ClubNotice.cnoticeFile }">
+						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ ClubNotice.cnoticeFile }">
+					</c:if>
+					<c:if test="${empty ClubNotice.cnoticeFile }">
+						<img class="comment_img" src="${contextPath}/resources/uploadFiles/normal.jpg">
+					</c:if>
+                 </div> 
 				<div class="dong">${ ClubNotice.cnoticeNickname }</div>
 				
-				<div style="display:inline;"><i class="far fa-clock"></i>${ ClubNotice.cnCreateDate }</div>
+				<div style="display:inline;"><i class="far fa-clock" style="margin-right: 10px;"></i>${ ClubNotice.cnCreateDate }</div>
 				
-				<div style="display:inline;"><i class="far fa-eye"></i>${ ClubNotice.cnCount }</div>
+				<div style="display:inline;"><i class="far fa-eye" style="margin-right: 10px;"></i>${ ClubNotice.cnCount }</div>
 	<!-------------수정 /삭제 선택 -------------->	
 				<c:if test="${ loginUser.userId eq ClubNotice.userId }">
 				<i class="fas fa-ellipsis-v"></i>
@@ -118,19 +125,28 @@
 			<br>
 		<!-------------댓글 작성  ------------>
 			<div class="reply1_box" id="rtb">
-				<div id="notice_profile" style="float: left; display: inline;">
-					<img id="userFile" class="comment_img" src="${contextPath}/resources/uploadFiles/${ ClubNotice.cnoticeFile }">
-				</div>
+				<div id="notice_profile" style="float:left;display:inline;">
+					<c:if test="${!empty ClubNotice.cnoticeFile }">
+						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ ClubNotice.cnoticeFile }">
+					</c:if>
+					<c:if test="${empty ClubNotice.cnoticeFile }">
+						<img class="comment_img" src="${contextPath}/resources/uploadFiles/normal.jpg">
+					</c:if>
+                 </div> 
 				<div class="dong">${ loginUser.userId }</div>
 					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
 				<div style="margin-left: 10px; margin-top: 12px;">
-					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="95" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
+					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="103" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
 				<div class="counter" id="counter">(0/200자)</div>
 				</div>
 			</div>
 		<!-------------댓글 작성  끝------------>
+			<div class="Reply_list_title">Reply list<i class="far fa-comment-dots"></i><span id="rCount"></span></div>
 		<!-------------댓글 가져오기 ------------>	
 			<div id="noticeComment_outer">
+			
+			<!-- 댓글 구현되는 부분  -->
+			
 			</div>
 		<!-------------댓글 가져오기 끝------------>			
 		</form>

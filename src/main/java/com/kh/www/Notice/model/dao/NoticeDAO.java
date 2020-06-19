@@ -1,6 +1,7 @@
 package com.kh.www.Notice.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -90,6 +91,10 @@ public class NoticeDAO {
 	//아파트 동 전체 리스트 가져오기
 	public String selectcDonglist(SqlSessionTemplate sqlSession, String aptName) {
 		return sqlSession.selectOne("NoticeMapper.selectcDonglist", aptName);
+	}
+
+	public ArrayList<Notice> nSortCondition(SqlSessionTemplate sqlSession, HashMap map) {
+		return (ArrayList)sqlSession.selectList("NoticeMapper.selectSortCondition", map);
 	}
 
 

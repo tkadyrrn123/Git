@@ -1,6 +1,7 @@
 package com.kh.www.Notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,5 +104,10 @@ public class NoticeServiceImpl implements NoticeService {
 	public String selectcDonglist(String aptName) {
 		return nDAO.selectcDonglist(sqlSession, aptName);
 
+	}
+	
+	@Override
+	public ArrayList<Notice> selectSortCondition(HashMap map) {
+		return nDAO.nSortCondition(sqlSession, map);
 	}
 }
