@@ -168,7 +168,7 @@
 <body>
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer" >
-		<form name="pollVoteForm" action="choiseVote.vo">
+		<form name="pollVoteForm" action="choiseVote.vo" method="post">
 		<!-- 투표 Id,check,page 담는 hidden -->
 		<input type="hidden" name="vId" value="${Vote.vId}">
 		<input type="hidden" name="check" value="${check }">
@@ -339,7 +339,6 @@
 		</form>
 	</div>
 	<script>
-	
 		//투표결과창 js
 		var resultBars = $(".poll-choices-listing .poll-result-bar");
 

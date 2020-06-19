@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +102,7 @@ public class VoteController {
 	}
 	
 	@RequestMapping("voteDetail.vo")
-	public ModelAndView votingDetail(@RequestParam ("vId") int vId, @RequestParam ("check") boolean check, @RequestParam ("page") Integer page, ModelAndView mv) {
+	public ModelAndView votingDetail(@RequestParam ("vId") int vId, @RequestParam ("check") boolean check, @RequestParam ("page") Integer page, ModelAndView mv, HttpServletResponse response) {
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -119,12 +120,15 @@ public class VoteController {
 		}
 		Member writer = vService.selectWriteUser(v.getUserId());
 		mv.addObject("Vote", v).addObject("vclist", vclist).addObject("vInlist", vInlist).addObject("writer", writer).addObject("currentPage", currentPage).addObject("check", check).setViewName("voteDetail");
-		
+		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
+		response.setHeader("Pragma", "no-cache");
 		return mv;
 	}
 	
 	@RequestMapping("choiseVote.vo")
-	public String choiseVote(@RequestParam("article_poll_fldpoll_egseq") int[] vcId, @RequestParam("vId") int vId, @RequestParam ("check") boolean check, @RequestParam ("page") Integer page, HttpServletRequest req) {
+	public ModelAndView choiseVote(@RequestParam("article_poll_fldpoll_egseq") int[] vcId, @RequestParam("vId") int vId, @RequestParam ("check") boolean check, @RequestParam ("page") Integer page, HttpServletRequest req, HttpServletResponse response, ModelAndView mv) {
 		HttpSession session = req.getSession();
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String userId = loginUser.getUserId();
@@ -137,7 +141,7 @@ public class VoteController {
 		
 		int result = vService.insertVInvote(invoteList);
 		if(result > 0) {
-			return "redirect:voteDetail.vo?vId=" + vId + "&check=" + check + "&page=" + page;
+			return votingDetail(vId, check, page, mv, response);
 		}else {
 			throw new VoteException("투표에 실패하였습니다.");
 		}
@@ -152,7 +156,7 @@ public class VoteController {
 	}
 	
 	@RequestMapping("voteModify.vo")
-	public ModelAndView voteModify(HttpServletRequest request, ModelAndView mv) {
+	public ModelAndView voteModify(HttpServletRequest request, ModelAndView mv, HttpServletResponse response) {
 		int vId = Integer.parseInt(request.getParameter("vId"));
 		int page = Integer.parseInt(request.getParameter("page"));
 		String vName = request.getParameter("vTitle");
@@ -188,25 +192,11 @@ public class VoteController {
 		// 투표 진행중인지 종료인지 확인
 		boolean check = today.before(endDate);
 		
-		// 텅빈 투표 참여 목록 null확인 안해줘서 필요함
-		ArrayList<VInvote> vInlist = new ArrayList<VInvote>();
-		
 		// 투표 수정하기
 		result = vService.updateVote(v,vclist,originVClist);
 		
 		if(result > 0) {
-			// 업데이트된 투표 객체 가져옴
-			Vote vote = vService.selectVote(vId);
-			
-			// 업데이트된 투표 후보 목록 가져옴
-			ArrayList<VChoice> updateVClist = vService.selectVChoiceList(vId);
-			if(vote != null) {
-				// mv.addObject("vId", vId).addObject("page", page).addObject("check", check).setViewName("redirect:voteDetail.vo");
-				mv.addObject("Vote", vote).addObject("vclist", updateVClist).addObject("vInlist", vInlist).addObject("writer", loginUser).addObject("currentPage", page).addObject("check", check).setViewName("voteDetail");
-				return mv;
-			} else {
-				throw new VoteException("수정한 투표글을 불러오는데 실패하였습니다.");
-			}
+			return votingDetail(vId, check, page, mv, response);
 		} else {
 			throw new VoteException("투표 수정에 실패하였습니다.");
 		}
