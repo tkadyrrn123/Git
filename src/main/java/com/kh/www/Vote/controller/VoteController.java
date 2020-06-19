@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Vote.model.exception.VoteException;
@@ -120,6 +118,7 @@ public class VoteController {
 		}
 		Member writer = vService.selectWriteUser(v.getUserId());
 		mv.addObject("Vote", v).addObject("vclist", vclist).addObject("vInlist", vInlist).addObject("writer", writer).addObject("currentPage", currentPage).addObject("check", check).setViewName("voteDetail");
+		// 캐시 없애서 뒤로가기 방지
 		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
