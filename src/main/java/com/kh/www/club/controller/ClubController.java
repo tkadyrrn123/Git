@@ -291,4 +291,34 @@ public class ClubController {
 		return result;
 	}
 	
+// 동호회 대댓글 추가	
+	@RequestMapping("insertComment2.cb")
+	@ResponseBody
+	public ArrayList<Comment2> insertComments2(@RequestParam("userId") String userId, @RequestParam("rNo") int rNo, @RequestParam("content") String content, HttpServletResponse response) {
+		Comment2 c = new Comment2();
+		c.setrNo(rNo);
+		c.setrContent(content);
+		c.setrUserId(userId);
+
+		int result = cService.insertComment2(c);
+		
+		if(result > 0) {
+			ArrayList<Comment2> comment2 = cService.selectComment2(rNo);
+			return comment2;
+			
+		}else {
+			throw new ClubException("댓글 등록에 실패했습니다.");
+		}
+		
+	}
+// 동호회 대댓글 삭제	
+	@RequestMapping("deleteComment3.cb")
+	@ResponseBody
+	public int deleteComment3(@RequestParam("rrNo") int rrNo) {
+		
+		int result = cService.deleteComment3(rrNo);
+		return result;
+	}
+	
+	
 }

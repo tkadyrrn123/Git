@@ -102,6 +102,21 @@ public class ClubServiceImpl implements ClubService {
 		return cDAO.selectComment2(sqlSession);
 	}
 
+	@Override
+	public int insertComment2(Comment2 c) {
+		return cDAO.insertComment2(sqlSession, c);
+	}
+
+	@Override
+	public ArrayList<Comment2> selectComment2(int rNo) {
+		return cDAO.selectComment2(sqlSession, rNo);
+	}
+
+	@Override
+	public int deleteComment3(int rrNo) {
+		return cDAO.updateComment2(sqlSession, rrNo);
+	}
+
 
 
 
