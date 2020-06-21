@@ -9,12 +9,23 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
    .wrapper{margin-top: 20px;}
-	#title{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;}
-	#line{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px;}
-	.sellAll{width: 80%; margin: 40px 0px 0px 200px; postion:relative;line-height: 1.6}
+/* 	#title{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;} */
+/* 	#line{width: 90%; background: lightgray; height:2px; margin: auto; margin-top: 20px;} */
+	.sellAll{width: 90%; margin: 100px auto 0px auto; postion:relative;line-height: 1.6}
 	.sell{width: 350px; display: inline-block; margin-left: 100px; margin-bottom:50px;text-align:center;
-		  border:1px solid #aaa; border-radius:5px; padding-bottom:15px;}
-	.sell:hover{cursor:pointer;}
+		  border:1px solid #aaa; border-radius:5px; padding-bottom:15px;
+		  box-shadow: 0 2px 40px 0 rgba(0,0,0,0.07);
+		  transition: box-shadow .3s ease-out, transform .3s ease-out, opacity .2s ease-out;
+		  transition-delay: .1s;
+		  transform: translateZ(0);
+		  }
+	.sell:hover{
+				cursor:pointer;	
+				opacity: 1 !important;
+			    box-shadow: rgba(45,45,45,0.05) 0px 2px 2px, rgba(49,49,49,0.05) 0px 4px 4px, rgba(42,42,42,0.05) 0px 8px 8px, rgba(32,32,32,0.05) 0px 16px 16px, rgba(49,49,49,0.05) 0px 32px 32px, rgba(35,35,35,0.05) 0px 64px 64px;
+			    transform: translate(0, -4px);
+			    z-index: 999;
+				}
 	.sellDiv{width: 100%; height: 300px;}
 	.sellPic{width: 100%; height: 210px;}
 	.sellName{width: 100%; height: 10%; font-size: 20px; font-weight:bold;margin-top:10px;}
@@ -32,10 +43,16 @@
 	    font-size: 12px;
 	    padding: 10px;
 	}
+	#write-btn{
+		position: absolute;
+		margin-top: -50px;
+		right: 180px;
+/*  		margin-right: -10px;  */
+	}
 
 /* 	.marketFilterForm{position:absolute; width: 300px; display:inline-block; left:44%;} */
 /* 	.marketSelect>option{padding: 5px;} */
-	.form_wrap{margin:30px auto 0 auto; width: 340px;}
+	.form_wrap{margin:30px auto 0 auto; width: 340px; position:relative;}
 	#selectBox{
 	  display: block;
 	  margin-left: 85%;
@@ -139,7 +156,7 @@
 	top: 220px;
 	color: white;
 	font-size: 1.5em;}
-		
+	
 </style>
 
 </head>
@@ -150,14 +167,14 @@
 	<img class="img" src="resources/images/market6.jpg">
 	<div class="header_wrap">
 	<jsp:include page="../common/menubar.jsp"/>
-	<b id="headcomment">중고 장터 게시판</b>
+	<b id="headcomment">중고장터</b>
 	</div>
 	
 	<div class="wrapper">
-		<div id= title>
-			중고 장터
-		</div>
-		<div id="line"></div>
+<!-- 		<div id= title> -->
+<!-- 			중고 장터 -->
+<!-- 		</div> -->
+<!-- 		<div id="line"></div> -->
 		
 		<!-- 게시글 리스트 -->
 		<div class=sellAll>
@@ -180,37 +197,38 @@
 			</c:forEach>
 		</div>		
 		<div class="form_wrap">
-    <form class="board_search" name="search_form" action="get">
-	    <div class="select-box">
-		  <div class="select-box__current" tabindex="1">
-		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="total" value="total" name="Ben" checked="checked"/>
-		      <p class="select-box__input-text">전체</p>
-		    </div>
-		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="writer" value="writer" name="Ben"/>
-		      <p class="select-box__input-text">작성자</p>
-		    </div>
-		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="content" value="content" name="Ben"/>
-		      <p class="select-box__input-text">내용</p>
-		    </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
-		  </div>
-		  <ul class="select-box__list">
-		    <li>
-		      <label class="select-box__option" for="total" aria-hidden="aria-hidden">전체</label>
-		    </li>
-		    <li>
-		      <label class="select-box__option" for="writer" aria-hidden="aria-hidden">작성자</label>
-		    </li>
-		    <li>
-		      <label class="select-box__option" for="content" aria-hidden="aria-hidden">내용</label>
-		    </li>
-		  </ul>
+		    <form class="board_search" name="search_form" action="get">
+			    <div class="select-box">
+				  <div class="select-box__current" tabindex="1">
+				    <div class="select-box__value">
+				      <input class="select-box__input" type="radio" id="total" value="total" name="Ben" checked="checked"/>
+				      <p class="select-box__input-text">전체</p>
+				    </div>
+				    <div class="select-box__value">
+				      <input class="select-box__input" type="radio" id="writer" value="writer" name="Ben"/>
+				      <p class="select-box__input-text">작성자</p>
+				    </div>
+				    <div class="select-box__value">
+				      <input class="select-box__input" type="radio" id="content" value="content" name="Ben"/>
+				      <p class="select-box__input-text">내용</p>
+				    </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
+				  </div>
+				  <ul class="select-box__list">
+				    <li>
+				      <label class="select-box__option" for="total" aria-hidden="aria-hidden">전체</label>
+				    </li>
+				    <li>
+				      <label class="select-box__option" for="writer" aria-hidden="aria-hidden">작성자</label>
+				    </li>
+				    <li>
+				      <label class="select-box__option" for="content" aria-hidden="aria-hidden">내용</label>
+				    </li>
+				  </ul>
+				</div>
+				<input class="search_input" name="text" type="text">
+				<button class="btn_standard" type="submit">검색</button>
+			</form>
 		</div>
-		<input class="search_input" name="text" type="text">
-		<button class="btn_standard" type="submit">검색</button>
-		
 		<button id="write-btn" class="btn_standard" type="button" value="글쓰기" onclick="location.href='writingMarket.ma'">글쓰기</button>
 		
 		
@@ -253,6 +271,7 @@
 			</c:if>
         </div>
 	</div>
+	<jsp:include page="../common/Footer.jsp"/>	
 	
 	<script>
 // 		$('.sell').on('click', function(){
