@@ -96,7 +96,7 @@
 		<div id="line1"></div>
 		
 		<div id="content1">
-
+			<input type="hidden" name="userId" value="${ loginUser.userId }"> 
 			
 			<div id=sellPic>
 				<img id=img src="${ pageContext.servletContext.contextPath }/resources/clubFiles/${ c.fileName }"/>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.www.club.model.vo.Club;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Repository("cDAO")
@@ -83,6 +84,30 @@ public class ClubDAO {
 
 	public int updateComment(SqlSessionTemplate sqlSession, Comment c) {
 		return sqlSession.update("clubMapper.updateComment", c);
+	}
+
+	public int deleteComment(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("clubMapper.deleteComment", rNo);
+	}
+
+	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("clubMapper.selectComment2");
+	}
+
+	public int insertComment2(SqlSessionTemplate sqlSession, Comment2 c) {
+		return sqlSession.insert("clubMapper.insertComment2", c);
+	}
+
+	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession, int rNo) {
+		return (ArrayList)sqlSession.selectList("clubMapper.selectComment23",rNo);
+	}
+
+	public int updateComment2(SqlSessionTemplate sqlSession, int rrNo) {
+		return sqlSession.update("clubMapper.updateComment2", rrNo);
+	}
+
+	public int updateComment(SqlSessionTemplate sqlSession, Comment2 c) {
+		return sqlSession.update("clubMapper.updateComment23", c);
 	}
 
 }

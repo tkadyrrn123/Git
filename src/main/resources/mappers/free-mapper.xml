@@ -59,7 +59,7 @@
 		select board_no,
 		        b.board_title, b.board_content, b.create_date, b.board_count,
 		        f1.file_name,
-		        u.nickname, u.user_file
+		        u.nickname, u.user_file, user_id
 		from tb_free f
 		     join tb_board b using(board_no)
 		     join tb_file f1 using(board_no)
@@ -75,6 +75,7 @@
 		<result property="nickname" column="nickname"/>	
 		<result property="userFile" column="user_File"/>	
 		<result property="fileName" column="file_name"/>	
+		<result property="userId" column="user_id"/>	
 	</resultMap>
 	<update id="addReadCount">
 		update tb_board

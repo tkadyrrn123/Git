@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>투표종료</title>
+<title>투표진행중</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
-/* ----전체틀-------- */
+	/* ----전체틀-------- */
 	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-top: 185px; margin-bottom: 50px; padding-bottom: 50px;}
 	#detailContent {width: 900px; height: 80px;}
 	.detailTable{margin: auto; text-align: center; border-collapse: collapse;}
@@ -19,8 +19,8 @@
 	.list_bar{display:inline; float: right; margin-top: 15px; margin-right: 20px; background-color: white; border: none; cursor: pointer;}
 
 /*수정삭제  */
-	.pop{padding:5px 0px; cursor: pointer;}
- 	.pop:hover label{background-color: lightgray;}
+	.pop{padding:5px 0px;}
+ 	.vLabel:hover {background-color: lightgray; cursor: pointer;}
  	#popup{width: 100px; height: 65px; position: absolute; top: 80px; right: 18px; background-color: white; text-align: center;
 			    border: 1px solid #d5d5d5; border-radius: 3px; box-shadow: rgba(0,0,0,.1) 0 1px 1px 0; display: none;}
 	.fa-ellipsis-v{font-size:25px; display:inline; float: right; margin-top: 15px; margin-right: 20px; background-color: white;
@@ -47,6 +47,8 @@
 /* 대댓글  */	
 	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
 
+/* 투표 */
+	.vam{margin-bottom: 10px;}
 
 /* 투표결과 */
 	#topic-poll-option {position: relative; width: 100%; min-height: 45px;}
@@ -78,7 +80,7 @@
 	
 	#topic-poll-wrapper {  margin-top: 30px;}
 	
-	#topic-poll {  border: 1px solid lightgray;  width: 675px;  padding: 15px;  vertical-align: top;  border-radius: 10px;  font-size: 14px;  margin-left: 140px;  margin-top: 10px;  margin-bottom: 10px;}
+	#topic-poll {  border: 1px solid lightgray;  width: 695px;  padding: 15px;  vertical-align: top;  border-radius: 10px;  font-size: 14px;  margin-left: 140px;  margin-top: 10px;  margin-bottom: 10px;}
 	#topic-poll .icon-edit:hover {  background-position: -384px 0;}
 	#topic-poll .poll-header {  overflow: hidden;  padding-bottom: 10px;  border-bottom: 1px solid lightgray;  position: relative;  min-height: 20px;}
 	#topic-poll .poll-header .poll-title {  display: inline-block;  position: absolute;  bottom: 10px;  font-size: 17px;}
@@ -126,7 +128,7 @@
 	}
 	#topic-poll.results .poll-choices-listing .poll-result {  min-height: 30px;  width: 100%;  display: inline-block;  position: relative;  box-sizing: border-box;}
 	#topic-poll.results .poll-choices-listing .poll-votes-count {  height: 100%;  vertical-align: middle;  position: absolute;  right: 0px;  top: 0px;  font-weight: bold;  color: #666666;}
-	#topic-poll.results .poll-choices-listing .poll-result-bar-wrapper {  height: 20px;  display: inline-block;  margin-left: -4px;  width: 520px;  margin-bottom: 5px;  overflow: hidden;  border-radius: 10px 0px 0px 10px;  border-top-right-radius: 10px;  border-bottom-right-radius: 10px;  background-color: #E2E2E2;}
+	#topic-poll.results .poll-choices-listing .poll-result-bar-wrapper {  height: 20px;  display: inline-block;  width: 520px;  margin-bottom: 5px;  overflow: hidden;  border-radius: 10px 0px 0px 10px;  border-top-right-radius: 10px;  border-bottom-right-radius: 10px;  background-color: #E2E2E2;}
 	#topic-poll.results .poll-choices-listing .poll-percentage {  width: 35px;  display: inline-block;  vertical-align: top;  padding-left: 5px;  padding-top: 2px;  color: #999999;}
 	
 	#topic-poll.unavailable .poll-unavailable-msg {  padding: 20px;  text-align: center;}
@@ -166,209 +168,178 @@
 <body>
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer" >
-		<form>
+		<form name="pollVoteForm" action="choiseVote.vo" method="post">
+		<!-- 투표 Id,check,page 담는 hidden -->
+		<input type="hidden" name="vId" value="${Vote.vId}">
+		<input type="hidden" name="check" value="${check }">
+		<input type="hidden" name="page" value="${currentPage }">
 		<!-- 게시글 상단부 시작  -->	
 			<br>
-			<h2 style="margin-left: 15px;">투표결과창 상세보기</h2>
+			<h2 style="margin-left: 15px;">투표게시판 상세보기</h2>
 			<hr>
 			<br>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
-				<div style="width: 60px; height: 25px; float: left; display: inline; background-color: skyblue; text-align: center; color: white; font-variant: all-petite-caps;">투표완료</div>
+				<div style="width: 60px; height: 25px; float: left; display: inline; background-color: skyblue; text-align: center; color: white; font-variant: all-petite-caps;">
+				<c:if test="${check}">
+				투표중
+				</c:if>
+				<c:if test="${!check}">
+				투표완료
+				</c:if>
+				</div>
 					<div class="detailTable_title">
-						<b>여기는 제목을 쓰는 공간으로 깨끗하고 살기 좋은 아파트를 위하여</b>
+						<b>${Vote.vName}</b>
 					</div>
 					<div id="cdt_profile" style="float:left;display:inline;">
-						<img class="comment2-1img" src="<%= request.getContextPath() %>/css/화단사진.jpg">
+						<img class="comment2-1img" src="resources/images/0505.jpg">
 					</div>
-					<div class="dong">닉네임(101동)</div>
-					<div style="display:inline;"><i class="far fa-clock"></i> 2020.2.29. 19:16</div>
-					<div style="display:inline;"><i class="far fa-eye"></i> 120</div>
+					<div class="dong">${writer.nickName}(${writer.aptDong})</div>
+					<div style="display:inline;"><i class="far fa-clock"></i> ${Vote.createDate }</div>
+					<div style="display:inline;"><i class="far fa-eye"></i> ${Vote.vCount }</div>
 				<!--수정 /삭제 선택 -->	
-				<i class="fas fa-ellipsis-v"></i>
-				<div id="popup">
-					<div class="pop"><label>수정</label></div>
-					<div class="pop"><label>삭제</label></div>
-				</div>
+				<c:if test="${(loginUser.userId).equals(writer.userId)}">
+					<i class="fas fa-ellipsis-v"></i>
+					<div id="popup">
+						<div class="pop"><label id="vModify" class="vLabel" onclick="location.href='voteModifyView.vo?vId=${Vote.vId}&page=${currentPage}'">수정</label></div>
+						<div class="pop"><label id="vDelete" class="vLabel" onclick="deleteYN();">삭제</label></div>
+					</div>
+				</c:if>
 				<hr>
 			</div>
 		<!-- 게시글 상단부 끝  -->	
 		<!-- 게시글 내용  -->
-			<div style="width: 800px; height: auto; margin-left: 100px; margin-top: 50px;"> 여러분 오늘 어떤 투표를 할지 말씀드릴게요. 오늘은 뭐냐면 대충 투표는 해야겠는데 글을 어디서 가져오기는 좀 귀찮고 무슨 텍스트든 적기는 해야할 것같으니까 일단 
-			찌끄려 보는 그런거거든요. 일단 아래 보시면 아시겠지만, 땅문서 어쩌구 랄랄라하는 투표를 할거구요, 익명 투표로 진행될 예저입니다.. 투표 도중에 댓글은 못달고 투표결과 나오면
-			댓글 달수 있도록해드릴거에요.
-			</div>
+			<div style="width: 800px; height: auto; margin-left: 100px; margin-top: 50px;">${Vote.vContent}</div>
 		<!-- 게시글 내용 끝 -->	
-		<!-- 투표결과부분 -->
-			<div id="topic-poll-wrapper" style="display: block;">
-				<div class="topic-poll">
-					<div id="topic-poll" class="results" data-max-votes="3">
-						<div class="poll-header">
-							<div class="poll-title">
-								하우스스토리를 통해 땅문서를 가지는 방법은? <span class="anonymous-marker">
-									Anonymous </span> <span class="poll-total-votes"> | 24 Votes </span>
-							</div>
-
-							<div class="poll-edit-link">
-
-								<a href="#" data-target="#edit_topic_poll_modal"
-									data-toggle="modal"><i class="icon-edit icon-light "></i></a>
-							</div>
-						</div>
-
-						<div class="poll-choices-listing">
-
-							<div class="poll-choice">
-								<span class="choice-name voted"> 부동산투기 <span
-									class="choice-voted-marker"> <a
-										href="/topic_polls/33/change_vote" class="change-view-link">-
-											Your vote <i class="icon-edit icon-light "></i>
-									</a>
-								</span>
-								</span> <span class="poll-result"> <span class="poll-percentage">
-										25% </span> <span class="poll-result-bar-wrapper">
-
-										<div class="poll-result-bar" visibility="hidden"
-											style="width: 520px;"></div>
-								</span> <span class="poll-votes-count">6 Votes</span>
-								</span>
-							</div>
-							<div class="poll-choice">
-								<span class="choice-name "> 로또당첨 </span> <span class="poll-result">
-									<span class="poll-percentage"> 20% </span> <span
-									class="poll-result-bar-wrapper">
-
-										<div class="poll-result-bar" visibility="hidden"
-											style="width: 430px;"></div>
-								</span> <span class="poll-votes-count">5 Votes</span>
-								</span>
-							</div>
-							<div class="poll-choice">
-								<span class="choice-name "> 땅문서 훔친다 </span> <span
-									class="poll-result"> <span class="poll-percentage">
-										16% </span> <span class="poll-result-bar-wrapper">
-
-										<div class="poll-result-bar" visibility="hidden"
-											style="width: 344px;"></div>
-								</span> <span class="poll-votes-count">4 Votes</span>
-								</span>
-							</div>
-							<div class="poll-choice">
-								<span class="choice-name voted"> 부모님한테 물려받기 <span
-									class="choice-voted-marker"> <a
-										href="/topic_polls/33/change_vote" class="change-view-link">-
-											Your vote <i class="icon-edit icon-light "></i>
-									</a>
-								</span>
-								</span> <span class="poll-result"> <span class="poll-percentage">
-										12% </span> <span class="poll-result-bar-wrapper">
-
-										<div class="poll-result-bar" visibility="hidden"
-											style="width: 258px;"></div>
-								</span> <span class="poll-votes-count">3 Votes</span>
-								</span>
-							</div>
-							<div class="poll-choice">
-								<span class="choice-name "> 있을수없음 </span> <span
-									class="poll-result"> <span class="poll-percentage">
-										12% </span> <span class="poll-result-bar-wrapper">
-
-										<div class="poll-result-bar" visibility="hidden"
-											style="width: 258px;"></div>
-								</span> <span class="poll-votes-count">3 Votes</span>
-								</span>
-							</div>
-							<div class="poll-choice">
-								<span class="choice-name voted"> 회사에 열심히 다닌다 90년정도<span
-									class="choice-voted-marker"> <a
-										href="/topic_polls/33/change_vote" class="change-view-link">-
-											Your vote <i class="icon-edit icon-light "></i>
-									</a>
-								</span>
-								</span> <span class="poll-result"> <span class="poll-percentage">
-										8% </span> <span class="poll-result-bar-wrapper">
-
-										<div class="poll-result-bar" visibility="hidden"
-											style="width: 172px;"></div>
-								</span> <span class="poll-votes-count">2 Votes</span>
-								</span>
-							</div>
-							<div class="poll-choice">
-								<span class="choice-name "> 포기한다 </span> <span
-									class="poll-result"> <span class="poll-percentage">
-										4% </span> <span class="poll-result-bar-wrapper">
-
-										<div class="poll-result-bar" visibility="hidden"
-											style="width: 86px;"></div>
-								</span> <span class="poll-votes-count">1 Vote</span>
-								</span>
-							</div>
-							<div class="poll-choice">
-								<span class="choice-name "> 열심히 한다 </span> <span class="poll-result">
-									<span class="poll-percentage"> 0% </span> <span
-									class="poll-result-bar-wrapper">
-
-										<div class="poll-result-bar" visibility="hidden"
-											style="width: 0px;"></div>
-								</span> <span class="poll-votes-count">0 Votes</span>
-								</span>
-							</div>
-
-						</div>
-
+		<!-- 투표진행부분 중복투표는 체크박스, 단일투표는 라디오박스-->
+			<c:set var="invoteCheck" value="false"/>
+			<c:forEach var="i" begin="0" end="${vInlist.size()}">
+				<c:if test="${not invoteCheck}">
+					<c:if test="${vInlist[i].userId eq loginUser.userId}">
+						<c:set var="invoteCheck" value="true"/>
+					</c:if>
+				</c:if>
+			</c:forEach>
+			
+			<!-- 내가 이 투표게시판의 투표를 안했으며 투표 중 일 경우 보여주는 부분 -->
+			<c:if test="${!invoteCheck && check}">
+			<div id = "vote_ing"style="font-size: 12px; line-height: 1.6; text-align: center; margin-top: 30px;">
+				<div style="width: 90% !important; max-width: 542px !important; min-width: 300px !important; margin: 0 auto;
+    				text-align: left; border: 1px solid #d5d5d5;">
+    				<div style="padding: 13px 18px 11px; color: #444444; background-color: #f7f7f7; font-size: 12px; line-height: 1.6;"><b>투표하기</b>
+					<span> 기간 : <span>${Vote.createDate} ~ ${Vote.endDate}</span> <span>|</span>
+						참여자수 : <strong>
+						<c:if test="${vInlist != null && !vInlist.isEmpty() }">
+							${vInlist.size()}
+						</c:if>
+						<c:if test="${vInlist == null || vInlist.isEmpty() }">
+							0
+						</c:if>
+						</strong> 명</span>
+					</div>
+					<ol style="padding: 16px 18px 9px; margin: 0; list-style: none; background-color: #fff;">
+						<c:if test="${vclist != null && !vclist.isEmpty() }">
+							<c:if test="${(Vote.overlapYN).equals('N') }">
+								<c:forEach var="i" begin="0" end="${vclist.size()-1}">
+									<li><input type="radio" name="article_poll_fldpoll_egseq" class="vam" value="${vclist[i].vcId}"><label style="vertical-align: text-bottom;">${vclist[i].vcName}</label></li>
+								</c:forEach>
+							</c:if>
+							<c:if test="${(Vote.overlapYN).equals('Y') }">
+								<c:forEach var="j" begin="0" end="${vclist.size()-1}">
+									<li><input type="checkbox" name="article_poll_fldpoll_egseq" class="vam" value="${vclist[j].vcId}"><label style="vertical-align: text-bottom;">${vclist[j].vcName}</label></li>
+								</c:forEach>
+							</c:if>
+						</c:if>
+					</ol>
+				</div>
+				<div class="poll_btn_area">
+					<div class="poll_btn_center" style="margin-top:20px;">
+						<input type="submit" value="투표하기" onclick="javascript:pollSubmit();">
 					</div>
 				</div>
 			</div>
-			<!-- 투표결과부분 끝 -->
+			</c:if>
+			
+			<!-- 내가 이 투표게시판의 투표를 했거나 투표가 끝났을 경우 보여주는 부분 -->
+			<c:if test="${invoteCheck || !check}">
+				<!-- 투표결과부분 -->
+					<div id="topic-poll-wrapper" style="display: block;">
+						<div class="topic-poll">
+							<div id="topic-poll" class="results" data-max-votes="3">
+								<div class="poll-header">
+									<div class="poll-title">${Vote.vName}<span class="poll-total-votes"> | ${vInlist.size()} Votes </span>
+									</div>
+		
+									<div class="poll-edit-link">
+										<a href="#" data-target="#edit_topic_poll_modal"
+											data-toggle="modal"><i class="icon-edit icon-light "></i></a>
+									</div>
+								</div>
+								<div class="poll-choices-listing">
+									<c:set var="invoteMax" value="${vInlist.size()}"/>
+									<!-- 투표결과 보여주는 부분  -->
+									<c:forEach var="i" begin="0" end="${vclist.size()-1}">
+										<div class="poll-choice">
+											<span class="choice-name voted"> ${vclist[i].vcName} <span class="choice-voted-marker">
+												<c:set var="Votes" value="0"/>
+												
+												<!-- 내가 투표했는지 확인하고 몇명이 했는지 확인하는 부분 -->
+												<c:forEach var="j" begin="0" end="${vInlist.size()-1}">
+													<c:if test="${(vInlist[j].userId eq loginUser.userId) and (vclist[i].vcId eq vInlist[j].vcId)}">
+														<a class="change-view-link" style="color:blue;">
+														- Your vote
+														<i class="icon-edit icon-light "></i>
+														</a>
+													</c:if>
+													<c:if test="${vclist[i].vcId eq vInlist[j].vcId}">
+														<c:set var="Votes" value="${Votes+1}"/>
+													</c:if>
+												</c:forEach>
+												<c:set var="percent" value="${ Math.round(Votes / invoteMax * 100) }"/>
+											</span>
+											</span> <span class="poll-result"> <span class="poll-percentage">
+													${percent}% </span> <span class="poll-result-bar-wrapper">
+			
+													<div class="poll-result-bar" visibility="hidden"
+														style="width: ${percent}%;"></div>
+											</span> <span class="poll-votes-count">${Votes} Votes</span>
+											</span>
+										</div>
+									</c:forEach>
+									
+								</div>
+		
+							</div>
+						</div>
+					</div>
+				<!-- 투표결과부분 끝 -->
+				</c:if>
+			<!--목록으로   -->	
 			<br>
 			<hr style="width: 900px;">
 			<div class="go_list_box">
-				<input type="button" class="go_list" value="목록">
+				<input type="button" class="go_list" value="목록" onclick="location.href='voteList.vo?page=${currentPage}'">
 			</div>
 			<br>
-			<!--댓글 작성  -->
+			<!--투표중에는 댓글 작성 불가 -->
 			<div class="reply1_box">
 				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="comment2-1img" src="<%=request.getContextPath()%>/css/화단사진.jpg">
+					<img class="comment2-1img" src="resources/images/0505.jpg">
 				</div>
-				<div class="dong">라랄라(202동)</div>
-					<input type="button" class="reply1_btn" value="댓글등록">
+				<div class="dong">${loginUser.nickName }(${loginUser.aptDong })</div>
+					<button type="button" class="reply1_btn">댓글등록</button>
 				<div style="margin-left: 10px; margin-top: 12px;">
-					<textarea class="reply_TEXT" name="reply_TEXT" cols="105" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
-				<div style="color:#aaa; float: right; margin-top: 45px;" id="counter">(0/200자)</div>
+				<c:if test="${check}">
+				<textarea class="reply_TEXT" name="reply_TEXT" cols="105" rows="4" placeholder="투표 진행 중 에는 댓글 작성이 불가합니다. 투표가 완료되면 댓글작성이 가능합니다." readonly></textarea>
+				</c:if>
+				<c:if test="${!check}">
+				<textarea class="reply_TEXT" name="reply_TEXT" cols="105" rows="4"></textarea>
+				</c:if>
 				</div>
-			</div>
-			<!--원 댓글  -->
-			<div class="reply2_box">
-				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="comment2-1img" src="<%=request.getContextPath()%>/css/화단사진.jpg">
-				</div>
-				<div class="dong">라랄라(202동)</div>
-					<input type="button" value="삭제" class="reply2_box_btn">
-					<input type="button" value="수정" class="reply2_box_btn">
-				<div style="margin-left: 10px;">와! 이런식으로 어쩌구 저쩌구한 투표결과를 보니 좋네요!</div>
-				<div style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div>
-				<input type="button" value="답글" class="reply2_box_btn2">
-				<i class="far fa-thumbs-up">0</i>
-				</div>
-			
-			<!-- 대 댓글 -->
-			<div class="reply3_box">
-				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="comment2-1img"src="<%=request.getContextPath()%>/css/화단사진.jpg">
-				</div>
-				<div class="dong">뾰로롱(201동)</div>
-					<input type="button" value="삭제" class="reply2_box_btn">
-					<input type="button" value="수정" class="reply2_box_btn">
-				<div style="margin-left: 10px;">와! 이런식으로 어쩌구 저쩌구한 투표결과를 보니 좋네요!</div>
-				<div style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div>
-				<input type="button" value="답글" class="reply2_box_btn2">
-				<i class="fas fa-thumbs-up">1</i>
 			</div>
 		</form>
 	</div>
-
 	<script>
-		//투표결과창
+		//투표결과창 js
 		var resultBars = $(".poll-choices-listing .poll-result-bar");
 
 		if (resultBars.is(':hidden')) {
@@ -392,19 +363,45 @@
 		        $('#counter').html("(200/200자)");
 		    }
 		});
-		
 		/* 수정 삭제 보이기 */
 		$(".fa-ellipsis-v").click(function(){
 	           var submenu = $(this).next();
 	              // submenu 가 화면상에 보일때는 위로 보드랍게 접고 아니면 아래로 보드랍게 펼치기
-	              console.log(submenu);
-	                  
 	               if(submenu.css("display") == "none"){
 	               	submenu.show();
 	      	        }else{
 	      	        	submenu.hide();
 	      	        }
 	     });
+		//체크박스
+		function pollSubmit() {
+			if (!checkData()) {
+				alert("보기를 선택하세요");
+				return false;
+			}
+// 			document.pollVoteForm.pollseq.value = "437405";
+// 			document.pollVoteForm.return_url.value = "http://cafe.daum.net/_c21_/poll/status?grpid=1XFJP&fldid=eHrC&dataid=89";
+			document.pollVoteForm.submit();
+		}
+
+		function checkData() {
+			var choice = document.pollVoteForm.article_poll_fldpoll_egseq;
+			if(choice.length > 0) {
+				for(i = 0; i < choice.length; i++)
+					if (choice[i].checked) return true;
+			} else {
+				return choice.checked;
+			}
+		}
+		
+		function deleteYN(){
+			var result = confirm("정말로 삭제하시겠습니까?");
+			vId = "${Vote.vId}";
+			if(result){
+				location.href='voteDelete.vo?vId=' + vId;
+			}
+		}
 	</script>
+		
 </body>
 </html>

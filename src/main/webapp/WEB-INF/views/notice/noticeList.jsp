@@ -15,7 +15,7 @@
 						font-size: 1.5em;}
     .board_wrab {text-align: center; 
     			  color:rgb(94, 92, 92);
-    			  margin-top: 50px;
+    			  margin-top: 20px;
     			  width:100%;
     			  postion:relative;
     			  } 
@@ -65,6 +65,7 @@
 	  font-size: 0.9em;
 	  color: #60666d;
       border: 1px solid #dad4d4;
+      margin-top: 20px;
 	  }
 	.select-box__current {
 	  position: relative;
@@ -157,17 +158,14 @@
 	<div class="select-box" id="selectBox">
 		  <div class="select-box__current" tabindex="1">
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="latest" value="latest" name="Ben" checked="checked"/>
+		      <input class="select-box__input" type="radio" id="latest" value="latest" name="nSortCondition" checked="checked"/>
 		      <p class="select-box__input-text">최신순</p>
 		    </div>
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="hits" value="hist" name="Ben"/>
+		      <input class="select-box__input" type="radio" id="hits" value="hits" name="nSortCondition"/>
 		      <p class="select-box__input-text">조회순</p>
 		    </div>
-		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="like" value="content" name="Ben"/>
-		      <p class="select-box__input-text">추천순</p>
-		    </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
+		    <img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
 		  </div>
 		  <ul class="select-box__list" style="display:hidden">
 		    <li>
@@ -176,11 +174,32 @@
 		    <li>
 		      <label class="select-box__option" for="hits" aria-hidden="aria-hidden">조회순</label>
 		    </li>
-		    <li>
-		      <label class="select-box__option" for="like" aria-hidden="aria-hidden">추천순</label>
-		    </li>
 		  </ul>
 	</div>
+	 <script>
+      $('.select-box__input').click(function(){
+         var nSortCondition = $(this).val();
+         console.log(nSortCondition);
+         location.href="nSortCondition.no?nSortCondition="+nSortCondition;
+         
+         if(nSortCondition == 'hits'){
+	         $(":radio[name='nSortCondition'][value='hits']").attr('checked', true);
+         }
+
+//        //체크 해제할 라디오버튼 불러오기
+//          var nSortCondition = document.getElementsByName("nSortCondition");
+//          var nSortCondition = document.getElementsByName("nSortCondition");
+   
+//          for(var i=0;nSortCondition.length;i++){
+
+//               //체크되어 있다면 park[i].checked == true
+//               //true -> false로 변환 ==> 체크해제
+//               if(nSortCondition[i].checked){
+//             	  nSortCondition[i].checked = false;
+//               }
+//          }
+      });
+   </script>
 <!--정렬 끝---------------------------------------------------------------------------------------------------->	
 <!-- 	                    <select class="dong" name="nDong"> -->
 <!-- 	                    	<option value="전체 공지" selected>전체 공지</option> -->
@@ -230,7 +249,7 @@
 				<button class="btn_standard" onclick="location.href='noticeInsertView.no';">공지작성</button>
 	    	</div>
     	</c:if>
-        
+        <button class="btn_standard" onclick="location.href='test2.no';">테스트</button>
         <!---------- 페이징 처리 -------->
 		<table id="notice_page_tb">
 			<tr align="center" height="20" id="buttonTab">

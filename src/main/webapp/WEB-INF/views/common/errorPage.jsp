@@ -20,7 +20,7 @@
 	font-size: 1.5em;
 }
 </style>
-<body>
+<body onload="javascript:window_onload()">
 	<img class="img" src="resources/images/error.png">
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">ERROR!</b>
@@ -28,7 +28,16 @@
 		<h1>Error</h1>
 		<h2 style="color:red;">${message }</h2>
 		<h2 style="color:red;">${requestScope['javax.servlet.error.message'] }</h2>
+		<h2> 5초 후 이전페이지로 돌아갑니다.</h2>
 	</div>
 	<jsp:include page="../common/Footer.jsp"/>
+	<script>
+		function window_onload(){
+			setTimeout('go_back()', 5000);
+		}
+		function go_back(){
+			history.back();
+		}
+	</script>
 </body>
 </html>

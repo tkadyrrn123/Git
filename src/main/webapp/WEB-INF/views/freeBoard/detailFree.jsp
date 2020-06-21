@@ -75,10 +75,17 @@
 				<div class="detailTable_title">
 					<b>${ fb.boardTitle } </b>
 				</div>
-				<div id="cdt_profile" style="float:left;display:inline;">
+				<c:if test="${ !empty loginUser.userFile }">
+					<div id="cdt_profile" style="float:left;display:inline;">
 						<img class="profileImg" src="${ contextPath}/resources/uploadFiles/${ fb.userFile} ">
 					</div>
-					<div class="dong">${ fb.nickname }(101동)</div>
+				</c:if>
+				<c:if test="${ empty loginUser.userFile }">
+					<div id="cdt_profile" style="float:left;display:inline;">
+						<img class="profileImg" src="${ contextPath}/resources/images/로고.png">
+					</div>
+				</c:if>
+					<div class="dong">${ fb.nickname }</div>
 					<div style="display:inline;"><i class="far fa-clock"></i> ${ fb.createDate }</div>
 					<div style="display:inline;"><i class="far fa-eye"></i> ${ fb.boardCount }</div>
 				<!--수정 /삭제 선택 -->	
@@ -89,13 +96,13 @@
 			<c:param name="boardNo" value="${ fb.boardNo }" />
 			<c:param name="page" value="${ page }" />
 		</c:url>
-
+			<c:if test="${ loginUser.userId eq fb.userId }">
 				<i class="fas fa-ellipsis-v"></i>
 				<div id="popup">
 					<div class="pop"><label onclick="location.href='${ modifyView }'">수정</label></div>
 					<div class="pop"><label onclick="deleteMsg();">삭제</label></div>
 				</div>
-
+			</c:if>
 				<hr>
 			</div>
 		<!-- 게시글 상단부 끝  -->	

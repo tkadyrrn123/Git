@@ -16,7 +16,7 @@
 			join tb_board b using(board_no)
             join tb_user u using(user_id)
             left join tb_file f using(board_no) 
-            join tb_club_join j using(club_name)
+            left join tb_club_join j using(club_name)
 		where board_delete = 'N'
         group by club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name, nickname
 		order by board_no desc
@@ -42,7 +42,7 @@
 			join tb_board b using(board_no)
             join tb_user u using(user_id)
             left join tb_file f using(board_no) 
-            join tb_club_join j using(club_name)
+            left join tb_club_join j using(club_name)
         where board_delete = 'N' and club_name = #{clubName}
         group by club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name, nickname
 	</select>
@@ -97,6 +97,7 @@
 		<result property="rState" column="COMMENTS_DELETE"/>
 		<result property="userFile" column="USER_FILE"/>
 		<result property="nickname" column="NICKNAME"/>
+		<result property="rState" column="COMMENTS_DELETE"/>
 	</resultMap>
 	
 	<update id="updateClub">
@@ -122,5 +123,53 @@
 		where reply_no = #{rNo}
 	</update>
 	
+	<update id="clubMapper.deleteComment">
+		update tb_comment
+		set comments_delete = 'Y'
+		where reply_no = #{rNo}
+	</update>
+	
+	<select id="clubMapper.selectComment2" resultMap="Comment2ResultSet">
+		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
+		from tb_comment_re
+			join tb_user using(user_ID)
+		where comments_delete = 'N'
+		order by RE_REPLY_NO DESC
+	</select>
+	<select id="clubMapper.selectComment23" resultMap="Comment2ResultSet">
+		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
+		from tb_comment_re
+			join tb_user using(user_ID)
+		where comments_delete = 'N' and reply_no = #{rNo}
+		order by RE_REPLY_NO DESC
+	</select>
+	
+		<resultMap type="Comment2" id="Comment2ResultSet">
+		<id property="rrNo" column="RE_REPLY_NO"/>
+		<result property="rNo" column="REPLY_NO"/>
+		<result property="rUserId" column="USER_ID"/>
+		<result property="rContent" column="REPLY_CONTENT"/>
+		<result property="rCreateDate" column="COMMENT_DATE"/>
+		<result property="rDecYN" column="DECYN"/>
+		<result property="rDecYN" column="COMMENTS_DELETE"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="userFile" column="USER_FILE"/>
+	</resultMap>
+	
+	<insert id="clubMapper.insertComment2">
+		insert into tb_comment_re
+		values(SEQ_COMMENT_RE.nextval, #{rNo}, #{rUserId}, #{rContent}, default, default, default )
+	</insert>
+	
+	<update id="updateComment2">
+		update tb_comment_re
+		set COMMENTS_DELETE = 'Y'
+		where re_reply_no = #{rrNo}
+	</update>
+	<update id="clubMapper.updateComment23">
+		update tb_comment_re
+		set reply_content = ${rContent}, COMMENT_DATE = default
+		where re_reply_no = #{rrNo}
+	</update>
 	
 </mapper>

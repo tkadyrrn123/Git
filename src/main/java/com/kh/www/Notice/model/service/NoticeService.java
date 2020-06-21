@@ -1,6 +1,7 @@
 package com.kh.www.Notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.common.model.vo.Comment;
@@ -52,6 +53,8 @@ public interface NoticeService {
 	
 	//아파트 동 전체 리스트 가져오기
 	String selectcDonglist(String aptName);
+
+	ArrayList<Notice> selectSortCondition(HashMap map);
 
 	
 }

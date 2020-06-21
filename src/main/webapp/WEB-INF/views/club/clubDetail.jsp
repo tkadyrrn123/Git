@@ -60,24 +60,25 @@
 	.btn:hover{background:skyblue;}
  	#replyInput{width:80% ; margin: 100px 0px 0px 200px; border: 1px solid black; height: 184px; } 
  	#rWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px;}  
+ 	
+ 	#replyInput2{width:72% ; margin: 10px 0px 0px 300px; border: 1px solid black; height: 204px; background:skyblue;} 
+ 	#rrWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px; background:skyblue;}  
  	 
  	#rProfile{width: 40px; height:40px; margin-top: 10px;}
  	#rImg{ border-radius: 50%;  width: 100%; height:100%; }  
- 	#rWriter{vertical-align: middle; margin-top: -28px; margin-right: 30px; margin-left:10px;width:5%;}
+ 	#rWriter{vertical-align: middle; margin-top: -28px; margin-right: 10px; margin-left:10px;width:7%;}
  	#rHo{vertical-align: middle; margin-top: -28px;}
  	#info{display: inline-block;  height:50px; margin-left: 30px; width:80%;}
  	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
  	.info{display: inline-block;} 
  	#insertBtn{width: 70px;  margin-top: 20px;} 
+ 	#counter{margin-top: 70px;float: right;margin-right: 50px;}
  	
+ 
  	
- 	.reply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; }  
-
- 	
- 	#rreply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; }  
- 	
- 	#content4 textarea{width: 75%; margin: 20px 0px 0px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
- 	
+ 	#content4 textarea{width: 75%; margin: 20px 0px 14px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
+ 	 .reply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; }  
+ 	.rreply{width: 110%; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; } 
 /*  	#rUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 500px;}  
  	#rDeleteBtn{width: 70px;  vertical-align: middle; margin-top: 20px;}  */ 
  	
@@ -87,16 +88,22 @@
  	#rUpdateBtnAjax{margin-left: 29px;}  
  	#rDeleteBtnAjax{margin-left: 16px;}  
  	
- 	#rrUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 457px;}  
- 	#replyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px; margin-top: -30px ; margin-right:500px;}
+ 	#rrUpdateBtn{width: 70px; margin-left: 617px;}  
+ 	#replyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px; margin-top: 29px; margin-right:500px;}
+ 	#rreplyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px;     margin-top: 29px; margin-right: 372px; vertical-align: top;}
+ 	#rrContent{background: skyblue;}
+ 	
+ 	
  	#replyBtn{margin: 10px 0 10px 60px;}
  	.likeBtn{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
  	.likeBtn2{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display:none;} 
  	
  	#likeBtn3{margin-left: 753px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}   
  	#likeBtn4{margin-left: 753px; width: 3%; height:3%; vertical-align: middle; display:none;}  
- 	#likeImg{width: 100%; height:100%; }  
+ 	#likeImg{width: 100%; height:100%;}  
  	#likeImg2{width:100%; height:100%;}    
+ 	#likeImg3{width: 100%; height:100%;}  
+ 	#likeImg4{width:100%; height:100%;}    
  	.likeCount{display: inline-block;    vertical-align: sub; margin-left: 10px;}
  	.img{filter: brightness(70%);
      width: 100%;
@@ -193,7 +200,7 @@ ${ c.clubPlace }
 			<textarea name="clubEtc"  class="textarea" id="etcInput"  style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required readonly>
 ${ c.clubEtc }
 			</textarea>
-			
+			<input type="hidden" name="userId" value="${ loginUser.userId }"> 
 
 		</div>
 		
@@ -228,7 +235,7 @@ ${ c.clubEtc }
 				</div>
 				<button class="btn" id="insertBtn">댓글 등록</button>
 
-				<textarea id="rWrite" style="overflow: hidden; overflow-wrap: break-word; resize: none;" required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
+				<textarea class="rWrite" id="rWrite" style="overflow: hidden; overflow-wrap: break-word; resize: none;" required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
 				<span style="color:#aaa;" id="counter">(0 / 최대 200자)</span>
 			</div>
 		</div> 
@@ -242,14 +249,15 @@ ${ c.clubEtc }
 						<c:if test="${!empty b.userFile }">
 							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${b.userFile}"></div>
 						</c:if>
-						<c:if test="${empty b.userFile }">
+						<c:if test="${empty b.userFile }"> 
 							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
 						</c:if>
 							<div class="info"  id="rWriter">${b.nickname}</div>
 							<div class="info"  id="replyDate">${b.rCreateDate}</div>
 						<c:if test="${loginUser.userId eq b.rUserId }">
-							<button class="btn" id="rUpdateBtn${ status.index }">수정</button> 
-							<button class="btn" id="rDeleteBtn${ status.index }">삭제</button>
+							<button type="button" class="btn" id="rUpdateBtn${ status.index }">수정</button> 
+							<button type="button" class="btn" id="rDeleteBtn${ status.index }">삭제</button>
+							<div style="display:none">${b.rNo}</div>
 						</c:if>
 					</div>
 
@@ -257,6 +265,7 @@ ${ c.clubEtc }
  
 					<div> 
 						<button class="btn" id="replyBtn">답글</button>
+						<div style="display:none">${b.rNo}</div>
 						<div class="likeBtn" id="likeBtn1">
 							<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like.png">
 						</div>
@@ -287,9 +296,12 @@ ${ c.clubEtc }
 					</div>
 
 						<textarea class="rrContent${ status.index }" style="border: 1px solid black;">${b.rContent}</textarea>
- 
-
 				</div>
+				
+	
+				
+				
+				
   				<script>
 				$(function () {
 					$('.rContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 32  );
@@ -305,47 +317,67 @@ ${ c.clubEtc }
 			   			$('#replyUpdate${ status.index }').show();
 			   		})
 			   		
-			   		
-
-			   		
 			   	$('#rDeleteBtnC${ status.index }').click(function(){
-			   			$('#replyUpdate${ status.index }').hide();
-			   			$('#reply${ status.index }').show();
-			   		})
+			   		$('#reply${ status.index }').show();
+		   			$('#replyUpdate${ status.index }').hide();
+			   	})
 			   	
-	
-			   		
+			   	
+			   	$('#rDeleteBtn${ status.index }').click(function(){
+						<c:url var="dc" value="deleteComment.cb">
+							<c:param name="rNo" value="${b.rNo}"></c:param>
+							<c:param name="clubName" value="${ c.clubName }"></c:param>
+							<c:param name="userId" value="${ loginUser.userId }"></c:param>
+							<c:param name="boardNo" value="${ c.boardNo }"></c:param>
+						</c:url>
+					if(confirm("댓글을 삭제하시겠습니까?")){
+		   				location.href="${dc}";
+		   			}
+			   		});
+
 				</script>
+				
+				
+		<!-- 대댓글 -->
+		<div id="content5">
+			<c:forEach var="a" items="${comment2}" varStatus="status">
+			<c:if test="${a.rNo eq b.rNo }">
+			<div class="rreply" id="rreply${ status.index }">
+				<div id="info2">
+					<c:if test="${!empty a.userFile }">
+						<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${a.userFile}"></div>
+					</c:if>
+					<c:if test="${empty a.userFile }"> 
+						<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+					</c:if>
+					<div class="info"  id="rWriter">${a.nickname}</div>
+					<div class="info"  id="rreplyDate">${a.rCreateDate}</div>
+					<c:if test="${loginUser.userId eq a.rUserId }">
+						<button type="button" class="btn" id="rrUpdateBtn">수정</button> 
+						<button type="button" class="btn" id="rrDeleteBtn">삭제</button>
+						<div style="display:none">${a.rNo}</div>
+						<div style="display:none">${a.rrNo}</div>
+						<div style="display:none">${ status.index }</div>
+					</c:if> 
+				</div>
+
+				<textarea class="rContent${ status.index }" id="rrContent" readonly >${a.rContent}</textarea>
+			</div>
+			</c:if>
+			</c:forEach>
+		</div>		
+				
+				
 			</c:forEach>
 		</div>
-				
+	</div>		
 			
-		</div>		
-		
-		<div id="content5">
-			<div id="rreply">
-				<div id="info2">
-					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
-					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="replyDate">2020-05-27 03:03</div>
-					<button class="btn" id="rrUpdateBtn">수정</button> 
-					<button class="btn" id="rrDeleteBtn">삭제</button> 
-				</div>
-				<div width="100%">
-					<p id="rContent" readonly>010-1234-5678 쪽으로 연락 주세요</p>
-				</div> 
-				<div>
-					<button class="btn" id="replyBtn">답글</button>
-					<div class="likeBtn" id="likeBtn3">
-						<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like3.png">
-					</div>
-					<div class="likeBtn2" id="likeBtn4">
-						<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like4.png">
-					</div>
-						<div class="likeCount">0</div>
-				</div>
-			</div>
-		</div>
+	
+
+
+
+
+						
 		
 		
 		
@@ -353,9 +385,7 @@ ${ c.clubEtc }
 		
 		
 		
-		
-		
-	</div>
+
 	
 		<jsp:include page="../common/Footer.jsp"/>
 	
@@ -364,23 +394,25 @@ ${ c.clubEtc }
 	<script type="text/javascript">
 	
 		/** 댓글 글자수 제한 **/
-		$('#rWrite').keyup(function (e){
+		$(document).on('keyup','.rWrite', function (e){
 		    var content = $(this).val();
-		    $('#counter').html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
+		    $(this).next().html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
 	
 		    if (content.length > 200){
 		        alert("최대 200자까지 입력 가능합니다.");
 		        $(this).val(content.substring(0, 200));
-		        $('#counter').html("(200 / 최대 200자)");
+		        $(this).next().html("(200 / 최대 200자)");
 		    }
-		}).keydown(function (e){
+		});
+		
+		$(document).on('keydown','.rWrite', function (e){
 			var content = $(this).val();
-		    $('#counter').html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
+		    $(this).next().html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
 	
 		    if (content.length > 200){
 		        alert("최대 200자까지 입력 가능합니다.");
 		        $(this).val(content.substring(0, 200));
-		        $('#counter').html("(200 / 최대 200자)");
+		        $(this).next().html("(200 / 최대 200자)");
 		    }
 		});
 		
@@ -391,10 +423,7 @@ ${ c.clubEtc }
 		  $('.textarea').height(1).height( $('.textarea').prop('scrollHeight') - 10  );	
 		});
 
-/* 		$('.reply button:eq(1)').css('display','none'); */
-		$(document).on('click','.reply button:eq(1)',function(){
-			location.href="clubList.cb";
-		})
+
 
 		
 		
@@ -423,11 +452,11 @@ ${ c.clubEtc }
    		
 
    		
-
+/* 댓글 추가 ajax */
    		$('#insertBtn').on('click', function(){
-   			var userId = '${ loginUser.userId }' 
-   			var boardNo = ${ c.boardNo }
-   			var content = $('#rWrite').val();
+   			var userId = '${ loginUser.userId }';
+   			var boardNo = ${ c.boardNo };
+   			var content = $('#rWrite').val();  			
    			$.ajax({
    				url: 'insertComment.cb',
    				data: {userId:userId, boardNo:boardNo, content:content},
@@ -446,10 +475,12 @@ ${ c.clubEtc }
 						}
 						var $writer = $('<div>').text(data[i].nickname).attr('class','info').attr('id','rWriter');
 						var $date = $('<div>').text(data[i].rCreateDate).attr('class','info').attr('id','replyDate');
-						if(data[i].rUserId == userId){
+
 						var $rubtn = $('<button>').text("수정").attr('class','btn').attr('id','rUpdateBtnAjax');
+						var $rNo2 = $('<div>').text(data[i].rNo).css('display','none');
 						var $rdbtn = $('<button>').text("삭제").attr('class','btn').attr('id','rDeleteBtnAjax');
-						}
+						var $turn2 = $('<div>').text(i).css('display','none');
+						
 						var $content = $('<textarea>').text(data[i].rContent);	
 						
 						var $divv = $('<div>');
@@ -472,8 +503,10 @@ ${ c.clubEtc }
 						var $replyUpdate = $('<div>').attr('class', 'reply').attr('id','replyUpdate' + i).css('display','none');
 						var $ddiv = $('<div>').attr('id', 'info2')
 						var $rrubtn = $('<button>').text("수정완료").attr('class','btn').attr('id','rUpdateBtnC');
-						var $rrdbtn = $('<button>').text("수정취소").attr('class','btn').attr('id','rDeleteBtnC'+i);
-						var $ccontent = $('<textarea>').attr('class','rrContent'+i).text(data[i].rContent);
+						var $rNo = $('<div>').text(data[i].rNo).css('display','none');
+						var $turn = $('<div>').text(i).css('display','none');
+						var $rrdbtn = $('<button>').text("수정취소").attr('class','btn').attr('id','rDeleteBtnC');
+						var $ccontent = $('<textarea>').attr('class','rrContent'+i).text(data[i].rContent).css('border', '1px solid black');
 						
 						
 	
@@ -484,9 +517,12 @@ ${ c.clubEtc }
 						$div.append($profile);
 						$div.append($writer);
 						$div.append($date);
-						$div.append($rubtn);
-						$div.append($rdbtn);
-						
+						if(data[i].rUserId == userId){
+							$div.append($rubtn);
+							$div.append($rdbtn);
+							$div.append($rNo2);
+							$div.append($turn2);
+						}
 						$divv.append($rreply);
 						$like1.append($img1);
 						$like2.append($img2);
@@ -506,6 +542,8 @@ ${ c.clubEtc }
 						$ddiv.append($wwriter);
 						$ddiv.append($ddate);
 						$ddiv.append($rrubtn);
+						$ddiv.append($rNo);
+						$ddiv.append($turn);
 						$ddiv.append($rrdbtn);
 						$replyUpdate.append($ddiv);
 						$replyUpdate.append($ccontent);
@@ -515,9 +553,11 @@ ${ c.clubEtc }
 						$replyTable.append($replyUpdate);
 						
 						var aaa = $content.prop('scrollHeight');
-						var aaaa = $ccontent.prop('scrollHeight');
+						
 						$content.height(aaa + 20);
-						$ccontent.height(aaaa + 20);
+						
+						var aaaa = $ccontent.prop('scrollHeight');
+						$ccontent.height(aaaa + 110);
 
 						
  	
@@ -529,25 +569,56 @@ ${ c.clubEtc }
    				}
    			})
    		})
-   		
+/* 댓글 추가 후 수정버튼 이벤트 */   		
    		$(document).on('click', '#rUpdateBtnAjax',function(){
 			$(this).parent().parent().css('display','none');
 			$(this).parent().parent().next().css('display','inline-block');
 
 		}); 		   	
-   		
+  		
    		$(document).on('click', '#rUpdateBtnC',function(){
-			$(this).parent().parent().css('display','none');
-			$(this).parent().parent().next().css('display','inline-block');
+   			var a = $(this).next().next().text();
+   			var b = $(this).next().text();
+	
+			updateReply(a,b);		
 
 		}); 
+
+/* 댓글 추가 수정 후 삭제버튼 이벤트 */   		
+   		$(document).on('click', '#rDeleteBtnAjax',function(){
+   			var rNo = $(this).next().text();
+   			var i = $(this).next().next().text();
+   			if(confirm("댓글을 삭제하시겠습니까?")){
+				
+   			$.ajax({
+   				url: 'deleteComment2.cb',
+   				data: {rNo:rNo},
+   				success: function(data){
+   					$reply = $('#reply' + i);
+   					$replyUpdate = $('#replyUpdate' + i);
+					$reply.html("");
+					$replyUpdate.html("");
+					$reply.css('display', 'none');
+					$replyUpdate.css('display', 'none');
+   				}
+			}); 
+   		}	
+   	});
+   	
+   	/* 댓글 추가 수정 후  수정 취소 */
+   		$(document).on('click', '#rDeleteBtnC',function(){
+   			$(this).parent().parent().hide();
+   			$(this).parent().parent().prev().show();
+
+   	});
    		
    		
-   		
+/* 댓글 수정 */  		
 		function updateReply(a, b){
-  	   			var boardNo = ${ c.boardNo }
-   				var rNo = b
+  	   			var boardNo = ${ c.boardNo };
+   				var rNo = b;
    				var content = $('.rrContent' + a).val();
+   				var userId = '${ loginUser.userId }'
   	   			$.ajax({
   	   				url: 'updateComment.cb',
   	   				data: {boardNo:boardNo, content:content, rNo:b},
@@ -555,7 +626,7 @@ ${ c.clubEtc }
   	   					$replyTable = $('#content4');
   						$replyTable.html("");
   						for(var i = 0; i < data.length; i++){
-  							var $reply = $('<div>').attr('id', 'reply');
+  							var $reply = $('<div>').attr('id', 'reply' + i).attr('class','reply');
   							var $div = $('<div>').attr('id', 'info2');
   							var $profile = $('<div>').attr('class','info').attr('id','rProfile');
   							
@@ -566,8 +637,12 @@ ${ c.clubEtc }
   							}
   							var $writer = $('<div>').text(data[i].nickname).attr('class','info').attr('id','rWriter');
   							var $date = $('<div>').text(data[i].rCreateDate).attr('class','info').attr('id','replyDate');
+  							
   							var $rubtn = $('<button>').text("수정").attr('class','btn').attr('id','rUpdateBtnAjax');
+  							var $rNo2 = $('<div>').text(data[i].rNo).css('display','none');
   							var $rdbtn = $('<button>').text("삭제").attr('class','btn').attr('id','rDeleteBtnAjax');
+  							var $turn2 = $('<div>').text(i).css('display','none');
+  							
 
   							var $content = $('<textarea>').text(data[i].rContent);	
   							
@@ -579,38 +654,189 @@ ${ c.clubEtc }
   							var $img2 = $('<img>').attr('id','likeImg4').attr('src', '${ pageContext.servletContext.contextPath }/resources/images/like2.png');
   							var $count = $('<div>').text("0").attr('class','likeCount');
   							
+  							
+  							var $pprofile = $('<div>').attr('class','info').attr('id','rProfile');
+  							if(data[i].userFile == null){
+  								var $iimg = $('<img>').attr('src', '${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg').attr('class','info').attr('id','rImg');
+  							} else {
+  								var $iimg = $('<img>').attr('src', '${ pageContext.servletContext.contextPath }/resources/uploadFiles/' + data[i].userFile).attr('class','info').attr('id','rImg');
+  							}
+  							var $wwriter = $('<div>').text(data[i].nickname).attr('class','info').attr('id','rWriter');
+  							var $ddate = $('<div>').text(data[i].rCreateDate).attr('class','info').attr('id','replyDate');
+  							var $replyUpdate = $('<div>').attr('class', 'reply').attr('id','replyUpdate' + i).css('display','none');
+  							var $ddiv = $('<div>').attr('id', 'info2')
+  							var $rrubtn = $('<button>').text("수정완료").attr('class','btn').attr('id','rUpdateBtnC');
+  							var $rNo = $('<div>').text(data[i].rNo).css('display','none');
+  							var $turn = $('<div>').text(i).css('display','none');
+  							var $rrdbtn = $('<button>').text("수정취소").attr('class','btn').attr('id','rDeleteBtnC');
+  							var $ccontent = $('<textarea>').attr('class','rrContent'+i).text(data[i].rContent).css('border', '1px solid black');
+  							
+  							
+  		
+  							
+  							
   							$profile.append($img);
+  							
   							$div.append($profile);
   							$div.append($writer);
   							$div.append($date);
-  							$div.append($rubtn);
-  							$div.append($rdbtn);
-  							$reply.append($div);
-  							$reply.append($content);
+  							if(data[i].rUserId == userId){
+  								$div.append($rubtn);
+  								$div.append($rdbtn);
+  								$div.append($rNo2);
+  								$div.append($turn2);
+  							}
+  							
   							$divv.append($rreply);
   							$like1.append($img1);
   							$like2.append($img2);
   							$divv.append($like1)
   							$divv.append($like2)
   							$divv.append($count)
+  							 
+  							$reply.append($div);
+  							$reply.append($content);
+
+  							
   							$reply.append($divv);
-
+  							
+  							
+  							$pprofile.append($iimg);
+  							$ddiv.append($pprofile);
+  							$ddiv.append($wwriter);
+  							$ddiv.append($ddate);
+  							$ddiv.append($rrubtn);
+  							$ddiv.append($rNo);
+  							$ddiv.append($turn);
+  							$ddiv.append($rrdbtn);
+  							$replyUpdate.append($ddiv);
+  							$replyUpdate.append($ccontent);
+  							
+  							
   							$replyTable.append($reply);
-  							console.log(data);
+  							$replyTable.append($replyUpdate);
+  							
   							var aaa = $content.prop('scrollHeight');
+  							
   							$content.height(aaa + 20);
-
+  							
+  							var aaaa = $ccontent.prop('scrollHeight');
+  							$ccontent.height(aaaa + 110);
   						}
 
-   						$('#rWrite').val("");
+  						$('#rWrite').val("");
    	   				}
    	   			})  		
    		}
 		
 
-   		
-   		
+   		/* 대댓글 입력창  */
+   		$(document).on('click','#replyBtn', function(){
+   			var $rreplyInsertTable = $(this).parent().parent().next(); /* 댓글 수정 창 */
+   			$rreplyInsertTable.next().css('display','none');
+   			var rreplys = '<div id="replyInput2">' +
+						 '	<div id="info">' +
+						 '		<c:if test="${!empty loginUser.userFile }">' +
+						 '			<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${loginUser.userFile}"></div>' +
+						 '		</c:if>' +
+						 '		<c:if test="${empty loginUser.userFile }">' +
+						 '			<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>' +
+						 '	 	</c:if>' +
+						 '			<div class="info"  id="rWriter">${ loginUser.nickName }</div>' +
+						 '	</div>' +
+						 '	<button class="btn" id="insertBtnRe" style="width:70px;">댓글 등록</button>' +
+						 '  <div style="display:none;">' + $(this).next().text() + '</div>' +
+						 '	<textarea class="rWrite" id="rrWrite" style="border:1px solid black; overflow: hidden; overflow-wrap: break-word; resize: none;" required  placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>'  +
+						 '	<span style="color:black;" id="counter">(0 / 최대 200자)</span>' +
+						 '</div>'
+						 
+   			$rreplyInsertTable.after(rreplys);		 
+   		});
+		
+   		/* 대댓글 등록  */
+   		$(document).on('click','#insertBtnRe', function(){
+   			var userId = '${ loginUser.userId }';
+   			var rNo = $(this).next().text();
+   			var content = $(this).next().next().val();
+   			$.ajax({
+   				url: 'insertComment2.cb',
+   				data: {userId:userId, rNo:rNo, content:content},
+   				success: function(data){
+   					alert('성공');
+   					$replyTable = $('#content5');
+					$replyTable.html("");
+					for(i = 0; i < data.length; i++){
+						var $table1 = 
+							'	<div class="rreply" id="rreply' + i + '">' +
+							'		<div id="info2">';
+						if(data[i].userFile == null){
+							var $table2 = '<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>';
+						}	
+						if(data[i].userFile != null){
+							var $table2 = '<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${a.userFile}"></div>';
+						}		
+							var $table3 = '<div class="info"  id="rWriter">' + data[i].nickname + '</div>' +
+										  '<div class="info"  id="rreplyDate">'+data[i].rCreateDate+'</div>';
+						
+						if(data[i].rUserId == userId){
+							var $table4 = '<button type="button" class="btn" id="rrUpdateBtn' + i + '">수정</button> ' +
+										  '<button type="button" class="btn" id="rrDeleteBtn">삭제</button>' +
+										  '<div style="display:none">' +data[i].rNo +'</div>' + 
+										  '<div style="display:none">' + data[i].rrNo + '</div>' + 
+										  '<div style="display:none">' + i + '</div>';
+						}	
+							var $table5 =   '</div>' +
+											'<textarea class="rContent${ status.index }" id="rrContent" readonly >' + data[i].rContent +'</textarea>' +
+											'</div>';
 
+	
+							$table = $table1 + $table2 + $table3 + $table4 + $table5;
+							$replyTable.append($table);
+
+					}
+						
+
+
+					$('#rrWrite').parent().hide();
+   				}
+   			}) 
+   		})
+   		
+   		/* 대댓글 수정창  */
+   		$(document).on('click','#rrUpdateBtn', function(){
+   			var rrNo = $(this).next().next().next().text();
+   			var i = $(this).next().next().next().next().text();
+   			var $textarea = '<textarea class="rContent'+ i +'" id="rrContent" style="border:1px solid black; min-height:100px;" >'+$(this).parent().next().text() + '</textarea>';
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 취소</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 완료</button>')
+
+   			
+
+   			
+   			$(this).parent().next().remove();
+   			$(this).parent().next().css('display','none'); 
+   			$(this).parent().parent().append($textarea);
+   			var content = $(this).parent().next().next().text();
+   			$(this).next().next().next().remove();
+   			$(this).remove();
+   		   	});
+   		
+ 		/* 대댓글 삭제  */
+   		$(document).on('click','#rrDeleteBtn', function(){
+   			var rrNo = $(this).next().next().text();
+   			var i = $(this).next().next().next().text();
+   				if(confirm("댓글을 삭제하시겠습니까?")){
+   					$.ajax({
+   		   				url: 'deleteComment3.cb',
+   		   				data: {rrNo:rrNo},
+   		   				success: function(data){
+   		   					$rreply = $('#rreply' + i);
+   		   					$rreply.html("");
+							$rreply.css('display', 'none');
+   		   				}
+   					}); 
+   		   		}	
+   		   	}); 		
    		
    		
    		$('.likeBtn').click(function(){
@@ -653,11 +879,7 @@ ${ c.clubEtc }
 		});
 		
 		
-/* 		$(document).on('click', '#rDeleteBtnAjax', function(){
-			if(confirm("댓글을 삭제하시겠습니까?")){
-   				location.href="deleteClub.cb";
-   			}
-		}); */
+
 		
 
 	</script> 
