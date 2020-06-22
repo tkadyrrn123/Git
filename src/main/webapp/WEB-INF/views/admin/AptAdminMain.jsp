@@ -174,50 +174,43 @@ marquee>b{font-size: 20px;}
 			
 				<div class="container_content">
 					<section>
-						<h2>최근 아파트가입 5건</h2>
-						<div class="all_list2 all_list">총 아파트 ${aall.allMember}개 중 승인아파트 ${aall.accept-aall.delete}개, 미승인아파트 ${aall.disaccept}개, 탈퇴 아파트 ${aall.delete}개</div>
+						<h2>최근 게시글</h2>
 						<table>
 							<thead>
 								<tr>
 									 <th scope="col" style="width: 10px;">번호</th>
-							         <th scope="col" style="width: 200px;">아파트명</th>
-							         <th scope="col" style="width: 300px;">주소</th>
-							         <th scope="col" style="width: 30px;">동(수)</th>
-							         <th scope="col" style="width: 100px;">가입일</th>
-							         <th scope="col" style="width: 100px;">전화번호</th>
-							         <th scope="col" style="width: 30px;">승인여부</th>
-							         <th scope="col" style="width: 30px;">탈퇴여부</th>
+									 <th scope="col" style="width: 30px;">게시판</th>
+							         <th scope="col" style="width: 400px;">제목</th>
+							         <th scope="col" style="width: 70px;">작성자</th>
+							         <th scope="col" style="width: 100px;">작성일</th>
+							         <th scope="col" style="width: 20px;">조회수</th>
+							         <th scope="col" style="width: 20px;">삭제여부</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty alist }">
+								<c:if test="${empty bList }">
 									<tr>
 										<td colspan="8" style="text-align: center; padding: 100px 0 !important;">
 											자료가 없습니다.
 										</td>
 									</tr>
 								</c:if>
-								<c:forEach var="a" items="${alist}">
+								<c:forEach var="b" items="${bList}">
 									<tr>
-										<td>${a.id}</td>
-										<td>${a.name}</td>
-										<td>${a.address}</td>
-										<td>
-											<c:set var="dongs" value="${fn:split(a.dong, ',')}" />
-											${fn:length(dongs)}
-										</td>
-										<td>${a.createdate}</td>
-										<td>${a.tel}</td>
-										<td>${a.accept}</td>
-										<td>${a.delete}</td>
+										<td>${b.bId}</td>
+										<td>${b.type}</td>
+										<td>${b.title}</td>
+										<td>${b.writer}</td>
+										<td>${b.createDate}</td>
+										<td>${b.count}</td>
+										<td>${b.delete}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-						<div class="userlist btnList"><a href='ApartList.adm'>전체 아파트 목록</a></div>
+						<div class="userlist btnList"><a href='AptBoardList.adm'>전체 게시글 목록</a></div>
 					</section>
 				</div>
-				
 		</div>
 			<jsp:include page="../common/Footer.jsp"/>
 	</div>

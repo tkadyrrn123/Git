@@ -25,6 +25,7 @@
 		<typeAlias type="com.kh.www.Vote.model.vo.VChoice" alias="VChoice"/>
 		<typeAlias type="com.kh.www.Vote.model.vo.VInvote" alias="VInvote"/>
 		<typeAlias type="com.kh.www.Vote.model.vo.Vote" alias="Vote"/>
+		<typeAlias type="com.kh.www.Member.model.vo.BoardType" alias="BoardType"/>
 	</typeAliases>
 	
 	<mappers>

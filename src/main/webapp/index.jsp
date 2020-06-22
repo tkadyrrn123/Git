@@ -1449,7 +1449,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 		<div class="modal-content">
 			<p id="title">ID / PW 찾기</p>
 			<hr style="margin-top: 0;">
-			<form>
+			<form action="idSearch.do">
 				<table id="tb1">
 					<tr>
 						<td><h1>아이디 찾기</h1></td>
@@ -1458,7 +1458,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 						<td><p class="text">아이디는 가입시 등록한 메일 주소로 알려드립니다. 가입할 때 등록한 메일 주소를 입력하고 "아이디 찾기" 버튼을 클릭해주세요.</p></td>
 					</tr>
 					<tr>
-						<td><input type="email" placeholder="이메일 주소"></td>
+						<td><input type="email" name="userId_email" placeholder="이메일 주소"></td>
 					</tr>
 					<tr>
 						<td>
@@ -1468,7 +1468,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 				</table>
 			</form>
 			<hr>
-			<form>
+			<form action="passSearch.do">
 				<table id="tb2">
 					<tr>
 						<td><h1>비밀번호 찾기</h1></td>
@@ -1477,7 +1477,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 						<td><p class="text">비밀번호는 가입시 등록한 메일 주소로 알려드립니다. 가입할 때 등록한 메일 주소를 입력하고 "임시 비밀번호 발급" 버튼을 클릭해주세요.</p></td>
 					</tr>
 					<tr>
-						<td><input type="email" placeholder="이메일 주소"></td>
+						<td><input type="email" name="userPass_email" placeholder="이메일 주소"></td>
 					</tr>
 					<tr>
 						<td>
@@ -1697,5 +1697,6 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 		});
 		
 	</script>
+
 </body>
 </html>
