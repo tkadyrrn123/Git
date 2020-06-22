@@ -6,21 +6,21 @@ import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -28,6 +28,8 @@ import com.kh.www.Apart.model.exception.ApartException;
 import com.kh.www.Apart.model.service.ApartService;
 import com.kh.www.Apart.model.vo.Apart;
 import com.kh.www.Member.model.service.MemberService;
+import com.kh.www.Member.model.vo.Email;
+import com.kh.www.Member.model.vo.EmailSender;
 import com.kh.www.Member.model.vo.Member;
 
 /**
@@ -46,6 +48,14 @@ public class HomeController {
 	@Autowired
 	private BCryptPasswordEncoder BCryptPasswordEncoder; 
 	
+	@Autowired
+	private EmailSender emailSender;
+	
+	@Autowired
+	private Email email;
+	
+	@Autowired
+	private JavaMailSender EmailSender;
 	//아파트 추가
 	@RequestMapping("aptAdd.do")
 	public String aptInsert(@RequestParam("aptAdd_Name") String name, @RequestParam("address1") String address,
@@ -268,7 +278,7 @@ public class HomeController {
 		Member loginUser = mService.Login(id);
 		
 		if(loginUser != null) {
-			
+			System.out.println("비밀번호 비교 :" + BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()));
 			if(BCryptPasswordEncoder.matches(pwd, loginUser.getUserPwd()) && (loginUser.getUserLevel() == 1 || loginUser.getUserLevel() == 2 )) {
 				model.addAttribute("loginUser", loginUser);
 				
@@ -298,6 +308,74 @@ public class HomeController {
 	public String mainView() {
 		
 		return "/WEB-INF/views/Main";
+	}
+	
+	@RequestMapping("idSearch.do")
+	public String idSearch(@RequestParam("userId_email") String user_email, HttpServletResponse response) throws IOException {
+		
+		String userId = mService.idSearch(user_email);
+		
+		String msg = "";
+		msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
+		msg += "<h3 style='color: blue;'>아이디 찾기 입니다.</h3>";
+		msg += "<div style='font-size: 130%'>";
+		msg += "비밀번호 찾기 페이지로 돌아가 인증코드 <strong>";
+		msg += userId + "</strong> 를 입력해주세요.</div><br/>";
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		if(userId != null) {
+			email.setSubject("[HOUSTORY] 아이디 찾기 메일입니다.");
+			email.setContent(msg);
+			email.setReceiver(user_email);
+			emailSender.SendEmail(email, EmailSender);
+			
+			out.println("<script>alert('메일을 확인해주세요!'); history.go(-1);</script>");
+            out.flush();
+		}else {
+			out.println("<script>alert('등록된 이메일이 없습니다. 다시 확인해주세요!'); history.go(-1);</script>");
+            out.flush();
+		}
+		return "index";
+	}
+	@RequestMapping("passSearch.do")
+	public String passSearch(@RequestParam("userPass_email") String user_email, HttpServletResponse response) throws IOException {
+		
+		 String uuid = "";
+		 uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		 uuid = uuid.substring(0, 10);
+		 
+		 String msg = "";
+		 msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
+		 msg += "<h3 style='color: blue;'>비밀번호 찾기 인증코드입니다.</h3>";
+		 msg += "<div style='font-size: 130%'>";
+		 msg += "비밀번호 찾기 페이지로 돌아가 인증코드 <strong>";
+		 msg += uuid + "</strong> 를 입력해주세요.</div><br/>";
+		 
+		 String userId = mService.idSearch(user_email);
+		 
+		 response.setContentType("text/html; charset=UTF-8");
+		 PrintWriter out = response.getWriter();
+		 
+		 if(userId != null) {
+			email.setSubject("[HOUSTORY] 비밀번호 찾기 메일입니다.");
+			email.setContent(msg);
+			email.setReceiver(user_email);
+			emailSender.SendEmail(email, EmailSender);
+			
+			//임시비밀번호 DB에 변경
+			String encPwd = BCryptPasswordEncoder.encode(uuid);
+			mService.searchPwdAlter(userId, encPwd);
+			
+			out.println("<script>alert('메일을 확인해주세요!'); history.go(-1);</script>");
+            out.flush();
+		 }else {
+			out.println("<script>alert('등록된 이메일이 없습니다. 다시 확인해주세요!'); history.go(-1);</script>");
+            out.flush();
+		 }
+		 
+		return "index";
 	}
 	
 }

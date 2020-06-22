@@ -108,6 +108,11 @@
 					<li onclick="location.href='AptAdminAcceptList.adm'">- 가입 신청 목록</li>
 				</ul>
 			</li>
+			<li class="dropdown"><label>게시글 관리</label>
+				<ul class="sub" >
+					<li onclick="location.href='AptBoardList.adm'">- 전체 게시글 목록</li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 

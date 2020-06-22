@@ -16,6 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.kh.www.Apart.model.service.ApartService;
 import com.kh.www.Apart.model.vo.Apart;
 import com.kh.www.Member.model.service.MemberService;
+import com.kh.www.Member.model.vo.BoardType;
 import com.kh.www.Member.model.vo.LevelCount;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Member.model.vo.MemberCount;
@@ -413,7 +414,7 @@ public class Admincontroller {
 		
 		return "redirect:ApartAccept.adm";
 	}
-//=================================================아파트 어드민==============================================
+//=================================================아파트 관리사무소==============================================
 	@RequestMapping("AptAdminMain.adm")
 	public String AptAdminMain(HttpSession session,  Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
@@ -424,9 +425,24 @@ public class Admincontroller {
 		MemberCount memberCount = mService.AptMemberCount(aptName);
 		//멤버 리스트
 		ArrayList<Member> mList = mService.AptMemberfiveList(aptName);
+		//최근 게시물 5건
+		ArrayList<BoardType> bList = mService.fiveBoardList(aptName);
+		for(BoardType b : bList) {
+			if(b.getFree() != 0) {
+				b.setType("자유게시판");
+			}else if(b.getMarket() != 0) {
+				b.setType("중고마켓");
+			}else if(b.getClub() != 0) {
+				b.setType("동호회");
+			}else if(b.getClubNotice() != 0) {
+				b.setType("동호회공지");
+			}
+		}
 		
+		System.out.println("컨트롤러: " +bList);
 		model.addAttribute("cCount", createCount)
 		     .addAttribute("mCount", memberCount)
+		     .addAttribute("bList", bList)
 		     .addAttribute("mlist", mList);
 		
 		return "AptAdminMain";
@@ -602,4 +618,9 @@ public class Admincontroller {
 		return "redirect:AptAdminMemberList.adm";
 	}
 	
+	@RequestMapping("AptBoardList.adm")
+	public String AptBoardList() {
+		
+		return "AptAdminBoardList";
+	}
 }

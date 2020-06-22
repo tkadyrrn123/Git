@@ -228,6 +228,18 @@
 			<artifactId>json</artifactId>
 			<version>20171018</version>
 		</dependency>
+		<!-- 메일 보내기  -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>4.1.7.RELEASE</version>
+		</dependency>
 		
 	</dependencies>
     <build>

@@ -414,4 +414,38 @@
 		UPDATE TB_USER SET USER_DELETE='Y'
 		WHERE USER_ID = #{userId}
 	</update>
+	
+	<select id="idSearch" resultType="string">
+		SELECT USER_ID FROM TB_USER WHERE EMAIL = #{email}
+	</select>
+	
+	<update id="searchPwdAlter">
+		UPDATE TB_USER SET USER_PWD = #{uuid} WHERE USER_ID = #{userId} 
+	</update>
+	
+	<select id="fiveBoardList" resultMap="BoardResult">
+		SELECT bNo, title, createDate, userId, bcount, bdelete, free, market, club, club_notice
+		FROM(SELECT b.BOARD_NO bNo, b.BOARD_TITLE title, b.CREATE_DATE createDate, m.USER_ID userId, b.BOARD_COUNT bcount, b.BOARD_DELETE bdelete, f.board_no free, m.board_no market, c.board_no club, n.board_no club_notice FROM TB_BOARD b
+			 JOIN TB_USER m ON(b.USER_ID = m.USER_ID)
+			 LEFT JOIN tb_free f ON(b.board_no = f.board_no)
+			 LEFT JOIN tb_market m ON(b.board_no = m.board_no)
+			 LEFT JOIN tb_club c ON(b.board_no = c.board_no)
+			 LEFT JOIN tb_club_notice n ON(b.board_no = n.board_no)
+			 WHERE APT_NAME = #{aptName}
+			 ORDER BY ROWNUM DESC)
+		WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
+	
+	<resultMap type="BoardType" id="BoardResult">
+		<id column="bNo" property="bId"/>
+		<result column="title" property="title"/>
+		<result column="createDate" property="createDate"/>
+		<result column="userId" property="writer"/>
+		<result column="bcount" property="count"/>
+		<result column="free" property="free"/>
+		<result column="market" property="market"/>
+		<result column="club" property="club"/>
+		<result column="club_notice" property="clubNotice"/>
+		<result column="bdelete" property="delete"/>
+	</resultMap>
 </mapper>

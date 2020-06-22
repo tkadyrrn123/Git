@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.www.Member.model.vo.BoardType;
 import com.kh.www.Member.model.vo.LevelCount;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Member.model.vo.MemberCount;
@@ -243,7 +244,22 @@ public class MemberDAO {
 	public int AdminAptMemberDelete(SqlSessionTemplate sqlSession, String userId) {
 		return sqlSession.update("memberMapper.AdminAptMemberDelete", userId);
 	}
-	
-	
+
+	public String idSearch(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.selectOne("memberMapper.idSearch", email);
+	}
+
+	public int searchPwdAlter(SqlSessionTemplate sqlSession, String userId, String uuid) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("userId", userId);
+		hs.put("uuid", uuid);
+		
+		return sqlSession.update("memberMapper.searchPwdAlter", hs);
+	}
+
+	public ArrayList<BoardType> fiveBoardList(SqlSessionTemplate sqlSession, String aptName) {
+		return (ArrayList)sqlSession.selectList("memberMapper.fiveBoardList", aptName);
+	}
+
 	
 }
