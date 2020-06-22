@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -394,20 +395,36 @@ public class NoticeController {
 	//댓글 등록
 	@RequestMapping("addNoticeComment.no")
 	@ResponseBody //success 리턴을 위해
-	public String addReply(@ModelAttribute Comment nc, HttpSession session) {
+	public Object addReply(@ModelAttribute Comment nc, HttpSession session) {
+	
+		//받아오는 항목 4개 : 게시글 번호(noticeNo), 댓글내용(rContent), 
+		//대댓글하려면 ...parent_id : "0", depth : "0" 이거 2개 컬럼 있어야하는뎅 ...스벌...
+		//도훈씨 방법으로 해보지뭐 할수있을거야..일단 진행해보자
+		
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String ncUserId = loginUser.getUserId();
 		
-		nc.setrUserId(ncUserId);
+		nc.setrUserId(ncUserId); //코멘트 객체에 userId 넣기
 		
 		int result = noticeService.insertNoticeComment(nc);
 		
-		if(result > 0) {
-			return "success";
-		}else {
-			throw new NoticeException("댓글 등록에 실패하였습니다.");
-		}
+//		if(result > 0) {
+//			return "success";
+//		}else {
+//			throw new NoticeException("댓글 등록에 실패하였습니다.");
+//		}
 		
+		//리턴값
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		if(result>0){
+            retVal.put("code", "OK");
+            retVal.put("message", "등록에 성공 하였습니다.");
+        }else{
+            retVal.put("code", "FAIL");
+            retVal.put("message", "등록에 실패 하였습니다.");
+        }
+        return retVal;
 	}
 	
 	//댓글 수정

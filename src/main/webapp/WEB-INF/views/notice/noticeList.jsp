@@ -249,7 +249,6 @@
 				<button class="btn_standard" onclick="location.href='noticeInsertView.no';">공지작성</button>
 	    	</div>
     	</c:if>
-        <button class="btn_standard" onclick="location.href='test2.no';">테스트</button>
         <!---------- 페이징 처리 -------->
 		<table id="notice_page_tb">
 			<tr align="center" height="20" id="buttonTab">
