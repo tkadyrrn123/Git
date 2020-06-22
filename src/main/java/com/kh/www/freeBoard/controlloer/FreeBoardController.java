@@ -342,13 +342,10 @@ public class FreeBoardController {
 	
 	@RequestMapping("commentModify.fr")
     @ResponseBody
-    public int commentModify(@RequestParam int rNo, @RequestParam String rContent) {
-        
-        Comment comment = new Comment();
-        comment.setrNo(rNo);
-        comment.setrContent(rContent);
-        
-        return freeService.commentModify(comment);
+    public int commentModify(@RequestParam("rNo") int rNo) {
+
+		
+		return 0;
     }
 
 	@RequestMapping("deleteReply.fr")

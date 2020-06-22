@@ -204,16 +204,17 @@
 						$div = $('<div class="reply2_box">');
 						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+ data[i].userFile +'">');
 						$nickname = $('<div class="nickname" id="nickname">').text(data[i].nickname);
-						
-						$rContent = $('<div class="rContent'+data[i].rNo+'">').html(data[i].rContent);
+						$rContentdiv = $('<div>')
+						$rContent = $('<textarea class="rContent'+data[i].rNo+'" readonly style="resize:none; width: 100%; min-height: 100px; outline:none; ">').html(data[i].rContent);
 						
 						$rCreateDate = $('<div class="rCreateDate">').text(data[i].rCreateDate);
-						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="수정">');
-						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="삭제">');
+						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +');" value="수정" >');
+						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +');" value="삭제">');
 						
 						$div.append($profileImg);
 						$div.append($nickname);
-						$div.append($rContent);
+						$div.append($rContentdiv);
+						$rContentdiv.append($rContent);
 						$div.append($rCreateDate);
 						$div.append($rMBtn);
 						$div.append($rDBtn);
@@ -228,37 +229,18 @@
 				} 
 			}
 		});
+
 	}
 	
-	// 댓글 수정
-	function modifyR(rNo, rContent){
-		var a ='';
-		var content = rContent.replace('<br>', '\n');
-		
-		if(cCheck){
-			$mBtn = $('#mBtn');
-			$mBtn.val('완료');
-			
-			a += '<div>';
-			
-		    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+
-		    content+'</textarea>';
-		    
-		    a += '<div class="counter" id="update_counter">'+rContent.length+'/200</div>';
-		    a += '<i class="fas fa-check" onclick="commentModify('+rNo+');"></i>';
-		    a += '</div>';
-		    
-		    $('.rContent'+rNo).append(a);
-		    
-		    cCheck = false;
-		} else{
-			
-			
-			
-			cCheck = true;
-		}
-	}
+ 	function modifyR(rNo){
+ 	//	alert(rNo);
+	$('.rContent'+rNo).prop('readonly', false);
+ 		
+	
+ 	}	
 
+	
+	
 //댓글 수정시 글자 카운팅
  function plus(rNo){
     var content = $("#update_reply_TEXT_"+rNo+"").val();
@@ -272,28 +254,9 @@
     }
 } 
 
-//댓글 수정 저장
-function commentModify(rNo){
-    var updateContent = $('name=rContent_'+rNo+'').val();
-    var mBtn = $('')
-    
-//     updateContent = updateContent.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    
-    $.ajax({
-        url : 'commentModify.fr',
-        dataType: 'json',
-        data : {'rContent' : updateContent, 'rNo' : rNo},
-        success : function(data){
-           
-           if(data == 1) getReplyList(rNo); //댓글 수정후 목록 출력 
-            
-            alert("확인을 클릭하면 수정이 완료됩니다.")
-        }
-    });
-}
+
 	// 댓글 삭제
 	function deleteR(rNo, rContent){
-		console.log(rContent);
 		
 		$.ajax({
 			url: 'deleteReply.fr',
@@ -311,10 +274,6 @@ function commentModify(rNo){
 	$('#rSubmit').on('click', function(){
 		var rContent = $('#rContent').val();
 		var boardNo = ${ fb.boardNo};
-		
-		rContent = rContent.replace(/(?:\r\n|\r|\n)/g, '<br>');
-		
-		console.log(rContent);
 		
  		$.ajax({
 			url: 'addReply.fr',
