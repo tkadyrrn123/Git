@@ -114,7 +114,7 @@
 	
 	<insert id="insertReply">
 		insert into tb_comment
-		values(seq_reply.nextval, #{boardNo}, null, #{rUserId}, #{rContent}, sysdate, default, default)
+		values(seq_reply.nextval, #{boardNo}, null, null, #{rUserId}, #{rContent}, sysdate, default, default)
 	</insert>
 	
 	<update id="updateFreeBoard">
@@ -129,7 +129,7 @@
 		where board_no = #{boardNo}
 	</update>
 	
-	<update id="updateComment">
+	<update id="updateReply">
 		update tb_comment
 		set reply_content=#{rContent}, comment_date = sysdate
 		where reply_no=#{rNo}

@@ -59,9 +59,7 @@
 </style>
 </head>
 <body>
-<script>
-	cCheck = true;
-</script>
+
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
@@ -160,7 +158,7 @@
 				<div id="cdt_profile" style="float: left; display: inline;">
 					<img class="profileImg"src="${ contextPath }/resources/images/로고.png">
 				</div>
-				<div class="dong">뾰로롱(201동)</div>
+				<div class="dong">뾰로롱</div>
 					<input type="button" value="삭제" class="reply2_box_btn">
 					<input type="button" value="수정" class="reply2_box_btn">
 				<div style="margin-left: 10px;">와! 이런식으로 어쩌구 저쩌구한 투표결과를 보니 좋네요!</div>
@@ -174,10 +172,10 @@
 	<script>
 	$(function(){
 		getReplyList();
-		/* 
-		setInterval(function(){
-			getReplyList();
-		}, 1000); */
+		
+// 		setInterval(function(){
+// 			getReplyList();
+// 		}, 1000); 
 	});	
 	
 	function getReplyList(){
@@ -197,27 +195,39 @@
 				var $nickname;
 				var $rContent;
 				var $rCreateDate;
+				var $noprofileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/normal.jpg>');	
 			
 				 
 				if(data.length > 0){
 					for(var i in data){
 						$div = $('<div class="reply2_box">');
-						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+ data[i].userFile +'">');
-						$nickname = $('<div class="nickname" id="nickname">').text(data[i].nickname);
+						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+	data[i].userFile +'">');									
+
+						
+						$nickname = $('<div class="nickname" id="nickname" style="display: inline-block;">').text(data[i].nickname);
 						$rContentdiv = $('<div>')
 						$rContent = $('<textarea class="rContent'+data[i].rNo+'" readonly style="resize:none; width: 100%; min-height: 100px; outline:none; ">').html(data[i].rContent);
 						
-						$rCreateDate = $('<div class="rCreateDate">').text(data[i].rCreateDate);
-						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +');" value="수정" >');
+						$rCreateDate = $('<div class="rCreateDate" style="display: inline-block; margin-left: 610px;">').text(data[i].rCreateDate);
+						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +');" value="수정">');
 						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +');" value="삭제">');
 						
+
 						$div.append($profileImg);
-						$div.append($nickname);
+
+						$div.append($nickname);		
+						$div.append($rCreateDate);
+						
 						$div.append($rContentdiv);
 						$rContentdiv.append($rContent);
-						$div.append($rCreateDate);
-						$div.append($rMBtn);
-						$div.append($rDBtn);
+						
+						console.log(data[i].nickname);
+						
+						if('${loginUser.nickName}' == data[i].nickname){
+							$div.append($rMBtn);
+							$div.append($rDBtn);
+						}
+						
 						$rOuter.append($div);						
 					}
 				} else{
@@ -232,12 +242,53 @@
 
 	}
 	
+	// 댓글 등록	
+	$('#rSubmit').on('click', function(){
+		var rContent = $('#rContent').val();
+		var boardNo = ${ fb.boardNo};
+		
+ 		$.ajax({
+			url: 'addReply.fr',
+			data: {rContent:rContent, boardNo:boardNo},
+			success: function(data){
+				if(data == 'success'){
+					getReplyList();
+					$('#rContent').val('');
+				}
+			}
+		}); 
+		
+	});
+	
+	// 댓글 수정
  	function modifyR(rNo){
  	//	alert(rNo);
 	$('.rContent'+rNo).prop('readonly', false);
- 		
+	$('.rContent'+rNo).css('border-color', 'red');
 	
- 	}	
+	if($('#mBtn'+rNo).val() == '수정'){
+	 	$('#mBtn'+rNo).val('완료');
+	 		 	
+	 	$('#mBtn'+rNo).on('click', function(){
+		 	var rContent = $('.rContent'+rNo).val();
+		 	
+		 	$.ajax({
+		 		url: 'modifyReply.fr',
+		 		data: {rContent:rContent, rNo:rNo},
+		 		success: function(data){
+		 			if(data == 'success'){
+		 				getReplyList();
+		 			}
+		 		}
+		 	});	 		
+	 		
+	 	})
+
+	}
+		
+	}
+	
+ 		
 
 	
 	
@@ -270,23 +321,7 @@
 		});
 	}
 	
-	// 댓글 등록	
-	$('#rSubmit').on('click', function(){
-		var rContent = $('#rContent').val();
-		var boardNo = ${ fb.boardNo};
-		
- 		$.ajax({
-			url: 'addReply.fr',
-			data: {rContent:rContent, boardNo:boardNo},
-			success: function(data){
-				if(data == 'success'){
-					getReplyList();
-					$('#rContent').val('');
-				}
-			}
-		}); 
-		
-	});
+
 	
 	function deleteMsg(){
 		var del = confirm('정말 삭제합니까?');
