@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.www.Member.model.dao.MemberDAO;
+import com.kh.www.Member.model.vo.BoardType;
 import com.kh.www.Member.model.vo.LevelCount;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Member.model.vo.MemberCount;
@@ -206,7 +207,21 @@ public class MemberServiceImpl implements MemberService {
 	public int AdminAptMemberDelete(String userId) {
 		return mDAO.AdminAptMemberDelete(sqlSession, userId);
 	}
-	
-	
+
+	@Override
+	public String idSearch(String email) {
+		return mDAO.idSearch(sqlSession, email);
+	}
+
+	@Override
+	public int searchPwdAlter(String userId, String uuid) {
+		return mDAO.searchPwdAlter(sqlSession, userId, uuid);
+	}
+
+	@Override
+	public ArrayList<BoardType> fiveBoardList(String aptName) {
+		return mDAO.fiveBoardList(sqlSession, aptName);
+	}
+
 
 }

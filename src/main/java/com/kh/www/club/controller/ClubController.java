@@ -320,5 +320,23 @@ public class ClubController {
 		return result;
 	}
 	
-	
+//	동호회 대댓글 수정
+	@RequestMapping("updateComment3.cb")
+	@ResponseBody
+	public int updateComment2(@RequestParam("content") String content, @RequestParam("rrNo") int rrNo, HttpServletResponse response) {
+		Comment2 c = new Comment2();
+		c.setRrNo(rrNo);
+		c.setrContent(content);
+		
+		int result = cService.updateComment2(c);
+		
+		if(result > 0) {
+
+			return result;
+			
+		}else {
+			throw new ClubException("댓글 수정에 실패했습니다.");
+		}
+		
+	}	
 }
