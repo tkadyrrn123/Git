@@ -105,5 +105,10 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 		return fDAO.deleteReply(sqlSession, rNo);
 	}
 
+	@Override
+	public int modifyReply(Comment c) {
+		return fDAO.modifyReply(sqlSession, c);
+	}
+
 
 }

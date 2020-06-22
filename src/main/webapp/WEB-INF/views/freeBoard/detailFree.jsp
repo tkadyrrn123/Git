@@ -59,9 +59,7 @@
 </style>
 </head>
 <body>
-<script>
-	cCheck = true;
-</script>
+
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
@@ -160,7 +158,7 @@
 				<div id="cdt_profile" style="float: left; display: inline;">
 					<img class="profileImg"src="${ contextPath }/resources/images/로고.png">
 				</div>
-				<div class="dong">뾰로롱(201동)</div>
+				<div class="dong">뾰로롱</div>
 					<input type="button" value="삭제" class="reply2_box_btn">
 					<input type="button" value="수정" class="reply2_box_btn">
 				<div style="margin-left: 10px;">와! 이런식으로 어쩌구 저쩌구한 투표결과를 보니 좋네요!</div>
@@ -174,10 +172,10 @@
 	<script>
 	$(function(){
 		getReplyList();
-		/* 
-		setInterval(function(){
-			getReplyList();
-		}, 1000); */
+		
+// 		setInterval(function(){
+// 			getReplyList();
+// 		}, 1000); 
 	});	
 	
 	function getReplyList(){
@@ -197,26 +195,39 @@
 				var $nickname;
 				var $rContent;
 				var $rCreateDate;
+				var $noprofileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/normal.jpg>');	
 			
 				 
 				if(data.length > 0){
 					for(var i in data){
 						$div = $('<div class="reply2_box">');
-						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+ data[i].userFile +'">');
-						$nickname = $('<div class="nickname" id="nickname">').text(data[i].nickname);
+						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+	data[i].userFile +'">');									
+
 						
-						$rContent = $('<div class="rContent'+data[i].rNo+'">').html(data[i].rContent);
+						$nickname = $('<div class="nickname" id="nickname" style="display: inline-block;">').text(data[i].nickname);
+						$rContentdiv = $('<div>')
+						$rContent = $('<textarea class="rContent'+data[i].rNo+'" readonly style="resize:none; width: 100%; min-height: 100px; outline:none; ">').html(data[i].rContent);
 						
-						$rCreateDate = $('<div class="rCreateDate">').text(data[i].rCreateDate);
-						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="수정">');
-						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +',\''+data[i].rContent+'\');" value="삭제">');
+						$rCreateDate = $('<div class="rCreateDate" style="display: inline-block; margin-left: 610px;">').text(data[i].rCreateDate);
+						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +');" value="수정">');
+						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +');" value="삭제">');
 						
+
 						$div.append($profileImg);
-						$div.append($nickname);
-						$div.append($rContent);
+
+						$div.append($nickname);		
 						$div.append($rCreateDate);
-						$div.append($rMBtn);
-						$div.append($rDBtn);
+						
+						$div.append($rContentdiv);
+						$rContentdiv.append($rContent);
+						
+						console.log(data[i].nickname);
+						
+						if('${loginUser.nickName}' == data[i].nickname){
+							$div.append($rMBtn);
+							$div.append($rDBtn);
+						}
+						
 						$rOuter.append($div);						
 					}
 				} else{
@@ -228,93 +239,13 @@
 				} 
 			}
 		});
-	}
-	
-	// 댓글 수정
-	function modifyR(rNo, rContent){
-		var a ='';
-		var content = rContent.replace('<br>', '\n');
-		
-		if(cCheck){
-			$mBtn = $('#mBtn');
-			$mBtn.val('완료');
-			
-			a += '<div>';
-			
-		    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+
-		    content+'</textarea>';
-		    
-		    a += '<div class="counter" id="update_counter">'+rContent.length+'/200</div>';
-		    a += '<i class="fas fa-check" onclick="commentModify('+rNo+');"></i>';
-		    a += '</div>';
-		    
-		    $('.rContent'+rNo).append(a);
-		    
-		    cCheck = false;
-		} else{
-			
-			
-			
-			cCheck = true;
-		}
-	}
 
-//댓글 수정시 글자 카운팅
- function plus(rNo){
-    var content = $("#update_reply_TEXT_"+rNo+"").val();
-    console.log(content);
-    $('#update_counter').html(content.length+"/200");//글자수 실시간 카운팅
-
-    if (content.length > 200){
-        alert("최대 200자까지 입력 가능합니다.");
-        $(this).val(content.substring(0, 200));
-        $('#update_counter').html("200/200");
-    }
-} 
-
-//댓글 수정 저장
-function commentModify(rNo){
-    var updateContent = $('name=rContent_'+rNo+'').val();
-    var mBtn = $('')
-    
-//     updateContent = updateContent.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    
-    $.ajax({
-        url : 'commentModify.fr',
-        dataType: 'json',
-        data : {'rContent' : updateContent, 'rNo' : rNo},
-        success : function(data){
-           
-           if(data == 1) getReplyList(rNo); //댓글 수정후 목록 출력 
-            
-            alert("확인을 클릭하면 수정이 완료됩니다.")
-        }
-    });
-}
-	// 댓글 삭제
-	function deleteR(rNo, rContent){
-		console.log(rContent);
-		
-		$.ajax({
-			url: 'deleteReply.fr',
-			data: {rNo:rNo, rContent:rContent},
-			success: function(data){
-				if(data == 'success'){
-					alert('확인을 누르면 삭제가 완료됩니다.');
-					getReplyList();
-				}
-			}
-		});
 	}
 	
 	// 댓글 등록	
 	$('#rSubmit').on('click', function(){
 		var rContent = $('#rContent').val();
 		var boardNo = ${ fb.boardNo};
-		
-		rContent = rContent.replace(/(?:\r\n|\r|\n)/g, '<br>');
-		
-		console.log(rContent);
 		
  		$.ajax({
 			url: 'addReply.fr',
@@ -328,6 +259,69 @@ function commentModify(rNo){
 		}); 
 		
 	});
+	
+	// 댓글 수정
+ 	function modifyR(rNo){
+ 	//	alert(rNo);
+	$('.rContent'+rNo).prop('readonly', false);
+	$('.rContent'+rNo).css('border-color', 'red');
+	
+	if($('#mBtn'+rNo).val() == '수정'){
+	 	$('#mBtn'+rNo).val('완료');
+	 		 	
+	 	$('#mBtn'+rNo).on('click', function(){
+		 	var rContent = $('.rContent'+rNo).val();
+		 	
+		 	$.ajax({
+		 		url: 'modifyReply.fr',
+		 		data: {rContent:rContent, rNo:rNo},
+		 		success: function(data){
+		 			if(data == 'success'){
+		 				getReplyList();
+		 			}
+		 		}
+		 	});	 		
+	 		
+	 	})
+
+	}
+		
+	}
+	
+ 		
+
+	
+	
+//댓글 수정시 글자 카운팅
+ function plus(rNo){
+    var content = $("#update_reply_TEXT_"+rNo+"").val();
+    console.log(content);
+    $('#update_counter').html(content.length+"/200");//글자수 실시간 카운팅
+
+    if (content.length > 200){
+        alert("최대 200자까지 입력 가능합니다.");
+        $(this).val(content.substring(0, 200));
+        $('#update_counter').html("200/200");
+    }
+} 
+
+
+	// 댓글 삭제
+	function deleteR(rNo, rContent){
+		
+		$.ajax({
+			url: 'deleteReply.fr',
+			data: {rNo:rNo, rContent:rContent},
+			success: function(data){
+				if(data == 'success'){
+					alert('확인을 누르면 삭제가 완료됩니다.');
+					getReplyList();
+				}
+			}
+		});
+	}
+	
+
 	
 	function deleteMsg(){
 		var del = confirm('정말 삭제합니까?');

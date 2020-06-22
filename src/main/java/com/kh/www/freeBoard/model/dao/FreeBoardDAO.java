@@ -83,6 +83,10 @@ public class FreeBoardDAO {
 		return sqlSession.update("freeMapper.deleteReply", rNo);
 	}
 
+	public int modifyReply(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.update("freeMapper.updateReply", c);
+	}
+
 
 
 

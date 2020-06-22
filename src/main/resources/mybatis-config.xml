@@ -39,6 +39,7 @@
 		<mapper resource="mappers/ClubNotice-mapper.xml"/>
 		<mapper resource="mappers/Main-mapper.xml"/>
 		<mapper resource="mappers/Vote-mapper.xml"/>
+		<mapper resource="mappers/Comment-mapper.xml"/>
 	</mappers>
 	
 
