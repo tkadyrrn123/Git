@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CommentMapper">
+
+	<insert id="insertComment">
+		insert into tb_comment
+		values(SEQ_REPLY.NEXTVAL, #{boardNo},default,default, #{rUserId}, #{rContent}, sysdate, 'N', default )
+	</insert>
+	
+	<select id="selectComment" resultMap="CommentResultSet">
+		select REPLY_NO, BOARD_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
+		from tb_comment
+			join tb_user using(user_ID)
+		where comments_delete = 'N' and board_no = #{boardNo}
+		order by REPLY_NO DESC
+	</select>
+	
+	<update id="updateComment">
+		update tb_comment
+		set comment_date = sysdate, reply_content = #{rContent}
+		where reply_no = #{rNo}
+	</update>
+	
+	<update id="deleteComment">
+		update tb_comment
+		set comments_delete = 'Y'
+		where reply_no = #{rNo}
+	</update>
+	
+	<select id="selectComment2" resultMap="Comment2ResultSet">
+		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
+		from tb_comment_re
+			join tb_user using(user_ID)
+		where comments_delete = 'N' and reply_no = #{rNo}
+		order by RE_REPLY_NO DESC
+	</select>
+	
+	<insert id="insertComment2">
+		insert into tb_comment_re
+		values(SEQ_COMMENT_RE.nextval, #{rNo}, #{rUserId}, #{rContent}, default, default, default )
+	</insert>
+	
+	<update id="deleteComment2">
+		update tb_comment_re
+		set COMMENTS_DELETE = 'Y'
+		where re_reply_no = #{rrNo}
+	</update>
+	<update id="updateComment2">
+		update tb_comment_re
+		set reply_content = ${rContent}, COMMENT_DATE = default
+		where re_reply_no = #{rrNo}
+	</update>
+
+	<resultMap type="Comment" id="CommentResultSet">
+		<id property="rNo" column="REPLY_NO"/>
+		<result property="boardNo" column="BOARD_NO"/>
+		<result property="rUserId" column="USER_ID"/>
+		<result property="rContent" column="REPLY_CONTENT"/>
+		<result property="rCreateDate" column="COMMENT_DATE"/>
+		<result property="rDecYN" column="DECYN"/>
+		<result property="rState" column="COMMENTS_DELETE"/>
+		<result property="userFile" column="USER_FILE"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="rState" column="COMMENTS_DELETE"/>
+	</resultMap>
+</mapper>
