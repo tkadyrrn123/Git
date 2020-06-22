@@ -149,7 +149,7 @@ public class MyPageController {
 		
 		// 원래 프사가 있을경우 파일 지움
 		String originFileName = request.getParameter("originFile");
-		if(originFileName != null) {
+		if(originFileName != null && !originFileName.equals("normal")) {
 			deleteFile(originFileName, request);
 		}
 		
