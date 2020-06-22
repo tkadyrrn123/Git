@@ -126,4 +126,67 @@
 		set market_price=#{price}
 		where board_no=#{boardNo}
 	</update>
+	
+	<insert id="insertComment">
+		insert into tb_comment
+		values(SEQ_REPLY.NEXTVAL, #{boardNo},default,default, #{rUserId}, #{rContent}, sysdate, 'N', default )
+	</insert>
+	
+	<select id="selectFilterResultCount" resultType="_int">
+		select count(*)
+		from tb_market
+			 join tb_board using(board_no)
+			 join tb_user using(user_id)
+		where board_delete = 'N'
+		<if test="title != null">
+			and board_title like '%' || #{title} || '%'
+		</if>
+		<if test="writer != null">
+			and nickname = #{writer}
+		</if>
+		<if test="content != null">
+			and board_content like '%' || #{content} || '%'
+		</if>
+	</select>
+	
+	<select id="selectFilterResultList" resultMap="marketResultSet">
+		select BOARD_NO,m.MARKET_PRICE,m.SALE_YN,b.BOARD_TITLE,b.BOARD_CONTENT,b.CREATE_DATE,USER_ID,b.BOARD_DELETE,f.FILE_NAME,u.NICKNAME,u.USER_FILE
+		from tb_market m
+			 join tb_board b using (board_no)
+			 join tb_file f using(board_no)
+			 join tb_user u using (user_id)
+		where board_delete = 'N'
+		<if test="sc.title != null">
+			and board_title like '%' || #{sc.title} || '%' 
+		</if>
+		<if test="sc.writer != null">
+			and nickname = #{sc.writer}
+		</if>
+		<if test="sc.content != null">
+			and board_content like '%' || #{sc.content} || '%'
+		</if>
+		order by board_no desc
+	</select>
+	
+	<select id="selectComment" resultMap="commentResultSet">
+		select reply_no, board_no, user_id, reply_content, comment_date, decyn, comments_delete, user_file, nickname
+		from tb_comment
+			 join tb_user using(user_id)
+		where comments_delete = 'N' and board_no = #{boardNo}
+		order by reply_no desc
+	</select>
+	
+	
+	<resultMap type="Comment" id="commentResultSet">
+		<id property="rNo" column="reply_no"/>
+		<result property="boardNo" column="board_no"/>
+		<result property="rUserId" column="user_id"/>
+		<result property="rContent" column="reply_content"/>
+		<result property="rCreateDate" column="comment_date"/>
+		<result property="rDecYN" column="decyn"/>
+		<result property="rState" column="comments_delete"/>
+		<result property="userFile" column="user_file"/>
+		<result property="nickname" column="nickname"/>
+	</resultMap>
+	
 </mapper>

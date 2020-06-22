@@ -1,11 +1,13 @@
 package com.kh.www.market.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.market.model.dao.MarketDAO;
 import com.kh.www.market.model.vo.Market;
@@ -74,6 +76,26 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public int updatePrice(Market ma) {
 		return marketDAO.updatePrice(sqlSession, ma);
+	}
+
+	@Override
+	public int insertComment(Comment c) {
+		return marketDAO.insertComment(sqlSession, c);
+	}
+
+	@Override
+	public ArrayList<Comment> selectComment(int boardNo) {
+		return marketDAO.selectComment(sqlSession, boardNo);
+	}
+
+	@Override
+	public int getFilterResultListCount(HashMap hm) {
+		return marketDAO.getFilterResultListCount(sqlSession, hm);
+	}
+
+	@Override
+	public ArrayList<Market> selectFilterResultList(HashMap hm, PageInfo pi) {
+		return marketDAO.selectFilterResultList(sqlSession, hm ,pi);
 	}
 
 }

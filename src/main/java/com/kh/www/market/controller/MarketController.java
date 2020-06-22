@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.common.Pagenation;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
+import com.kh.www.freeBoard.model.vo.SearchCondition;
 import com.kh.www.market.model.exception.MarketException;
 import com.kh.www.market.model.service.MarketService;
 import com.kh.www.market.model.vo.Market;
@@ -40,7 +45,7 @@ public class MarketController {
 		
 		int listCount = marketService.getListCount();
 		
-		PageInfo pi = Pagenation.getPageInfo(currentPage,listCount);
+		PageInfo pi = Pagenation.getPageInfoMarket(currentPage,listCount);
 		
 		ArrayList<Market> list = marketService.selectList(pi);
 		
@@ -196,5 +201,72 @@ public class MarketController {
 			f.delete();
 		}
 	}
+	
+	@RequestMapping("filter.ma")
+	public ModelAndView filterMarket(@RequestParam(value="page", required=false) Integer page, HttpSession session, ModelAndView mv,
+									@RequestParam(value="filterValue") String filterValue, @RequestParam(value="condition") String condition) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		SearchCondition sc = new SearchCondition();
+		
+		if(condition.equals("writer")) {
+			sc.setWriter(filterValue);
+		} else if(condition.equals("title")) {
+			sc.setTitle(filterValue);
+		} else if(condition.equals("content")) {
+			sc.setContent(filterValue);
+		}
+		
+		HashMap hm = new HashMap();
+		hm.put("sc",sc);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = marketService.getFilterResultListCount(hm);
+		
+		PageInfo pi = Pagenation.getPageInfoMarket(currentPage, listCount);
+		
+		ArrayList<Market> list = marketService.selectFilterResultList(hm,pi);
+		
+		if(list!=null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.addObject("condition", condition);
+			mv.addObject("filterValue", filterValue);
+			mv.setViewName("marketList");
+		} else {
+			throw new MarketException("중고장터 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	
+	// 댓글 추가
+	@RequestMapping("insertComment.ma")
+	@ResponseBody
+	public ArrayList<Comment> insertComments(@RequestParam("userId") String userId, @RequestParam("boardNo") int boardNo, @RequestParam("content") String content, HttpServletResponse response){
+		Comment c = new Comment();
+		
+		c.setBoardNo(boardNo);
+		c.setrContent(content);
+		c.setrUserId(userId);
+		
+		int result = marketService.insertComment(c);
+		
+		if(result > 0) {
+			ArrayList<Comment> comment = marketService.selectComment(boardNo);
+			return comment;
+		} else {
+			throw new MarketException("댓글 등록에 실패했습니다.");
+		}
+		
+		
+	}
+	
 	
 }

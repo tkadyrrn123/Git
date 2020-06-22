@@ -1,11 +1,13 @@
 package com.kh.www.market.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.market.model.vo.Market;
 
@@ -59,6 +61,24 @@ public class MarketDAO {
 	public int updatePrice(SqlSessionTemplate sqlSession, Market ma) {
 		return sqlSession.update("marketMapper.updatePrice", ma);
 	}
+
+	public int insertComment(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.insert("marketMapper.insertComment", c);
+	}
+
+	public ArrayList<Comment> selectComment(SqlSessionTemplate sqlSession, int boardNo) {
+		return (ArrayList)sqlSession.selectList("marketMapper.selectComment", boardNo);
+	}
+
+	public int getFilterResultListCount(SqlSessionTemplate sqlSession, HashMap hm) {
+		return sqlSession.selectOne("marketMapper.selectFilterResultCount",hm);
+	}
+
+	public ArrayList<Market> selectFilterResultList(SqlSessionTemplate sqlSession, HashMap hm, PageInfo pi) {
+		hm.put("pi", pi);
+		return (ArrayList)sqlSession.selectList("marketMapper.selectFilterResultList", hm);
+	}
+
 
 
 	

@@ -9,13 +9,12 @@
 <title>HOUSTORY</title>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
-   #all{margin-top: 20px;}
+   #all{margin-top: 20px; margin-bottom: 40px;}
 	#menu{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;}
 	#line1{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px;}
 	#line2{width: 80%; background: lightgray; height:2px; margin: auto;}
 	.sellAll{width: 80%; margin: 40px 0px 0px 200px;}
 
-	#content1{width: 80%; margin-left:100px;}
   	#content2{overflow:scroll; white-space:pre-wrap;} 
 	#content3{width: 65%; margin-left:100px;}
 	#content4{width: 65%; margin-left:100px;} 
@@ -25,9 +24,9 @@
 	#hit{display: inline-block; width: 7%; float:right; margin-top: 30px; margin-right: 140px;} 
 	#date{display: inline-block; width: 8%; float:right; margin-top: 30px; margin-right: 50px;}
 	
-	#sellPic{width: 30%; height: 400px; margin-left : 70px; margin-top: 20px; display: inline-block;}
+	#sellPic{width: 30%; height: 400px; margin-left : 100px; margin-top: 20px; display: inline-block;}
  	#img{margin-left : 130px; width: 100%} 
-	#itemName{display: inline-block; font-size: 30px; font-weight:bold;margin-left: 200px;}
+	#itemName{display: inline-block; font-size: 30px; font-weight:bold;margin-left: 220px;}
 /* 	#price{display: inline-block;} */
 
 	.content_wrap{display:inline-block;
@@ -55,7 +54,8 @@
  	#replyInput{width:80% ; margin: 100px 0px 0px 200px; border: 1px solid black; height: 184px; } 
  	#rWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px;}  
  	 
- 	#rProfile{width: 40px; hieght:40px;}
+ 	#rProfile{width: 40px; hieght:40px; display:inline-block;}
+ 	#rWriter{display:inline-block;}
  	#rImg{ border-radius: 10%;  width: 100%; height:100%; }  
  	#info{display: inline-block;  height:50px; margin-left: 30px; width:80%;}
  	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
@@ -101,19 +101,20 @@
 	<img class="img" src="resources/images/market6.jpg">
 	<div class="header_wrap">
 	<jsp:include page="../common/menubar.jsp"/>
-	<b id="headcomment">중고 장터 상세 페이지</b>
+	<b id="headcomment">중고장터</b>
 	</div>
 	<div id= all>
-		<div id="content1"></div>
 			<div id="itemName">${ma.boardTitle}</div>
 			<div id="hit">조회수 : ${ ma.boardCount }</div>
 			<div id="date">등록일 : ${ ma.createDate } </div>
 			<div id="name">판매자 : ${ma.nickName}</div>
  			<div id="line1"></div> 
- 			
-			<div id=sellPic>
-				<img id=img src="${ pageContext.servletContext.contextPath }/resources/marketUploadFiles/${ ma.fileName }"/>
-			</div>
+			<c:if test="${empty ma.fileName}">
+				<div id=sellPic><img id=img src="resources/images/basicMarket.jpeg"/></div>
+			</c:if>
+			<c:if test="${!empty ma.fileName}">
+				<div id=sellPic><img id=img src="resources/marketUploadFiles/${ ma.fileName }"/></div>
+			</c:if>
 			<div class="content_wrap">
 				<div id="status">판매중 : </div>
 				<div id="price">판매가 : ${ma.price}</div>			
@@ -135,19 +136,21 @@
 				<button class="btn" id="listBtn" onclick="location.href='market.ma'" >목록</button>
 		</div>
 		
-		
-		
 		<!--  댓글 작성  -->
 		<div id="content3">
 			<div id="replyInput">
 				<div id="info">
-					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
-					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="rHo">(202호)</div>
+					<c:if test="${!empty loginUser.userFile}">
+					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${loginUser.userFile}"></div>
+					</c:if>
+					<c:if test="${empty loginUser.userFile}">
+					<div class="info"  id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+					</c:if>
+					<div class="info"  id="rWriter">${loginUser.nickName}</div>
 				</div>
 				<button class="btn" id="insertBtn">댓글 등록</button>
 
-				<textarea id="rWrite" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
+				<textarea id="rWrite" class="reply_TEXT" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
 				<span style="color:#aaa;" id="counter">(0 / 최대 200자)</span>
 			</div>
 		</div> 
@@ -156,29 +159,30 @@
 		
 		<!--  댓글   -->
 		 <div id="content4">
-			<div id="reply">
+		 	<c:forEach var="b" items="${comment}" varStatus="status">
+			<div id="reply" id="reply${ status.index }">
 				<div id="info2">
-					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
-					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="rHo">(202호)</div>
-					<div class="info"  id="replyDate">2020-05-27 03:03</div>
-					<button class="btn" id="rUpdateBtn">수정</button> 
-					<button class="btn" id="rDeleteBtn">삭제</button> 
+					<c:if test="${!empty b.userFile}">
+						<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${loginUser.userFile}"></div>
+					</c:if>
+					<c:if test="{empty b.userFile}">
+						<div class="info" id="rPrrofile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+					</c:if>
+					<div class="info"  id="rWriter">${ b.nickname }</div>
+					<div class="info"  id="replyDate">${ b.rCreateDate }</div>
+					<c:if test="${loginUser.userId eq b.rUserId}">
+						<button class="btn" id="rUpdateBtn${ status.index }">수정</button> 
+						<button class="btn" id="rDeleteBtn${ status.index }">삭제</button>
+						<div style="display:none">${b.rNo}</div> 
+					</c:if>
 				</div>
-				<div width="100%">
-					<textarea id="rContent"  readonly>010-1234-5678 쪽으로 연락 주세요</textarea>
-				</div> 
+					<textarea id="rContent${ status.index }"  readonly>${ b.rContent }</textarea>
 				<div>
 					<button class="btn" id="replyBtn">답글</button>
-					<div class="likeBtn" id="likeBtn1">
-						<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like.png">
-					</div>
-					<div class="likeBtn2" id="likeBtn2">
-						<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like2.png">
-					</div>
-					<div class="likeCount">0</div>
+					<div style="display:none">${ b.rNo }</div>
 				</div>
 			</div>
+				</c:forEach>
 		</div>
 		
 		<div id="content5">
@@ -202,9 +206,9 @@
 					<div class="likeBtn2" id="likeBtn4">
 						<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like4.png">
 					</div>
-						<div class="likeCount">0</div>
 				</div>
 			</div>
+		</div>
 		</div>
 		<jsp:include page="../common/Footer.jsp"/>
 	
@@ -216,57 +220,146 @@
 				location.href="${deleteMarket}";
 			}
 		});
+		
+		/** textarea 높이 자동 조절 **/
+		$(function () {
+			
+		  $('.textarea').height(1).height( $('.textarea').prop('scrollHeight') - 10  );	
+		});
 	
 	
 		/** 댓글 글자수 제한 **/
-		$('#rWrite').keyup(function (e){
+		$('.reply_TEXT').keyup(function (e){
 		    var content = $(this).val();
-		    $('#counter').html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
+		    $('#counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
 	
 		    if (content.length > 200){
 		        alert("최대 200자까지 입력 가능합니다.");
 		        $(this).val(content.substring(0, 200));
-		        $('#counter').html("(200 / 최대 200자)");
+		        $('#counter').html("(200/200자)");
 		    }
-		}).keydown(function (e){
+		});
+		
+		$(document).on('keydown','.rWrite', function (e){
 			var content = $(this).val();
-		    $('#counter').html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
+		    $(this).next().html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
 	
 		    if (content.length > 200){
 		        alert("최대 200자까지 입력 가능합니다.");
 		        $(this).val(content.substring(0, 200));
-		        $('#counter').html("(200 / 최대 200자)");
+		        $(this).next().html("(200 / 최대 200자)");
 		    }
 		});
 		
-		
-		/** 댓글 창 높이 자동 조절 **/
-		$(function () {
-			
-		  $('#rContent').height(1).height( $('#rContent').prop('scrollHeight') - 20  );	
-		});
-		
-		$('.likeBtn').click(function(){
-			$(this).parent().children('.likeBtn2').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text(); 
-			count *= 1;
-			count = count + 1;
-			$(this).parent().children('.likeCount').text(count);
-		});
-		
-// 		$("#btn").eq(n);
-//  	$("ul li:nth-child(2)").append("<span> - 2nd!</span>");
+		/* 댓글 추가 ajax */
+   		$('#insertBtn').on('click', function(){
+   			var userId = '${ loginUser.userId }';
+   			var boardNo = ${ ma.boardNo };
+   			var content = $('#rWrite').val();  			
+   			$.ajax({
+   				url: 'insertComment.ma',
+   				data: {userId:userId, boardNo:boardNo, content:content},
+   				success: function(data){
+   					$replyTable = $('#content4');
+					$replyTable.html("");
+					for(var i = 0; i < data.length; i++){
+						var $reply = $('<div>').attr('id', 'reply' + i).attr('class','reply');
+						var $div = $('<div>').attr('id', 'info2');
+						var $profile = $('<div>').attr('class','info').attr('id','rProfile');
+						
+						if(data[i].userFile == null){
+							var $img = $('<img>').attr('src', '${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg').attr('class','info').attr('id','rImg');
+						} else {
+							var $img = $('<img>').attr('src', '${ pageContext.servletContext.contextPath }/resources/uploadFiles/' + data[i].userFile).attr('class','info').attr('id','rImg');
+						}
+						var $writer = $('<div>').text(data[i].nickname).attr('class','info').attr('id','rWriter');
+						var $date = $('<div>').text(data[i].rCreateDate).attr('class','info').attr('id','replyDate');
 
+						var $rubtn = $('<button>').text("수정").attr('class','btn').attr('id','rUpdateBtnAjax');
+						var $rNo2 = $('<div>').text(data[i].rNo).css('display','none');
+						var $rdbtn = $('<button>').text("삭제").attr('class','btn').attr('id','rDeleteBtnAjax');
+						var $turn2 = $('<div>').text(i).css('display','none');
+						
+						var $content = $('<textarea>').text(data[i].rContent);	
+						
+						var $divv = $('<div>');
+						var $rreply = $('<button>').text("답글").attr('class','btn').attr('id','replyBtn');
+						var $like1 = $('<div>').attr('class','likeBtn3').attr('id','likeBtn3');
+						var $img1 = $('<img>').attr('id','likeImg3').attr('src', '${ pageContext.servletContext.contextPath }/resources/images/like.png');
+						var $like2 = $('<div>').attr('class','likeBtn4').attr('id','likeBtn4');
+						var $img2 = $('<img>').attr('id','likeImg4').attr('src', '${ pageContext.servletContext.contextPath }/resources/images/like2.png');
+						var $count = $('<div>').text("0").attr('class','likeCount');
+						
+						
+						var $pprofile = $('<div>').attr('class','info').attr('id','rProfile');
+						if(data[i].userFile == null){
+							var $iimg = $('<img>').attr('src', '${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg').attr('class','info').attr('id','rImg');
+						} else {
+							var $iimg = $('<img>').attr('src', '${ pageContext.servletContext.contextPath }/resources/uploadFiles/' + data[i].userFile).attr('class','info').attr('id','rImg');
+						}
+						var $wwriter = $('<div>').text(data[i].nickname).attr('class','info').attr('id','rWriter');
+						var $ddate = $('<div>').text(data[i].rCreateDate).attr('class','info').attr('id','replyDate');
+						var $replyUpdate = $('<div>').attr('class', 'reply').attr('id','replyUpdate' + i).css('display','none');
+						var $ddiv = $('<div>').attr('id', 'info2')
+						var $rrubtn = $('<button>').text("수정완료").attr('class','btn').attr('id','rUpdateBtnC');
+						var $rNo = $('<div>').text(data[i].rNo).css('display','none');
+						var $turn = $('<div>').text(i).css('display','none');
+						var $rrdbtn = $('<button>').text("수정취소").attr('class','btn').attr('id','rDeleteBtnC');
+						var $ccontent = $('<textarea>').attr('class','rrContent'+i).text(data[i].rContent).css('border', '1px solid black');
+						
+						$profile.append($img);
+						
+						$div.append($profile);
+						$div.append($writer);
+						$div.append($date);
+						if(data[i].rUserId == userId){
+							$div.append($rubtn);
+							$div.append($rdbtn);
+							$div.append($rNo2);
+							$div.append($turn2);
+						}
+						$divv.append($rreply);
+						$like1.append($img1);
+						$like2.append($img2);
+						$divv.append($like1)
+						$divv.append($like2)
+						$divv.append($count)
+						 
+						$reply.append($div);
+						$reply.append($content);
+
+						
+						$reply.append($divv);
+						
+						
+						$pprofile.append($iimg);
+						$ddiv.append($pprofile);
+						$ddiv.append($wwriter);
+						$ddiv.append($ddate);
+						$ddiv.append($rrubtn);
+						$ddiv.append($rNo);
+						$ddiv.append($turn);
+						$ddiv.append($rrdbtn);
+						$replyUpdate.append($ddiv);
+						$replyUpdate.append($ccontent);
+						
+						
+						$replyTable.append($reply);
+						$replyTable.append($replyUpdate);
+						
+						var aaa = $content.prop('scrollHeight');
+						
+						$content.height(aaa + 20);
+						
+						var aaaa = $ccontent.prop('scrollHeight');
+						$ccontent.height(aaaa + 110);
+					}
+					$('#rWrite').val("");
+   				}
+   			})
+   		})
 		
-		$('.likeBtn2').click(function(){
-			$(this).parent().children('.likeBtn').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text();
-			count *= 1;
-			count = count - 1;
-			$(this).parent().children('.likeCount').text(count);
-		});
+		
 	</script> 
 
 </body>

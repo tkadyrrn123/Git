@@ -8,12 +8,12 @@
 <title>HOUSTORY</title>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
-   .wrapper{margin-top: 20px;}
-/* 	#title{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;} */
-/* 	#line{width: 90%; background: lightgray; height:2px; margin: auto; margin-top: 20px;} */
+   .wrapper{margin-top: 20px; margin-bottom:40px;}
 	.sellAll{width: 90%; margin: 100px auto 0px auto; postion:relative;line-height: 1.6}
-	.sell{width: 350px; display: inline-block; margin-left: 100px; margin-bottom:50px;text-align:center;
-		  border:1px solid #aaa; border-radius:5px; padding-bottom:15px;
+	.sell{width: 350px; 
+		  display: inline-block; 
+		  margin-left: 100px; 
+		  margin-bottom:50px;
 		  box-shadow: 0 2px 40px 0 rgba(0,0,0,0.07);
 		  transition: box-shadow .3s ease-out, transform .3s ease-out, opacity .2s ease-out;
 		  transition-delay: .1s;
@@ -28,27 +28,41 @@
 				}
 	.sellDiv{width: 100%; height: 300px;}
 	.sellPic{width: 100%; height: 210px;}
-	.sellName{width: 100%; height: 10%; font-size: 20px; font-weight:bold;margin-top:10px;}
+	.sellName{width: 100%; height: 10%; font-size: 20px; font-weight:bold;margin-top:10px;text-align:center;}
 	.sellName>a{color: black !important;}
 	.sellName>a:visited{color: gray !important;}
-	.sellAddress{width: 100%; height: 10%;}
-	.sellPrice{width: 100%; height: 10%;}
+	.sellId{width: 40%; height: 10%; display:inline-block;}
+	.sellPrice{width: 57%; height: 10%; display:inline-block;text-align:right;}
 	.btn_standard {
-	   border: 1px solid #dad4d4;
-	    border-radius: 6px;
-	    background-color: #fff;
-	    font-weight: 500;
-	    color: #666;
-	    cursor: pointer;
-	    font-size: 12px;
-	    padding: 10px;
-	}
+			    border: 1px solid #dad4d4;
+			    border-radius: 6px;
+			    background-color: #fff;
+			    font-weight: 500;
+			    color: #666;
+			    cursor: pointer;
+			    font-size: 12px;
+			    padding: 10px;
+				}
+	
+	.insideWrap{
+				border-top:1px solid #dad4d4;
+				margin-top:7px;
+				padding: 10px;
+				}
+	
 	#write-btn{
 		position: absolute;
-		margin-top: -50px;
+		margin-top: -38px;
 		right: 180px;
 /*  		margin-right: -10px;  */
 	}
+	
+	.emptyCom{font-weight: bold; 
+			  font-size:1.2em;
+			  display:inline-block;
+			  heigth:50px;
+			  vertical-align:top;
+			  }
 
 /* 	.marketFilterForm{position:absolute; width: 300px; display:inline-block; left:44%;} */
 /* 	.marketSelect>option{padding: 5px;} */
@@ -182,7 +196,12 @@
 				<div class=sell>
 					<div class=sellDiv>
 						<div class="hidden" style="display:none">${m.boardNo}</div>
-						<div class=sellPic><img class=sellPic src="resources/marketUploadFiles/${ m.fileName }"/></div>
+						<c:if test="${empty m.fileName}">
+							<div class=sellPic><img class=sellPic src="resources/images/basicMarket.jpeg"/></div>
+						</c:if>
+						<c:if test="${!empty m.fileName}">
+							<div class=sellPic><img class=sellPic src="resources/marketUploadFiles/${ m.fileName }"/></div>
+						</c:if>
 						<div class=sellName>
 							<c:url var="madetail" value="marketDetail.ma">
 								<c:param name="boardNo" value="${m.boardNo}"/>
@@ -190,32 +209,81 @@
 							</c:url>
 							<a href="${madetail}">${m.boardTitle}</a>
 						</div>
-						<div class=sellAddress>${m.userId}</div>
-						<div class=sellPrice>${m.price}원</div>
+						<div class="insideWrap">
+							<span class=sellId>${m.nickName}</span>
+							<span class=sellPrice>${m.price}원</span>
+						</div>
 					</div>
 				</div>
 			</c:forEach>
+			<c:if test="${ empty list }">
+			<span class="emptyCom">
+        	 등록된 게시글이 없습니다.
+        	 </span>
+       		</c:if>
 		</div>		
-		<div class="form_wrap">
-		    <form class="board_search" name="search_form" action="get">
+		
+		<!-- 페이징 처리 -->
+		<c:if test="${!empty list }">
+        	<div class="pagingArea" align="center">
+
+		<!-- [이전] -->
+				<c:if test="${ pi.currentPage <= 1 }">
+					<button class="btn_standard">이전</button>
+				</c:if>
+				<c:if test="${ pi.currentPage > 1 }">
+					<c:url var="before" value="market.ma">
+						<c:param name="page" value="${ pi.currentPage - 1 }"/>
+					</c:url>
+					<button class="btn_standard" onclick="location.href='${ before }'">이전</button>
+				</c:if>
+				
+		<!-- 페이지 -->
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ p eq pi.currentPage }">
+						<button class="btn_standard">${ p }</button>
+					</c:if>
+					
+					<c:if test="${ p ne pi.currentPage }">
+						<c:url var="pagination" value="market.ma">
+							<c:param name="page" value="${ p }"/>
+						</c:url>
+						<button class="btn_standard" onclick="location.href='${ pagination }'">${ p }</button>
+					</c:if>
+				</c:forEach>
+				
+				<!-- [다음] -->
+				<c:if test="${ pi.currentPage >= pi.maxPage }">
+					<button class="btn_standard">다음</button>
+				</c:if>
+				<c:if test="${ pi.currentPage < pi.maxPage }">
+					<c:url var="after" value="market.ma">
+						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					</c:url> 
+					<button class="btn_standard" onclick="location.href='${ after }'">다음</button>
+				</c:if>
+       		</div>
+       		
+       		<div class="form_wrap">
+		    <form class="board_search" name="search_form" action="filter.ma">
 			    <div class="select-box">
 				  <div class="select-box__current" tabindex="1">
 				    <div class="select-box__value">
-				      <input class="select-box__input" type="radio" id="total" value="total" name="Ben" checked="checked"/>
-				      <p class="select-box__input-text">전체</p>
+				      <input class="select-box__input" type="radio" id="total" value="title" name="condition" checked="checked"/>
+				      <p class="select-box__input-text">제목</p>
 				    </div>
 				    <div class="select-box__value">
-				      <input class="select-box__input" type="radio" id="writer" value="writer" name="Ben"/>
+				      <input class="select-box__input" type="radio" id="writer" value="writer" name="condition" />
 				      <p class="select-box__input-text">작성자</p>
 				    </div>
 				    <div class="select-box__value">
-				      <input class="select-box__input" type="radio" id="content" value="content" name="Ben"/>
+				      <input class="select-box__input" type="radio" id="content" value="content" name="condition" />
 				      <p class="select-box__input-text">내용</p>
 				    </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
 				  </div>
 				  <ul class="select-box__list">
 				    <li>
-				      <label class="select-box__option" for="total" aria-hidden="aria-hidden">전체</label>
+				      <label class="select-box__option" for="title" aria-hidden="aria-hidden">전체</label>
 				    </li>
 				    <li>
 				      <label class="select-box__option" for="writer" aria-hidden="aria-hidden">작성자</label>
@@ -225,58 +293,19 @@
 				    </li>
 				  </ul>
 				</div>
-				<input class="search_input" name="text" type="text">
+				<input class="search_input" name="filterValue" type="text">
 				<button class="btn_standard" type="submit">검색</button>
 			</form>
 		</div>
+			</c:if>
 		<button id="write-btn" class="btn_standard" type="button" value="글쓰기" onclick="location.href='writingMarket.ma'">글쓰기</button>
-		
-		
-		<!-- 페이징 처리 -->
-		<div class="pagingArea" align="center">
-			<!-- [이전] -->
-			<c:if test="${ pi.currentPage <= 1 }">
-				[이전] &nbsp;
-			</c:if>
-			<c:if test="${ pi.currentPage > 1 }">
-				<c:url var="before" value="blist.bo">
-					<c:param name="page" value="${ pi.currentPage - 1 }"/>
-				</c:url>
-				<a href="${ before }">[이전]</a> &nbsp;
-			</c:if>
-				
-			<!-- 페이지 -->
-			<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-				<c:if test="${ p eq pi.currentPage }">
-					<font color="red" size="4"><b>[${ p }]</b></font>
-				</c:if>
-					
-				<c:if test="${ p ne pi.currentPage }">
-					<c:url var="pagination" value="blist.bo">
-						<c:param name="page" value="${ p }"/>
-					</c:url>
-					<a href="${ pagination }">${ p }</a> &nbsp;
-				</c:if>
-			</c:forEach>
-				
-			<!-- [다음] -->
-			<c:if test="${ pi.currentPage >= pi.maxPage }">
-				[다음]
-			</c:if>
-			<c:if test="${ pi.currentPage < pi.maxPage }">
-				<c:url var="after" value="blist.bo">
-					<c:param name="page" value="${ pi.currentPage + 1 }"/>
-				</c:url> 
-				<a href="${ after }">[다음]</a>
-			</c:if>
-        </div>
 	</div>
 	<jsp:include page="../common/Footer.jsp"/>	
 	
 	<script>
-// 		$('.sell').on('click', function(){
-// 			location.href="marketDetail.ma?boardNo=${m.boardNo}&page=${ page }"
-// 		});
+		$('.sell').on('click', function(){
+			location.href="${madetail}";
+		});
 	</script>
 
 	
