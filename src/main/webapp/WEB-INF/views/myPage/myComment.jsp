@@ -78,6 +78,7 @@
 						<td>${clist[i].replyNo}</td>
 						<td>${clist[i].replyContent}</td>
 						<td>${clist[i].commentDate}</td>
+						<td>${clist[i].type}</td>
 					</tr>
 				</c:forEach>
 			</c:if>

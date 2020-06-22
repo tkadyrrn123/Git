@@ -2,6 +2,7 @@ package com.kh.www.Member.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.www.Member.model.vo.BoardType;
 import com.kh.www.Member.model.vo.LevelCount;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Member.model.vo.MemberCount;
@@ -83,5 +84,11 @@ public interface MemberService {
 	ArrayList<Member> AptAdminSearchList(PageInfo pi, SearchOption so, String aptName);
 	// 멤버 탈퇴(관리자)
 	int AdminAptMemberDelete(String userId);
+	//아이디 찾기
+	String idSearch(String email);
+	//비밀번호 찾기(임시비밃너호로 변경)
+	int searchPwdAlter(String userId, String uuid);
+	//최근 5건 게시물 목록
+	ArrayList<BoardType> fiveBoardList(String aptName);
 
 }

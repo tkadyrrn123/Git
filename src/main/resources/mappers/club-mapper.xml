@@ -162,10 +162,14 @@
 	</insert>
 	
 	<update id="updateComment2">
-		update tb_comment
+		update tb_comment_re
 		set COMMENTS_DELETE = 'Y'
-		where re_reply_no = #{rNo}
+		where re_reply_no = #{rrNo}
 	</update>
-	
+	<update id="clubMapper.updateComment23">
+		update tb_comment_re
+		set reply_content = ${rContent}, COMMENT_DATE = default
+		where re_reply_no = #{rrNo}
+	</update>
 	
 </mapper>

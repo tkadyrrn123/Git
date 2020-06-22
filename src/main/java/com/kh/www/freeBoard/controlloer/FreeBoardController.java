@@ -105,12 +105,7 @@ public class FreeBoardController {
 		} else {
 			throw new FreeBoardException("정렬 실패!");
 		}
-		
-//		if(sortCondition.equals("hits")) {
-//			
-//		}else {
-//			
-//		}
+
 		return mv;
 	}
 	

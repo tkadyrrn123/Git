@@ -60,7 +60,7 @@ footer .footer-right a{
 }
 footer .container_small{padding-left: 250px;}
 .footer-right p {margin-bottom: 0;}
-.text{font-size: 20px;}
+.names{font-size: 20px;}
 .tleft{color: #92a8d1;}
 .tright{margin-left: 20px; color: #f7cac9;}
 </Style>
@@ -69,9 +69,10 @@ footer .container_small{padding-left: 250px;}
 	<footer>
 		<div class="footer-limiter">
 			<div class="footer-right">
-				<p><b class="text tleft">이종훈</b> <b class="text tright">임연화</b></p>
-				<p><b class="text tleft">박근오</b> <b class="text tright">김민주</b></p>
-				<p><b class="text tleft">송도훈</b> <b class="text tright">정무지개</b></p>
+				<p style="margin-left: 10px;"><b class="names tleft">하우스스토리</b></p>
+				<p><b class="names tleft">이종훈</b> <b class="names tright">임연화</b></p>
+				<p><b class="names tleft">박근오</b> <b class="names tright">김민주</b></p>
+				<p><b class="names tleft">송도훈</b> <b class="names tright">정무지개</b></p>
 			</div>
 
 			<div class="footer-left">
