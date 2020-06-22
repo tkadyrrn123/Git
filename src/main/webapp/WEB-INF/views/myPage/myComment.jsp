@@ -69,6 +69,7 @@
 				<th class="number">No.</th>
 				<th class="name">제목</th>
 				<th class="date">작성일</th>
+				<th class="type">게시판</th>
 			</tr>
 		</thead>
 		<tbody class="bottomBoard">

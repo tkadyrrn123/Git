@@ -76,7 +76,7 @@
 	
 	<insert id="insertComment">
 		insert into tb_comment
-		values(SEQ_REPLY.NEXTVAL, #{boardNo},default, #{rUserId}, #{rContent}, sysdate, 'N', default )
+		values(SEQ_REPLY.NEXTVAL, #{boardNo},default,default, #{rUserId}, #{rContent}, sysdate, 'N', default )
 	</insert>
 	
 	<select id="selectComment" resultMap="CommentResultSet">
@@ -129,14 +129,14 @@
 		where reply_no = #{rNo}
 	</update>
 	
-	<select id="clubMapper.selectComment2" resultMap="Comment2ResultSet">
+	<select id="selectComment2" resultMap="Comment2ResultSet">
 		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
 		from tb_comment_re
 			join tb_user using(user_ID)
 		where comments_delete = 'N'
 		order by RE_REPLY_NO DESC
 	</select>
-	<select id="clubMapper.selectComment23" resultMap="Comment2ResultSet">
+	<select id="selectComment23" resultMap="Comment2ResultSet">
 		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
 		from tb_comment_re
 			join tb_user using(user_ID)
@@ -156,7 +156,7 @@
 		<result property="userFile" column="USER_FILE"/>
 	</resultMap>
 	
-	<insert id="clubMapper.insertComment2">
+	<insert id="insertComment2">
 		insert into tb_comment_re
 		values(SEQ_COMMENT_RE.nextval, #{rNo}, #{rUserId}, #{rContent}, default, default, default )
 	</insert>
@@ -166,7 +166,7 @@
 		set COMMENTS_DELETE = 'Y'
 		where re_reply_no = #{rrNo}
 	</update>
-	<update id="clubMapper.updateComment23">
+	<update id="updateComment23">
 		update tb_comment_re
 		set reply_content = ${rContent}, COMMENT_DATE = default
 		where re_reply_no = #{rrNo}
