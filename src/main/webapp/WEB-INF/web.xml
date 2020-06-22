@@ -214,4 +214,19 @@
 		<servlet-name>VoteServlet</servlet-name>
 		<url-pattern>*.vo</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 댓글 -->
+	<servlet>
+		<servlet-name>CommentServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/Comment-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>CommentServlet</servlet-name>
+		<url-pattern>*.co</url-pattern>
+	</servlet-mapping>
 </web-app>
