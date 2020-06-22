@@ -732,7 +732,7 @@ ${ c.clubEtc }
 
    		/* 대댓글 입력창  */
    		$(document).on('click','#replyBtn', function(){
-   			var $rreplyInsertTable = $(this).parent().parent().next(); /* 댓글 수정 창 */
+   			var $rreplyInsertTable = $(this).parent().parent(); /* 댓글 수정 창 */
    			$rreplyInsertTable.next().css('display','none');
    			var rreplys = '<div id="replyInput2">' +
 						 '	<div id="info">' +
@@ -750,7 +750,7 @@ ${ c.clubEtc }
 						 '	<span style="color:black;" id="counter">(0 / 최대 200자)</span>' +
 						 '</div>'
 						 
-   			$rreplyInsertTable.after(rreplys);		 
+   			$rreplyInsertTable.after(rreplys);
    		});
 		
    		/* 대댓글 등록  */
@@ -762,7 +762,6 @@ ${ c.clubEtc }
    				url: 'insertComment2.cb',
    				data: {userId:userId, rNo:rNo, content:content},
    				success: function(data){
-   					alert('성공');
    					$replyTable = $('#content5');
 					$replyTable.html("");
 					for(i = 0; i < data.length; i++){
@@ -773,7 +772,7 @@ ${ c.clubEtc }
 							var $table2 = '<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>';
 						}	
 						if(data[i].userFile != null){
-							var $table2 = '<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${a.userFile}"></div>';
+							var $table2 = '<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${loginUser.userFile}"></div>';
 						}		
 							var $table3 = '<div class="info"  id="rWriter">' + data[i].nickname + '</div>' +
 										  '<div class="info"  id="rreplyDate">'+data[i].rCreateDate+'</div>';
