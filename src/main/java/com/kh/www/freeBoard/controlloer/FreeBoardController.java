@@ -340,15 +340,21 @@ public class FreeBoardController {
 		
 	}
 	
-	@RequestMapping("commentModify.fr")
+	@RequestMapping("modifyReply.fr")
     @ResponseBody
-    public int commentModify(@RequestParam int rNo, @RequestParam String rContent) {
-        
-        Comment comment = new Comment();
-        comment.setrNo(rNo);
-        comment.setrContent(rContent);
-        
-        return freeService.commentModify(comment);
+    public String modifyReply(@RequestParam("rNo") int rNo, @ModelAttribute Comment c, @RequestParam("rContent") String rContent) {
+		
+		c.setrNo(rNo);
+		c.setrContent(rContent);
+		
+		int result = freeService.modifyReply(c);
+		
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new FreeBoardException("댓글 수정 실패!");
+		}
+		
     }
 
 	@RequestMapping("deleteReply.fr")
