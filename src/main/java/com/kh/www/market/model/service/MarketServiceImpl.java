@@ -98,4 +98,10 @@ public class MarketServiceImpl implements MarketService {
 		return marketDAO.selectFilterResultList(sqlSession, hm ,pi);
 	}
 
+	@Override
+	public ArrayList<Comment> selectRList(int boardNo) {
+		return marketDAO.selectRList(sqlSession, boardNo);
+	}
+
+
 }

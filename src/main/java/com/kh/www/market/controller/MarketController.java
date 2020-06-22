@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
@@ -44,6 +47,7 @@ public class MarketController {
 		}
 		
 		int listCount = marketService.getListCount();
+		
 		
 		PageInfo pi = Pagenation.getPageInfoMarket(currentPage,listCount);
 		
@@ -243,6 +247,23 @@ public class MarketController {
 		}
 		
 		return mv;
+	}
+	
+	// 댓글 목록
+	@RequestMapping("rList.ma")
+	public void replyList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		ArrayList<Comment> list = marketService.selectRList(boardNo);
+	//	System.out.println("댓글리스트 받아옴? "+list);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

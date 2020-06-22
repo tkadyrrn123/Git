@@ -35,4 +35,7 @@ public interface MarketService {
 	int getFilterResultListCount(HashMap hm);
 
 	ArrayList<Market> selectFilterResultList(HashMap hm, PageInfo pi);
+
+	ArrayList<Comment> selectRList(int boardNo);
+
 }

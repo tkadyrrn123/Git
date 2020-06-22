@@ -79,6 +79,10 @@ public class MarketDAO {
 		return (ArrayList)sqlSession.selectList("marketMapper.selectFilterResultList", hm);
 	}
 
+	public ArrayList<Comment> selectRList(SqlSessionTemplate sqlSession, int boardNo) {
+		return (ArrayList)sqlSession.selectList("marketMapper.selectRList", boardNo);
+	}
+
 
 
 	

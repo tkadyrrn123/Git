@@ -8,7 +8,7 @@
     </select>
     
     <select id="selectList" resultMap="marketResultSet">
-    	select BOARD_NO,m.MARKET_PRICE,m.SALE_YN,b.BOARD_TITLE,b.BOARD_CONTENT,
+    	select BOARD_NO,m.MARKET_PRICE,m.SALE_YN,b.BOARD_TITLE,b.BOARD_CONTENT,b.BOARD_COUNT,
     		   b.CREATE_DATE,USER_ID,b.BOARD_DELETE,f.FILE_NAME,u.NICKNAME,u.USER_FILE
     	from tb_market m
     		join tb_board b using(board_no)
@@ -23,6 +23,7 @@
     	<result property="saleStatus" column="SALE_YN"/>
     	<result property="boardTitle" column="BOARD_TITLE"/>
     	<result property="boardContent" column="BOARD_CONTENT"/>
+    	<result property="boardCount" column="board_Count"/>	
     	<result property="createDate" column="CREATE_DATE"/>
     	<result property="userId" column="USER_ID"/>
     	<result property="nickName" column="NICKNAME"/>
@@ -168,6 +169,14 @@
 		order by board_no desc
 	</select>
 	
+	<select id="selectRList" resultMap="commentResultSet">
+		select reply_no, board_no, user_id, reply_content, comment_date, decyn, comments_delete, user_file, nickname
+		from tb_comment
+			 join tb_user using(user_id)
+		where comments_delete = 'N' and board_no = #{boardNo}
+		order by reply_no desc
+	</select>
+	
 	<select id="selectComment" resultMap="commentResultSet">
 		select reply_no, board_no, user_id, reply_content, comment_date, decyn, comments_delete, user_file, nickname
 		from tb_comment
@@ -188,5 +197,6 @@
 		<result property="userFile" column="user_file"/>
 		<result property="nickname" column="nickname"/>
 	</resultMap>
+	
 	
 </mapper>
