@@ -63,4 +63,15 @@
 		<result property="nickname" column="NICKNAME"/>
 		<result property="rState" column="COMMENTS_DELETE"/>
 	</resultMap>
+	<resultMap type="Comment2" id="Comment2ResultSet">
+		<id property="rrNo" column="RE_REPLY_NO"/>
+		<result property="rNo" column="REPLY_NO"/>
+		<result property="rUserId" column="USER_ID"/>
+		<result property="rContent" column="REPLY_CONTENT"/>
+		<result property="rCreateDate" column="COMMENT_DATE"/>
+		<result property="rDecYN" column="DECYN"/>
+		<result property="rDecYN" column="COMMENTS_DELETE"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="userFile" column="USER_FILE"/>
+	</resultMap>
 </mapper>
