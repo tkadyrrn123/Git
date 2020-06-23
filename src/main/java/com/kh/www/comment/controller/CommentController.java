@@ -92,7 +92,6 @@ public class CommentController {
 			
 			if(result > 0) {
 				return "success";
-				
 			}else {
 				throw new CommentException("댓글 수정에 실패했습니다.");
 			}
