@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.www.club.model.exception.ClubException;
+import com.kh.www.comment.model.exception.CommentException;
 import com.kh.www.comment.model.service.CommentService;
 import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.Comment2;
@@ -37,7 +37,7 @@ public class CommentController {
 				ArrayList<Comment> comment = cService.selectComment(boardNo);
 				return comment;
 			}else {
-				throw new ClubException("댓글 등록에 실패했습니다.");
+				throw new CommentException("댓글 등록에 실패했습니다.");
 			}
 			
 		}
@@ -58,7 +58,7 @@ public class CommentController {
 				return comment;
 				
 			}else {
-				throw new ClubException("댓글 수정에 실패했습니다.");
+				throw new CommentException("댓글 수정에 실패했습니다.");
 			}
 			
 		}
@@ -76,7 +76,7 @@ public class CommentController {
 				return "redirect:clubDetail.co";
 			
 			}else {
-				throw new ClubException("댓글 삭제에 실패했습니다.");
+				throw new CommentException("댓글 삭제에 실패했습니다.");
 			}
 		}
 		@RequestMapping("deleteComment2.co")
@@ -103,7 +103,7 @@ public class CommentController {
 				return comment2;
 				
 			}else {
-				throw new ClubException("댓글 등록에 실패했습니다.");
+				throw new CommentException("댓글 등록에 실패했습니다.");
 			}
 			
 		}
@@ -131,7 +131,7 @@ public class CommentController {
 				return result;
 				
 			}else {
-				throw new ClubException("댓글 수정에 실패했습니다.");
+				throw new CommentException("댓글 수정에 실패했습니다.");
 			}
 			
 		}	
