@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.www.comment.model.exception.CommentException;
 import com.kh.www.comment.model.service.CommentService;
@@ -22,25 +23,40 @@ public class CommentController {
 	
 	@Autowired
 	CommentService cService;
-		// 댓글 추가	
-		@RequestMapping("insertComment.co")
-		@ResponseBody
-		public ArrayList<Comment> insertComments(@RequestParam("userId") String userId, @RequestParam("boardNo") int boardNo, @RequestParam("content") String content, HttpServletResponse response) {
-			Comment c = new Comment();
-			c.setBoardNo(boardNo);
-			c.setrContent(content);
-			c.setrUserId(userId);
+	// 댓글 추가	
+			@RequestMapping("insertComment.co")
+			@ResponseBody
+			public ArrayList<Comment> insertComments(@RequestParam("userId") String userId, 
+													 @RequestParam(value="boardNo", required=false) Integer boardNo, 
+													 @RequestParam("content") String content, 
+													 @RequestParam(value="voteId", required=false) Integer voteId,
+													 HttpServletResponse response) {
+				int no = 0;
+				Comment c = new Comment();
+				c.setrContent(content);
+				c.setrUserId(userId);
+				if(boardNo != null) {
+					no = boardNo;
+					c.setBoardNo(no);
+				}else if(voteId != null) {
+					no = voteId;
+					c.setVoteId(no);
+				}
 
-			int result = cService.insertComment(c);
-			
-			if(result > 0) {
-				ArrayList<Comment> comment = cService.selectComment(boardNo);
-				return comment;
-			}else {
-				throw new CommentException("댓글 등록에 실패했습니다.");
+				int result = cService.insertComment(c);
+				
+				if(result > 0) {
+					if(boardNo != null) {
+					ArrayList<Comment> comment = cService.selectComment(boardNo);
+					return comment;
+					}else {
+						return null;
+					}
+				}else {
+					throw new CommentException("댓글 등록에 실패했습니다.");
+				}
+				
 			}
-			
-		}
 		
         //	댓글 수정
 		@RequestMapping("updateComment.co")
@@ -61,6 +77,25 @@ public class CommentController {
 				throw new CommentException("댓글 수정에 실패했습니다.");
 			}
 			
+		}
+		
+		// 투표 전용 댓글 수정
+		@RequestMapping("updateVoteComment.co")
+		@ResponseBody
+		public String updateVopeComment(@RequestParam("voteId") int vId, @RequestParam("content") String content, @RequestParam("rNo") int rNo, HttpServletResponse response) {
+			Comment c = new Comment();
+			c.setrNo(rNo);
+			c.setVoteId(vId);
+			c.setrContent(content);
+			
+			int result = cService.updateVoteComment(c);
+			
+			if(result > 0) {
+				return "success";
+				
+			}else {
+				throw new CommentException("댓글 수정에 실패했습니다.");
+			}
 		}
 		
 		// 댓글 삭제	
@@ -87,6 +122,18 @@ public class CommentController {
 			return result;
 		}
 		
+		// 투표 전용 댓글 삭제
+		@RequestMapping("deleteVoteComment.co")
+		@ResponseBody
+		public String deleteVoteComment(@RequestParam("voteId") int voteId, @RequestParam("rNo") int rNo) {
+			int result = cService.deleteComment(rNo);
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new CommentException("댓글 삭제에 실패했습니다.");
+			}
+		}
+		
 		// 대댓글 추가	
 		@RequestMapping("insertComment2.co")
 		@ResponseBody
@@ -102,6 +149,25 @@ public class CommentController {
 				ArrayList<Comment2> comment2 = cService.selectComment2(rNo);
 				return comment2;
 				
+			}else {
+				throw new CommentException("댓글 등록에 실패했습니다.");
+			}
+			
+		}
+		
+		//투표 전용 대댓글 추가
+		@RequestMapping("insertVoteReComment.co")
+		@ResponseBody
+		public String insertVoteReComment(@RequestParam("userId") String userId, @RequestParam("rNo") int rNo, @RequestParam("content") String content, HttpServletResponse response) {
+			Comment2 c = new Comment2();
+			c.setrNo(rNo);
+			c.setrContent(content);
+			c.setrUserId(userId);
+
+			int result = cService.insertComment2(c);
+			
+			if(result > 0) {
+				return "success";
 			}else {
 				throw new CommentException("댓글 등록에 실패했습니다.");
 			}

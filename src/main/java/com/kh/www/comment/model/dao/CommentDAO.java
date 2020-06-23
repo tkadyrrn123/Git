@@ -36,7 +36,7 @@ public class CommentDAO {
 	}
 
 	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession, int rNo) {
-		return (ArrayList)sqlSession.selectList("CommentMapper.selectComment2", rNo);
+		return (ArrayList)sqlSession.selectList("CommentMapper.selectComment23", rNo);
 	}
 
 	public int updateComment2(SqlSessionTemplate sqlSession, Comment2 c) {
@@ -47,6 +47,18 @@ public class CommentDAO {
 	public int deleteComment3(SqlSessionTemplate sqlSession, int rrNo) {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("CommentMapper.deleteComment2", rrNo);
+	}
+
+	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("CommentMapper.selectComment2");
+	}
+
+	public ArrayList<Comment> selectVoteComment(SqlSessionTemplate sqlSession, int vId) {
+		return (ArrayList)sqlSession.selectList("CommentMapper.selectVoteComment", vId);
+	}
+
+	public int updateVoteComment(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.update("CommentMapper.updateVoteComment", c);
 	}
 
 }

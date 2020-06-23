@@ -16,5 +16,5 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
-	<context:component-scan base-package="com.kh.www.Vote" />
+	<context:component-scan base-package="com.kh.www" />
 </beans>

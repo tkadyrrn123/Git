@@ -59,4 +59,19 @@ public class CommentServiceImpl implements CommentService{
 		return cDAO.updateComment2(sqlSession, c);
 	}
 
+	@Override
+	public ArrayList<Comment2> selectComment2() {
+		return cDAO.selectComment2(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Comment> selectVoteComment(int vId) {
+		return cDAO.selectVoteComment(sqlSession, vId);
+	}
+
+	@Override
+	public int updateVoteComment(Comment c) {
+		return cDAO.updateVoteComment(sqlSession, c);
+	}
+
 }

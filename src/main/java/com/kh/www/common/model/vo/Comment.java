@@ -6,6 +6,7 @@ public class Comment {
 	private int rNo; //댓글번호
 	private int boardNo; //게시글 번호
 	private int noticeNo; //공지사항 번호
+	private int voteId; // 투표 아이디
 	private String rUserId; //댓글 작성자 Id
 	private String rContent;//댓글내용
 	private Date rCreateDate; //댓글 생성 날짜
@@ -124,6 +125,14 @@ public class Comment {
 
 	public void setUserFile(String userFile) {
 		this.userFile = userFile;
+	}
+
+	public int getVoteId() {
+		return voteId;
+	}
+
+	public void setVoteId(int voteId) {
+		this.voteId = voteId;
 	}
 
 	@Override
