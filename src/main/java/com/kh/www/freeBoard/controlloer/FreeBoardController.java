@@ -73,7 +73,7 @@ public class FreeBoardController {
 	}
 	
 	@RequestMapping("sort.fr")
-	public ModelAndView sortFree(HttpSession session, @RequestParam("sortCondition") String sortCondition, 
+	public ModelAndView sortFree(HttpSession session, @RequestParam(value="sortCondition", required=false) String sortCondition, 
 							@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
 		
 		Member loginUser = (Member)session.getAttribute("loginUser");
@@ -100,7 +100,7 @@ public class FreeBoardController {
 		
 		if(list != null) {
 			mv.addObject("list", list);
-			mv.addObject("pi", pi);
+			mv.addObject("pi", pi).addObject("sortCondition", sortCondition);
 			mv.setViewName("freeBoardList");		
 		} else {
 			throw new FreeBoardException("정렬 실패!");

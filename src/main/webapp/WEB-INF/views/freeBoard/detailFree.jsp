@@ -127,10 +127,17 @@
 			<br>
 			<!--댓글 작성  -->
 			<div class="reply1_box">
-				<div id="cdt_profile" style="float: left; display: inline;">
-					<img class="profileImg" src="<%=request.getContextPath()%>/resources/uploadFiles/${ fb.userFile }">
-				</div>
-				<div class="dong">${ fb.nickname }</div>
+				<c:if test="${ !empty loginUser.userFile }">
+					<div id="cdt_profile" style="float: left; display: inline;">
+						<img class="profileImg" src="<%=request.getContextPath()%>/resources/uploadFiles/${ loginUser.userFile }">
+					</div>
+				</c:if>
+				<c:if test="${ empty loginUser.userFile }">
+					<div id="cdt_profile" style="float: left; display: inline;">
+						<img class="profileImg" src="<%=request.getContextPath()%>/resources/images/로고.png">
+					</div>
+				</c:if>
+				<div class="dong">${ loginUser.nickName }</div>
 					<input type="button" class="reply1_btn" value="댓글등록" id="rSubmit">
 				<div style="margin-left: 10px; margin-top: 12px;">
 					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="105" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
@@ -154,6 +161,7 @@
 --%>
 			</div>
 			<!-- 대 댓글 -->
+			
 			<div class="reply3_box">
 				<div id="cdt_profile" style="float: left; display: inline;">
 					<img class="profileImg"src="${ contextPath }/resources/images/로고.png">
@@ -201,15 +209,19 @@
 				if(data.length > 0){
 					for(var i in data){
 						$div = $('<div class="reply2_box">');
-						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+	data[i].userFile +'">');									
-
+						
+						if(data[i].userFile != null){
+						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+	data[i].userFile +'">');																
+						} else {
+						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/images/로고.png">');
+						}
 						
 						$nickname = $('<div class="nickname" id="nickname" style="display: inline-block;">').text(data[i].nickname);
 						$rContentdiv = $('<div>')
-						$rContent = $('<textarea class="rContent'+data[i].rNo+'" readonly style="resize:none; width: 100%; min-height: 100px; outline:none; ">').html(data[i].rContent);
+						$rContent = $('<textarea onkeyup="plus('+ data[i].rNo +');"class="rContent'+data[i].rNo+'" readonly style="resize:none; width: 100%; min-height: 100px; outline:none; ">').html(data[i].rContent);
 						
-						$rCreateDate = $('<div class="rCreateDate" style="display: inline-block; margin-left: 610px;">').text(data[i].rCreateDate);
-						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +');" value="수정">');
+						$rCreateDate = $('<div class="rCreateDate" style="margin-left: 680px;">').text(data[i].rCreateDate);
+						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +', this);" value="수정">');
 						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +');" value="삭제">');
 						
 
@@ -261,15 +273,59 @@
 	});
 	
 	// 댓글 수정
- 	function modifyR(rNo){
+ 	function modifyR(rNo, e){
  	//	alert(rNo);
 	$('.rContent'+rNo).prop('readonly', false);
-	$('.rContent'+rNo).css('border-color', 'red');
+	$('.rContent'+rNo).css('border-color', 'pink');
 	
+	var save1 ="";
+
 	if($('#mBtn'+rNo).val() == '수정'){
-	 	$('#mBtn'+rNo).val('완료');
-	 		 	
-	 	$('#mBtn'+rNo).on('click', function(){
+		save1 = $(e).parent().find('textarea').text();
+		console.log("값"+save1);
+		
+		
+//	 	$('#mBtn'+rNo).val('완료');
+	 	$('#mBtn'+rNo).val('수정취소');
+	 	
+	 	$div = $(".reply2_box");
+		$ok = $('<input type="button" class="mdBtn" onclick="modifyRup('+rNo+')" value="수정완료">');
+	 	$(e).parent($div).append($ok);
+	 	
+	 	var counter = '<div style="color:#aaa; float: right;" id="counter'+rNo+'">(0/200자)</div>';
+	 	$(e).next().after(counter);
+	 	var content = $(e).prev().find('textarea').text();
+	 	console.log(content.length);
+	 	$('#counter'+rNo).html(content.length+"/200");
+	 	
+		$('#dBtn'+rNo).hide();
+	}else if($('#mBtn'+rNo).val() == '수정취소'){
+		$('.rContent'+rNo).prop('readonly', true);
+		$(e).prev().find('textarea').val(save1);
+		console.log("값"+save1);
+		console.log($(e).prev().find('textarea'));
+		getReplyList();
+
+//원본
+//  	 	$('#mBtn'+rNo).on('click', function(){
+// 		 	var rContent = $('.rContent'+rNo).val();
+		 	
+// 		 	$.ajax({
+// 		 		url: 'modifyReply.fr',
+// 		 		data: {rContent:rContent, rNo:rNo},
+// 		 		success: function(data){
+// 		 			if(data == 'success'){
+// 		 				getReplyList();
+// 		 			}
+// 		 		}
+// 		 	});	 		
+//  	 	})
+
+	}
+		
+	}
+	
+ 	function modifyRup(rNo){
 		 	var rContent = $('.rContent'+rNo).val();
 		 	
 		 	$.ajax({
@@ -281,27 +337,19 @@
 		 			}
 		 		}
 		 	});	 		
-	 		
-	 	})
+		}	
+	
 
-	}
-		
-	}
-	
- 		
-
-	
-	
 //댓글 수정시 글자 카운팅
  function plus(rNo){
-    var content = $("#update_reply_TEXT_"+rNo+"").val();
+    var content = $('.rContent'+rNo).val();
     console.log(content);
-    $('#update_counter').html(content.length+"/200");//글자수 실시간 카운팅
+    $('#counter'+rNo+'').html(content.length+"/200");//글자수 실시간 카운팅
 
     if (content.length > 200){
         alert("최대 200자까지 입력 가능합니다.");
         $(this).val(content.substring(0, 200));
-        $('#update_counter').html("200/200");
+        $('#counter'+rNo+'').html("200/200");
     }
 } 
 
