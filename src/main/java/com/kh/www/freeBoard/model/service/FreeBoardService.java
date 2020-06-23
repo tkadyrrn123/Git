@@ -42,6 +42,8 @@ public interface FreeBoardService {
 
 	int deleteReply(int rNo);
 
+	int modifyReply(Comment c);
+
 
 	
 }
