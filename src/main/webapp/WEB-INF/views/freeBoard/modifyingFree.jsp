@@ -68,9 +68,7 @@
                   <tr id="tr3">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;" name="boardContent">
- 							${ fb.boardContent }
-                        </textarea>
+                        <textarea id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;" name="boardContent">${ fb.boardContent }</textarea>
                      </td>
                   </tr>      
                   <tr id="tr4">

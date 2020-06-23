@@ -69,7 +69,7 @@ footer .container_small{padding-left: 250px;}
 	<footer>
 		<div class="footer-limiter">
 			<div class="footer-right">
-				<p style="margin-left: 10px;"><b class="names tleft">하우스스토리</b></p>
+				<p style="margin-left: 10px;"><b class="names tleft">하우스토리</b></p>
 				<p><b class="names tleft">이종훈</b> <b class="names tright">임연화</b></p>
 				<p><b class="names tleft">박근오</b> <b class="names tright">김민주</b></p>
 				<p><b class="names tleft">송도훈</b> <b class="names tright">정무지개</b></p>

@@ -190,6 +190,14 @@
 		  </ul>
 	</div>
 	<script>
+		$(function(){
+			var sortCondition = '${ sortCondition }';
+			if(sortCondition == ""){
+				$('#latest').prop('checked', 'checked');
+			} else if(sortCondition == "hits") {
+				$('#hits').prop('checked', 'checked');
+			}
+		})		
 		$('.select-box__input').click(function(){
 			var sortCondition = $(this).val();
 			location.href="sort.fr?sortCondition="+sortCondition;
