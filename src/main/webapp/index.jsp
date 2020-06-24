@@ -1477,7 +1477,11 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 						<td><p class="text">비밀번호는 가입시 등록한 메일 주소로 알려드립니다. 가입할 때 등록한 메일 주소를 입력하고 "임시 비밀번호 발급" 버튼을 클릭해주세요.</p></td>
 					</tr>
 					<tr>
-						<td><input type="email" name="userPass_email" placeholder="이메일 주소"></td>
+						<td>
+						<input type="text" name="userPass_id" placeholder="아이디" style="width: 20%;"> 
+						&nbsp;&nbsp;&nbsp;
+						<input type="email" name="userPass_email" placeholder="이메일 주소" style="width: 40%;">
+						</td>
 					</tr>
 					<tr>
 						<td>
