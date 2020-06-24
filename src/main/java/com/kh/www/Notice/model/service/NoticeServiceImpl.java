@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.www.Notice.model.dao.NoticeDAO;
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Service("nService")
@@ -109,5 +110,14 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override //공지사항 검색한 리스트 가져오기
 	public ArrayList<Notice> selectSortCondition(HashMap map) {
 		return nDAO.nSortCondition(sqlSession, map);
+	}
+	
+	@Override //공지사항 대댓글 추가
+	public int insertComment2(Comment2 c) {
+		return nDAO.insertComment2(sqlSession, c);
+	}
+	@Override
+	public ArrayList<Comment2> selectComment2(int rNo) {
+		return nDAO.selectComment2(sqlSession, rNo);
 	}
 }
