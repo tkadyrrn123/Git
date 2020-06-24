@@ -40,8 +40,8 @@
 	.dong{line-height:3; display: inline; margin-left: 10px; margin-right: 10px;}
 	.dong2{display: inline; margin-left: 10px; margin-right: 10px;}
 	.reply1_btn{margin-right: 15px; float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
-	.reply_TEXT{margin-right: 15px; border-radius:0.34em; border-color: lightgrey; resize:none; readonly}
-	#reply_TEXT{margin-right: 15px; border-radius:0.34em; border-color: lightgrey; resize:none;}
+	.reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
+	#reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
 /* 	.update_reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;} */
 	.fa-comment-dots{margin-left: 7px; color: #62b3b6;}
 	.Reply_list_title{margin-left: 120px; color: #62b3b6; margin-top: 10px; margin-bottom: 10px;}
@@ -49,18 +49,26 @@
 /* 원댓글  */	
 	.reply2_box{width: 800px; height: auto; margin-left: 100px; margin-top: 8px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: solid; border-color: rgb(201, 232, 255);}
 	
-	.update_btn{margin-right: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	.update_btn{margin-right: 10px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
+	.delete_btn{margin-right: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
 	
 	.delete_btn{margin-right: 10px; margin-left: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
-	.counter{color:#aaa; float: right; margin-top: 45px; margin-right: 15px;}
-	.counter2{color:#aaa; float: right; margin-right: 15px; margin-top: 55px;}
+	.counter{color:#aaa; float: right; margin-top: 55px; margin-right: 15px;}
+	.counter2{color:#aaa; float: right; margin-right: 15px; margin-top: 70px;}
 	
 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
 	 
 /* 대댓글  */	
-	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
+	.re_reply_btn{margin-right: 10px; margin-top: 15px; border-radius: 6px; background-color: rgb(201, 232, 255); font-weight: 500;
+	     cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
+	
+	.reply3_box{width: 760px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
+ 	.re_submit_btn{margin-right: 10px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+		color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
+ 	
  	
 </style>
 </head>
@@ -68,7 +76,6 @@
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
-		<form>
 	<!----------- 게시글 상단부 시작  ---------->	
 			<br>
 			<h2 style="margin-left: 15px;">공지사항 상세보기</h2>
@@ -138,7 +145,7 @@
 				<div class="dong">${ loginUser.userId }</div>
 					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
 				<div style="margin-left: 10px; margin-top: 12px;">
-					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="93" rows="4" placeholder="댓글을 입력해주세요."></textarea>
+					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="94" rows="5" placeholder="댓글을 입력해주세요."></textarea>
 				<div class="counter" id="counter">0/200</div>
 				</div>
 			</div>
@@ -146,44 +153,9 @@
 			<div class="Reply_list_title">Reply list<i class="far fa-comment-dots"></i><span id="rCount"></span></div>
 		<!-------------댓글 가져오기 ------------>	
 		<div id="noticeComment_list">
-
-			<c:forEach var="b" items="${comment}" varStatus="status">
-				<div class="reply" id="reply${ status.index }">
-					<div id="info2">
-						<c:if test="${!empty b.userFile }">
-							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${b.userFile}"></div>
-						</c:if>
-						<c:if test="${empty b.userFile }"> 
-							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
-						</c:if>
-							<div class="info"  id="rWriter">${b.nickname}</div>
-							<div class="info"  id="replyDate">${b.rCreateDate}</div>
-						<c:if test="${loginUser.userId eq b.rUserId }">
-							<button type="button" class="btn" id="rUpdateBtn${ status.index }">수정</button> 
-							<button type="button" class="btn" id="rDeleteBtn${ status.index }">삭제</button>
-							<div style="display:none">${b.rNo}</div>
-						</c:if>
-					</div>
-
-						<textarea class="rContent${ status.index }" readonly >${b.rContent}</textarea>
- 
-					<div> 
-						<button class="btn" id="replyBtn">답글</button>
-						<div style="display:none">${b.rNo}</div>
-						<div class="likeBtn" id="likeBtn1">
-							<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like.png">
-						</div>
-						<div class="likeBtn2" id="likeBtn2">
-							<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like2.png">
-						</div>
-						<div class="likeCount">0</div>
-					</div>
-				</div>
-			</c:forEach>			
-			
+		<!--댓글 구현되는 부분  -->
 		</div>
-		<!-------------댓글 가져오기 끝------------>			
-		</form>
+		<!-------------댓글 가져오기 끝------------>
 	</div>
 	
 	<script>
@@ -255,6 +227,7 @@
 				var $rUserId;
 				var $rContent;
 				var $rCreateDate;
+				var $reReply;//답글 버튼
 				
 				var $rModify;
 				var $rDelete;
@@ -264,23 +237,25 @@
 					for(var i in data){
 
 						$div = $('<div id="noticeComment'+data[i].rNo+'" class="reply2_box">');
-						$div_userFile = $('<div style="float:left;display:inline;">');
 						$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'">');
 						
  						if("${loginUser.userId}"== data[i].rUserId){
  							$rModify = $('<div id="update_btn_'+data[i].rNo+'" class="update_btn" onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\',this);"> 수정 </div>');
-							$rDelete = $('<div id="delete_btn_'+data[i].rNo+'" class="update_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </div>');
+							$rDelete = $('<div id="delete_btn_'+data[i].rNo+'" class="delete_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </div>');
 						}else{
 							$rModify = "";
 							$rDelete = "";
 						}
-						$rUserId = $('<div class="dong2">').text(data[i].rUserId);
-						$rContent = $('<textarea id="reply_TEXT" class="reply_TEXT_'+data[i].rNo+'" name="rContent_'+data[i].rNo+'" cols="93" rows="4" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" resize:none; readonly onkeyup="plus('+data[i].rNo+');"></textarea>').text(data[i].rContent);
-						$rCreateDate = $('<div id="rCreateDate_'+data[i].rNo+'" style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
 
+						$rUserId = $('<div class="dong2">').text(data[i].rUserId);
+						$reReply = $('<div id="'+data[i].rNo+'" class="re_reply_btn"> 답글 </div>');
+						$rContent = $('<textarea id="reply_TEXT" class="reply_TEXT_'+data[i].rNo+'" name="rContent_'+data[i].rNo+'" cols="94" rows="5" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" resize:none; readonly onkeyup="plus('+data[i].rNo+');"></textarea>').text(data[i].rContent);
+						$rCreateDate = $('<div id="rCreateDate_'+data[i].rNo+'" style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
+					
 						$div.append($userFile);
 						$div.append($rUserId);
 						
+						$div.append($reReply); //답글 버튼
 						$div.append($rModify);
 						$div.append($rDelete);
 						
@@ -304,46 +279,39 @@
 		
 		setInterval(function(){
 			getCommentList();
-		}, 60000);
+		}, 120000);
 	});
 	
 	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
 	function commentUpdateForm(rNo, rContent, e){
 	
 	var save1 = "";
-	if($(e).text().trim() == "수정"){
-        save1 = $(e).parent().find('textarea').text(); //기존내용 임시저장
-		console.log(save1);
-
-		//수정버튼누르면 리드온리 false로 바꿈
-		$('.reply_TEXT_'+rNo).prop('readonly', false);
-  		$('#delete_btn_'+rNo).hide(); //기존 삭제버튼 숨기기
-
-		//삭제버튼 글자를 취소로 바꾸기
-		$('#update_btn_'+rNo).text("취소");
-		
-		$div = $('#noticeComment'+rNo);
- 		$rModify2 = $('<div id="update_btn2_'+rNo+'" class="update_btn" onclick="commentUpdate('+rNo+');">등록</div>');
-		$count2 = $('<div class="counter2" id="update_counter">'+rContent.length+'/200</div>');
-		
- 		$(e).parent($div).find('.dong2').append($rModify2);
-		$(e).parent($div).find('.reply_TEXT_'+rNo+'').after($count2);
+		if($(e).text().trim() == "수정"){
+	        save1 = $(e).parent().find('textarea').text(); //기존내용 임시저장
+			console.log(save1);
 	
-	} else if ($(e).text().trim() == "취소"){
+			//수정버튼누르면 리드온리 false로 바꿈
+			$('.reply_TEXT_'+rNo).prop('readonly', false);
+	  		$('#delete_btn_'+rNo).hide(); //기존 삭제버튼 숨기기
+	
+			//삭제버튼 글자를 취소로 바꾸기
+			$('#update_btn_'+rNo).text("취소");
+			
+			$div = $('#noticeComment'+rNo);
+	 		$rModify2 = $('<div id="update_btn2_'+rNo+'" class="delete_btn" onclick="commentUpdate('+rNo+');">등록</div>');
+			$count2 = $('<div class="counter2" id="update_counter">'+rContent.length+'/200</div>');
+			
+	 		$(e).parent($div).find($('#update_btn_'+rNo)).after($rModify2);
+			$(e).parent($div).find('.reply_TEXT_'+rNo+'').after($count2);
 		
-		$('.reply_TEXT_'+rNo).prop('readonly', true); // 다시 읽음 전용으로
-		$(e).parent().find('textarea').val(save1); //수정전 값 다시 넣기
-  		$('#update_btn_'+rNo).text("수정");
-  	    getCommentList();
+		} else if ($(e).text().trim() == "취소"){
+			
+			$('.reply_TEXT_'+rNo).prop('readonly', true); // 다시 읽음 전용으로
+			$(e).parent().find('textarea').val(save1); //수정전 값 다시 넣기
+	  		$('#update_btn_'+rNo).text("수정");
+	  	    getCommentList();
+		}
 	}
-	}
-		
-// 	    a += '<div>';
-// 	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+rContent.replace(/\+/g, ' ')+'</textarea>';
-//  	    a += '<div class="counter" id="update_counter">'+rContent.length+'/200</div>';
-//  	    a += '<i class="fas fa-check" onclick="commentUpdate('+rNo+');"></i>';
-	    
-// 	    $('.rContent'+rNo).html(a);
 	
 	//댓글 수정시 글자 카운팅
 	function plus(rNo){
@@ -394,6 +362,48 @@
 		    });
 		}
 	}
+	
+	/* 대댓글 입력창  */
+	$(document).on('click','.re_reply_btn', function(){
+		var $rreplyInsertTable = $(this).parent(); /* 댓글 창 */
+		console.log($rreplyInsertTable);
+		
+		var re_id_num = $(this).attr("id");
+		
+		var rreplys = '<div id="replyInput2" class="reply3_box">' +
+				 '	<div id="notice_profile" style="float:left;display:inline;">' +
+				 '		<c:if test="${!empty loginUser.userFile }">' +
+				 '			<div class="info" id="rProfile"><img class="comment_img" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${loginUser.userFile}"></div>' +
+				 '		</c:if>' +
+				 '		<c:if test="${empty loginUser.userFile }">' +
+				 '			<div class="info" id="rProfile"><img class="comment_img" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>' +
+				 '	 	</c:if>' +
+				 '	</div>' +
+				 '	<div class="dong"  id="rWriter">${ loginUser.userId }</div>' +
+				 '	<button class="re_submit_btn" id="insertBtnRe" style="width:70px;">댓글 등록</button>' +
+				 '  <div style="display:none;">' + re_id_num + '</div>' +
+				 '  <div style="margin-left: 10px; margin-top: 12px;">' +
+				 '	<textarea class="reply_TEXT" id="rrWrite" cols="89" rows="5" resize:none; placeholder="댓글을 입력해주세요."></textarea>'  +
+				 '	<div class="counter" id="counter">0/200</div>' +
+				 ' </div>'+
+				 '</div>'
+		$rreplyInsertTable.after(rreplys);
+	});
+	
+	/* 대댓글 등록  */
+	$(document).on('click','#insertBtnRe', function(){
+		var userId = '${ loginUser.userId }';
+		var rNo = $(this).next().text();
+		var content = $(this).next().next().children().val();
+		
+			$.ajax({
+			url: 'insertComment2.no',
+			data: {userId:userId, rNo:rNo, content:content},
+			success: function(data){
+				document.location.reload(true);
+			}
+		}); 
+	})
 	</script>
 
 	<jsp:include page="../common/Footer.jsp"/>

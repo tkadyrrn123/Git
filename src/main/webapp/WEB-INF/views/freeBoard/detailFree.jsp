@@ -176,6 +176,29 @@
 			</div>
 		</form>
 	</div>
+	<script>
+	/* 웹소켓  */
+	var bNo = '${ fb.boardNo }';
+	var replyWriter = '${ loginUser.userId }';
+	var BoardWriter = '${ fb.userId }';
+	
+	$(function(){
+			$('#rSubmit').on('click', function(evt) {
+				  evt.preventDefault();
+			  	if (socket.readyState !== 1) return;
+			    	  let msg = $('#rContent').val();
+			    	  
+			    	  if(socket){
+			    		  let socketMsg = "free," + replyWriter + "," + BoardWriter + "," + bNo;
+			    		  console.log(socketMsg);
+			    		  socket.send(socketMsg);
+			    	  }
+			    });
+		});
+	</script>
+	
+	
+	
 	
 	<script>
 	$(function(){

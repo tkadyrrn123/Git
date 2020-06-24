@@ -193,15 +193,7 @@
       
    </script>
 <!--정렬 끝---------------------------------------------------------------------------------------------------->	
-<!-- 	                    <select class="dong" name="nDong"> -->
-<!-- 	                    	<option value="전체 공지" selected>전체 공지</option> -->
-<%-- 						    <c:forEach var="i" begin="0" end="${nDonglist.size()}" varStatus="status"> --%>
-<%-- 						        <c:if test="${nDonglist[i] != selected}"> --%>
-<%-- 								    <option value="${nDonglist[i]}">${nDonglist[i]}</option> --%>
-<%-- 						        </c:if> --%>
-<%-- 						    </c:forEach> --%>
-<!-- 						</select> -->
-<!--                     </td> -->
+
 
 	<div class="board_wrab">
         <table id="notice_list_tb">
