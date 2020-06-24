@@ -97,7 +97,7 @@ public class ClubController {
 	public ModelAndView clubUpdateForm(@ModelAttribute Club c, HttpServletRequest request,@RequestParam("userId") String userId, HttpServletResponse response, ModelAndView mv) {
 		mv.addObject("c", c);
 		mv.addObject("userId", userId);
-		mv.setViewName("clubUpdateForm");
+		mv.setViewName("clubUpdateForm"); 
 		return mv;
 	}
 
