@@ -223,7 +223,7 @@
 						$rCreateDate = $('<div class="rCreateDate" style="margin-left: 680px;">').text(data[i].rCreateDate);
 						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +', this);" value="수정">');
 						$rDBtn = $('<input type="button" class="mdBtn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +');" value="삭제">');
-						
+						$rereBtn = $('<input type="button" class="mdBtn" id="rrBtn'+data[i].rNo+'" onclick="rereR('+ data[i].rNo +');" value="답글">');
 
 						$div.append($profileImg);
 
@@ -240,6 +240,7 @@
 							$div.append($rDBtn);
 						}
 						
+						$div.append($rereBtn)
 						$rOuter.append($div);						
 					}
 				} else{
@@ -253,6 +254,10 @@
 		});
 
 	}
+	
+
+
+
 	
 	// 댓글 등록	
 	$('#rSubmit').on('click', function(){
@@ -283,7 +288,6 @@
 	if($('#mBtn'+rNo).val() == '수정'){
 		save1 = $(e).parent().find('textarea').text();
 		console.log("값"+save1);
-		
 		
 //	 	$('#mBtn'+rNo).val('완료');
 	 	$('#mBtn'+rNo).val('수정취소');
@@ -324,7 +328,8 @@
 	}
 		
 	}
-	
+
+// 수정 댓글 저장 
  	function modifyRup(rNo){
 		 	var rContent = $('.rContent'+rNo).val();
 		 	
@@ -340,21 +345,21 @@
 		}	
 	
 
-//댓글 수정시 글자 카운팅
- function plus(rNo){
-    var content = $('.rContent'+rNo).val();
-    console.log(content);
-    $('#counter'+rNo+'').html(content.length+"/200");//글자수 실시간 카운팅
+// 원댓글 수정시 글자 카운팅
+	 function plus(rNo){
+	    var content = $('.rContent'+rNo).val();
+	    console.log(content);
+	    $('#counter'+rNo+'').html(content.length+"/200");//글자수 실시간 카운팅
+	
+	    if (content.length > 200){
+	        alert("최대 200자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 200));
+	        $('#counter'+rNo+'').html("200/200");
+	    }
+	} 
 
-    if (content.length > 200){
-        alert("최대 200자까지 입력 가능합니다.");
-        $(this).val(content.substring(0, 200));
-        $('#counter'+rNo+'').html("200/200");
-    }
-} 
 
-
-	// 댓글 삭제
+// 댓글 삭제
 	function deleteR(rNo, rContent){
 		
 		$.ajax({
@@ -369,8 +374,6 @@
 		});
 	}
 	
-
-	
 	function deleteMsg(){
 		var del = confirm('정말 삭제합니까?');
 		if(del){
@@ -378,7 +381,7 @@
 		}
 	}
 	
-	// textarea 체크
+	// 댓글작성 글자수 체크
 	$('.reply_TEXT').keyup(function (e){
 	    var content = $(this).val();
 	    $('#counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
