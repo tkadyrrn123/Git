@@ -272,10 +272,32 @@ ${ c.clubEtc }
 						<div class="likeBtn2" id="likeBtn2">
 							<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like2.png">
 						</div>
-						<div class="likeCount">0</div>
+						<div class="likeCount">
+						<c:set var="likeCount" value="0"/>
+						<c:if test="${likeList.size() > 0}">
+						<c:forEach var="i" begin="0" end="${likeList.size()-1}">
+						<c:if test="${likeList[i].rNo eq b.rNo}">
+						<c:set var="likeCount" value="${likeCount+1}"/>
+						</c:if>
+						</c:forEach>
+						</c:if>
+						${likeCount}
+						</div>
 					</div>
 				</div>
-				
+				<script>
+				var reply = $('#reply${ status.index }');
+				var likeBtn1 = reply.children().next().next().children().next().next();
+				var likeBtn2 = reply.children().next().next().children().next().next().next();
+					<c:if test="${likeList.size() > 0}">
+					<c:forEach var="i" begin="0" end="${likeList.size()-1}">
+					<c:if test="${loginUser.userId eq likeList[i].rUserId and b.rNo eq likeList[i].rNo}">
+						likeBtn1.css('display','none');
+						likeBtn2.css('display','inline-block');
+					</c:if>
+					</c:forEach>
+					</c:if>
+				</script>
 				
 				
 		<!--  댓글 수정  -->	
@@ -331,7 +353,14 @@ ${ c.clubEtc }
 							<c:param name="boardNo" value="${ c.boardNo }"></c:param>
 						</c:url>
 					if(confirm("댓글을 삭제하시겠습니까?")){
-		   				location.href="${dc}";
+						$.ajax({
+							url:"${dc}",
+							success:function(){
+								document.location.reload();
+							}
+							
+						});
+		   				// location.href="${dc}";
 		   			}
 			   		});
 
@@ -446,7 +475,7 @@ ${ c.clubEtc }
    				url: 'insertComment.cb',
    				data: {userId:userId, boardNo:boardNo, content:content},
    				success: function(data){
-   					document.location.reload(true);
+   					document.location.reload();
    				}
    			});
    		})
@@ -455,15 +484,7 @@ ${ c.clubEtc }
 			$(this).parent().parent().css('display','none');
 			$(this).parent().parent().next().css('display','inline-block');
 
-		}); 		   	
-  		
-   		$(document).on('click', '#rUpdateBtnC',function(){
-   			var a = $(this).next().next().text();
-   			var b = $(this).next().text();
-	
-			updateReply(a,b);		
-
-		}); 
+		});
 
 /* 댓글 추가 수정 후 삭제버튼 이벤트 */   		
    		$(document).on('click', '#rDeleteBtnAjax',function(){
@@ -504,7 +525,7 @@ ${ c.clubEtc }
   	   				url: 'updateComment.cb',
   	   				data: {boardNo:boardNo, content:content, rNo:b},
   	   				success: function(data){
-  	   				document.location.reload(true);
+  	   				document.location.reload();
    	   				}
    	   			});
    		}
@@ -541,7 +562,7 @@ ${ c.clubEtc }
    				url: 'insertComment2.cb',
    				data: {userId:userId, rNo:rNo, content:content},
    				success: function(data){
-   					document.location.reload(true);
+   					document.location.reload();
    				}
    			});
    		})
@@ -551,8 +572,8 @@ ${ c.clubEtc }
    			var rrNo = $(this).next().next().next().text();
    			var i = $(this).next().next().next().next().text();
    			var $textarea = '<textarea class="rContent'+ i +'" id="rrContent" style="border:1px solid black; min-height:100px;" >'+$(this).parent().next().text() + '</textarea>';
-   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 취소</button>')
-   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 완료</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnCancel" style="width:70px;">수정 취소</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnSubmit" style="width:70px;">수정 완료</button>')
 
    			
 
@@ -564,6 +585,24 @@ ${ c.clubEtc }
    			$(this).next().next().next().remove();
    			$(this).remove();
    		   	});
+   		
+   		/* 대댓글 수정 */
+   		$(document).on('click','#rrUpdateBtnSubmit', function(){
+   			var content = $(this).parent().next().val();
+   			var rrNo = $(this).next().next().next().text();
+   			$.ajax({
+   				url:"updateComment3.co",
+   				data:{rrNo:rrNo, content:content},
+   				success:function(){
+   					document.location.reload();
+   				}
+   			});
+   		});
+   		
+   		/* 대댓글 수정 취소 */
+   		$(document).on('click','#rrUpdateBtnCancel', function(){
+   			document.location.reload();
+   		});
    		
  		/* 대댓글 삭제  */
    		$(document).on('click','#rrDeleteBtn', function(){
@@ -583,13 +622,23 @@ ${ c.clubEtc }
    		   	}); 		
    		
    		
+   		// 댓글 좋아요
    		$('.likeBtn').click(function(){
-			$(this).parent().children('.likeBtn2').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text(); 
-			count *= 1;
-			count = count + 1;
-			$(this).parent().children('.likeCount').text(count);
+   			var rNo = $(this).prev().text();
+   			var userId = '${ loginUser.userId }';
+   			var thisBtn = $(this);
+   			$.ajax({
+   				url:"CommentLike.co",
+   				data:{rNo:rNo, userId:userId},
+   				success: function(){
+   					thisBtn.parent().children('.likeBtn2').css('display','inline-block');
+   					thisBtn.css('display','none');
+   					var count = thisBtn.parent().children('.likeCount').text(); 
+   					count *= 1;
+   					count = count + 1;
+   					thisBtn.parent().children('.likeCount').text(count);
+   				}
+   			});
 		}); 
    		
    		$(document).on('click', '.likeBtn3',function(){
@@ -601,16 +650,23 @@ ${ c.clubEtc }
 			$(this).parent().children('.likeCount').text(count);
 		}); 
 		
-		
-
-		
+   		// 댓글 좋아요 취소
 		$('.likeBtn2').click(function(){
-			$(this).parent().children('.likeBtn').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text();
-			count *= 1;
-			count = count - 1;
-			$(this).parent().children('.likeCount').text(count);
+			var rNo = $(this).prev().prev().text();
+   			var userId = '${ loginUser.userId }';
+   			var thisBtn = $(this);
+			$.ajax({
+				url:"CommentNotLike.co",
+   				data:{rNo:rNo, userId:userId},
+   				success: function(){
+   					thisBtn.parent().children('.likeBtn').css('display','inline-block');
+   					thisBtn.css('display','none');
+   					var count = thisBtn.parent().children('.likeCount').text();
+   					count *= 1;
+   					count = count - 1;
+   					thisBtn.parent().children('.likeCount').text(count);
+   				}
+   			});
 		});
 		
 		$(document).on('click', '.likeBtn4', function(){

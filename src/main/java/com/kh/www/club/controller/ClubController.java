@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.www.club.model.exception.ClubException;
 import com.kh.www.club.model.service.ClubService;
 import com.kh.www.club.model.vo.Club;
+import com.kh.www.comment.model.service.CommentService;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.Comment2;
@@ -35,6 +36,9 @@ public class ClubController {
 	
 	@Autowired
 	private ClubService cService;
+	
+	@Autowired
+	private CommentService coService;
 	
 // 동호회 리스트 불러오기	
 	@RequestMapping("clubList.cb")
@@ -67,7 +71,7 @@ public class ClubController {
 		Club club = cService.selectClub(clubName);
 		ArrayList<Comment> comment = cService.selectComment(boardNo);
 		ArrayList<Comment2> comment2 = cService.selectComment2();
-
+		ArrayList<Comment> likeList = coService.selectLike();
 		
 		HashMap m = new HashMap();
 		m.put("clubName", clubName);
@@ -79,6 +83,7 @@ public class ClubController {
 			mv.addObject("page", page);
 			mv.addObject("comment", comment);
 			mv.addObject("comment2", comment2);
+			mv.addObject("likeList", likeList);
 			mv.addObject("result", result);
 			mv.setViewName("clubDetail");
 		}else {
