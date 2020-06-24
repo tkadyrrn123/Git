@@ -30,8 +30,10 @@ import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Notice.model.exception.NoticeException;
 import com.kh.www.Notice.model.service.NoticeService;
 import com.kh.www.Notice.model.vo.Notice;
+import com.kh.www.club.model.exception.ClubException;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Controller
@@ -434,5 +436,26 @@ public class NoticeController {
 	public ModelAndView test(ModelAndView mv, HttpSession session) {
 		mv.setViewName("test2");
 		return mv;
+	}
+	
+	//공지사항 대댓글 추가	
+	@RequestMapping("insertComment2.no")
+	@ResponseBody
+	public ArrayList<Comment2> insertComments2(@RequestParam("userId") String userId, @RequestParam("rNo") int rNo, @RequestParam("content") String content, HttpServletResponse response) {
+		Comment2 c = new Comment2();
+		c.setrNo(rNo);
+		c.setrContent(content);
+		c.setrUserId(userId);
+
+		int result = noticeService.insertComment2(c);
+		
+		if(result > 0) {
+			ArrayList<Comment2> comment2 = noticeService.selectComment2(rNo);
+			return comment2;
+			
+		}else {
+			throw new NoticeException("답글 등록에 실패했습니다.");
+		}
+		
 	}
 }
