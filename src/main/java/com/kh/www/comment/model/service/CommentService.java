@@ -29,5 +29,11 @@ public interface CommentService {
 
 	int updateVoteComment(Comment c);
 
+	int CommentLike(Comment c);
+
+	int CommentNotLike(Comment c);
+
+	ArrayList<Comment> selectLike();
+
 
 }
