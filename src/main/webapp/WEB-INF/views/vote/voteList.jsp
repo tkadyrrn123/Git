@@ -155,7 +155,7 @@
 </style>
 </head>
 <body>
-	<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/voteImage.png">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<h2>투표 게시판</h2>
