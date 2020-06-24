@@ -619,7 +619,68 @@ public class Admincontroller {
 	}
 	
 	@RequestMapping("AptBoardList.adm")
-	public String AptBoardList() {
+	public String AptBoardList(@RequestParam(value="page", required = false) Integer page, HttpSession session, Model model) {
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName= loginUser.getAptName();
+		
+		int listCount = mService.AptBoardListCount(aptName);
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		ArrayList<BoardType> bList = mService.AptBoardList(pi, aptName);
+		
+		for(BoardType b : bList) {
+			if(b.getFree() != 0) {
+				b.setType("자유게시판");
+			}else if(b.getMarket() != 0) {
+				b.setType("중고마켓");
+			}else if(b.getClub() != 0) {
+				b.setType("동호회");
+			}else if(b.getClubNotice() != 0) {
+				b.setType("동호회공지");
+			}
+		}
+		System.out.println(bList);
+		model.addAttribute("bList", bList)
+		     .addAttribute("pi", pi);
+		
+		return "AptAdminBoardList";
+	}
+	
+	@RequestMapping("AptAdminBoardSearch.adm")
+	public String AptAdminBoardSearch(@RequestParam("searchOption") String searchOption, @RequestParam("searchText") String text,
+							          @RequestParam(value="page", required = false) Integer page,
+								      Model model, HttpSession session) {
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		SearchOption so = new SearchOption();
+		if(searchOption.equals("제목")) {
+			so.setTitle(text);
+		}else if(searchOption.equals("작성자")) {
+			so.setUserId(text);
+		}
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String aptName= loginUser.getAptName();
+		
+		int listCount = mService.AptBoardSearchListCount(so, aptName);
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		ArrayList<BoardType> bList = mService.AptBoardSearchList(pi, so, aptName);
+		
+		model.addAttribute("searchOption", searchOption)
+	     	 .addAttribute("searchText", text)
+		     .addAttribute("bList", bList)
+	         .addAttribute("pi", pi);
 		
 		return "AptAdminBoardList";
 	}

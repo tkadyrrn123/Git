@@ -91,4 +91,12 @@ public interface MemberService {
 	//최근 5건 게시물 목록
 	ArrayList<BoardType> fiveBoardList(String aptName);
 
+	int AptBoardListCount(String aptName);
+
+	ArrayList<BoardType> AptBoardList(PageInfo pi, String aptName);
+
+	int AptBoardSearchListCount(SearchOption so, String aptName);
+
+	ArrayList<BoardType> AptBoardSearchList(PageInfo pi, SearchOption so, String aptName);
+
 }
