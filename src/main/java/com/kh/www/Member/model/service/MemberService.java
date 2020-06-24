@@ -86,6 +86,8 @@ public interface MemberService {
 	int AdminAptMemberDelete(String userId);
 	//아이디 찾기
 	String idSearch(String email);
+	
+	String idSearch(String user_Id, String user_email);
 	//비밀번호 찾기(임시비밃너호로 변경)
 	int searchPwdAlter(String userId, String uuid);
 	//최근 5건 게시물 목록
@@ -98,5 +100,7 @@ public interface MemberService {
 	int AptBoardSearchListCount(SearchOption so, String aptName);
 
 	ArrayList<BoardType> AptBoardSearchList(PageInfo pi, SearchOption so, String aptName);
+
+	
 
 }

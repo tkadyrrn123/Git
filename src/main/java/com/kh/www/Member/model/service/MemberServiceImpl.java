@@ -243,5 +243,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.AptBoardSearchList(sqlSession, pi, so, aptName);
 	}
 
+	@Override
+	public String idSearch(String user_Id, String user_email) {
+		return mDAO.idSearch(sqlSession, user_Id, user_email);
+	}
+
 
 }
