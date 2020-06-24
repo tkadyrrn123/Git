@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.www.comment.model.exception.CommentException;
 import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.Comment2;
 
@@ -26,8 +27,8 @@ public class CommentDAO {
 	}
 
 	public int deleteComment(SqlSessionTemplate sqlSession, int rNo) {
-		// TODO Auto-generated method stub
-		return sqlSession.delete("CommentMapper.deleteComment", rNo);
+		sqlSession.update("CommentMapper.deleteCommentRe", rNo);
+		return sqlSession.update("CommentMapper.deleteComment", rNo);
 	}
 
 	public int insertComment2(SqlSessionTemplate sqlSession, Comment2 c) {
@@ -46,7 +47,7 @@ public class CommentDAO {
 
 	public int deleteComment3(SqlSessionTemplate sqlSession, int rrNo) {
 		// TODO Auto-generated method stub
-		return sqlSession.delete("CommentMapper.deleteComment2", rrNo);
+		return sqlSession.update("CommentMapper.deleteComment2", rrNo);
 	}
 
 	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession) {
@@ -59,6 +60,18 @@ public class CommentDAO {
 
 	public int updateVoteComment(SqlSessionTemplate sqlSession, Comment c) {
 		return sqlSession.update("CommentMapper.updateVoteComment", c);
+	}
+
+	public int CommentLike(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.insert("CommentMapper.CommentLike", c);
+	}
+
+	public int CommentNotLike(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.delete("CommentMapper.CommentNotLike", c);
+	}
+
+	public ArrayList<Comment> selectLike(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("CommentMapper.selectLike");
 	}
 
 }

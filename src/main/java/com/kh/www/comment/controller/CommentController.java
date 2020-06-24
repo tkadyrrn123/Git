@@ -82,12 +82,11 @@ public class CommentController {
 		// 투표 전용 댓글 수정
 		@RequestMapping("updateVoteComment.co")
 		@ResponseBody
-		public String updateVopeComment(@RequestParam("voteId") int vId, @RequestParam("content") String content, @RequestParam("rNo") int rNo, HttpServletResponse response) {
+		public String updateVopeComment(@RequestParam("voteId") int vId, @RequestParam("content") String content, @RequestParam("rNo") int rNo) {
 			Comment c = new Comment();
 			c.setrNo(rNo);
 			c.setVoteId(vId);
 			c.setrContent(content);
-			
 			int result = cService.updateVoteComment(c);
 			
 			if(result > 0) {
@@ -200,4 +199,33 @@ public class CommentController {
 			}
 			
 		}	
+		
+		// 댓글 좋아요
+		@RequestMapping("CommentLike.co")
+		@ResponseBody
+		public String CommentLike(@RequestParam("rNo") int rNo, @RequestParam("userId") String userId) {
+			Comment c = new Comment();
+			c.setrNo(rNo);
+			c.setrUserId(userId);
+			int result = cService.CommentLike(c);
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new CommentException("댓글 좋아요 에 실패하였습니다.");
+			}
+		}
+		// 댓글 좋아요 취소
+		@RequestMapping("CommentNotLike.co")
+		@ResponseBody
+		public String CommentNotLike(@RequestParam("rNo") int rNo, @RequestParam("userId") String userId) {
+			Comment c = new Comment();
+			c.setrNo(rNo);
+			c.setrUserId(userId);
+			int result = cService.CommentNotLike(c);
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new CommentException("좋아요 안하기 에 실패하였습니다.");
+			}
+		}
 }

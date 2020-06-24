@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -166,7 +167,6 @@ public class NoticeController {
 		Notice notice = noticeService.selectNotice(nNo); //글번호 전체 내용 가져오기
 		
 		if(notice != null) {
-			// 모델엔드뷰로 보드를 보낸다.
 			mv.addObject("notice", notice)
 			  .addObject("page", page)
 			  .setViewName("noticeDetailView");
@@ -334,7 +334,7 @@ public class NoticeController {
 	//공지사항 정렬 검색
 	@RequestMapping("nSortCondition.no")
 	private ModelAndView boardSearch(@RequestParam(value="page", required=false) Integer page,
-			@RequestParam String nSortCondition, @ModelAttribute Notice n, HttpServletRequest request, 
+			@RequestParam(value="nSortCondition", required=false) String nSortCondition, @ModelAttribute Notice n, HttpServletRequest request, 
 			ModelAndView mv, HttpSession session) {
 		
 		//세션에서 아파트이름 가져오기
@@ -394,11 +394,12 @@ public class NoticeController {
 	//댓글 등록
 	@RequestMapping("addNoticeComment.no")
 	@ResponseBody //success 리턴을 위해
-	public String addReply(@ModelAttribute Comment nc, HttpSession session) {
+	public Object addReply(@ModelAttribute Comment nc, HttpSession session) {
+		
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String ncUserId = loginUser.getUserId();
 		
-		nc.setrUserId(ncUserId);
+		nc.setrUserId(ncUserId); //코멘트 객체에 userId 넣기
 		
 		int result = noticeService.insertNoticeComment(nc);
 		

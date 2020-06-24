@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 	/* ----전체틀-------- */
-	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-top: 185px; margin-bottom: 50px; padding-bottom: 50px;}
+	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 50px; padding-bottom: 50px;}
 	#detailContent {width: 900px; height: 80px;}
 	.detailTable{margin: auto; text-align: center; border-collapse: collapse;}
 	.detailTable_title{margin-left: 75px; font-size: 18px; padding-bottom: 10px; color:rgb(81, 143, 187);}
@@ -17,6 +17,11 @@
  	.detailTable td{border-bottom: 1px solid lightgray; text-align: left;}
  	.detailTable_comment{margin: auto; border-bottom: 1px solid lightgray; height: 50px; background-color: lightgray; width: 800px;}
 	.list_bar{display:inline; float: right; margin-top: 15px; margin-right: 20px; background-color: white; border: none; cursor: pointer;}
+	.commnuity_header { position: absolute;
+						left: 46%;
+						top: 220px;
+						color: white;
+						font-size: 1.5em;}
 
 /*수정삭제  */
 	.pop{padding:5px 0px;}
@@ -273,7 +278,11 @@
 </style>
 </head>
 <body>
+<img class="img" src="resources/images/voteImage.png">
 <jsp:include page="../common/menubar.jsp"/>
+<div class="commnuity_header">
+<h2>투표 게시판</h2>
+</div>
 	<div class="outer" >
 		<form name="pollVoteForm" action="choiseVote.vo" method="post">
 		<!-- 투표 Id,check,page 담는 hidden -->
@@ -448,8 +457,6 @@
 		</form>
 	</div>
 	
-	
-	<!-- 댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글 -->
 	<!--  댓글   -->
 		<div id="content4">
 			<c:forEach var="b" items="${comment}" varStatus="status">
@@ -469,9 +476,7 @@
 							<div style="display:none">${b.rNo}</div>
 						</c:if>
 					</div>
-
-						<textarea class="rContent${ status.index }" readonly >${b.rContent}</textarea>
- 
+					<textarea class="rContent${ status.index }" readonly >${b.rContent}</textarea>
 					<div> 
 						<button class="btn" id="replyBtn">답글</button>
 						<div style="display:none">${b.rNo}</div>
@@ -481,12 +486,32 @@
 						<div class="likeBtn2" id="likeBtn2">
 							<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like2.png">
 						</div>
-						<div class="likeCount">0</div>
+						<div class="likeCount">
+						<c:set var="likeCount" value="0"/>
+						<c:if test="${likeList.size() > 0}">
+						<c:forEach var="i" begin="0" end="${likeList.size()-1}">
+						<c:if test="${likeList[i].rNo eq b.rNo}">
+						<c:set var="likeCount" value="${likeCount+1}"/>
+						</c:if>
+						</c:forEach>
+						</c:if>
+						${likeCount}
+						</div>
 					</div>
 				</div>
-				
-				
-				
+				<script>
+				var reply = $('#reply${ status.index }');
+				var likeBtn1 = reply.children().next().next().children().next().next();
+				var likeBtn2 = reply.children().next().next().children().next().next().next();
+					<c:if test="${likeList.size() > 0}">
+					<c:forEach var="i" begin="0" end="${likeList.size()-1}">
+					<c:if test="${loginUser.userId eq likeList[i].rUserId and b.rNo eq likeList[i].rNo}">
+						likeBtn1.css('display','none');
+						likeBtn2.css('display','inline-block');
+					</c:if>
+					</c:forEach>
+					</c:if>
+				</script>
 		<!--  댓글 수정  -->	
 				<div class="reply" id="replyUpdate${ status.index }">
 					<div id="info2">
@@ -518,7 +543,9 @@
 					  
 					  
 					$('#replyUpdate${ status.index }').hide();
-						});
+					
+					
+				});
 				
 				
 			   	$('#rUpdateBtn${ status.index }').click(function(){
@@ -545,7 +572,6 @@
 			   			});
 		   			}
 			   		});
-
 				</script>
 				
 				
@@ -564,12 +590,12 @@
 					<div class="info"  id="rWriter">${a.nickname}</div>
 					<div class="info"  id="rreplyDate">${a.rCreateDate}</div>
 					<c:if test="${loginUser.userId eq a.rUserId }">
-						<button type="button" class="btn" id="rrUpdateBtn">수정</button> 
+						<button type="button" class="btn" id="rrUpdateBtn">수정</button>
 						<button type="button" class="btn" id="rrDeleteBtn">삭제</button>
 						<div style="display:none">${a.rNo}</div>
 						<div style="display:none">${a.rrNo}</div>
 						<div style="display:none">${ status.index }</div>
-					</c:if> 
+					</c:if>
 				</div>
 
 				<textarea class="rContent${ status.index }" id="rrContent" readonly >${a.rContent}</textarea>
@@ -625,8 +651,6 @@
 				alert("보기를 선택하세요");
 				return false;
 			}
-// 			document.pollVoteForm.pollseq.value = "437405";
-// 			document.pollVoteForm.return_url.value = "http://cafe.daum.net/_c21_/poll/status?grpid=1XFJP&fldid=eHrC&dataid=89";
 			document.pollVoteForm.submit();
 		}
 
@@ -674,17 +698,9 @@
 			$(this).parent().parent().css('display','none');
 			$(this).parent().parent().next().css('display','inline-block');
 
-		}); 		   	
-  		
-   		$(document).on('click', '#rUpdateBtnC',function(){
-   			var a = $(this).next().next().text();
-   			var b = $(this).next().text();
-	
-			updateReply(a,b);		
+		});
 
-		}); 
-
-/* 댓글 추가 수정 후 삭제버튼 이벤트 */   		
+		/* 댓글 추가 수정 후 삭제버튼 이벤트 */   		
    		$(document).on('click', '#rDeleteBtnAjax',function(){
    			var rNo = $(this).next().text();
    			var i = $(this).next().next().text();
@@ -713,12 +729,14 @@
    	});
    		
    		
-/* 댓글 수정 */  		
+	/* 댓글 수정 */  		
 		function updateReply(a, b){
   	   			var voteId = ${ Vote.vId };
    				var rNo = b;
    				var content = $('.rrContent' + a).val();
-   				var userId = '${ loginUser.userId }'
+   				console.log(typeof voteId);
+   				console.log(typeof b);
+   				console.log(typeof content);
   	   			$.ajax({
   	   				url: 'updateVoteComment.co',
   	   				data: {voteId:voteId, content:content, rNo:b},
@@ -763,15 +781,15 @@
    					document.location.reload();
    				}
    			});
-   		})
+   		});
    		
    		/* 대댓글 수정창  */
    		$(document).on('click','#rrUpdateBtn', function(){
    			var rrNo = $(this).next().next().next().text();
    			var i = $(this).next().next().next().next().text();
    			var $textarea = '<textarea class="rContent'+ i +'" id="rrContent" style="border:1px solid black; min-height:100px;" >'+$(this).parent().next().text() + '</textarea>';
-   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 취소</button>')
-   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 완료</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnCancel" style="width:70px;">수정 취소</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnSubmit" style="width:70px;">수정 완료</button>')
 
    			
 
@@ -782,7 +800,25 @@
    			var content = $(this).parent().next().next().text();
    			$(this).next().next().next().remove();
    			$(this).remove();
-   		   	});
+   		});
+   		
+   		/* 대댓글 수정 */
+   		$(document).on('click','#rrUpdateBtnSubmit', function(){
+   			var content = $(this).parent().next().val();
+   			var rrNo = $(this).next().next().next().text();
+   			$.ajax({
+   				url:"updateComment3.co",
+   				data:{rrNo:rrNo, content:content},
+   				success:function(){
+   					document.location.reload();
+   				}
+   			});
+   		});
+   		
+   		/* 대댓글 수정 취소 */
+   		$(document).on('click','#rrUpdateBtnCancel', function(){
+   			document.location.reload();
+   		});
    		
  		/* 대댓글 삭제  */
    		$(document).on('click','#rrDeleteBtn', function(){
@@ -803,42 +839,40 @@
    		
    		
    		$('.likeBtn').click(function(){
-			$(this).parent().children('.likeBtn2').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text(); 
-			count *= 1;
-			count = count + 1;
-			$(this).parent().children('.likeCount').text(count);
+   			var rNo = $(this).prev().text();
+   			var userId = '${ loginUser.userId }';
+   			var thisBtn = $(this);
+   			$.ajax({
+   				url:"CommentLike.co",
+   				data:{rNo:rNo, userId:userId},
+   				success: function(){
+   					thisBtn.parent().children('.likeBtn2').css('display','inline-block');
+   					thisBtn.css('display','none');
+   					var count = thisBtn.parent().children('.likeCount').text(); 
+   					count *= 1;
+   					count = count + 1;
+   					thisBtn.parent().children('.likeCount').text(count);
+   				}
+   			});
 		}); 
    		
-   		$(document).on('click', '.likeBtn3',function(){
-			$(this).parent().children('.likeBtn4').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text(); 
-			count *= 1;
-			count = count + 1;
-			$(this).parent().children('.likeCount').text(count);
-		}); 
-		
-		
-
 		
 		$('.likeBtn2').click(function(){
-			$(this).parent().children('.likeBtn').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text();
-			count *= 1;
-			count = count - 1;
-			$(this).parent().children('.likeCount').text(count);
-		});
-		
-		$(document).on('click', '.likeBtn4', function(){
-			$(this).parent().children('.likeBtn3').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text();
-			count *= 1;
-			count = count - 1;
-			$(this).parent().children('.likeCount').text(count);
+			var rNo = $(this).prev().prev().text();
+   			var userId = '${ loginUser.userId }';
+   			var thisBtn = $(this);
+			$.ajax({
+				url:"CommentNotLike.co",
+   				data:{rNo:rNo, userId:userId},
+   				success: function(){
+   					thisBtn.parent().children('.likeBtn').css('display','inline-block');
+   					thisBtn.css('display','none');
+   					var count = thisBtn.parent().children('.likeCount').text();
+   					count *= 1;
+   					count = count - 1;
+   					thisBtn.parent().children('.likeCount').text(count);
+   				}
+   			});
 		});
 	</script>
 		

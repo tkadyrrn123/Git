@@ -155,7 +155,7 @@
 </style>
 </head>
 <body>
-	<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/voteImage.png">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<h2>투표 게시판</h2>
@@ -310,6 +310,7 @@
 		<input type="hidden" id="vId" name="vId">
 		<input type="hidden" id="check" name="check">
 		<input type="hidden" id="page" name="page">
+		<input type="hidden" id="userId" name="userId" value="${loginUser.userId }">
 	</form>
 	<script>
 		$(function(){
@@ -366,7 +367,6 @@
 			$('#page').val('${pi.currentPage}');
 			
 			document.detail.submit();
-			// location.href="voteDetail.vo?vId=" + vId + "&check=" + vCheck + "&page=" + "${pi.currentPage}";
 		});
 	</script>
 	<jsp:include page="../common/Footer.jsp"/>	

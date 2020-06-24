@@ -20,7 +20,10 @@ import com.kh.www.Vote.model.vo.VChoice;
 import com.kh.www.Vote.model.vo.VInvote;
 import com.kh.www.Vote.model.vo.VKeyword;
 import com.kh.www.Vote.model.vo.Vote;
+import com.kh.www.comment.model.service.CommentService;
 import com.kh.www.common.Pagenation;
+import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Controller
@@ -28,6 +31,9 @@ public class VoteController {
 	
 	@Autowired
 	private VoteService vService;
+	
+	@Autowired
+	private CommentService cService;
 	
 	// 투표목록 불러오기
 	@RequestMapping("voteList.vo")
@@ -100,8 +106,10 @@ public class VoteController {
 	}
 	
 	@RequestMapping("voteDetail.vo")
-	public ModelAndView votingDetail(@RequestParam ("vId") int vId, @RequestParam ("check") boolean check, @RequestParam ("page") Integer page, ModelAndView mv, HttpServletResponse response) {
-		
+	public ModelAndView votingDetail(@RequestParam ("vId") int vId, @RequestParam ("check") boolean check, @RequestParam("userId") String userId, @RequestParam ("page") Integer page, ModelAndView mv, HttpServletResponse response) {
+		ArrayList<Comment> comment = cService.selectVoteComment(vId);
+		ArrayList<Comment2> comment2 = cService.selectComment2();
+		ArrayList<Comment> likeList = cService.selectLike();
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -117,7 +125,7 @@ public class VoteController {
 			vInlist = vService.selectVInvoteList(vcIdList);
 		}
 		Member writer = vService.selectWriteUser(v.getUserId());
-		mv.addObject("Vote", v).addObject("vclist", vclist).addObject("vInlist", vInlist).addObject("writer", writer).addObject("currentPage", currentPage).addObject("check", check).setViewName("voteDetail");
+		mv.addObject("Vote", v).addObject("vclist", vclist).addObject("vInlist", vInlist).addObject("writer", writer).addObject("likeList", likeList).addObject("currentPage", currentPage).addObject("check", check).addObject("comment", comment).addObject("comment2", comment2).setViewName("voteDetail");
 		// 캐시 없애서 뒤로가기 방지
 		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -131,7 +139,6 @@ public class VoteController {
 		HttpSession session = req.getSession();
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String userId = loginUser.getUserId();
-		
 		ArrayList<VInvote> invoteList = new ArrayList<VInvote>();
 		
 		for(int i=0; i<vcId.length; i++) {
@@ -140,7 +147,7 @@ public class VoteController {
 		
 		int result = vService.insertVInvote(invoteList);
 		if(result > 0) {
-			return votingDetail(vId, check, page, mv, response);
+			return votingDetail(vId, check, userId, page, mv, response);
 		}else {
 			throw new VoteException("투표에 실패하였습니다.");
 		}
@@ -195,7 +202,7 @@ public class VoteController {
 		result = vService.updateVote(v,vclist,originVClist);
 		
 		if(result > 0) {
-			return votingDetail(vId, check, page, mv, response);
+			return votingDetail(vId, check, userId, page, mv, response);
 		} else {
 			throw new VoteException("투표 수정에 실패하였습니다.");
 		}

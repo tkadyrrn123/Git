@@ -448,4 +448,45 @@
 		<result column="club_notice" property="clubNotice"/>
 		<result column="bdelete" property="delete"/>
 	</resultMap>
+	
+	<select id="AptBoardListCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_BOARD
+		JOIN TB_USER USING(USER_ID)
+		WHERE APT_NAME = #{aptName}
+	</select>
+	
+	<select id="AptBoardList" resultMap="BoardResult">
+		SELECT bNo, title, createDate, userId, bcount, bdelete, free, market, club, club_notice
+		FROM(SELECT b.BOARD_NO bNo, b.BOARD_TITLE title, b.CREATE_DATE createDate, m.USER_ID userId, b.BOARD_COUNT bcount, b.BOARD_DELETE bdelete, f.board_no free, m.board_no market, c.board_no club, n.board_no club_notice FROM TB_BOARD b
+			 JOIN TB_USER m ON(b.USER_ID = m.USER_ID)
+			 LEFT JOIN tb_free f ON(b.board_no = f.board_no)
+			 LEFT JOIN tb_market m ON(b.board_no = m.board_no)
+			 LEFT JOIN tb_club c ON(b.board_no = c.board_no)
+			 LEFT JOIN tb_club_notice n ON(b.board_no = n.board_no)
+			 WHERE APT_NAME = #{aptName}
+			 ORDER BY ROWNUM DESC)
+	</select>
+	
+	<select id="AptBoardSearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_BOARD
+		JOIN TB_USER USING(USER_ID)
+		WHERE APT_NAME = #{aptName}
+		<if test="so.title != null">AND BOARD_TITLE LIKE '%' || #{so.title} || '%'</if>
+		<if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+	</select>
+	
+	<select id="AptBoardSearchList" resultMap="BoardResult">
+		SELECT bNo, title, createDate, userId, bcount, bdelete, free, market, club, club_notice
+		FROM(SELECT b.BOARD_NO bNo, b.BOARD_TITLE title, b.CREATE_DATE createDate, m.USER_ID userId, b.BOARD_COUNT bcount, b.BOARD_DELETE bdelete, f.board_no free, m.board_no market, c.board_no club, n.board_no club_notice FROM TB_BOARD b
+			 JOIN TB_USER m ON(b.USER_ID = m.USER_ID)
+			 LEFT JOIN tb_free f ON(b.board_no = f.board_no)
+			 LEFT JOIN tb_market m ON(b.board_no = m.board_no)
+			 LEFT JOIN tb_club c ON(b.board_no = c.board_no)
+			 LEFT JOIN tb_club_notice n ON(b.board_no = n.board_no)
+			 WHERE APT_NAME = #{aptName}
+			 <if test="so.title != null">AND BOARD_TITLE LIKE '%' || #{so.title} || '%'</if>
+			 <if test="so.userId != null">AND USER_ID LIKE '%' || #{so.userId} || '%'</if>
+			 ORDER BY ROWNUM DESC)
+	</select>
+	
 </mapper>

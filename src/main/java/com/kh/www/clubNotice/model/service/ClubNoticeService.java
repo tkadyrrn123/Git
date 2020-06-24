@@ -1,6 +1,7 @@
 package com.kh.www.clubNotice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.clubNotice.model.vo.ClubNotice;
@@ -43,6 +44,9 @@ public interface ClubNoticeService {
 
 	//동호회 공지사항 검색한 리스트 가져오기
 	ArrayList<ClubNotice> selectSearchResultList(ClubNotice cn, PageInfo pi);
+	
+	//동호회 공지사항 정렬 리스트 가져오기
+	ArrayList<ClubNotice> selectSortCondition(HashMap map);
 	
 	
 	//댓글리스트 가져오기

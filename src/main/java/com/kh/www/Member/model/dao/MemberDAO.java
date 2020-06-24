@@ -261,5 +261,38 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.fiveBoardList", aptName);
 	}
 
+	public int AptBoardListCount(SqlSessionTemplate sqlSession, String aptName) {
+		return sqlSession.selectOne("memberMapper.AptBoardListCount", aptName);
+	}
+
+	public ArrayList<BoardType> AptBoardList(SqlSessionTemplate sqlSession, PageInfo pi, String aptName) {
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.AptBoardList", aptName, rowBounds);
+	}
+
+	public int AptBoardSearchListCount(SqlSessionTemplate sqlSession, SearchOption so, String aptName) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("so", so);
+		hs.put("aptName", aptName);
+		
+		return sqlSession.selectOne("memberMapper.AptBoardSearchListCount", hs);
+	}
+
+	public ArrayList<BoardType> AptBoardSearchList(SqlSessionTemplate sqlSession, PageInfo pi, SearchOption so,
+												   String aptName) {
+		
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("so", so);
+		hs.put("aptName", aptName);
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.AptBoardSearchList", hs, rowBounds);
+	}
+
 	
 }

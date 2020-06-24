@@ -1,6 +1,7 @@
 package com.kh.www.clubNotice.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -83,6 +84,11 @@ public class CNoticeDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("ClubNoticeMapper.selectSearchResultList", cn, rowBounds);
+	}
+
+	//동호회 공지사항 정렬 리스트 가져오기
+	public ArrayList<ClubNotice> selectSortCondition(SqlSessionTemplate sqlSession, HashMap map) {
+		return (ArrayList)sqlSession.selectList("ClubNoticeMapper.selectSortCondition", map);
 	}
 
 	

@@ -47,6 +47,12 @@
 		where reply_no = #{rNo}
 	</update>
 	
+	<update id="deleteCommentRe">
+		update tb_comment_re
+		set COMMENTS_DELETE = 'Y'
+		where reply_no = #{rNo}
+	</update>
+	
 	<select id="selectComment2" resultMap="Comment2ResultSet">
 		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
 		from tb_comment_re
@@ -74,10 +80,24 @@
 	</update>
 	<update id="updateComment2">
 		update tb_comment_re
-		set reply_content = ${rContent}, COMMENT_DATE = default
+		set reply_content = #{rContent}, COMMENT_DATE = default
 		where re_reply_no = #{rrNo}
 	</update>
-
+	
+	<insert id="CommentLike">
+		insert into tb_comment_like
+		values(#{rNo}, #{rUserId})
+	</insert>
+	
+	<delete id="CommentNotLike">
+		delete from tb_comment_like
+		where reply_no = #{rNo} and user_id = #{rUserId}
+	</delete>
+	
+	<select id="selectLike" resultMap="LikeResultSet">
+		select *
+		from tb_comment_like
+	</select>
 	<resultMap type="Comment" id="CommentResultSet">
 		<id property="rNo" column="REPLY_NO"/>
 		<result property="boardNo" column="BOARD_NO"/>
@@ -102,5 +122,9 @@
 		<result property="rDecYN" column="COMMENTS_DELETE"/>
 		<result property="nickname" column="NICKNAME"/>
 		<result property="userFile" column="USER_FILE"/>
+	</resultMap>
+	<resultMap type="Comment" id="LikeResultSet">
+		<id property="rNo" column="REPLY_NO"/>
+		<id property="rUserId" column="USER_ID"/>
 	</resultMap>
 </mapper>

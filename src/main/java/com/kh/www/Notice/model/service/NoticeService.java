@@ -53,7 +53,8 @@ public interface NoticeService {
 	
 	//아파트 동 전체 리스트 가져오기
 	String selectcDonglist(String aptName);
-
+	
+	//공지사항 정렬 선택 리스트 가져오기
 	ArrayList<Notice> selectSortCondition(HashMap map);
 
 	

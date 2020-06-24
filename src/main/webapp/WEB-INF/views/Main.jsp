@@ -124,7 +124,6 @@
 				$.ajax({
 					url:'getRealClub.main',
 					success:function(data){
-						
 						$('.comu_more').attr("href","clubList.cb");
 						
 						$clubUlBody = $('#comunity_list');
@@ -137,7 +136,7 @@
 							for(var i=0; i<data.length; i++){
 								$li = $('<li>');
 								$no = $('<b class="li" style="width: 10%;">').text(data[i].boardNo);
-								$cName = $('<b class="li" style="width: 55%; cursor: pointer;" onclick="clubDetail('+data[i].clubName+');">').text(data[i].clubName);
+								$cName = $('<b class="li" style="width: 55%; cursor: pointer;" onclick="clubDetail(' + "'" + data[i].clubName + "'," + data[i].boardNo + ');">').text(data[i].clubName);
 								$cPrice = $('<b class="li" style="width: 25%;">').text(data[i].clubPlace+"원");
 								if(data[i].endYn == 'N'){
 									$cEnd = $('<b class="li" style="width: 10%;">').text("모집중");
@@ -161,8 +160,8 @@
 			function freeDetail(data){
 				location.href="bdetail.fr?boardNo="+data+"&page=1";
 			}
-			function clubDetail(){
-				location.href="clubDetail.cb?clubName="+data+"$page=1";
+			function clubDetail(name,no){
+				location.href="clubDetail.cb?clubName="+name+"&boardNo="+no+"&userId="+'${loginUser.userId}'+"&page=1";
 			}
 		</script>
 		<div class="mboard comu_board">

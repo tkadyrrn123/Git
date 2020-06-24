@@ -154,11 +154,11 @@
 	<div class="select-box" id="selectBox">
 		  <div class="select-box__current" tabindex="1">
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="latest" value="latest" name="Ben" checked="checked"/>
+		      <input class="select-box__input" type="radio" id="latest" value="latest" name="cnSortCondition" checked="checked"/>
 		      <p class="select-box__input-text">최신순</p>
 		    </div>
 		    <div class="select-box__value">
-		      <input class="select-box__input" type="radio" id="hits" value="hist" name="Ben"/>
+		      <input class="select-box__input" type="radio" id="hits" value="hits" name="cnSortCondition"/>
 		      <p class="select-box__input-text">조회순</p>
 		    </div>
 		    <img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
@@ -172,6 +172,22 @@
 		    </li>
 		  </ul>
 	</div>
+	 <script>
+		 $(function(){
+	         var cnSortCondition = '${ cnSortCondition }';
+	         if(cnSortCondition == ""){
+	            $('#latest').prop('checked', 'checked');
+	         } else if(cnSortCondition == "hits") {
+	            $('#hits').prop('checked', 'checked');
+	         }
+	      })
+	      $('.select-box__input').click(function(){
+	         var cnSortCondition = $(this).val();
+	         console.log(cnSortCondition);
+	         location.href="cnSortCondition.cn?cnSortCondition="+cnSortCondition;
+	      });
+	      
+	   </script>	
 <!--정렬 끝---------------------------------------------------------------------------------------------------->		
 	
 	<div class="board_wrab">
