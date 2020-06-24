@@ -40,7 +40,7 @@
                   <tr id="tr5">
                      <td class="td1">물품사진</td>
                      <td>
-                  <input name="uploadFile" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
+                  <input name="uploadFile1" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
                   <input name="uploadFile2" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
                   <input name="uploadFile3" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
                      </td>

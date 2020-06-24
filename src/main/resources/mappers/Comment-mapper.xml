@@ -3,8 +3,14 @@
 <mapper namespace="CommentMapper">
 
 	<insert id="insertComment">
+		<if test="boardNo != 0">
 		insert into tb_comment
 		values(SEQ_REPLY.NEXTVAL, #{boardNo},default,default, #{rUserId}, #{rContent}, sysdate, 'N', default )
+		</if>
+		<if test="voteId != 0">
+		insert into tb_comment
+		values(SEQ_REPLY.NEXTVAL, default,default,#{voteId}, #{rUserId}, #{rContent}, sysdate, 'N', default )
+		</if>
 	</insert>
 	
 	<select id="selectComment" resultMap="CommentResultSet">
@@ -15,7 +21,21 @@
 		order by REPLY_NO DESC
 	</select>
 	
+	<select id="selectVoteComment" resultMap="CommentResultSet">
+		select REPLY_NO, VOTE_ID, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
+		from tb_comment
+			join tb_user using(user_ID)
+		where comments_delete = 'N' and VOTE_ID = #{vId}
+		order by REPLY_NO DESC
+	</select>
+	
 	<update id="updateComment">
+		update tb_comment
+		set comment_date = sysdate, reply_content = #{rContent}
+		where reply_no = #{rNo}
+	</update>
+	
+	<update id="updateVoteComment">
 		update tb_comment
 		set comment_date = sysdate, reply_content = #{rContent}
 		where reply_no = #{rNo}
@@ -27,13 +47,20 @@
 		where reply_no = #{rNo}
 	</update>
 	
-<!-- 	<select id="selectComment2" resultMap="Comment2ResultSet"> -->
-<!-- 		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME -->
-<!-- 		from tb_comment_re -->
-<!-- 			join tb_user using(user_ID) -->
-<!-- 		where comments_delete = 'N' and reply_no = #{rNo} -->
-<!-- 		order by RE_REPLY_NO DESC -->
-<!-- 	</select> -->
+	<select id="selectComment2" resultMap="Comment2ResultSet">
+		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
+		from tb_comment_re
+			join tb_user using(user_ID)
+		where comments_delete = 'N'
+		order by RE_REPLY_NO DESC
+	</select>
+	<select id="selectComment23" resultMap="Comment2ResultSet">
+		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
+		from tb_comment_re
+			join tb_user using(user_ID)
+		where comments_delete = 'N' and reply_no = #{rNo}
+		order by RE_REPLY_NO DESC
+	</select>
 	
 	<insert id="insertComment2">
 		insert into tb_comment_re
@@ -54,6 +81,8 @@
 	<resultMap type="Comment" id="CommentResultSet">
 		<id property="rNo" column="REPLY_NO"/>
 		<result property="boardNo" column="BOARD_NO"/>
+		<result property="noticeNo" column="NOTICE_NO"/>
+		<result property="voteId" column="VOTE_ID"/>
 		<result property="rUserId" column="USER_ID"/>
 		<result property="rContent" column="REPLY_CONTENT"/>
 		<result property="rCreateDate" column="COMMENT_DATE"/>
@@ -62,5 +91,16 @@
 		<result property="userFile" column="USER_FILE"/>
 		<result property="nickname" column="NICKNAME"/>
 		<result property="rState" column="COMMENTS_DELETE"/>
+	</resultMap>
+	<resultMap type="Comment2" id="Comment2ResultSet">
+		<id property="rrNo" column="RE_REPLY_NO"/>
+		<result property="rNo" column="REPLY_NO"/>
+		<result property="rUserId" column="USER_ID"/>
+		<result property="rContent" column="REPLY_CONTENT"/>
+		<result property="rCreateDate" column="COMMENT_DATE"/>
+		<result property="rDecYN" column="DECYN"/>
+		<result property="rDecYN" column="COMMENTS_DELETE"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="userFile" column="USER_FILE"/>
 	</resultMap>
 </mapper>

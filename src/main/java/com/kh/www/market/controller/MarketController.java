@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,7 +41,7 @@ public class MarketController {
 	private MarketService marketService;
 	
 	@RequestMapping("market.ma")
-	public ModelAndView marketList(@RequestParam(value="page", required=false) Integer page,ModelAndView mv) throws MarketException {
+	public ModelAndView marketList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) throws MarketException {
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -69,6 +70,7 @@ public class MarketController {
 		return "writingMarket";
 	}
 	
+	
 	@RequestMapping("writing.ma")
 	public String writing(@ModelAttribute Market m, HttpServletRequest request,HttpSession session, MultipartHttpServletRequest multi) throws MarketException {
 
@@ -81,19 +83,28 @@ public class MarketController {
 		
 		int result = marketService.insertBoard(m);
 		
+		String renameFileName="";
+		String filenames = "";
 		Iterator<String> files = multi.getFileNames();
 		while(files.hasNext()) {
+			
 			String upFile = files.next();
-			
+			System.out.println(upFile);
 			MultipartFile mFile = multi.getFile(upFile);
-			String renameFileName = saveFile(mFile, request);
-			
-			if(renameFileName != null) {
-				int fileResult = marketService.insertFiles(renameFileName);
+			renameFileName = saveFile(mFile, request);
+			if(renameFileName!=null) {
+				filenames += renameFileName+",";
 			}
 		}
+		filenames = filenames.substring(0, filenames.length()-1);
+		String[] fileArr = filenames.split(",");
 		
-		if(result > 0) {
+		System.out.println(filenames);
+		System.out.println(Arrays.toString(fileArr));
+		
+		int fileResult = marketService.insertFiles(filenames);
+		
+		if(result > 0 && fileResult > 0) {
 			return "redirect:market.ma";
 		} else {
 			throw new MarketException("게시글 등록에 실패하였습니다.");
@@ -104,28 +115,34 @@ public class MarketController {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "/marketUploadFiles";
 		
+//		System.out.println(file.getOriginalFilename());
+		
 		File folder = new File(savePath);
 		
 		if(!folder.exists()) {
 			folder.mkdirs();
 		}
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String originFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + ".";
-		
-		originFileName.substring(originFileName.lastIndexOf(".") + 1);
-		
-		String renamePath = folder + "/" + renameFileName;
-		
-		try {
-			file.transferTo(new File(renamePath));
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(!file.getOriginalFilename().equals("")) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			String originFileName = file.getOriginalFilename();
+			String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+			
+			originFileName.substring(originFileName.lastIndexOf(".") + 1);
+			
+			String renamePath = folder + "/" + renameFileName;
+			
+			try {
+				file.transferTo(new File(renamePath));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return renameFileName;
+		} else {
+			return null;
 		}
-		return renameFileName;
 	}
 	
 	

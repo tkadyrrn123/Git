@@ -218,6 +218,68 @@
 		})
 		
 		
+	/* 댓글 수정 */  		
+		 	function modifyR(rNo, e){
+	 	//	alert(rNo);
+		$('.rContent'+rNo).prop('readonly', false);
+		$('.rContent'+rNo).css('border-color', 'pink');
+		
+		var save1 ="";
+	
+		if($('#mBtn'+rNo).val() == '수정'){
+			save1 = $(e).parent().find('textarea').text();
+			console.log("값"+save1);
+			
+			
+	//	 	$('#mBtn'+rNo).val('완료');
+		 	$('#mBtn'+rNo).val('수정취소');
+		 	
+		 	$div = $(".reply2_box");
+			$ok = $('<input type="button" class="mdBtn" onclick="modifyRup('+rNo+')" value="수정완료">');
+		 	$(e).parent($div).append($ok);
+		 	
+		 	var counter = '<div style="color:#aaa; float: right;" id="counter'+rNo+'">(0/200자)</div>';
+		 	$(e).next().after(counter);
+		 	var content = $(e).prev().find('textarea').text();
+		 	console.log(content.length);
+		 	$('#counter'+rNo).html(content.length+"/200");
+		 	
+			$('#dBtn'+rNo).hide();
+		}else if($('#mBtn'+rNo).val() == '수정취소'){
+			$('.rContent'+rNo).prop('readonly', true);
+			$(e).prev().find('textarea').val(save1);
+			console.log("값"+save1);
+			console.log($(e).prev().find('textarea'));
+			getReplyList();
+		}
+	}
+	
+		function modifyRup(rNo){
+		 	var rContent = $('.rContent'+rNo).val();
+		 	
+		 	$.ajax({
+		 		url: 'updateComment.co',
+		 		data: {rContent:rContent, rNo:rNo},
+		 		success: function(data){
+		 			if(data == 'success'){
+		 				getReplyList();
+		 			}
+		 		}
+		 	});	 		
+		}
+		
+		//댓글 수정시 글자 카운팅
+		 function plus(rNo){
+		    var content = $('.rContent'+rNo).val();
+		    console.log(content);
+		    $('#counter'+rNo+'').html(content.length+"/200");//글자수 실시간 카운팅
+
+		    if (content.length > 200){
+		        alert("최대 200자까지 입력 가능합니다.");
+		        $(this).val(content.substring(0, 200));
+		        $('#counter'+rNo+'').html("200/200");
+		    }
+		} 
 		
 	</script> 
 

@@ -23,5 +23,11 @@ public interface CommentService {
 
 	int updateComment2(Comment2 c);
 
+	ArrayList<Comment2> selectComment2();
+
+	ArrayList<Comment> selectVoteComment(int vId);
+
+	int updateVoteComment(Comment c);
+
 
 }
