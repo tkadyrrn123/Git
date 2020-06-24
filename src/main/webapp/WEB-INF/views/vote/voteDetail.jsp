@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 	/* ----전체틀-------- */
-	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-top: 185px; margin-bottom: 50px; padding-bottom: 50px;}
+	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 50px; padding-bottom: 50px;}
 	#detailContent {width: 900px; height: 80px;}
 	.detailTable{margin: auto; text-align: center; border-collapse: collapse;}
 	.detailTable_title{margin-left: 75px; font-size: 18px; padding-bottom: 10px; color:rgb(81, 143, 187);}
@@ -17,6 +17,11 @@
  	.detailTable td{border-bottom: 1px solid lightgray; text-align: left;}
  	.detailTable_comment{margin: auto; border-bottom: 1px solid lightgray; height: 50px; background-color: lightgray; width: 800px;}
 	.list_bar{display:inline; float: right; margin-top: 15px; margin-right: 20px; background-color: white; border: none; cursor: pointer;}
+	.commnuity_header { position: absolute;
+						left: 46%;
+						top: 220px;
+						color: white;
+						font-size: 1.5em;}
 
 /*수정삭제  */
 	.pop{padding:5px 0px;}
@@ -273,7 +278,11 @@
 </style>
 </head>
 <body>
+<img class="img" src="resources/images/voteImage.png">
 <jsp:include page="../common/menubar.jsp"/>
+<div class="commnuity_header">
+<h2>투표 게시판</h2>
+</div>
 	<div class="outer" >
 		<form name="pollVoteForm" action="choiseVote.vo" method="post">
 		<!-- 투표 Id,check,page 담는 hidden -->
@@ -674,15 +683,7 @@
 			$(this).parent().parent().css('display','none');
 			$(this).parent().parent().next().css('display','inline-block');
 
-		}); 		   	
-  		
-   		$(document).on('click', '#rUpdateBtnC',function(){
-   			var a = $(this).next().next().text();
-   			var b = $(this).next().text();
-	
-			updateReply(a,b);		
-
-		}); 
+		});
 
 /* 댓글 추가 수정 후 삭제버튼 이벤트 */   		
    		$(document).on('click', '#rDeleteBtnAjax',function(){
@@ -713,12 +714,14 @@
    	});
    		
    		
-/* 댓글 수정 */  		
+	/* 댓글 수정 */  		
 		function updateReply(a, b){
   	   			var voteId = ${ Vote.vId };
    				var rNo = b;
    				var content = $('.rrContent' + a).val();
-   				var userId = '${ loginUser.userId }'
+   				console.log(typeof voteId);
+   				console.log(typeof b);
+   				console.log(typeof content);
   	   			$.ajax({
   	   				url: 'updateVoteComment.co',
   	   				data: {voteId:voteId, content:content, rNo:b},
@@ -770,8 +773,8 @@
    			var rrNo = $(this).next().next().next().text();
    			var i = $(this).next().next().next().next().text();
    			var $textarea = '<textarea class="rContent'+ i +'" id="rrContent" style="border:1px solid black; min-height:100px;" >'+$(this).parent().next().text() + '</textarea>';
-   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 취소</button>')
-   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnC" style="width:70px;">수정 완료</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnCancel" style="width:70px;">수정 취소</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnSubmit" style="width:70px;">수정 완료</button>')
 
    			
 
@@ -782,7 +785,25 @@
    			var content = $(this).parent().next().next().text();
    			$(this).next().next().next().remove();
    			$(this).remove();
-   		   	});
+   		});
+   		
+   		/* 대댓글 수정 */
+   		$(document).on('click','#rrUpdateBtnSubmit', function(){
+   			var content = $(this).parent().next().val();
+   			var rrNo = $(this).next().next().next().text();
+   			$.ajax({
+   				url:"updateComment3.co",
+   				data:{rrNo:rrNo, content:content},
+   				success:function(){
+   					document.location.reload();
+   				}
+   			});
+   		});
+   		
+   		/* 대댓글 수정 취소 */
+   		$(document).on('click','#rrUpdateBtnCancel', function(){
+   			document.location.reload();
+   		});
    		
  		/* 대댓글 삭제  */
    		$(document).on('click','#rrDeleteBtn', function(){
