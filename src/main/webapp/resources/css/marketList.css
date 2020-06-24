@@ -20,12 +20,14 @@
 				}
 	.sellDiv{width: 100%; height: 300px;}
 	.sellPic{width: 100%; height: 210px;}
-	.sellName{width: 100%; height: 10%; font-size: 20px; font-weight:bold;margin-top:10px;text-align:center;}
+	.sellName{width: 300px; height: 10%; font-size: 20px; font-weight:bold;margin-top:10px;text-align:center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 	.sellName>a{color: black !important;}
 	.sellName>a:visited{color: gray !important;}
-	.sellId{width: 100px; height: 10%; display:inline-block; margin-right:100px;}
-	.views{width:40px; display:inline-block;}
-	.sellPrice{width: 80px; height: 10%; display:inline-block;text-align:right; text-align: right;}
+	.sellId{width: 70px; height: 10%; display:inline-block; margin-right:100px;
+			color: #474561; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+	.sellId>a{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+	.views{width:53px; display:inline-block; color: #474561; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+	.sellPrice{width: 94px; height: 10%; display:inline-block;text-align:right; text-align: right; color: #474561; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 	.btn_standard {
 			    border: 1px solid #dad4d4;
 			    border-radius: 6px;

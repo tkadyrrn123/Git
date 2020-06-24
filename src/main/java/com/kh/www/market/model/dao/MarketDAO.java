@@ -83,6 +83,10 @@ public class MarketDAO {
 		return (ArrayList)sqlSession.selectList("marketMapper.selectRList", boardNo);
 	}
 
+	public int insertFiles(SqlSessionTemplate sqlSession, String renameFileName) {
+		return sqlSession.insert("marketMapper.insertFiles", renameFileName);
+	}
+
 
 
 	

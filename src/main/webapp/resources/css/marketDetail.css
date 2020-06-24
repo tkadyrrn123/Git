@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+	#all{margin-top: 20px; margin-bottom: 40px;}
+	#menu{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;}
+	#line1{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px;}
+	#line2{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px;}
+	.sellAll{width: 80%; margin: 40px 0px 0px 200px;}
+
+  	#content2{overflow:scroll; white-space:pre-wrap; border: 1px solid #ccccce; border-radius:5px;
+  			  height: 450px; padding: 15px;} 
+	#content3{width: 65%; margin-left:100px;}
+	#content4{width: 65%; margin-left:100px;} 
+	#content5{width: 61.8%; margin-left:150px;} 
+
+	#title{font-size:30px; width: 50%; font-weight:bold; margin-top: 20px; display: inline-block; margin-left: 130px;} 
+	#hit{display: inline-block; width: 7%; float:right; margin-top: 30px; margin-right: 160px;} 
+	#date{display: inline-block; width: 8%; float:right; margin:30px 20px 0 0}
+	
+	#sellPic{width: 26%; 
+			 height: 400px; 
+			 margin-left : 200px; 
+			 margin-top: 20px; 
+			 margin-bottom: 20px; 
+			 display: inline-block;}
+ 	#img{margin-left : 130px; width: 100%} 
+	#itemName{display: inline-block; font-size: 30px; color: #474561; font-weight:bold;margin-left: 220px; margin-top:20px;}
+
+	.content_wrap{display:inline-block;
+				  vertical-align:top;
+				  width: 40%;
+				  margin-top:20px;
+				  margin-left:200px;
+				  font-size:1.5em;}
+	.content_wrap>div{margin-bottom:20px;}
+	
+	#name{display: inline-block; margin-top: 30px; float:right; margin-right: 50px;}  
+ 	#sellContent{width: 80%; min-height: 200px; border:none; font-size: 16px;}
+ 	textarea{ resize:none;}
+ 	textarea:focus {outline: none;}
+ 	#btn{float:right; margin: 20px 220px 0px 0px;}
+ 	.btn{margin-left:10px;
+		border: 1px solid #ccccce;
+	    border-radius: 6px;
+	    background-color: #fff;
+	    font-weight: 500;
+	    color: #666;
+	    cursor: pointer;
+	    font-size: 12px;
+	    padding: 7px;
+	    width: 65px;} 
+	.btn:hover{background:skyblue;}
+ 	#replyInput{width:80% ; 
+ 				height: 184px;
+ 				margin: 100px 0px 0px 200px; 
+ 				border:2px dashed #dad4d4; 
+ 				} 
+ 	#rWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px;}  
+ 	 
+ 	#rProfile{width: 40px; hieght:40px; display:inline-block;}
+ 	#rWriter{display:inline-block;}
+ 	.rCreateDate{display:inline-block; margin-left: 20px;}
+ 	#rImg{ border-radius: 10%;  width: 100%; height:100%; }  
+ 	#info{display: inline-block;  height:50px; margin-left: 30px; width:80%;}
+ 	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
+ 	.info{display: inline-block;} 
+ 	#insertBtn{width: 70px;  margin-top: 20px;} 
+ 	
+ 	.rOuter{width: 65%; margin-left:100px;}
+ 	#reply{width:80% ; 
+ 			height: 130px;
+ 			margin: 20px 0px 0px 200px; 
+ 			border: 1px solid #dad4d4; 
+ 			padding: 15px;
+			}  
+ 	#rreply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; }  
+ 	#rContent{width: 75%; margin: 20px 0px 0px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
+ 	#rUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 500px;}  
+ 	#rDeleteBtn{width: 70px;  vertical-align: middle; margin-top: 20px;}  
+ 	#rUpdateBtn2{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 457px;}  
+ 	#replyDate{width: 12%; font-size: 12px; color: gray; /**margin-left: 70px; margin-top: -20px ;**/}
+ 	#replyBtn{margin: 10px 0 10px 60px;}
+ 	.likeBtn{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
+ 	.likeBtn2{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display:none;} 
+ 	
+ 	#likeBtn3{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
+ 	#likeBtn4{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display:none;}  
+ 	#likeImg{width: 100%; height:100%; }  
+ 	#likeImg2{width:100%; height:100%;}  
+ 	.likeCount{display: inline-block;    vertical-align: sub; margin-left: 10px;}  
+ 	
+	.img{width:100%; height:400px;}
+	.header_wrap{background-color:rgba(0, 0, 0, 0.5); width:100%; height: 400px;position:absolute;top:0;}
+	#headcomment{
+	position: absolute;
+	left: 45%;
+	top: 220px;
+	color: white;
+	font-size: 1.5em;}

@@ -27,13 +27,13 @@
 		where reply_no = #{rNo}
 	</update>
 	
-	<select id="selectComment2" resultMap="Comment2ResultSet">
-		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
-		from tb_comment_re
-			join tb_user using(user_ID)
-		where comments_delete = 'N' and reply_no = #{rNo}
-		order by RE_REPLY_NO DESC
-	</select>
+<!-- 	<select id="selectComment2" resultMap="Comment2ResultSet"> -->
+<!-- 		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME -->
+<!-- 		from tb_comment_re -->
+<!-- 			join tb_user using(user_ID) -->
+<!-- 		where comments_delete = 'N' and reply_no = #{rNo} -->
+<!-- 		order by RE_REPLY_NO DESC -->
+<!-- 	</select> -->
 	
 	<insert id="insertComment2">
 		insert into tb_comment_re

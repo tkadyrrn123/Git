@@ -29,7 +29,7 @@
 		<!-- 게시글 리스트 -->
 		<div class=sellAll>
 			<c:forEach var="m" items="${list}">
-				<div class=sell>
+				<div class=sell OnClick="location.href='marketDetail.ma?boardNo=${m.boardNo}&page=${pi.currentPage}'">
 					<div class=sellDiv>
 						<div class="hidden" style="display:none">${m.boardNo}</div>
 						<c:if test="${empty m.fileName}">
@@ -47,8 +47,8 @@
 						</div>
 						<div class="insideWrap">
 							<span class=sellId><i class="fas fa-user-circle"></i> ${m.nickName}</span>
-							<span class="views"><i class="fas fa-eye"></i> ${m.boardCount}</span>
 							<span class=sellPrice><i class="fas fa-won-sign"></i> ${m.price}</span>
+							<span class="views"><i class="fas fa-eye"></i> ${m.boardCount}</span>
 						</div>
 					</div>
 				</div>
@@ -78,7 +78,7 @@
 		<!-- 페이지 -->
 				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 					<c:if test="${ p eq pi.currentPage }">
-						<button class="btn_standard">${ p }</button>
+						<button class="btn_standard" style="color:#474561; font-weight:bold;">${ p }</button>
 					</c:if>
 					
 					<c:if test="${ p ne pi.currentPage }">
@@ -140,13 +140,7 @@
 	<jsp:include page="../common/Footer.jsp"/>	
 	
 	<script>
-		$('.sell').on('click', function(){
-			location.href="${madetail}";
-		});
-		
-		
 	</script>
-
 	
 	
 </body>

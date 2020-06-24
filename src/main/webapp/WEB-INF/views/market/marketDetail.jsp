@@ -7,102 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>HOUSTORY</title>
-<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
-<style>
-   #all{margin-top: 20px; margin-bottom: 40px;}
-	#menu{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;}
-	#line1{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px;}
-	#line2{width: 80%; background: lightgray; height:2px; margin: auto;}
-	.sellAll{width: 80%; margin: 40px 0px 0px 200px;}
-
-  	#content2{overflow:scroll; white-space:pre-wrap;} 
-	#content3{width: 65%; margin-left:100px;}
-	#content4{width: 65%; margin-left:100px;} 
-	#content5{width: 61.8%; margin-left:150px;} 
-
-	#title{font-size:30px; width: 50%; font-weight:bold; margin-top: 20px; display: inline-block; margin-left: 130px;} 
-	#hit{display: inline-block; width: 7%; float:right; margin-top: 30px; margin-right: 140px;} 
-	#date{display: inline-block; width: 8%; float:right; margin-top: 30px; margin-right: 50px;}
-	
-	#sellPic{width: 35%; height: 400px; margin-left : 100px; margin-top: 20px; margin-bottom: 20px; display: inline-block;}
- 	#img{margin-left : 130px; width: 100%} 
-	#itemName{display: inline-block; font-size: 30px; font-weight:bold;margin-left: 220px;}
-/* 	#price{display: inline-block;} */
-
-	.content_wrap{display:inline-block;
-				  vertical-align:top;background-color:tomato;
-				  width: 40%;
-				  margin-top:20px;
-				  margin-left:170px;}
-	
-	#name{display: inline-block; margin-top: 30px; float:right; margin-right: 50px;}  
- 	#sellContent{width: 80%; min-height: 200px; border:none; font-size: 16px;}
- 	textarea{ resize:none;}
- 	textarea:focus {outline: none;}
- 	#btn{float:right; margin: 20px 200px 0px 0px;}
- 	.btn{margin-left:10px;
-		border: 1px solid #ccccce;
-	    border-radius: 6px;
-	    background-color: #fff;
-	    font-weight: 500;
-	    color: #666;
-	    cursor: pointer;
-	    font-size: 12px;
-	    padding: 7px;
-	    width: 65px;} 
-	.btn:hover{background:skyblue;}
- 	#replyInput{width:80% ; 
- 				height: 184px;
- 				margin: 100px 0px 0px 200px; 
- 				border:2px dashed #dad4d4; 
- 				padding: 15px;
- 				} 
- 	#rWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px;}  
- 	 
- 	#rProfile{width: 40px; hieght:40px; display:inline-block;}
- 	#rWriter{display:inline-block;}
- 	.rCreateDate{display:inline-block; margin-left: 20px;}
- 	#rImg{ border-radius: 10%;  width: 100%; height:100%; }  
- 	#info{display: inline-block;  height:50px; margin-left: 30px; width:80%;}
- 	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
- 	.info{display: inline-block;} 
- 	#insertBtn{width: 70px;  margin-top: 20px;} 
- 	
- 	.rOuter{width: 65%; margin-left:100px;}
- 	#reply{width:80% ; 
- 			height: 130px;
- 			margin: 20px 0px 0px 200px; 
- 			border: 1px solid #dad4d4; 
- 			padding: 15px;
-			}  
- 	#rreply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; }  
- 	#rContent{width: 75%; margin: 20px 0px 0px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
- 	#rUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 500px;}  
- 	#rDeleteBtn{width: 70px;  vertical-align: middle; margin-top: 20px;}  
- 	#rUpdateBtn2{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 457px;}  
- 	#replyDate{width: 12%; font-size: 12px; color: gray; /**margin-left: 70px; margin-top: -20px ;**/}
- 	#replyBtn{margin: 10px 0 10px 60px;}
- 	.likeBtn{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
- 	.likeBtn2{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display:none;} 
- 	
- 	#likeBtn3{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
- 	#likeBtn4{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display:none;}  
- 	#likeImg{width: 100%; height:100%; }  
- 	#likeImg2{width:100%; height:100%;}  
- 	.likeCount{display: inline-block;    vertical-align: sub; margin-left: 10px;}  
- 	
-	.img{width:100%; height:400px;}
-	.header_wrap{background-color:rgba(0, 0, 0, 0.5); width:100%; height: 400px;position:absolute;top:0;}
-	#headcomment{
-	position: absolute;
-	left: 45%;
-	top: 220px;
-	color: white;
-	font-size: 1.5em;}
-</style> 
- 
-  
-
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/css/marketDetail.css"> 
 
 </head>
 <body>
@@ -118,17 +24,17 @@
 			<div id="itemName">${ma.boardTitle}</div>
 			<div id="hit">조회수 : ${ ma.boardCount }</div>
 			<div id="date">등록일 : ${ ma.createDate } </div>
-			<div id="name">판매자 : ${ma.nickName}</div>
+			<div id="name">작성자 : ${ma.nickName}</div>
  			<div id="line1"></div> 
-			<c:if test="${empty ma.fileName}">
-				<div id=sellPic><img id=img src="resources/images/basicMarket.jpeg"/></div>
-			</c:if>
-			<c:if test="${!empty ma.fileName}">
-				<div id=sellPic><img id=img src="resources/marketUploadFiles/${ ma.fileName }"/></div>
-			</c:if>
+<%--  				<c:forEach  --%>
+				<c:if test="${empty ma.fileName}">
+					<div id=sellPic><img id=img src="resources/images/basicMarket.jpeg"/></div>
+				</c:if>
+				<c:if test="${!empty ma.fileName}">
+					<div id=sellPic><img id=img class="bxslider" src="resources/marketUploadFiles/${ ma.fileName }"/></div>
+				</c:if>
 			<div class="content_wrap">
-				<div id="status">판매중 : </div>
-				<div id="price">판매가 : ${ma.price}</div>			
+				<div id="price">가격 : ${ma.price}</div>			
 				<div id="content2">${ ma.boardContent }</div>
 			</div>
 		
@@ -182,8 +88,8 @@
 					<button class="btn" id="rUpdateBtn2">수정</button> 
 					<button class="btn" id="rDeleteBtn">삭제</button> 
 				</div>
-				<div width="100%">
-					<p id="rContent" readonly>010-1234-5678 쪽으로 연락 주세요</p>
+				<div>
+					<p id="rContent">010-1234-5678 쪽으로 연락 주세요</p>
 				</div> 
 				<div>
 					<button class="btn" id="replyBtn">답글</button>
@@ -238,7 +144,7 @@
 		    }
 		});
 		
-		/* 댓글 */
+		/* 댓글 목록 조회*/
    		$(function(){
 		getReplyList();
 		/* 
@@ -296,6 +202,21 @@
 			}
 		});
 	}
+	
+	/* 댓글 추가 ajax */
+		$('#insertBtn').on('click', function(){
+			var userId = '${ loginUser.userId }';
+			var boardNo = ${ ma.boardNo };
+			var content = $('#rWrite').val();  			
+			$.ajax({
+				url: 'insertComment.co',
+				data: {userId:userId, boardNo:boardNo, content:content},
+				success: function(data){
+					document.location.reload(true);
+				}
+			});
+		})
+		
 		
 		
 	</script> 

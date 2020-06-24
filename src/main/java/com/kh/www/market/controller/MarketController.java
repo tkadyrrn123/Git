@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -69,17 +70,8 @@ public class MarketController {
 	}
 	
 	@RequestMapping("writing.ma")
-	public String writing(@ModelAttribute Market m, @RequestParam(value="uploadFile",required=false) MultipartFile uploadFile, HttpServletRequest request,HttpSession session) throws MarketException {
-		
-		System.out.println("mmmm : " + m);
-		
-		if(uploadFile != null && !uploadFile.isEmpty()) {
-			String renameFileName = saveFile(uploadFile, request);
-			
-			if(renameFileName != null) {
-				m.setFileName(renameFileName);
-			}
-		}
+	public String writing(@ModelAttribute Market m, HttpServletRequest request,HttpSession session, MultipartHttpServletRequest multi) throws MarketException {
+
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String id = loginUser.getUserId();
 		m.setUserId(id);
@@ -88,6 +80,18 @@ public class MarketController {
 		System.out.println(m.getUserId());
 		
 		int result = marketService.insertBoard(m);
+		
+		Iterator<String> files = multi.getFileNames();
+		while(files.hasNext()) {
+			String upFile = files.next();
+			
+			MultipartFile mFile = multi.getFile(upFile);
+			String renameFileName = saveFile(mFile, request);
+			
+			if(renameFileName != null) {
+				int fileResult = marketService.insertFiles(renameFileName);
+			}
+		}
 		
 		if(result > 0) {
 			return "redirect:market.ma";
@@ -254,7 +258,6 @@ public class MarketController {
 	public void replyList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		ArrayList<Comment> list = marketService.selectRList(boardNo);
-	//	System.out.println("댓글리스트 받아옴? "+list);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -264,29 +267,6 @@ public class MarketController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	// 댓글 추가
-	@RequestMapping("insertComment.ma")
-	@ResponseBody
-	public ArrayList<Comment> insertComments(@RequestParam("userId") String userId, @RequestParam("boardNo") int boardNo, @RequestParam("content") String content, HttpServletResponse response){
-		Comment c = new Comment();
-		
-		c.setBoardNo(boardNo);
-		c.setrContent(content);
-		c.setrUserId(userId);
-		
-		int result = marketService.insertComment(c);
-		
-		if(result > 0) {
-			ArrayList<Comment> comment = marketService.selectComment(boardNo);
-			return comment;
-		} else {
-			throw new MarketException("댓글 등록에 실패했습니다.");
-		}
-		
-		
 	}
 	
 	

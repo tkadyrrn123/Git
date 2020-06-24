@@ -103,5 +103,10 @@ public class MarketServiceImpl implements MarketService {
 		return marketDAO.selectRList(sqlSession, boardNo);
 	}
 
+	@Override
+	public int insertFiles(String renameFileName) {
+		return marketDAO.insertFiles(sqlSession, renameFileName);
+	}
+
 
 }

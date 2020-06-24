@@ -34,29 +34,36 @@
     </resultMap>
     
 	<insert id="insertBoard">
-		<if test="fileName != null">
-			insert all
+<!-- 		<if test="fileName != null"> -->
+<!-- 			insert all -->
 			
-			into tb_board
-			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, #{userId}, default, default)	
-			into tb_market
-			values(SEQ_BOARD.CURRVAL,#{price},'Y')
-			into tb_File
-			values(seq_file.nextval, seq_board.currval, #{fileName}, null, null)
+<!-- 			into tb_board -->
+<!-- 			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, #{userId}, default, default)	 -->
+<!-- 			into tb_market -->
+<!-- 			values(SEQ_BOARD.CURRVAL,#{price},'Y') -->
+<!-- 			into tb_File -->
+<!-- 			values(seq_file.nextval, seq_board.currval, #{fileName}, null, null) -->
 
-			select * from dual	
-		</if>
-		<if test="fileName == null">
+<!-- 			select * from dual	 -->
+<!-- 		</if> -->
+<!-- 		<if test="fileName == null"> -->
 			insert all
 			
 			into tb_board
 			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, #{userId}, default, default)
 			into tb_market
 			values(SEQ_BOARD.CURRVAL,#{price},'Y')
-			into tb_File
-			values(seq_file.nextval, seq_board.currval, null, null, null)
+<!-- 			into tb_File -->
+<!-- 			values(seq_file.nextval, seq_board.currval, null, null, null) -->
 			
 			select * from dual	
+<!-- 		</if> -->
+	</insert>
+	
+	<insert id="insertFiles">
+		<if test="renameFileName != null">
+		insert into tb_File
+		values(seq_file.nextval, seq_board.currval, #{renameFileName}, null, null)
 		</if>
 	</insert>
     

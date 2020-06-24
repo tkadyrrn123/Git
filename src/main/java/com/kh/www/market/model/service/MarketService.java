@@ -38,4 +38,6 @@ public interface MarketService {
 
 	ArrayList<Comment> selectRList(int boardNo);
 
+	int insertFiles(String renameFileName);
+
 }

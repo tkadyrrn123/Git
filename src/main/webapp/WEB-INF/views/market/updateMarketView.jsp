@@ -6,37 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>HOUSTORY</title>
-<style type="text/css">
-   #body{margin-top: 20px;}
-   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavender;}
-   h5{ margin: 0 auto;}
-   h2{font-family: "Sans-Serif"; margin-left: 11%;}
-   hr{border-color: lavender;}
-   .inputs{height: 60%; border: 1px solid lavender; margin-left: 20px; width: 80%;}
-   #tr1{height: 10%}
-   #tr2{height: 10%;}
-   #tr3{height: 10%;}
-   #tr4{height: 60%;}
-   #tr5{height: 10%;}
-   #tb{width: 60%; height: 600px; margin: 0 auto; }
-   .td1{text-align: center; font-size: 11px; background: lavender;}
-   
-   #content{width: 80%; height: 90%; border: none;text-align:left; margin-left: 20px; resize: none; display:block;}
-   #btns{text-align: center;}
-   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: lavender;}
- 
-    input::placeholder{font-style: italic; color: darksalmon;}
-    textarea::placeholder{font-style: italic; color: darksalmon;}
-    
-	.img{width:100%; height:400px;}
-	.header_wrap{background-color:rgba(0, 0, 0, 0.5); width:100%; height: 400px;position:absolute;top:0;}
-	#headcomment{
-	position: absolute;
-	left: 45%;
-	top: 220px;
-	color: white;
-	font-size: 1.5em;}
-</style>
+<link rel="stylesheet" type="text/css" href="resources/css/writingMarket.css">
 </head>
 <body>
 <img class="img" src="resources/images/market6.jpg">
