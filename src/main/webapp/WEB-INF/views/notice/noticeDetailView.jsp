@@ -37,10 +37,12 @@
 /* 댓글작성 */
 	.reply1_box{width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
 	.comment_img{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
-	.dong{line-height: 50px; display: inline; margin-left: 10px; margin-right: 10px;}
-	.reply1_btn{margin-right: 5px; float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
-	.reply_TEXT{margin-top: 10px; margin-right: 15px; border-radius:0.34em; border-color: lightgrey; resize:none;}
-	.update_reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
+	.dong{line-height:3; display: inline; margin-left: 10px; margin-right: 10px;}
+	.dong2{display: inline; margin-left: 10px; margin-right: 10px;}
+	.reply1_btn{margin-right: 15px; float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
+	.reply_TEXT{margin-right: 15px; border-radius:0.34em; border-color: lightgrey; resize:none; readonly}
+	#reply_TEXT{margin-right: 15px; border-radius:0.34em; border-color: lightgrey; resize:none;}
+/* 	.update_reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;} */
 	.fa-comment-dots{margin-left: 7px; color: #62b3b6;}
 	.Reply_list_title{margin-left: 120px; color: #62b3b6; margin-top: 10px; margin-bottom: 10px;}
 	#rCount{margin-left: 5px;}
@@ -52,99 +54,15 @@
 	
 	.delete_btn{margin-right: 10px; margin-left: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
-	.counter{color:#aaa; float: right; margin-top: 5px; margin-right: 10px;}
+	.counter{color:#aaa; float: right; margin-top: 45px; margin-right: 15px;}
+	.counter2{color:#aaa; float: right; margin-right: 15px; margin-top: 55px;}
 	
 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
 	 
 /* 대댓글  */	
 	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
-
-/* 추가.? 삭제해야하나? */ 	
- 	textarea{
-              width:100%;
-            }
-        .reply_reply {
-                border: 2px solid #FF50CF;
-            }
-        .reply_modify {
-                border: 2px solid #FFBB00;
-            }
  	
 </style>
-<script type="text/javascript">
-            $(document).ready(function(){
-                
-                var status = false; //수정과 대댓글을 동시에 적용 못하도록
-                
-//--------1. 댓글 저장-----------------------------------------------------------
-                $("#reply_save").click(function(){ //댓글등록 버튼을 누르면
-                    
-                	//댓글 내용 널값확인
-                    if($("#rContent").val().trim() == ""){
-                        alert("내용을 입력하세요.");
-                        $("#rContent").focus();
-                        return false;
-                    }
-                    
-                    var rContent = $("#rContent").val().replace("\n", "<br>"); //댓글 내용 넣고 개행처리
-                    
-                    //보낼 데이터 값
-                    var rContent = $("#rContent").val(); //댓글내용
-                    var noticeNo = ${ notice.nNo }; //댓글이 참조하는 공지번호
-                    
-                    var reply_id; //원댓글 번호 변수명 선언
-                    
-                    //ajax 호출
-                    $.ajax({
-                        url            : "addNoticeComment.no",
-//                         dataType    :    "json",
-                        contentType :    "application/x-www-form-urlencoded; charset=UTF-8",
-                        type         :    "post",
-                        async        :     false, //동기: false, 비동기: ture
-                        data        :    {rContent:rContent, noticeNo:noticeNo},
-                        success     :    function(retVal){
- 
-                            if(retVal.code != "OK") {
-                                alert(retVal.message);
-                                return false;
-                            }else{
-                                reply_id = retVal.reply_id; //원댓글 번호빈곳에 원댓글 번호 넣기??
-                            }
-                            
-                        },
-                        error        :    function(request, status, error){
-                            console.log("AJAX_ERROR");
-                        }
-                    });
-                    
-                    var reply_area = $("#reply_area");
-                    
-                    var reply = 
-                        '<tr reply_type="main">'+
-                        '    <td width="820px">'+
-                        rContent+
-                        '    </td>'+
-                        '    <td width="100px">'+
-                        $("#reply_writer").val()+ /*  loginUser.userId */
-                        '    </td>'+
-                        '    <td align="center">'+
-                        '       <button name="re_reply" reply_id = "'+reply_id+'">댓글</button>'+
-                        '       <button name="re_modify" r_type = "main" parent_id = "0" reply_id = "'+reply_id+'">수정</button>      '+
-                        '       <button name="re_del" r_type = "main" reply_id = "'+reply_id+'">삭제</button>      '+
-                        '    </td>'+
-                        '</tr>';
-                        
-                     if($('#reply_area').contents().size()==0){
-                         $('#reply_area').append(reply);
-                     }else{
-                         $('#reply_area tr:last').after(reply);
-                     }
- 
-                    //댓글 초기화
-                    $("#rContent").val("");
-                });
-            });
-        </script>
 </head>
 <body>
 <img class="img" src="resources/images/noticeImage.jpg">
@@ -207,64 +125,64 @@
 				<input type="button" class="go_list" value="목록" onclick="location.href='noticeList.no'">
 			</div>
 			<br>
-<!-------------테스트 댓글 시작------------>				
- 			<div>
-             	<table class="reply1_box" id="rtb"><!-- border="1" bordercolor="#46AA46" -->
-      <!--댓글 작성시 작성자 인포   -->
-                   <tr>
-                       <td>
-                    <!--프로필사진  -->
-						<div id="notice_profile" style="float:left;display:inline;">
-							<c:if test="${!empty notice.noticeFile }">
-								<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
-							</c:if>
-							<c:if test="${empty notice.noticeFile }">
-								<img class="comment_img" src="${contextPath}/resources/uploadFiles/normal.jpg">
-							</c:if>
-		                 </div>
-		            <!-- 댓글 작성자 아이디 -->  
-                        <div class="dong" id="reply_writer" name="reply_writer">${ loginUser.userId }</div>
-                        <button id="reply_save" name="reply_save" class="reply1_btn">댓글 등록</button><!-- id="rSubmit" -->
-                    </td>
-                   </tr>
-                   
-       <!--댓글 작성시 글 작성 폼   -->           
-                   <tr style="margin-left: 10px; margin-top: 12px;">
-                       <td >
-                           <textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="103" rows="4" placeholder="댓글을 입력해주세요."></textarea>
-                           <div class="counter" id="counter">0/200</div> <!-- 글자 카운트  -->
-                       </td>
-                   </tr>
-               </table>
-<!-- 테스트 댓글 작성창 끝  -->
-				<div class="Reply_list_title">Reply list<i class="far fa-comment-dots"></i><span id="rCount"></span></div>
-<!-- 테스트 댓글 리스트 목록 창 시작  ----------------------------------------------------------------------------->
-<!-- 테스트 댓글 리스트 목록 창 시작  ----------------------------------------------------------------------------->
-<!-- 테스트 댓글 리스트 목록 창 시작  ----------------------------------------------------------------------------->
-<!-- 테스트 댓글 리스트 목록 창 시작  ----------------------------------------------------------------------------->
-               <table border="1" id="reply_area"><!--id="noticeComment_list" -->
-                   <tr reply_type="all"  style="display:none"><!-- 뒤에 댓글 붙이기 쉽게 선언 -->
-                       <td colspan="4"></td>
-                   </tr>
-                   <!-- 댓글이 들어갈 공간 -->
-                   <c:forEach var="clist" items="${clist}" varStatus="status">
-                    <tr>
-                        <td width="820px">
-                           ${clist.rContent}
-                        </td>
-                        <td width="100px">
-                            ${clist.userId}
-                        </td>
-                        <td align="center">
-                            <button name="reply_reply" parent_id = "${replyList.reply_id}" reply_id = "${replyList.reply_id}">댓글</button><!-- 첫 댓글에만 댓글이 추가 대댓글 불가 -->
-                            <button name="reply_modify" parent_id = "${replyList.parent_id}" r_type = "<c:if test="${replyList.depth == '0'}">main</c:if><c:if test="${replyList.depth == '1'}">sub</c:if>" reply_id = "${replyList.reply_id}">수정</button>
-                            <button name="reply_del" reply_id = "${replyList.reply_id}">삭제</button>
-                        </td>
-                    </tr>
-                </c:forEach>
-               </table>
-<!-- 테스트 댓글 리스트 목록 창 끝  ----------------------------------------------------------------------------->               
-        </div>		
+		<!-------------댓글 작성  ------------>
+			<div class="reply1_box" id="rtb">
+				<div id="notice_profile" style="float:left;display:inline;">
+					<c:if test="${!empty notice.noticeFile }">
+						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
+					</c:if>
+					<c:if test="${empty notice.noticeFile }">
+						<img class="comment_img" src="${contextPath}/resources/uploadFiles/normal.jpg">
+					</c:if>
+                 </div> 
+				<div class="dong">${ loginUser.userId }</div>
+					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
+				<div style="margin-left: 10px; margin-top: 12px;">
+					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="93" rows="4" placeholder="댓글을 입력해주세요."></textarea>
+				<div class="counter" id="counter">0/200</div>
+				</div>
+			</div>
+		<!-------------댓글 작성  끝------------>
+			<div class="Reply_list_title">Reply list<i class="far fa-comment-dots"></i><span id="rCount"></span></div>
+		<!-------------댓글 가져오기 ------------>	
+		<div id="noticeComment_list">
+
+			<c:forEach var="b" items="${comment}" varStatus="status">
+				<div class="reply" id="reply${ status.index }">
+					<div id="info2">
+						<c:if test="${!empty b.userFile }">
+							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${b.userFile}"></div>
+						</c:if>
+						<c:if test="${empty b.userFile }"> 
+							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+						</c:if>
+							<div class="info"  id="rWriter">${b.nickname}</div>
+							<div class="info"  id="replyDate">${b.rCreateDate}</div>
+						<c:if test="${loginUser.userId eq b.rUserId }">
+							<button type="button" class="btn" id="rUpdateBtn${ status.index }">수정</button> 
+							<button type="button" class="btn" id="rDeleteBtn${ status.index }">삭제</button>
+							<div style="display:none">${b.rNo}</div>
+						</c:if>
+					</div>
+
+						<textarea class="rContent${ status.index }" readonly >${b.rContent}</textarea>
+ 
+					<div> 
+						<button class="btn" id="replyBtn">답글</button>
+						<div style="display:none">${b.rNo}</div>
+						<div class="likeBtn" id="likeBtn1">
+							<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like.png">
+						</div>
+						<div class="likeBtn2" id="likeBtn2">
+							<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like2.png">
+						</div>
+						<div class="likeCount">0</div>
+					</div>
+				</div>
+			</c:forEach>			
+			
+		</div>
+		<!-------------댓글 가져오기 끝------------>			
 		</form>
 	</div>
 	
@@ -281,18 +199,203 @@
       	        	submenu.hide();
       	        }
      });
+	
+//--<댓글>-------------------------------------------------------------------------------
 	// 댓글 등록 textarea 체크
 	$('.reply_TEXT').keyup(function (e){
 	    var content = $(this).val();
-	    $('.counter').html(content.length+"/200");//글자수 실시간 카운팅
+	    $('#counter').html(content.length+"/200");//글자수 실시간 카운팅
 
-	    if(content.length > 200){
+	    if (content.length > 200){
 	        alert("최대 200자까지 입력 가능합니다.");
 	        $(this).val(content.substring(0, 200));
-	        $('.counter').html("200/200");
+	        $('#counter').html("200/200");
 	    }
 	});
+	
+	//댓글 등록
+	$('#rSubmit').on('click', function(){ //댓글등록 버튼을 누르면
+		var rContent = $("#rContent").val(); //댓글내용
+		var noticeNo = ${ notice.nNo }; //댓글이 참조하는 공지번호
+				
+		$.ajax({
+			url:'addNoticeComment.no',
+			data:{rContent:rContent, noticeNo:noticeNo},
+			success: function(data){
+				
+				if(data == 'success'){ //댓글 등록을 성공하면
+					getCommentList(); //댓글 리스트 불러오기 메소드를 실행시키고
+					$("#rContent").val(''); //댓글입력창 초기화
+				}
+			}
+		});
+		$('#counter').html("0/200"); // 댓글 글자수 카운팅 초기화
+	});
+	
+	// 댓글 리스트 불러오기
+	function getCommentList(){
+		var nNo = ${ notice.nNo };
+		var div="";
+		
+		$.ajax({
+			url: 'cList.no',
+			data: {nNo:nNo},
+			dataType: 'json',
+			success: function(data){
+				console.log(data);
+				
+				//댓글 수 카운팅 후 표시
+ 				$('#rCount').text(data.length);
+
+ 				$noticeComment_outer = $('#noticeComment_list');
+				$noticeComment_outer.html('');
+				
+				var $div;
+				var $userFile;
+				var $rUserId;
+				var $rContent;
+				var $rCreateDate;
+				
+				var $rModify;
+				var $rDelete;
+				
+				
+				if(data.length > 0){
+					for(var i in data){
+
+						$div = $('<div id="noticeComment'+data[i].rNo+'" class="reply2_box">');
+						$div_userFile = $('<div style="float:left;display:inline;">');
+						$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'">');
+						
+ 						if("${loginUser.userId}"== data[i].rUserId){
+ 							$rModify = $('<div id="update_btn_'+data[i].rNo+'" class="update_btn" onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\',this);"> 수정 </div>');
+							$rDelete = $('<div id="delete_btn_'+data[i].rNo+'" class="update_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </div>');
+						}else{
+							$rModify = "";
+							$rDelete = "";
+						}
+						$rUserId = $('<div class="dong2">').text(data[i].rUserId);
+						$rContent = $('<textarea id="reply_TEXT" class="reply_TEXT_'+data[i].rNo+'" name="rContent_'+data[i].rNo+'" cols="93" rows="4" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" resize:none; readonly onkeyup="plus('+data[i].rNo+');"></textarea>').text(data[i].rContent);
+						$rCreateDate = $('<div id="rCreateDate_'+data[i].rNo+'" style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
+
+						$div.append($userFile);
+						$div.append($rUserId);
+						
+						$div.append($rModify);
+						$div.append($rDelete);
+						
+						$div.append($rContent);
+						$div.append($rCreateDate);
+						$noticeComment_outer.append($div); // 최종 반영되는 부분
+					
+					}
+				}else{
+					$div = $('<div id="noticeComment" class="reply2_box">');
+					$rContent = $('<div style="text-align: center;">').text('등록된 댓글이 없습니다.');
+					
+					$div.append($rContent);
+					$noticeComment_outer.append($div);
+				}
+			}
+		});
+	}
+	$(function(){
+		getCommentList();
+		
+		setInterval(function(){
+			getCommentList();
+		}, 60000);
+	});
+	
+	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+	function commentUpdateForm(rNo, rContent, e){
+	
+	var save1 = "";
+	if($(e).text().trim() == "수정"){
+        save1 = $(e).parent().find('textarea').text(); //기존내용 임시저장
+		console.log(save1);
+
+		//수정버튼누르면 리드온리 false로 바꿈
+		$('.reply_TEXT_'+rNo).prop('readonly', false);
+  		$('#delete_btn_'+rNo).hide(); //기존 삭제버튼 숨기기
+
+		//삭제버튼 글자를 취소로 바꾸기
+		$('#update_btn_'+rNo).text("취소");
+		
+		$div = $('#noticeComment'+rNo);
+ 		$rModify2 = $('<div id="update_btn2_'+rNo+'" class="update_btn" onclick="commentUpdate('+rNo+');">등록</div>');
+		$count2 = $('<div class="counter2" id="update_counter">'+rContent.length+'/200</div>');
+		
+ 		$(e).parent($div).find('.dong2').append($rModify2);
+		$(e).parent($div).find('.reply_TEXT_'+rNo+'').after($count2);
+	
+	} else if ($(e).text().trim() == "취소"){
+		
+		$('.reply_TEXT_'+rNo).prop('readonly', true); // 다시 읽음 전용으로
+		$(e).parent().find('textarea').val(save1); //수정전 값 다시 넣기
+  		$('#update_btn_'+rNo).text("수정");
+  	    getCommentList();
+	}
+	}
+		
+// 	    a += '<div>';
+// 	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+rContent.replace(/\+/g, ' ')+'</textarea>';
+//  	    a += '<div class="counter" id="update_counter">'+rContent.length+'/200</div>';
+//  	    a += '<i class="fas fa-check" onclick="commentUpdate('+rNo+');"></i>';
+	    
+// 	    $('.rContent'+rNo).html(a);
+	
+	//댓글 수정시 글자 카운팅
+	function plus(rNo){
+	    var content = $(".reply_TEXT_"+rNo+"").val();
+	    console.log(content);
+	    $('#update_counter').html(content.length+"/200");//글자수 실시간 카운팅
+
+	    if (content.length > 200){
+	        alert("최대 200자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 200));
+	        $('#update_counter').html("200/200");
+	    }
+	} 
+	
+	//댓글 수정 저장
+	function commentUpdate(rNo){
+	    var updateContent = $('[name=rContent_'+rNo+']').val();
+	    console.log(updateContent);
+	    $.ajax({
+	        url : 'commentUpdate.no',
+	        dataType: 'json',
+	        data : {'rContent' : updateContent, 'rNo' : rNo},
+	        success : function(data){
+	           
+	        	if(data == 1) getCommentList(); //댓글 수정후 목록 출력 
+	            
+	            alert("댓글이 수정되었습니다.")
+	        }
+	    });
+	}
+	
+	//댓글 삭제 
+	function commentDelete(rNo){
+		var deleteCf = confirm("정말로 삭제하시겠습니까?")
+		console.log(deleteCf);
+		if(deleteCf == true){
+		
+		    $.ajax({
+		        url : 'commentUpdate.no'+rNo,
+		        dataType: 'json',
+		        success : function(data){
+		        	console.log("댓글 삭제 데이터 1>"+data);
+		        	
+		            if(data == 1) getCommentList(rNo); //댓글 삭제후 목록 출력 
+		            
+		            
+		        }
+		    });
+		}
+	}
 	</script>
+
 	<jsp:include page="../common/Footer.jsp"/>
 </body>
 </html>

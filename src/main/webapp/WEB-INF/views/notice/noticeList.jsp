@@ -177,28 +177,20 @@
 		  </ul>
 	</div>
 	 <script>
+	 $(function(){
+         var nSortCondition = '${ nSortCondition }';
+         if(nSortCondition == ""){
+            $('#latest').prop('checked', 'checked');
+         } else if(nSortCondition == "hits") {
+            $('#hits').prop('checked', 'checked');
+         }
+      })
       $('.select-box__input').click(function(){
          var nSortCondition = $(this).val();
          console.log(nSortCondition);
          location.href="nSortCondition.no?nSortCondition="+nSortCondition;
-         
-         if(nSortCondition == 'hits'){
-	         $(":radio[name='nSortCondition'][value='hits']").attr('checked', true);
-         }
-
-//        //체크 해제할 라디오버튼 불러오기
-//          var nSortCondition = document.getElementsByName("nSortCondition");
-//          var nSortCondition = document.getElementsByName("nSortCondition");
-   
-//          for(var i=0;nSortCondition.length;i++){
-
-//               //체크되어 있다면 park[i].checked == true
-//               //true -> false로 변환 ==> 체크해제
-//               if(nSortCondition[i].checked){
-//             	  nSortCondition[i].checked = false;
-//               }
-//          }
       });
+      
    </script>
 <!--정렬 끝---------------------------------------------------------------------------------------------------->	
 <!-- 	                    <select class="dong" name="nDong"> -->

@@ -126,7 +126,7 @@
 	<!-- 댓글 등록 -->
 	<insert id="insertNoticeComment">
 		insert into tb_comment
-		values(SEQ_REPLY.nextval, null, #{noticeNo}, #{rUserId}, #{rContent}, sysdate, 0, default)
+		values(SEQ_REPLY.nextval, null, #{noticeNo}, null, #{rUserId}, #{rContent}, sysdate, 0, default)
 	</insert>
 	
 	<!--댓글 수정  -->
@@ -199,6 +199,7 @@
 		where apt_delete = 'N' and apt_name =#{aptName}
 	</select>
 	
+	<!-- 공지사항 정렬 가져오기 -->
 	<select id="selectSortCondition" resultMap="noticeResultSet">
 		select *
 		from tb_notice

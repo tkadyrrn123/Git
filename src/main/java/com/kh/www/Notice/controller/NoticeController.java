@@ -167,7 +167,6 @@ public class NoticeController {
 		Notice notice = noticeService.selectNotice(nNo); //글번호 전체 내용 가져오기
 		
 		if(notice != null) {
-			// 모델엔드뷰로 보드를 보낸다.
 			mv.addObject("notice", notice)
 			  .addObject("page", page)
 			  .setViewName("noticeDetailView");
@@ -335,7 +334,7 @@ public class NoticeController {
 	//공지사항 정렬 검색
 	@RequestMapping("nSortCondition.no")
 	private ModelAndView boardSearch(@RequestParam(value="page", required=false) Integer page,
-			@RequestParam String nSortCondition, @ModelAttribute Notice n, HttpServletRequest request, 
+			@RequestParam(value="nSortCondition", required=false) String nSortCondition, @ModelAttribute Notice n, HttpServletRequest request, 
 			ModelAndView mv, HttpSession session) {
 		
 		//세션에서 아파트이름 가져오기
@@ -396,10 +395,6 @@ public class NoticeController {
 	@RequestMapping("addNoticeComment.no")
 	@ResponseBody //success 리턴을 위해
 	public Object addReply(@ModelAttribute Comment nc, HttpSession session) {
-	
-		//받아오는 항목 4개 : 게시글 번호(noticeNo), 댓글내용(rContent), 
-		//대댓글하려면 ...parent_id : "0", depth : "0" 이거 2개 컬럼 있어야하는뎅 ...스벌...
-		//도훈씨 방법으로 해보지뭐 할수있을거야..일단 진행해보자
 		
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String ncUserId = loginUser.getUserId();
@@ -408,23 +403,12 @@ public class NoticeController {
 		
 		int result = noticeService.insertNoticeComment(nc);
 		
-//		if(result > 0) {
-//			return "success";
-//		}else {
-//			throw new NoticeException("댓글 등록에 실패하였습니다.");
-//		}
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new NoticeException("댓글 등록에 실패하였습니다.");
+		}
 		
-		//리턴값
-		Map<String, Object> retVal = new HashMap<String, Object>();
-		
-		if(result>0){
-            retVal.put("code", "OK");
-            retVal.put("message", "등록에 성공 하였습니다.");
-        }else{
-            retVal.put("code", "FAIL");
-            retVal.put("message", "등록에 실패 하였습니다.");
-        }
-        return retVal;
 	}
 	
 	//댓글 수정

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Notice.model.exception.NoticeException;
+import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.clubNotice.model.exception.ClubNoticeException;
 import com.kh.www.clubNotice.model.service.ClubNoticeService;
 import com.kh.www.clubNotice.model.vo.ClubNotice;
@@ -304,4 +306,45 @@ public class clubNoticeController {
 		}	
 		return mv;
 	}
+	//동호회 공지사항 정렬 검색
+		@RequestMapping("cnSortCondition.cn")
+		private ModelAndView boardSearch(@RequestParam(value="page", required=false) Integer page,
+				@RequestParam(value="cnSortCondition", required=false) String cnSortCondition, @ModelAttribute ClubNotice cn, HttpServletRequest request, 
+				ModelAndView mv, HttpSession session) {
+			
+			//세션에서 아파트이름 가져오기
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			String aptName = loginUser.getAptName();
+			cn.setAptName(aptName);
+			
+			HashMap map = new HashMap();
+			map.put("cnSortCondition", cnSortCondition);
+			map.put("aptName", aptName);
+			map.put("ClubNotice", cn);
+			
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = page;
+			}
+			
+			//동호회 공지사항 검색키워드에 따른 전체 수 가져오기
+			int listCount = ClubNoticeService.getSearchResultListCount(cn);
+			
+			PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
+			
+			map.put("pi", pi);
+			
+			//동호회 공지사항 정렬 리스트 가져오기
+			ArrayList<ClubNotice> list = ClubNoticeService.selectSortCondition(map);
+			
+			if(list != null) {
+				mv.addObject("list", list);
+				mv.addObject("pi", pi);
+				mv.addObject("cnSortCondition", cnSortCondition);
+				mv.setViewName("clubNoticeList");
+			}else {	
+				throw new NoticeException("동호회 공지사항 정렬에 실패했습니다.");
+			}	
+			return mv;
+		}
 }

@@ -198,4 +198,19 @@
 		</choose>
 		order by board_no desc
 	</select>
+	
+	<!-- 동호회 공지사항 정렬 가져오기 -->
+	<select id="selectSortCondition" resultMap="cnoticeResultSet">
+		select *
+		from tb_club_notice
+			 join tb_board using(board_no)
+		     join tb_user using(user_id)
+		where board_delete = 'N' and apt_name = #{aptName}
+		<if test = "cnSortCondition == 'hits'">
+			order by board_count desc
+		</if>
+		<if test = "cnSortCondition == 'latest'">
+			order by board_no desc
+		</if>		
+	</select>
 </mapper>
