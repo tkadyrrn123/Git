@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <script src="https://kit.fontawesome.com/4d55e1ad7a.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <style>
 * {
@@ -39,11 +40,27 @@
 	a:visited { color: white; text-decoration: none;}
 	a:hover { color: white; text-decoration: none;}
 	.fas{cursor: pointer;}
+	
+#socketMsg{
+	position: fixed;
+    top: 8%;
+    width: 20%;
+    right: 3%;
+    z-index: 5;
+}
+#msg p{margin: 0; text-align: end;}
+#msg p>a{color: #8a6d3b;}
+
 </style>
 </head>
 <body>
+	<div id="socketMsg" class="alert alert-warning alert-dismissible" role="alert" style="display: none;">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span id="cBtn" aria-hidden="true">&times;</span></button>
+	  <div id="msg">
+	  	<strong>Warning!</strong> Better check yourself, you're not looking too good.
+	  </div>
+	</div>
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
-	
 	<div class="menubar">
 		<a href="main.do">HOUSTORY</a>
 		
@@ -105,6 +122,42 @@
 		    });
 	});
 	
+	</script>
+	
+	<!-- 웹소켓  -->
+	<script type="text/javascript">
+	var socket = null;
+	$(document).ready(function(){
+		connect();
+	});
+	
+	function connect(){
+		var ws = new WebSocket("ws://"+location.host+"/www/Alert");
+		socket = ws;
+	    ws.onopen = function () {
+	        console.log('Info: connection opened.');
+	        
+	    };
+	
+	    ws.onmessage = function (event) {
+	        console.log("Messeage: "+ event.data+'\n');
+	        var msg = $('#socketMsg');
+	        $('#socketMsg #msg').html(event.data);
+	        msg.fadeIn();
+	    };
+	
+	    ws.onclose = function (event) { 
+	    	console.log('Info: connection closed.'); 
+// 	    	setTimeout( function(){ connect(); }, 1000); // retry connection!!
+	    };
+	    ws.onerror = function (err) { console.log('Error: ' + err); };
+	}
+	//알림창 닫기   
+	$('#socketMsg #cBtn').click(function(){
+		$('#socketMsg').fadeOut();
+	})
+	
+
 	</script>
 	
 </body>
