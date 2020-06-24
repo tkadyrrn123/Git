@@ -316,11 +316,12 @@ public class HomeController {
 		String userId = mService.idSearch(user_email);
 		
 		String msg = "";
-		msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
-		msg += "<h3 style='color: blue;'>아이디 찾기 입니다.</h3>";
-		msg += "<div style='font-size: 130%'>";
-		msg += "비밀번호 찾기 페이지로 돌아가 인증코드 <strong>";
-		msg += userId + "</strong> 를 입력해주세요.</div><br/>";
+		msg += "<div align='center' style='border:1px solid black; font-family:verdana; width: 500px; height: 400px; background-color: #292c2f;'>";
+		msg += "<br><br><img src=\"http://localhost:6080/spring/resources/images/%EB%A1%9C%EA%B3%A0.png\">";
+		msg += "<h2 style='color: white;'>아이디 찾기 입니다.</h2>";
+		msg += "<div style='font-size: 130%; color: white;'>";
+		msg += "회원님의 아이디는 <strong>";
+		msg += userId + "</strong> 입니다.</div><br></div>";
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -340,20 +341,21 @@ public class HomeController {
 		return "index";
 	}
 	@RequestMapping("passSearch.do")
-	public String passSearch(@RequestParam("userPass_email") String user_email, HttpServletResponse response) throws IOException {
+	public String passSearch(@RequestParam("userPass_id") String user_Id, @RequestParam("userPass_email") String user_email, HttpServletResponse response) throws IOException {
 		
 		 String uuid = "";
 		 uuid = UUID.randomUUID().toString().replaceAll("-", "");
 		 uuid = uuid.substring(0, 10);
 		 
 		 String msg = "";
-		 msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
-		 msg += "<h3 style='color: blue;'>비밀번호 찾기 인증코드입니다.</h3>";
-		 msg += "<div style='font-size: 130%'>";
-		 msg += "비밀번호 찾기 페이지로 돌아가 인증코드 <strong>";
-		 msg += uuid + "</strong> 를 입력해주세요.</div><br/>";
+		 msg += "<div align='center' style='border:1px solid black; font-family:verdana; width: 500px; height: 400px; background-color: #292c2f;'>";
+		 msg += "<br><br><img src=\"http://localhost:6080/spring/resources/images/%EB%A1%9C%EA%B3%A0.png\">";
+		 msg += "<h2 style='color: white;'>비밀번호 찾기</h2>";
+		 msg += "<div style='font-size: 130%; color: white;'>";
+		 msg += "임시 비밀번호 : <strong>";
+		 msg += uuid + "</strong> 이 발급되었습니다.</div><br/></div>";
 		 
-		 String userId = mService.idSearch(user_email);
+		 String userId = mService.idSearch(user_Id,user_email);
 		 
 		 response.setContentType("text/html; charset=UTF-8");
 		 PrintWriter out = response.getWriter();
@@ -371,7 +373,7 @@ public class HomeController {
 			out.println("<script>alert('메일을 확인해주세요!'); history.go(-1);</script>");
             out.flush();
 		 }else {
-			out.println("<script>alert('등록된 이메일이 없습니다. 다시 확인해주세요!'); history.go(-1);</script>");
+			out.println("<script>alert('등록된 회원이 없습니다. 다시 확인해주세요!'); history.go(-1);</script>");
             out.flush();
 		 }
 		 
