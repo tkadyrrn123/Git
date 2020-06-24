@@ -9,8 +9,8 @@
   	#content2{overflow:scroll; white-space:pre-wrap; border: 1px solid #ccccce; border-radius:5px;
   			  height: 450px; padding: 15px;} 
 	#content3{width: 65%; margin-left:100px;}
-	#content4{width: 65%; margin-left:100px;} 
-	#content5{width: 61.8%; margin-left:150px;} 
+	#content4{width: 65%; margin-left:14.5%;} 
+	#content5{width: 61.8%; margin-left:150px; margin-bottom:30px;} 
 
 	#title{font-size:30px; width: 50%; font-weight:bold; margin-top: 20px; display: inline-block; margin-left: 130px;} 
 	#hit{display: inline-block; width: 7%; float:right; margin-top: 30px; margin-right: 160px;} 
@@ -35,8 +35,35 @@
 	
 	#name{display: inline-block; margin-top: 30px; float:right; margin-right: 50px;}  
  	#sellContent{width: 80%; min-height: 200px; border:none; font-size: 16px;}
- 	textarea{ resize:none;}
- 	textarea:focus {outline: none;}
+ 	
+ 	
+ 	/* 댓글작성 */
+	.reply1_box{width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
+	.comment2-1img{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
+	.dong{line-height: 50px; display: inline; margin-left: 10px; margin-right: 10px;}
+	.reply1_btn{float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
+	.reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
+
+	/* 원댓글  */	
+	.reply2_box{width: 800px; height: auto; margin-left: 100px; margin-top: 8px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: solid; border-color: rgb(201, 232, 255);}
+	.reply2_box_btn{cursor: pointer; float: right; margin-top: 15px; margin-right: 15px; border:0;}
+	.reply2_box_btn2{cursor: pointer;margin-left: 10px; margin-top: 10px; margin-bottom: 10px;  border:0; outline:0;}
+	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
+	
+	/* 대댓글  */	
+	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
+ 	
+ 	
+ 	#content4>textarea{readonly; 
+ 						resize:none; 
+ 						border:none;
+ 						width: 75%; 
+ 						margin: 20px 0px 14px 50px; 
+ 						ont-size:18px; 
+ 						font-weight: bold; 
+ 						min-height: 34px;}
+ 	#content4>textarea:focus {outline: none;}
+ 	
  	#btn{float:right; margin: 20px 220px 0px 0px;}
  	.btn{margin-left:10px;
 		border: 1px solid #ccccce;
@@ -54,39 +81,58 @@
  				margin: 100px 0px 0px 200px; 
  				border:2px dashed #dad4d4; 
  				} 
- 	#rWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px;}  
+ 	#rWrite{border: 1px solid black; 
+ 			width: 75%; 
+ 			margin: 0px 0px 0px 30px; 
+ 			height:100px;}  
  	 
- 	#rProfile{width: 40px; hieght:40px; display:inline-block;}
- 	#rWriter{display:inline-block;}
- 	.rCreateDate{display:inline-block; margin-left: 20px;}
- 	#rImg{ border-radius: 10%;  width: 100%; height:100%; }  
- 	#info{display: inline-block;  height:50px; margin-left: 30px; width:80%;}
- 	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
+ 	#rProfile{width: 40px; 
+ 			  hieght:40px; 
+ 			  margin-top: 10px;
+ 			  display:inline-block;}
+ 	#rImg{border-radius: 50%;  
+ 		  width: 100%; 
+ 		  height:100%;}  
+ 	#rWriter{vertical-align: middle; 
+ 			 margin-top: -28px; 
+ 			 margin-right: 10px; 
+ 			 margin-left:10px;
+ 			 width:7%;}
+	#rHo{vertical-align: middle; 
+		 margin-top: -28px;}
+ 	.rCreateDate{display:inline-block; 
+ 				 margin-left: 20px;}
+ 	#info{display: inline-block;  
+ 		  height:50px; 
+ 		  margin-left: 30px; 
+ 		  width:80%;}
+ 	#info2{display: inline-block;  
+ 		   height:50px; 
+ 		   margin-top: 12px; 
+ 		   margin-left: 30px; 
+ 		   width:100%;}
  	.info{display: inline-block;} 
- 	#insertBtn{width: 70px;  margin-top: 20px;} 
+ 	#insertBtn{width: 70px;  
+ 			   margin-top: 20px;} 
  	
  	.rOuter{width: 65%; margin-left:100px;}
- 	#reply{width:80% ; 
- 			height: 130px;
- 			margin: 20px 0px 0px 200px; 
- 			border: 1px solid #dad4d4; 
- 			padding: 15px;
-			}  
- 	#rreply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; }  
+ 	 .reply{width:80% ; 
+ 	 		margin: 10px 0px 0px 200px; 
+ 	 		border: 1px solid black; }  
+ 	.rreply{width: 110%; 
+ 			margin: 10px 0px 0px 200px; 
+ 			border: 1px solid black; 
+ 			background: skyblue; }
+ 			
  	#rContent{width: 75%; margin: 20px 0px 0px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
- 	#rUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 500px;}  
- 	#rDeleteBtn{width: 70px;  vertical-align: middle; margin-top: 20px;}  
- 	#rUpdateBtn2{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 457px;}  
- 	#replyDate{width: 12%; font-size: 12px; color: gray; /**margin-left: 70px; margin-top: -20px ;**/}
- 	#replyBtn{margin: 10px 0 10px 60px;}
- 	.likeBtn{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
- 	.likeBtn2{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display:none;} 
+ 	#rUpdateBtnAjax{margin-left: 29px;}  
+ 	#rDeleteBtnAjax{margin-left: 16px;}  
  	
- 	#likeBtn3{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
- 	#likeBtn4{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display:none;}  
- 	#likeImg{width: 100%; height:100%; }  
- 	#likeImg2{width:100%; height:100%;}  
- 	.likeCount{display: inline-block;    vertical-align: sub; margin-left: 10px;}  
+ 	#rrUpdateBtn{width: 70px; margin-left: 617px;}  
+ 	#replyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px; margin-top: 29px; margin-right:500px;}
+ 	#rreplyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px;     margin-top: 29px; margin-right: 372px; vertical-align: top;}
+ 	#rrContent{background: skyblue;}
+ 	#replyBtn{margin: 10px 0 10px 60px;}
  	
 	.img{width:100%; height:400px;}
 	.header_wrap{background-color:rgba(0, 0, 0, 0.5); width:100%; height: 400px;position:absolute;top:0;}

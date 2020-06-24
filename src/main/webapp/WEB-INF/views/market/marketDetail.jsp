@@ -75,11 +75,35 @@
 		
 		
 		<!--  댓글   -->
-		 <div class="rOuter">
-		</div>
+		<div id="content4">
+			<c:forEach var="b" items="${comment}" varStatus="status">
+				<div class="reply" id="reply${ status.index }">
+					<div id="info2">
+						<c:if test="${!empty b.userFile }">
+							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${b.userFile}"></div>
+						</c:if>
+						<c:if test="${empty b.userFile }"> 
+							<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+						</c:if>
+							<div class="info"  id="rWriter">${b.nickname}</div>
+							<div class="info"  id="replyDate">${b.rCreateDate}</div>
+						<c:if test="${loginUser.userId eq b.rUserId }">
+							<button type="button" class="btn" id="rUpdateBtn${ status.index }">수정</button> 
+							<button type="button" class="btn" id="rDeleteBtn${ status.index }">삭제</button>
+							<div style="display:none">${b.rNo}</div>
+						</c:if>
+					</div>
+					<textarea class="rContent${ status.index }" readonly >${b.rContent}</textarea>
+					<div> 
+						<button class="btn" id="replyBtn">답글</button>
+						<div style="display:none">${b.rNo}</div>
+					</div>
+					</div>
+					</c:forEach>
+				</div>
 		
 		<div id="content5">
-			<div id="rreply">
+			<div class="rreply" id="rreply">
 				<div id="info2">
 					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
 					<div class="info"  id="rWriter">작성자</div>

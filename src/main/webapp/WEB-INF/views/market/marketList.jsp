@@ -36,7 +36,13 @@
 							<div class=sellPic><img class=sellPic src="resources/images/basicMarket.jpeg"/></div>
 						</c:if>
 						<c:if test="${!empty m.fileName}">
-							<div class=sellPic><img class=sellPic src="resources/marketUploadFiles/${ m.fileName }"/></div>
+							<div class=sellPic>
+								<c:forTokens var="f" items="${ m.fileName }" delims="," varStatus="fs">
+									<c:if test="${fs.first eq true}">
+									<img class=sellPic src="resources/marketUploadFiles/${ f }"/>
+									</c:if>
+								</c:forTokens>
+							</div>
 						</c:if>
 						<div class=sellName>
 							<c:url var="madetail" value="marketDetail.ma">

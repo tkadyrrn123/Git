@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +16,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +29,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.www.Member.model.vo.Member;
+import com.kh.www.comment.model.exception.CommentException;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
@@ -41,7 +45,7 @@ public class MarketController {
 	private MarketService marketService;
 	
 	@RequestMapping("market.ma")
-	public ModelAndView marketList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) throws MarketException {
+	public ModelAndView marketList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, Model model) throws MarketException {
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -54,6 +58,7 @@ public class MarketController {
 		PageInfo pi = Pagenation.getPageInfoMarket(currentPage,listCount);
 		
 		ArrayList<Market> list = marketService.selectList(pi);
+		
 		
 		if(list != null) {
 			mv.addObject("list", list);
@@ -285,6 +290,27 @@ public class MarketController {
 			e.printStackTrace();
 		}
 	}
+	
+//	//	댓글 수정
+//		@RequestMapping("updateComment.co")
+//		@ResponseBody
+//		public ArrayList<Comment> updateComments(@RequestParam("boardNo") int boardNo, @RequestParam("content") String content, @RequestParam("rNo") int rNo, HttpServletResponse response) {
+//			Comment c = new Comment();
+//			c.setrNo(rNo);
+//			c.setBoardNo(boardNo);
+//			c.setrContent(content);
+//			
+//			int result = marketService.updateComment(c);
+//			
+//			if(result > 0) {
+//				ArrayList<Comment> comment = marketService.selectComment(boardNo);
+//				return comment;
+//				
+//			}else {
+//				throw new CommentException("댓글 수정에 실패했습니다.");
+//			}
+//			
+//		}
 	
 	
 }

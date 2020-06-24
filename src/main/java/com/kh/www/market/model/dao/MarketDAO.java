@@ -2,6 +2,7 @@ package com.kh.www.market.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -87,8 +88,5 @@ public class MarketDAO {
 		return sqlSession.insert("marketMapper.insertFiles", renameFileName);
 	}
 
-
-
-	
 
 }
