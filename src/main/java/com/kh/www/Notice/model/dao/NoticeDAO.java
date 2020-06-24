@@ -93,6 +93,7 @@ public class NoticeDAO {
 		return sqlSession.selectOne("NoticeMapper.selectcDonglist", aptName);
 	}
 
+	//공지사항 검색한 리스트 가져오기
 	public ArrayList<Notice> nSortCondition(SqlSessionTemplate sqlSession, HashMap map) {
 		return (ArrayList)sqlSession.selectList("NoticeMapper.selectSortCondition", map);
 	}

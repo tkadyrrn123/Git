@@ -106,7 +106,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	}
 	
-	@Override
+	@Override //공지사항 검색한 리스트 가져오기
 	public ArrayList<Notice> selectSortCondition(HashMap map) {
 		return nDAO.nSortCondition(sqlSession, map);
 	}
