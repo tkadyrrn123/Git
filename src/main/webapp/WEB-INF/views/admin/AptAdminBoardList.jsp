@@ -257,7 +257,7 @@ textarea, select{
 					<section>
 						<div><h2 style="margin: 10px 0;">전체 게시글 조회</h2></div>
 						
-						<form id="search" action="AptAdminMemberSearch.adm" onsubmit="return searchChk();">
+						<form id="search" action="AptAdminBoardSearch.adm" onsubmit="return searchChk();">
 							<select id="searchOption" name="searchOption">
 								<option>제목</option>
 								<option>작성자</option>
@@ -288,22 +288,22 @@ textarea, select{
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty mlist }">
+								<c:if test="${empty bList }">
 									<tr>
 										<td colspan="11" style="text-align: center; padding: 100px 0 !important;">
 											자료가 없습니다.
 										</td>
 									</tr>
 								</c:if>
-								<c:forEach var="m" items="${mlist}">
+								<c:forEach var="b" items="${bList}">
 									<tr>
-										<td>${a.id}</td>
-										<td>${a.id}</td>
-										<td>${a.name}</td>
-										<td>${a.address}</td>
-										<td>${a.createdate}</td>
-										<td>${a.accept}</td>
-										<td>${a.delete}</td>
+										<td>${b.bId}</td>
+										<td>${b.type}</td>
+										<td>${b.title}</td>
+										<td>${b.writer}</td>
+										<td>${b.createDate}</td>
+										<td>${b.count}</td>
+										<td>${b.delete}</td>
 									</tr>
 								</c:forEach>
 							</tbody>							
@@ -316,31 +316,6 @@ textarea, select{
 								<button class="member_btn right_btn">취소</button>
 							</div>
 						</div>
-						<script>
-							
-							if(${num}==2){
-								
-								$('tbody tr').css('cursor', 'pointer');
-								
-								$('tbody tr').click(function(){
-									var num = ${num};
-									var id = $(this).find('td').eq(0).text();
-									$('#popup_info b').text(id);
-									$('#popup_layer').fadeIn();
-									console.log(id);
-									
-									$('.left_btn').click(function(){
-										location.href='AdminAptMemberDelete.adm?id='+id+'&num='+num;
-									});
-									
-									$('.right_btn').click(function(){
-										$('#popup_layer').fadeOut();
-									});
-								});
-							}
-							
-							
-						</script>
 					</section>
 					<!--페이징-->	
 					<div id="pageBtn">

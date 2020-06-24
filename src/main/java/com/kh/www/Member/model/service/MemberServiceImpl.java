@@ -223,5 +223,25 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.fiveBoardList(sqlSession, aptName);
 	}
 
+	@Override
+	public int AptBoardListCount(String aptName) {
+		return mDAO.AptBoardListCount(sqlSession, aptName);
+	}
+
+	@Override
+	public ArrayList<BoardType> AptBoardList(PageInfo pi, String aptName) {
+		return mDAO.AptBoardList(sqlSession, pi, aptName);
+	}
+
+	@Override
+	public int AptBoardSearchListCount(SearchOption so, String aptName) {
+		return mDAO.AptBoardSearchListCount(sqlSession, so, aptName);
+	}
+
+	@Override
+	public ArrayList<BoardType> AptBoardSearchList(PageInfo pi, SearchOption so, String aptName) {
+		return mDAO.AptBoardSearchList(sqlSession, pi, so, aptName);
+	}
+
 
 }
