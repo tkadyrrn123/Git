@@ -83,7 +83,21 @@
 		set reply_content = #{rContent}, COMMENT_DATE = default
 		where re_reply_no = #{rrNo}
 	</update>
-
+	
+	<insert id="CommentLike">
+		insert into tb_comment_like
+		values(#{rNo}, #{rUserId})
+	</insert>
+	
+	<delete id="CommentNotLike">
+		delete from tb_comment_like
+		where reply_no = #{rNo} and user_id = #{rUserId}
+	</delete>
+	
+	<select id="selectLike" resultMap="LikeResultSet">
+		select *
+		from tb_comment_like
+	</select>
 	<resultMap type="Comment" id="CommentResultSet">
 		<id property="rNo" column="REPLY_NO"/>
 		<result property="boardNo" column="BOARD_NO"/>
@@ -108,5 +122,9 @@
 		<result property="rDecYN" column="COMMENTS_DELETE"/>
 		<result property="nickname" column="NICKNAME"/>
 		<result property="userFile" column="USER_FILE"/>
+	</resultMap>
+	<resultMap type="Comment" id="LikeResultSet">
+		<id property="rNo" column="REPLY_NO"/>
+		<id property="rUserId" column="USER_ID"/>
 	</resultMap>
 </mapper>

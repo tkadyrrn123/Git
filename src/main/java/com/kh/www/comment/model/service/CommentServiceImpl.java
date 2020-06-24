@@ -74,4 +74,19 @@ public class CommentServiceImpl implements CommentService{
 		return cDAO.updateVoteComment(sqlSession, c);
 	}
 
+	@Override
+	public int CommentLike(Comment c) {
+		return cDAO.CommentLike(sqlSession, c);
+	}
+
+	@Override
+	public int CommentNotLike(Comment c) {
+		return cDAO.CommentNotLike(sqlSession, c);
+	}
+
+	@Override
+	public ArrayList<Comment> selectLike() {
+		return cDAO.selectLike(sqlSession);
+	}
+
 }
