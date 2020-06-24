@@ -124,7 +124,6 @@
 				$.ajax({
 					url:'getRealClub.main',
 					success:function(data){
-						
 						$('.comu_more').attr("href","clubList.cb");
 						
 						$clubUlBody = $('#comunity_list');
