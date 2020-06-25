@@ -213,4 +213,45 @@
 			order by board_no desc
 		</if>		
 	</select>
+	
+	<!-- 댓글리스트 불러오기 -->
+	<select id="NoticeCommentList" resultMap="replyResultSet">
+		select reply_no, board_no, user_id, reply_content, comment_date, decyn, nickname, user_file
+		from tb_comment
+           join tb_user using(user_id)
+		where board_no = #{cnNo} and comments_delete = 'N'
+        order by reply_no desc
+	</select>
+	
+	<resultMap type="Comment" id="replyResultSet">
+		<id property="rNo" column="REPLY_NO"/>
+		<result property="boardNo" column="BOARD_NO"/>
+		<result property="rContent" column="REPLY_CONTENT"/>
+		<result property="rUserId" column="USER_ID"/>
+		<result property="rCreateDate" column="COMMENT_DATE"/>
+		<result property="rDecYN" column="DECYN"/>
+		<result property="rStatus" column="COMMENTS_DELETE"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="userFile" column="USER_FILE"/><!--프로필사진  -->
+	</resultMap>
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertNoticeComment">
+		insert into tb_comment
+		values(SEQ_REPLY.nextval, #{boardNo}, null, null, #{rUserId}, #{rContent}, sysdate, 0, default)
+	</insert>
+	
+	<!--댓글 수정  -->
+	<update id="updateNoticeComment">
+		update tb_comment
+		set REPLY_CONTENT = #{rContent}, COMMENT_DATE = SYSDATE
+		where REPLY_NO = #{rNo}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteNoticeComment">
+		update tb_comment
+		set COMMENTS_DELETE = 'Y'
+		where REPLY_NO = #{rNo}
+	</update>
 </mapper>

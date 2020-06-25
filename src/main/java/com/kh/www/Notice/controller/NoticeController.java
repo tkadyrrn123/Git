@@ -380,7 +380,7 @@ public class NoticeController {
 		response.setContentType("application/json; charset=UTF-8");
 		
 		ArrayList<Comment> clist = noticeService.noticeCommentList(nNo);
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
 			gson.toJson(clist, response.getWriter());
 		} catch (JsonIOException e) {
@@ -430,11 +430,6 @@ public class NoticeController {
         
         return noticeService.commentUpdate(rNo);
     }
-	@RequestMapping("test2.no")
-	public ModelAndView test(ModelAndView mv, HttpSession session) {
-		mv.setViewName("test2");
-		return mv;
-	}
 	
 	//공지사항 대댓글 추가	
 	@RequestMapping("insertComment2.no")

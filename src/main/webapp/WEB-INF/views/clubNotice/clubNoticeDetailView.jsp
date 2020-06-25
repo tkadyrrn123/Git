@@ -17,7 +17,7 @@
  	.detailTable_comment{margin: auto; border-bottom: 1px solid lightgray; height: 50px; background-color: lightgray; width: 800px;}
  	.detailTable_title{margin-left: 10px; font-size: 18px; padding-bottom: 10px; color:rgb(81, 143, 187);}
 	.img {filter: brightness(70%); width: 100%; height: 400px;}	
-	.clubNameview{color:lightcoral; margin-left: 60px; margin-bottom: 20px;}
+	.nDongview{color:lightcoral; margin-left: 60px; margin-bottom: 20px;}
 	
 /* 글내용 */
 	.board_content{width: 800px;    height: auto;    margin-left: 100px;    margin-top: 40px;    margin-bottom: 40px;}
@@ -37,28 +37,38 @@
 /* 댓글작성 */
 	.reply1_box{width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
 	.comment_img{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
-	.dong{line-height: 50px; display: inline; margin-left: 10px; margin-right: 10px;}
+	.dong{line-height:3; display: inline; margin-left: 10px; margin-right: 10px;}
+	.dong2{display: inline; margin-left: 10px; margin-right: 10px;}
 	.reply1_btn{margin-right: 15px; float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
-	.reply_TEXT{margin-right: 15px; border-radius:0.34em; border-color: lightgrey; resize:none;}
-	.update_reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
+	.reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
+	#reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
+/* 	.update_reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;} */
 	.fa-comment-dots{margin-left: 7px; color: #62b3b6;}
 	.Reply_list_title{margin-left: 120px; color: #62b3b6; margin-top: 10px; margin-bottom: 10px;}
 	#rCount{margin-left: 5px;}
-	
 /* 원댓글  */	
 	.reply2_box{width: 800px; height: auto; margin-left: 100px; margin-top: 8px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: solid; border-color: rgb(201, 232, 255);}
 	
-	.update_btn{margin-right: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	.update_btn{margin-right: 10px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
+	.delete_btn{margin-right: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
 	
 	.delete_btn{margin-right: 10px; margin-left: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
-	.counter{color:#aaa; float: right; margin-top: 45px; margin-right: 15px;}
+	.counter{color:#aaa; float: right; margin-top: 55px; margin-right: 15px;}
+	.counter2{color:#aaa; float: right; margin-right: 15px; margin-top: 70px;}
 	
 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
 	 
 /* 대댓글  */	
-	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
+	.re_reply_btn{margin-right: 10px; margin-top: 15px; border-radius: 6px; background-color: rgb(201, 232, 255); font-weight: 500;
+	     cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
+	
+	.reply3_box{width: 760px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
+ 	.re_submit_btn{margin-right: 10px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+		color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
+ 	
  	
 </style>
 </head>
@@ -66,7 +76,6 @@
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
-		<form>
 	<!----------- 게시글 상단부 시작  ---------->	
 		<br>
 		<h2 style="margin-left: 15px;">동호회 공지사항 상세보기</h2>
@@ -136,49 +145,23 @@
 				<div class="dong">${ loginUser.userId }</div>
 					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
 				<div style="margin-left: 10px; margin-top: 12px;">
-					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="103" rows="4" placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>
+					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="94" rows="5" placeholder="댓글을 입력해주세요."></textarea>
 				<div class="counter" id="counter">(0/200자)</div>
 				</div>
 			</div>
 		<!-------------댓글 작성  끝------------>
 			<div class="Reply_list_title">Reply list<i class="far fa-comment-dots"></i><span id="rCount"></span></div>
 		<!-------------댓글 가져오기 ------------>	
-			<div id="noticeComment_outer">
+		<div id="noticeComment_list">
+			
 			
 			<!-- 댓글 구현되는 부분  -->
 			
-			</div>
+		</div>
 		<!-------------댓글 가져오기 끝------------>			
-		</form>
 	</div>
 	
 	<script>
-	
-	// 댓글 등록 textarea 체크
-	$('.reply_TEXT').keyup(function (e){
-	    var content = $(this).val();
-	    $('#counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
-
-	    if (content.length > 200){
-	        alert("최대 200자까지 입력 가능합니다.");
-	        $(this).val(content.substring(0, 200));
-	        $('#counter').html("(200/200자)");
-	    }
-	});
-	
-	// 댓글 수정 update textarea 체크
-	$('.update_reply_TEXT').keyup(function (e){
-	    var content = $(this).val();
-	    console.log(content);
-	    $('#update_counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
-
-	    if (content.length > 200){
-	        alert("최대 200자까지 입력 가능합니다.");
-	        $(this).val(content.substring(0, 200));
-	        $('#update_counter').html("(200/200자)");
-	    }
-	});
-	
 	/* 수정 삭제 보이기 */
 	$(".fa-ellipsis-v").click(function(){
            var submenu = $(this).next();
@@ -192,152 +175,195 @@
       	        }
      });
 	
-// 	// 댓글 리스트 불러오기
-// 	function getCommentList(){
-// 		var cnNo = ${ ClubNotice.cnNo };
-		
-// 		$.ajax({
-// 			url: 'cList.cn',
-// 			data: {cnNo:cnNo},
-// 			dataType: 'json',
-// 			success: function(data){
-				
-// 				$noticeComment_outer = $('#noticeComment_outer');
-// 				$noticeComment_outer.html('');
-				
-// 				var $div;
-// 				var $userFile;
-// 				var $rUserId;
-// 				var $rContent;
-// 				var $rCreateDate;
-				
-// 				var $rModify;
-// 				var $rDelete;
-				
-// 				if(data.length > 0){
-// 					for(var i in data){
-						
-// 						$div = $('<div id="noticeComment'+data[i].rNo+'" class="reply2_box">');
-// 						$div_userFile = $('<div style="float:left;display:inline;">');
-// 						$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'">');
-						
-// 						if("${loginUser.userId}"== data[i].rUserId){
-// 							$rModify = $('<a class="update_btn" onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\');"> 수정 </a>');
-// 							$rDelete = $('<a class="delete_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </a> </div>');
-// 						}else{
-// 							$rModify = "";
-// 							$rDelete = "";
-// 						}
-						
-// 						$rUserId = $('<div class="dong">').text(data[i].rUserId);
-// 						$rContent = $('<div class="rContent'+data[i].rNo+'" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;">').text(data[i].rContent.replace(/\+/g, ' '));
-// 						$rCreateDate = $('<div style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
+	//--<댓글>-------------------------------------------------------------------------------
+	// 댓글 등록 textarea 체크
+	$('.reply_TEXT').keyup(function (e){
+	    var content = $(this).val();
+	    $('#counter').html(content.length+"/200");//글자수 실시간 카운팅
 
-// 						$div.append($userFile);
-// 						$div.append($rUserId);
+	    if (content.length > 200){
+	        alert("최대 200자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 200));
+	        $('#counter').html("200/200");
+	    }
+	});
+	
+	//댓글 등록
+	$('#rSubmit').on('click', function(){ //댓글등록 버튼을 누르면
+		var rContent = $("#rContent").val(); //댓글내용
+		var boardNo = ${ ClubNotice.cnNo }; //댓글이 참조하는 공지번호
+				
+		$.ajax({
+			url:'addNoticeComment.cn',
+			data:{rContent:rContent, boardNo : boardNo},
+			success: function(data){
+				if(data == 'success'){ //댓글 등록을 성공하면
+					getCommentList(); //댓글 리스트 불러오기 메소드를 실행시키고
+					$("#rContent").val(''); //댓글입력창 초기화
+				}
+			}
+		});
+		$('#counter').html("0/200"); // 댓글 글자수 카운팅 초기화
+	});
+	
+	// 댓글 리스트 불러오기
+	function getCommentList(){
+		var cnNo = ${ ClubNotice.cnNo };
+		var div="";
+		
+		$.ajax({
+			url: 'ccList.cn',
+			data: {cnNo:cnNo},
+			dataType: 'json',
+			success: function(data){
+				console.log(data);
+				
+				//댓글 수 카운팅 후 표시
+ 				$('#rCount').text(data.length);
+
+ 				$noticeComment_outer = $('#noticeComment_list');
+				$noticeComment_outer.html('');
+				
+				var $div;
+				var $userFile;
+				var $rUserId;
+				var $rContent;
+				var $rCreateDate;
+				var $reReply;//답글 버튼
+				
+				var $rModify;
+				var $rDelete;
+				
+				
+				if(data.length > 0){
+					for(var i in data){
+
+						$div = $('<div id="noticeComment'+data[i].rNo+'" class="reply2_box">');
+						$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+data[i].userFile+'">');
 						
-// 						$div.append($rModify);
-// 						$div.append($rDelete);
-						
-// 						$div.append($rContent);
-// 						$div.append($rCreateDate);
-// 						$noticeComment_outer.append($div);
-// 					}
-// 				}else{
-// 					$div = $('<div id="noticeComment" class="reply2_box">');
-// 					$rContent = $('<div style="text-align: center;">').text('등록된 댓글이 없습니다.');
+ 						if("${loginUser.userId}"== data[i].rUserId){
+ 							$rModify = $('<div id="update_btn_'+data[i].rNo+'" class="update_btn" onclick="commentUpdateForm('+data[i].rNo+',\''+data[i].rContent+'\',this);"> 수정 </div>');
+							$rDelete = $('<div id="delete_btn_'+data[i].rNo+'" class="delete_btn" onclick="commentDelete('+data[i].rNo+');"> 삭제 </div>');
+						}else{
+							$rModify = "";
+							$rDelete = "";
+						}
+
+						$rUserId = $('<div class="dong2">').text(data[i].rUserId);
+						$reReply = $('<div id="'+data[i].rNo+'" class="re_reply_btn"> 답글 </div>');
+						$rContent = $('<textarea id="reply_TEXT" class="reply_TEXT_'+data[i].rNo+'" name="rContent_'+data[i].rNo+'" cols="94" rows="5" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" resize:none; readonly onkeyup="plus('+data[i].rNo+');"></textarea>').text(data[i].rContent);
+						$rCreateDate = $('<div id="rCreateDate_'+data[i].rNo+'" style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
 					
-// 					$div.append($rContent);
-// 					$noticeComment_outer.append($div);
-// 				}
+						$div.append($userFile);
+						$div.append($rUserId);
+						
+						$div.append($reReply); //답글 버튼
+						$div.append($rModify);
+						$div.append($rDelete);
+						
+						$div.append($rContent);
+						$div.append($rCreateDate);
+						$noticeComment_outer.append($div); // 최종 반영되는 부분
+					}
+					
+				}else{
+					$div = $('<div id="noticeComment" class="reply2_box">');
+					$rContent = $('<div style="text-align: center;">').text('등록된 댓글이 없습니다.');
+					
+					$div.append($rContent);
+					$noticeComment_outer.append($div);
+				}
+			}
+		});
+	}
+	$(function(){
+		getCommentList();
+		
+		setInterval(function(){
+			getCommentList();
+		}, 120000);
+	});
+	
+	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+	function commentUpdateForm(rNo, rContent, e){
+	
+	var save1 = "";
+		if($(e).text().trim() == "수정"){
+	        save1 = $(e).parent().find('textarea').text(); //기존내용 임시저장
+			console.log(save1);
+	
+			//수정버튼누르면 리드온리 false로 바꿈
+			$('.reply_TEXT_'+rNo).prop('readonly', false);
+	  		$('#delete_btn_'+rNo).hide(); //기존 삭제버튼 숨기기
+	
+			//삭제버튼 글자를 취소로 바꾸기
+			$('#update_btn_'+rNo).text("취소");
+			
+			$div = $('#noticeComment'+rNo);
+	 		$rModify2 = $('<div id="update_btn2_'+rNo+'" class="delete_btn" onclick="commentUpdate('+rNo+');">등록</div>');
+			$count2 = $('<div class="counter2" id="update_counter">'+rContent.length+'/200</div>');
+			
+	 		$(e).parent($div).find($('#update_btn_'+rNo)).after($rModify2);
+			$(e).parent($div).find('.reply_TEXT_'+rNo+'').after($count2);
+		
+		} else if ($(e).text().trim() == "취소"){
+			
+			$('.reply_TEXT_'+rNo).prop('readonly', true); // 다시 읽음 전용으로
+			$(e).parent().find('textarea').val(save1); //수정전 값 다시 넣기
+	  		$('#update_btn_'+rNo).text("수정");
+	  	    getCommentList();
+		}
+	}
+	
+	//댓글 수정시 글자 카운팅
+	function plus(rNo){
+	    var content = $(".reply_TEXT_"+rNo+"").val();
+	    console.log(content);
+	    $('#update_counter').html(content.length+"/200");//글자수 실시간 카운팅
 
-// 			}
-// 		});
-// 	}
-// 	$(function(){
-// 		getCommentList();
-		
-// 		setInterval(function(){
-// 			getCommentList();
-// 		}, 1000);
-// 	});
+	    if (content.length > 200){
+	        alert("최대 200자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 200));
+	        $('#update_counter').html("200/200");
+	    }
+	} 
 	
-// 	//댓글 등록
-// 	$('#rSubmit').on('click', function(){
-// 		var rContent = $("#rContent").val(); //댓글내용
-// 		var noticeNo = ${ notice.nNo }; //댓글이 참조하는 공지번호
-		
-		
-// 		$.ajax({
-// 			url:'addNoticeComment.no',
-// 			data:{rContent:rContent, noticeNo:noticeNo},
-// 			success: function(data){
-				
-// 				if(data == 'success'){
-// 					getCommentList();
-// 					$('#rContent').val('');
-// 				}
-// 			}
-// 		});
-// 	});
-	
-// 	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
-// 	function commentUpdateForm(rNo, rContent){
-// 	    var a ='';
-	    
-// 	    a += '<div class="input-group">';
-// 	    a += '<div>';
-// 	    a += '<textarea name="rContent_'+rNo+'" class="update_reply_TEXT" id="update_reply_TEXT_'+rNo+'" cols="95" rows="4" onkeyup="plus('+rNo+');">'+rContent+'</textarea>';
-//  	    a += '<div class="counter" id="update_counter">(0/200자)</div>';
-// 	    a += '<i class="fas fa-check" onclick="commentUpdate('+rNo+');"></i>';
-// 	    a += '</div>';
-	    
-// 	    $('.rContent'+rNo).html(a);
-	    
-// 	}
-	
-// 	function plus(rNo){
-// 	    var content = $("#update_reply_TEXT_"+rNo+"").val();
-// 	    console.log(content);
-// 	    $('#update_counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
-
-// 	    if (content.length > 200){
-// 	        alert("최대 200자까지 입력 가능합니다.");
-// 	        $(this).val(content.substring(0, 200));
-// 	        $('#update_counter').html("(200/200자)");
-// 	    }
-// 	}
-	
-// 	//댓글 수정
-// 	function commentUpdate(rNo){
-// 	    var updateContent = $('[name=rContent_'+rNo+']').val();
-	    
-// 	    $.ajax({
-// 	        url : 'commentUpdate.no',
-// 	        dataType: 'json',
-// 	        data : {'rContent' : updateContent, 'rNo' : rNo},
-// 	        success : function(data){
-// 	        	console.log(data);
-// 	            if(data == 1) getCommentList(rNo); //댓글 수정후 목록 출력 
-// 	        }
-// 	    });
-// 	}
-	
-// 	//댓글 삭제 
-// 	function commentDelete(rNo){
-// 		 var deleteCf = confirm("정말 삭제하시겠습니까?")
-		
-// 	    $.ajax({
-// 	        url : 'commentUpdate.no'+rNo,
-// 	        dataType: 'json',
-// 	        success : function(data){
+	//댓글 수정 저장
+	function commentUpdate(rNo){
+	    var updateContent = $('[name=rContent_'+rNo+']').val();
+	    console.log(updateContent);
+	    $.ajax({
+	        url : 'commentUpdate.cn',
+	        dataType: 'json',
+	        data : {'rContent' : updateContent, 'rNo' : rNo},
+	        success : function(data){
 	           
-// 	            if(deleteCf==true && data == 1) getCommentList(rNo); //댓글 삭제후 목록 출력 
+	        	if(data == 1) getCommentList(); //댓글 수정후 목록 출력 
 	            
-// 	        }
-// 	    });
-// 	}
+	            alert("댓글이 수정되었습니다.")
+	        }
+	    });
+	}
 	
+	//댓글 삭제 
+	function commentDelete(rNo){
+		var deleteCf = confirm("정말로 삭제하시겠습니까?")
+		console.log(deleteCf);
+		if(deleteCf == true){
+		
+		    $.ajax({
+		        url : 'commentUpdate.cn'+rNo,
+		        dataType: 'json',
+		        success : function(data){
+		        	console.log("댓글 삭제 데이터 1>"+data);
+		        	
+		            if(data == 1) getCommentList(rNo); //댓글 삭제후 목록 출력 
+		            
+		            
+		        }
+		    });
+		}
+	}
 	
 	</script>
 	<jsp:include page="../common/Footer.jsp"/>
