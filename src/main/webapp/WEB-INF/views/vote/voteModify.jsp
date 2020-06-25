@@ -176,7 +176,7 @@
 						alert("수정이 취소되었습니다.");
 						return false;
 					}
-				}
+				} 
 			</script>
             <div id="btns">
                   <button class="btn" type="button" onclick="javascript:history.back();">취소</button>

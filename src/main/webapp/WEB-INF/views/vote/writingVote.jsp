@@ -149,7 +149,7 @@
 						}
 					}
 					return true;
-				}
+				} 
 			</script>
             <div id="btns">
                   <button class="btn" type="button" onclick="javascript:history.back();">취소</button>
