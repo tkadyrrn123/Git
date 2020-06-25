@@ -219,6 +219,7 @@
 		values(SEQ_COMMENT_RE.nextval, #{rNo}, #{rUserId}, #{rContent}, default, default, default )
 	</insert>
 	
+	<!--댓글 가져오기 -->
 	<select id="selectComment2" resultMap="Comment2ResultSet">
 		select REPLY_NO, RE_REPLY_NO, USER_ID, REPLY_CONTENT, COMMENT_DATE, DECYN, COMMENTS_DELETE, USER_FILE, NICKNAME
 		from tb_comment_re

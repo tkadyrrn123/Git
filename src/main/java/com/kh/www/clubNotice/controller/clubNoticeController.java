@@ -14,11 +14,16 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Notice.model.exception.NoticeException;
 import com.kh.www.Notice.model.vo.Notice;
@@ -26,6 +31,7 @@ import com.kh.www.clubNotice.model.exception.ClubNoticeException;
 import com.kh.www.clubNotice.model.service.ClubNoticeService;
 import com.kh.www.clubNotice.model.vo.ClubNotice;
 import com.kh.www.common.Pagenation;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Controller
@@ -347,4 +353,58 @@ public class clubNoticeController {
 			}	
 			return mv;
 		}
+		//댓글 리스트 가져오기
+		@RequestMapping("ccList.cn")
+		public void replyList(@RequestParam("cnNo") int cnNo, HttpServletResponse response) {
+			response.setContentType("application/json; charset=UTF-8");
+			
+			ArrayList<Comment> cclist = ClubNoticeService.noticeCommentList(cnNo);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			try {
+				gson.toJson(cclist, response.getWriter());
+			} catch (JsonIOException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+				
+		}
+		//댓글 등록
+		@RequestMapping("addNoticeComment.cn")
+		@ResponseBody //success 리턴을 위해
+		public Object addReply(@ModelAttribute Comment nc, HttpSession session) {
+			
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			String ncUserId = loginUser.getUserId();
+			
+			nc.setrUserId(ncUserId); //코멘트 객체에 userId 넣기
+			
+			int result = ClubNoticeService.insertNoticeComment(nc);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new NoticeException("동호회 공지사항 댓글 등록에 실패하였습니다.");
+			}
+			
+		}
+		//댓글 수정
+		@RequestMapping("commentUpdate.cn")
+	    @ResponseBody
+	    private int commentUpdate(@RequestParam int rNo, @RequestParam String rContent) throws Exception{
+	        
+	        Comment comment = new Comment();
+	        comment.setrNo(rNo);
+	        comment.setrContent(rContent);
+	        
+	        return ClubNoticeService.commentUpdate(comment);
+	    }
+		
+		//댓글 삭제
+		@RequestMapping("commentUpdate.cn{rNo}")
+	    @ResponseBody
+	    private int commentUpdate(@PathVariable int rNo) throws Exception{
+	        
+	        return ClubNoticeService.commentUpdate(rNo);
+	    }
 }

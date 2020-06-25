@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.clubNotice.model.dao.CNoticeDAO;
 import com.kh.www.clubNotice.model.vo.ClubNotice;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 import com.sun.xml.internal.bind.v2.runtime.NameList;
 
@@ -96,6 +97,25 @@ public class ClubNoticeServiceImpl implements ClubNoticeService {
 	@Override //동호회 공지사항 정렬 리스트 가져오기
 	public ArrayList<ClubNotice> selectSortCondition(HashMap map) {
 		return cnDAO.selectSortCondition(sqlSession, map);
+	}
+	@Override //댓글등록
+	public int insertNoticeComment(Comment nc) {
+		return cnDAO.insertNoticeComment(sqlSession, nc);
+	}
+	
+	@Override //댓글리스트 가져오기
+	public ArrayList<Comment> noticeCommentList(int cnNo) {
+		return cnDAO.NoticeCommentList(sqlSession, cnNo);
+	}
+	
+	@Override //댓글 수정
+	public int commentUpdate(Comment comment) {
+		return cnDAO.commentUpdate(sqlSession, comment);
+	}
+	
+	@Override //댓글 삭제
+	public int commentUpdate(int rNo) {
+		return cnDAO.commentUpdate(sqlSession, rNo);
 	}
 }
 
