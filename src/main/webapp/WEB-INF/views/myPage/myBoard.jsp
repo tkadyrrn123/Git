@@ -148,7 +148,7 @@
 			}else if(type == "자유"){
 				location.href="bdetail.fr?boardNo=" + no + "&page=1";
 			}else if(type == "중고마켓"){
-				location.href="";
+				location.href="marketDetail.ma?boardNo=" + no + "&page=1";
 			}
 		}
 	</script>

@@ -143,7 +143,7 @@
 			if('자유' == type){
 				location.href="bdetail.fr?boardNo=" + no + "&page=1";
 			}else if('중고장터' == type){
-				location.href="";
+				location.href="marketDetail.ma?boardNo=" + no + "&page=1";
 			}else if('동호회' == type){
 				location.href="clubDetail.cb?clubName=" + cName + "&page=1&boardNo=" + no + "&userId=${loginUser.userId}";
 			}else if('동호회 공지' == type){
