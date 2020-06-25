@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-   #body{margin-top: 300px;}
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavender;}
    h5{ margin: 0 auto;}
    h2{font-family: "Sans-Serif"; margin-left: 11%;}
@@ -25,13 +24,24 @@
    .content{width: 90%; height: 90%; border: none;}
    #btns{text-align: center;}
    .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: lavender;}
- 
+ 	.commnuity_header { position: absolute;
+						left: 46%;
+						top: 220px;
+						color: white;
+						font-size: 1.5em;}
     input::placeholder{font-style: italic; color: darksalmon;}
     textarea::placeholder{font-style: italic; color: darksalmon;}
+    .img{filter: brightness(70%);
+     width: 100%;
+     height: 400px;  }
 </style>
 </head>
 <body>
+<img class="img" src="resources/images/voteImage.png">
 <jsp:include page="../common/menubar.jsp"/>
+<div class="commnuity_header">
+<h2 style="margin-left: 0;">투표 게시판</h2>
+</div>
 <div id="body">
       <h2>&nbsp;투표</h2>
       <hr style="width: 80%; margin-left: 11%"><br>
@@ -139,7 +149,7 @@
 						}
 					}
 					return true;
-				}
+				} 
 			</script>
             <div id="btns">
                   <button class="btn" type="button" onclick="javascript:history.back();">취소</button>
@@ -147,5 +157,6 @@
             </div>
          </form>
    </div><br>
+   <jsp:include page="../common/Footer.jsp"/>
 </body>
 </html>

@@ -10,6 +10,7 @@ public class MyBoard {
 	private int market;
 	private int club;
 	private int clubNotice;
+	private String cName;
 	private String type;
 	public MyBoard() {}
 	public MyBoard(int boardNo, String boardTitle, Date createDate, int free, int market, int club, int clubNotice,
@@ -71,6 +72,12 @@ public class MyBoard {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getcName() {
+		return cName;
+	}
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
 	@Override
 	public String toString() {

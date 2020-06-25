@@ -52,7 +52,10 @@
 	}
 	.myPageUl li:nth-child(5) {
 	background-color: #8181F7;
-}
+	}
+	.cContent{
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
@@ -77,7 +80,7 @@
 				<c:forEach var="i" begin="0" end="${clist.size()-1}">
 					<tr>
 						<td>${clist[i].replyNo}</td>
-						<td>${clist[i].replyContent}</td>
+						<td class=cContent onclick="detailBoard('${clist[i].type}',${clist[i].boardNo},${clist[i].noticeNo},${clist[i].voteId},'${clist[i].cName}');">${clist[i].replyContent}</td>
 						<td>${clist[i].commentDate}</td>
 						<td>${clist[i].type}</td>
 					</tr>
@@ -134,5 +137,23 @@
 		</tfoot>
 	</table>
 	</div>
+	<script>
+		function detailBoard(type, no, noticeNo, voteId,cName){
+			
+			if('자유' == type){
+				location.href="bdetail.fr?boardNo=" + no + "&page=1";
+			}else if('중고장터' == type){
+				location.href="marketDetail.ma?boardNo=" + no + "&page=1";
+			}else if('동호회' == type){
+				location.href="clubDetail.cb?clubName=" + cName + "&page=1&boardNo=" + no + "&userId=${loginUser.userId}";
+			}else if('동호회 공지' == type){
+				location.href="cndetail.cn?cnNo=" + no + "&page=1";
+			}else if('공지' == type){
+				location.href="ndetail.no?nNo=" + noticeNo + "&page=1";
+			}else if('투표' == type){
+				location.href="voteDetail.vo?vId=" + voteId + "&page=1&userId=${loginUser.userId}";
+			}
+		}
+	</script>
 </body>
 </html>

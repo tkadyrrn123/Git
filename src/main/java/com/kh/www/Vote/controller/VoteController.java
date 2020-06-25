@@ -106,7 +106,7 @@ public class VoteController {
 	}
 	
 	@RequestMapping("voteDetail.vo")
-	public ModelAndView votingDetail(@RequestParam ("vId") int vId, @RequestParam ("check") boolean check, @RequestParam("userId") String userId, @RequestParam ("page") Integer page, ModelAndView mv, HttpServletResponse response) {
+	public ModelAndView votingDetail(@RequestParam ("vId") int vId, @RequestParam (value="check", required=false) boolean check, @RequestParam("userId") String userId, @RequestParam ("page") Integer page, ModelAndView mv, HttpServletResponse response) {
 		ArrayList<Comment> comment = cService.selectVoteComment(vId);
 		ArrayList<Comment2> comment2 = cService.selectComment2();
 		ArrayList<Comment> likeList = cService.selectLike();
@@ -115,6 +115,8 @@ public class VoteController {
 			currentPage = page;
 		}
 		Vote v = vService.selectVote(vId);
+		Date today = new Date(new java.util.Date().getTime());
+		check = today.before(v.getEndDate());
 		ArrayList<VChoice> vclist = vService.selectVChoiceList(vId);
 		ArrayList<Integer> vcIdList = new ArrayList<Integer>();
 		for(VChoice vc : vclist) {

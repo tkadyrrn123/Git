@@ -279,9 +279,11 @@
 				</tr>
 	  	</table>
     </div>
-    <div class="board_btn">
-       <button id="writeView">투표작성</button>
-    </div>
+    <c:if test="${loginUser.userLevel > 1}">
+	    <div class="board_btn">
+	       <button id="writeView">투표작성</button>
+	    </div>
+    </c:if>
     <div class="form_wrap">
 	    <div class="select-box">
 		  <div class="select-box__current" tabindex="1">

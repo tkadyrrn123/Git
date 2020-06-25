@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="marketMapper">
+    <select id="getListCount" resultType="_int">
+    	select count(*)
+    	from tb_board
+    	where board_delete= 'N'
+    </select>
+    
+    <select id="selectList" resultMap="marketResultSet">
+    	select BOARD_NO,m.MARKET_PRICE,m.SALE_YN,b.BOARD_TITLE,b.BOARD_CONTENT,b.BOARD_COUNT,
+    		   b.CREATE_DATE,USER_ID,b.BOARD_DELETE,f.FILE_NAME,u.NICKNAME,u.USER_FILE
+    	from tb_market m
+    		join tb_board b using(board_no)
+    		join tb_file f using(board_no)
+    		join tb_user u using(user_id)
+    	where board_delete = 'N'
+    	order by board_no desc
+    </select>
+    <resultMap type="Market" id="marketResultSet">
+    	<id property="boardNo" column="BOARD_NO"/>
+    	<result property="price" column="MARKET_PRICE"/>
+    	<result property="saleStatus" column="SALE_YN"/>
+    	<result property="boardTitle" column="BOARD_TITLE"/>
+    	<result property="boardContent" column="BOARD_CONTENT"/>
+    	<result property="boardCount" column="board_Count"/>	
+    	<result property="createDate" column="CREATE_DATE"/>
+    	<result property="userId" column="USER_ID"/>
+    	<result property="nickName" column="NICKNAME"/>
+    	<result property="boardDelete" column="BOARD_DELETE"/>
+    	<result property="fileName" column="FILE_NAME"/>
+    	<result property="nickName" column="NICKNAME"/>
+    	<result property="userFile" column="USER_FILE"/>
+    </resultMap>
+    
+	<insert id="insertBoard">
+<!-- 		<if test="fileName != null"> -->
+<!-- 			insert all -->
+			
+<!-- 			into tb_board -->
+<!-- 			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, #{userId}, default, default)	 -->
+<!-- 			into tb_market -->
+<!-- 			values(SEQ_BOARD.CURRVAL,#{price},'Y') -->
+<!-- 			into tb_File -->
+<!-- 			values(seq_file.nextval, seq_board.currval, #{fileName}, null, null) -->
+
+<!-- 			select * from dual	 -->
+<!-- 		</if> -->
+<!-- 		<if test="fileName == null"> -->
+			insert all
+			
+			into tb_board
+			values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, #{userId}, default, default)
+			into tb_market
+			values(SEQ_BOARD.CURRVAL,#{price},'Y')
+<!-- 			into tb_File -->
+<!-- 			values(seq_file.nextval, seq_board.currval, null, null, null) -->
+			
+			select * from dual	
+<!-- 		</if> -->
+	</insert>
+	
+	<insert id="insertFiles">
+		<if test="renameFileName != null">
+		insert into tb_File
+		values(seq_file.nextval, seq_board.currval, #{renameFileName}, null, null)
+		</if>
+	</insert>
+    
+    <select id="selectMarketList" resultMap="marketDetailResultSet">
+    	select board_no,market_price,b.board_title,b.board_content,b.create_date,b.board_count,f.file_name,u.nickname,u.user_file
+    	from tb_market
+    		 join tb_board b using(board_no)
+    		 join tb_file f using(board_no)
+    		 join tb_user u using(user_id)
+    	where b.board_delete = 'N' and board_no = #{boardNo}
+    </select>
+	<resultMap type="Market" id="marketDetailResultSet">
+		<id property="boardNo" column="board_No"/>
+		<result property="boardTitle" column="board_Title"/>
+		<result property="price" column="MARKET_PRICE"/>	
+		<result property="boardContent" column="board_Content"/>	
+		<result property="createDate" column="create_Date"/>	
+		<result property="boardCount" column="board_Count"/>	
+		<result property="nickName" column="nickname"/>	
+		<result property="userFile" column="user_File"/>	
+		<result property="fileName" column="file_name"/>	
+	</resultMap>
+	
+	<update id="upCount">
+		update tb_board
+		set board_count = board_count + 1
+		where board_no = #{boardNo}
+	</update>
+	
+	
+	<update id="deleteMarket">
+		update tb_board
+		set board_delete='Y'
+		where board_no = #{boardNo}
+	</update>
+	
+	<select id="selectUpdateMarket" resultMap="maUpdateViewResultSet">
+		select board_no, b.board_title, b.board_content, m.market_price, m.sale_yn, b.create_date,b.board_count,f.file_name,
+				u.nickname, u.user_file
+		from tb_market m
+			 join tb_board b using(board_no)
+			 join tb_file f using(board_no)
+			 join tb_user u using(user_id)
+		where b.board_delete ='N' and board_no = #{boardNo}
+	</select>
+	
+	<resultMap type="Market" id="maUpdateViewResultSet">
+		<id property="boardNo" column="board_no"/>
+		<result property="boardTitle" column="board_title"/>
+		<result property="boardContent" column="board_content"/>
+		<result property="price" column="market_price"/>
+		<result property="saleStatus" column="SALE_YN"/>
+		<result property="createDate" column="create_date"/>
+		<result property="boardCount" column="board_count"/>
+		<result property="fileName" column="file_name"/>
+		<result property="nickName" column="nickname"/>
+		<result property="userFile" column="user_file"/>
+	</resultMap>
+	
+	<update id="updateMarket">
+		update tb_board  
+		set board_title=#{boardTitle}, board_content=#{boardContent}
+		where board_no=#{boardNo}
+	</update>
+	
+	<update id="updatePrice">
+		update tb_market
+		set market_price=#{price}
+		where board_no=#{boardNo}
+	</update>
+	
+	<insert id="insertComment">
+		insert into tb_comment
+		values(SEQ_REPLY.NEXTVAL, #{boardNo},default,default, #{rUserId}, #{rContent}, sysdate, 'N', default )
+	</insert>
+	
+	<select id="selectFilterResultCount" resultType="_int">
+		select count(*)
+		from tb_market
+			 join tb_board using(board_no)
+			 join tb_user using(user_id)
+		where board_delete = 'N'
+		<if test="title != null">
+			and board_title like '%' || #{title} || '%'
+		</if>
+		<if test="writer != null">
+			and nickname = #{writer}
+		</if>
+		<if test="content != null">
+			and board_content like '%' || #{content} || '%'
+		</if>
+	</select>
+	
+	<select id="selectFilterResultList" resultMap="marketResultSet">
+		select BOARD_NO,m.MARKET_PRICE,m.SALE_YN,b.BOARD_TITLE,b.BOARD_CONTENT,b.CREATE_DATE,USER_ID,b.BOARD_DELETE,f.FILE_NAME,u.NICKNAME,u.USER_FILE
+		from tb_market m
+			 join tb_board b using (board_no)
+			 join tb_file f using(board_no)
+			 join tb_user u using (user_id)
+		where board_delete = 'N'
+		<if test="sc.title != null">
+			and board_title like '%' || #{sc.title} || '%' 
+		</if>
+		<if test="sc.writer != null">
+			and nickname = #{sc.writer}
+		</if>
+		<if test="sc.content != null">
+			and board_content like '%' || #{sc.content} || '%'
+		</if>
+		order by board_no desc
+	</select>
+	
+	<select id="selectRList" resultMap="commentResultSet">
+		select reply_no, board_no, user_id, reply_content, comment_date, decyn, comments_delete, user_file, nickname
+		from tb_comment
+			 join tb_user using(user_id)
+		where comments_delete = 'N' and board_no = #{boardNo}
+		order by reply_no desc
+	</select>
+	
+	<select id="selectComment" resultMap="commentResultSet">
+		select reply_no, board_no, user_id, reply_content, comment_date, decyn, comments_delete, user_file, nickname
+		from tb_comment
+			 join tb_user using(user_id)
+		where comments_delete = 'N' and board_no = #{boardNo}
+		order by reply_no desc
+	</select>
+	
+	
+	<resultMap type="Comment" id="commentResultSet">
+		<id property="rNo" column="reply_no"/>
+		<result property="boardNo" column="board_no"/>
+		<result property="rUserId" column="user_id"/>
+		<result property="rContent" column="reply_content"/>
+		<result property="rCreateDate" column="comment_date"/>
+		<result property="rDecYN" column="decyn"/>
+		<result property="rState" column="comments_delete"/>
+		<result property="userFile" column="user_file"/>
+		<result property="nickname" column="nickname"/>
+	</resultMap>
+	
+	
+</mapper>
