@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.dao.FreeBoardDAO;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
-import com.kh.www.freeBoard.model.vo.SearchCondition;
 
 @Service("freeService")
 public class FreeBoardServiceImpl implements FreeBoardService{
@@ -108,6 +108,11 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	@Override
 	public int modifyReply(Comment c) {
 		return fDAO.modifyReply(sqlSession, c);
+	}
+
+	@Override
+	public ArrayList<Comment2> selectRereList(String boardNo) {
+		return fDAO.selectRereList(sqlSession, boardNo);
 	}
 
 

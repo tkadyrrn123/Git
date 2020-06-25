@@ -112,6 +112,27 @@
 		<result property="userFile" column="user_file" />
 	</resultMap>
 	
+	<select id="selectRereList" resultMap="rereResultSet">
+		select re_reply_no, rere.reply_content, rere.comment_date,
+        		reply_no,
+        		u.nickname, u.user_file, user_id
+		from tb_free
+		        join tb_board using(board_no)
+		        join tb_comment re using(board_no)
+		        join tb_comment_re rere using(reply_no)
+		        join tb_user u using(user_id)
+		where rere.comments_delete = 'N' and board_no = #{boardNo}
+	</select>
+	<resultMap type="Comment2" id="rereResultSet">
+		<id property="rrNo" column="re_reply_no"/>
+		<result property="rContent" column="reply_content"/>
+		<result property="rCreateDate" column="comment_date"/>
+		<result property="rNo" column="reply_no"/>
+		<result property="nickname" column="nickname"/>
+		<result property="userFile" column="user_file"/>
+		<result property="rUserId" column="user_id"/>
+	</resultMap>
+	
 	<insert id="insertReply">
 		insert into tb_comment
 		values(seq_reply.nextval, #{boardNo}, null, null, #{rUserId}, #{rContent}, sysdate, default, default)

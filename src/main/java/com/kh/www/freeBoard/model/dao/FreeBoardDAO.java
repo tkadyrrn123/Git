@@ -8,9 +8,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
-import com.kh.www.freeBoard.model.vo.SearchCondition;
 
 @Repository
 public class FreeBoardDAO {
@@ -85,6 +85,10 @@ public class FreeBoardDAO {
 
 	public int modifyReply(SqlSessionTemplate sqlSession, Comment c) {
 		return sqlSession.update("freeMapper.updateReply", c);
+	}
+
+	public ArrayList<Comment2> selectRereList(SqlSessionTemplate sqlSession, String boardNo) {
+		return (ArrayList)sqlSession.selectList("freeMapper.selectRereList", boardNo);
 	}
 
 

@@ -26,6 +26,7 @@ import com.google.gson.JsonIOException;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.exception.FreeBoardException;
 import com.kh.www.freeBoard.model.service.FreeBoardService;
@@ -369,6 +370,27 @@ public class FreeBoardController {
 			throw new FreeBoardException("댓글 삭제 실패!");
 		}
 		
+	}
+	
+	@RequestMapping("rereList.fr")
+	public void getRereList(@RequestParam("boardNo") String boardNo, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		
+		ArrayList<Comment2> list = freeService.selectRereList(boardNo);
+		System.out.println("rereList.fr boardNo : "+boardNo);
+		System.out.println("rereList.fr db갔다온 list : "+list);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 }

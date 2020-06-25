@@ -38,7 +38,7 @@
 	.go_list{width:70px; height:25px; background-color:lightgray; border:0; outline:0; border-radius:0.34em; cursor: pointer;}		
 
 /* 댓글작성 */
-	.reply1_box{width: 800px; height: 180px; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
+	.reply1_box{width: 800px; height: 180px; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: 1px dotted; border-color: rgb(201, 232, 255);}
 	.profileImg{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
 	.dong{line-height: 50px; display: inline; margin-left: 10px; margin-right: 10px;}
 	.reply1_btn{float:right; width:70px; height:25px; background-color: navy; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
@@ -46,7 +46,7 @@
 
 /* 원댓글  */	
 	.reply2_box{width: 800px; height: auto; margin-left: 100px; margin-top: 8px; padding-left: 10px; 
-				padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: solid; border-color: rgb(201, 232, 255);}
+				padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: 1px solid; border-color: rgb(201, 232, 255);}
 	.reply2_box_btn{cursor: pointer; float: right; margin-top: 15px; margin-right: 15px; border:0;}
 	.reply2_box_btn2{cursor: pointer;margin-left: 10px; margin-top: 10px; margin-bottom: 10px;  border:0; outline:0;}
 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
@@ -56,6 +56,7 @@
 /* 대댓글  */	
 	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
  	
+ 	#rtb{border: 1px solid black;}
 </style>
 </head>
 <body>
@@ -147,7 +148,7 @@
 			<!--원 댓글  -->
 			<div class="rOuter">
 <%--		<div class="reply2_box" id="replyBox">
- 			<div id="cdt_profile" style="float: left; display: inline;">
+ 				<div id="cdt_profile" style="float: left; display: inline;">
 					<img class="comment2-1img" src="<%=request.getContextPath()%>/resources/uploadFiles/">
 				</div>
 				<div class="dong" id="nickname">닉네임공간(202동)</div>
@@ -156,12 +157,19 @@
 				<div class="rContent" style="margin-left: 10px;" id="content">댓글 내용 공간</div>
 				<div style="margin-left: 10px; color: gray;" id="createDate">날짜공간</div>
 				<input type="button" value="답글" class="reply2_box_btn2">
-				<i class="far fa-thumbs-up">0</i> 
 			</div>
 --%>
+
 			</div>
-			<!-- 대 댓글 -->
-			
+			<table class="replyTable" id="rtb">
+				<thead>
+					<tr>
+						<td colspan="2"><b id="rrCount"></b></td>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>								
+			<!-- 대 댓글 -->			
 			<div class="reply3_box">
 				<div id="cdt_profile" style="float: left; display: inline;">
 					<img class="profileImg"src="${ contextPath }/resources/images/로고.png">
@@ -172,12 +180,56 @@
 				<div style="margin-left: 10px;">와! 이런식으로 어쩌구 저쩌구한 투표결과를 보니 좋네요!</div>
 				<div style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div>
 				<input type="button" value="답글" class="reply2_box_btn2">
-				<i class="fas fa-thumbs-up">1</i>
 			</div>
 		</form>
 	</div>
 	
 	<script>
+	$(function(){
+		getRereList();
+	});
+	
+ 	function getRereList(){
+		var boardNo = ${ fb.boardNo};
+		
+/* 		$.ajax({
+			url: 'rereList.fr',
+			data: {boardNo:boardNo},
+			dataType: 'json',
+			success: function(data){
+				console.log(data);
+				$tableBody = $('#rtb tbody');
+				$tableBody.html('');
+				$rOuter = $('.rOuter');
+				$rereTable = $('.replyTable');
+				
+				var $div;
+				var $tr;
+				var $nickname;
+				var $rContent;
+				var $rCreateDate;
+				
+				if(data.length > 0){
+					for(var i in data){
+						$div = $('<div class="reply2_box" id="replyBox'+data[i].rNo+'">');
+						
+						$tr = $('<tr>');
+						$nickname = $('<td width="100">').text(data[i].nickname);
+						$rContent = $('<td>').text(data[i].rContent.replace(/\+/g, ' '));
+						$rCreateDate = $('<td width="100">').text(data[i].rCreateDate);
+						
+						$tr.append($nickname);
+						$tr.append($rContent);
+						$tr.append($rCreateDate);
+						$tableBody.append($tr);
+						
+					
+					}
+				}
+			}
+		}); */
+	} 
+	
 	$(function(){
 		getReplyList();
 		
@@ -194,7 +246,7 @@
 			data: {boardNo:boardNo},
 			dataType: 'json',
 			success: function(data){
-				console.log(data);
+			//	console.log(data);
 				$rOuter = $('.rOuter');
 				$rOuter.html('');
 				
@@ -203,12 +255,11 @@
 				var $nickname;
 				var $rContent;
 				var $rCreateDate;
-				var $noprofileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/normal.jpg>');	
-			
+				var $noprofileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/normal.jpg>');				
 				 
 				if(data.length > 0){
 					for(var i in data){
-						$div = $('<div class="reply2_box">');
+						$div = $('<div class="reply2_box" id="replyBox'+data[i].rNo+'">');
 						
 						if(data[i].userFile != null){
 						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+	data[i].userFile +'">');																
@@ -240,8 +291,52 @@
 							$div.append($rDBtn);
 						}
 						
-						$div.append($rereBtn)
-						$rOuter.append($div);						
+						$div.append($rereBtn);
+						console.log(i);
+						
+		// 대댓 목록
+		$.ajax({
+			url: 'rereList.fr',
+			data: {boardNo:boardNo},
+			dataType: 'json',
+			success: function(datas){
+				console.log(datas);
+				$tableBody = $('#rtb tbody');
+				$tableBody.html('');
+				$rereTable = $('.replyTable');
+
+				var $tr;
+				var $nickname;
+				var $rContent;
+				var $rCreateDate;
+				
+				if(datas.length > 0){
+					for(var j in datas){
+						console.log(datas[j].rNo);
+						console.log(i);
+						if(datas[j].rNo == data[i].rNo){
+						$tr = $('<tr>');
+						$nickname = $('<td width="100">').text(datas[j].nickname);
+						$rContent = $('<td>').text(datas[j].rContent.replace(/\+/g, ' '));
+						$rCreateDate = $('<td width="100">').text(datas[j].rCreateDate);
+						
+						$tr.append($nickname);
+						$tr.append($rContent);
+						$tr.append($rCreateDate);
+						$tableBody.append($tr);
+						$div.append($rereTable);
+						$rOuter.append($div);
+						
+						}
+					}
+				}
+			}
+		});						
+						
+						
+						$rOuter.append($div);	
+						
+						
 					}
 				} else{
 					$div = $('<div class="reply2_box">');
@@ -254,10 +349,6 @@
 		});
 
 	}
-	
-
-
-
 	
 	// 댓글 등록	
 	$('#rSubmit').on('click', function(){

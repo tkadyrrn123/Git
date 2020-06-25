@@ -3,12 +3,10 @@ package com.kh.www.freeBoard.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.springframework.stereotype.Service;
-
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
-import com.kh.www.freeBoard.model.vo.SearchCondition;
 
 public interface FreeBoardService {
 
@@ -43,6 +41,8 @@ public interface FreeBoardService {
 	int deleteReply(int rNo);
 
 	int modifyReply(Comment c);
+
+	ArrayList<Comment2> selectRereList(String boardNo);
 
 
 	
