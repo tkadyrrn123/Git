@@ -399,6 +399,7 @@
 												<c:set var="Votes" value="0"/>
 												
 												<!-- 내가 투표했는지 확인하고 몇명이 했는지 확인하는 부분 -->
+												<c:if test="${vInlist != null && !vInlist.isEmpty() }">
 												<c:forEach var="j" begin="0" end="${vInlist.size()-1}">
 													<c:if test="${(vInlist[j].userId eq loginUser.userId) and (vclist[i].vcId eq vInlist[j].vcId)}">
 														<a class="change-view-link" style="color:blue;">
@@ -410,6 +411,7 @@
 														<c:set var="Votes" value="${Votes+1}"/>
 													</c:if>
 												</c:forEach>
+												</c:if>
 												<c:set var="percent" value="${ Math.round(Votes / invoteMax * 100) }"/>
 											</span>
 											</span> <span class="poll-result"> <span class="poll-percentage">
