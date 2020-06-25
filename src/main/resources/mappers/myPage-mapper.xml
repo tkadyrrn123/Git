@@ -37,7 +37,7 @@
     <select id="getListCount" resultType="_int">
     	select count(*)
     	from tb_board
-    	where user_id = #{userId}
+    	where user_id = #{userId} and BOARD_DELETE = 'N'
     </select>
     <resultMap type="MyBoard" id="MyBoardResultSet">
     	<id property="boardNo" column="board_no"/>
@@ -49,7 +49,7 @@
     	<result property="clubNotice" column="club_notice"/>
     </resultMap>
     <select id="getBoardList" resultMap="MyBoardResultSet">
-    	select b.board_no, b.board_title, b.create_date, f.board_no free, m.board_no market, c.board_no club, cn.board_no club_notice
+    	select b.board_no, b.board_title, b.create_date, f.board_no free, m.board_no market, c.board_no club, cn.board_no club_notice, c.club_name cName
 		from tb_board b
 		LEFT JOIN tb_free f
 		    ON(b.board_no = f.board_no)
@@ -64,7 +64,7 @@
     <select id="getCommentListCount" resultType="_int">
     	select count(*)
     	from tb_comment
-    	where user_id = #{userId}
+    	where user_id = #{userId} and comments_delete = 'N'
     </select>
     <resultMap type="MyComment" id="MyCommentResultSet">
     	<id property="replyNo" column="reply_no"/>
@@ -74,16 +74,17 @@
     	<result property="replyContent" column="reply_content"/>
     	<result property="commentDate" column="comment_date"/>
     	<result property="type" column="type"/>
+    	<result property="cName" column="cName"/>
     </resultMap>
     <select id="getCommentList" resultMap="MyCommentResultSet">
     	select c.reply_no, c.board_no, c.notice_no, c.vote_id, c.reply_content, c.comment_date, CASE 
-                                                                WHEN f.board_no != null THEN '자유'
-                                                                WHEN m.board_no != null THEN '중고장터'
-                                                                WHEN cl.board_no != null THEN '동호회'
-                                                                WHEN cn.board_no != null THEN '동호회 공지'
-                                                                WHEN nc.notice_no != null THEN '공지'
-                                                                WHEN v.vote_id != null THEN '투표'
-                                                                END as type
+                                                                WHEN f.board_no != 0 THEN '자유'
+                                                                WHEN m.board_no != 0 THEN '중고장터'
+                                                                WHEN cl.board_no != 0 THEN '동호회'
+                                                                WHEN cn.board_no != 0 THEN '동호회 공지'
+                                                                WHEN nc.notice_no != 0 THEN '공지'
+                                                                WHEN v.vote_id != 0 THEN '투표'
+                                                                END as type, cl.club_name cname
 		from tb_comment c
 		LEFT JOIN tb_free f
 		    ON(c.board_no = f.board_no)

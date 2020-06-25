@@ -52,7 +52,10 @@
 	}
 	.myPageUl li:nth-child(2) {
 	background-color: #8181F7;
-}
+	}
+	.bTitle{
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
@@ -77,7 +80,7 @@
 				<c:forEach var="i" begin="0" end="${blist.size()-1}">
 					<tr>
 						<td>${blist[i].boardNo}</td>
-						<td>${blist[i].boardTitle} </td>
+						<td class=bTitle onclick="boardDetail(${blist[i].boardNo}, '${blist[i].type}', '${blist[i].cName }');">${blist[i].cName } </td>
 						<td>${blist[i].createDate}</td>
 						<td>${blist[i].type}</td>
 					</tr>
@@ -134,5 +137,20 @@
 		</tfoot>
 	</table>
 	</div>
+	<script>
+		function boardDetail(no, type, cName){
+			// 자유, 중고마켓, 동호회, 동호회 공지
+			console.log(no);
+			if(type == "동호회"){
+				location.href="clubDetail.cb?clubName=" + cName + "&page=1&boardNo=" + no + "&userId=${loginUser.userId}";
+			}else if(type == "동호회 공지"){
+				location.href="cndetail.cn?cnNo=" + no + "&page=1";
+			}else if(type == "자유"){
+				location.href="bdetail.fr?boardNo=" + no + "&page=1";
+			}else if(type == "중고마켓"){
+				location.href="";
+			}
+		}
+	</script>
 </body>
 </html>
