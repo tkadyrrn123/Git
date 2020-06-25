@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Repository
@@ -96,6 +97,14 @@ public class NoticeDAO {
 	//공지사항 검색한 리스트 가져오기
 	public ArrayList<Notice> nSortCondition(SqlSessionTemplate sqlSession, HashMap map) {
 		return (ArrayList)sqlSession.selectList("NoticeMapper.selectSortCondition", map);
+	}
+
+    //공지사항 대댓글 추가
+	public int insertComment2(SqlSessionTemplate sqlSession, Comment2 c) {
+		return sqlSession.insert("NoticeMapper.insertComment2", c);
+	}
+	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession, int rNo) {
+		return (ArrayList)sqlSession.selectList("NoticeMapper.selectComment2",rNo);
 	}
 
 

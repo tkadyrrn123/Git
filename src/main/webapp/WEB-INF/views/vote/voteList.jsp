@@ -310,6 +310,7 @@
 		<input type="hidden" id="vId" name="vId">
 		<input type="hidden" id="check" name="check">
 		<input type="hidden" id="page" name="page">
+		<input type="hidden" id="userId" name="userId" value="${loginUser.userId }">
 	</form>
 	<script>
 		$(function(){
@@ -366,7 +367,6 @@
 			$('#page').val('${pi.currentPage}');
 			
 			document.detail.submit();
-			// location.href="voteDetail.vo?vId=" + vId + "&check=" + vCheck + "&page=" + "${pi.currentPage}";
 		});
 	</script>
 	<jsp:include page="../common/Footer.jsp"/>	

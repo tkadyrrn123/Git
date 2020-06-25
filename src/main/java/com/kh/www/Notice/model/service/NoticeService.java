@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 public interface NoticeService {
@@ -56,6 +57,10 @@ public interface NoticeService {
 	
 	//공지사항 정렬 선택 리스트 가져오기
 	ArrayList<Notice> selectSortCondition(HashMap map);
+
+	//공지사항 대댓글 추가
+	int insertComment2(Comment2 c);
+	ArrayList<Comment2> selectComment2(int rNo);
 
 	
 }

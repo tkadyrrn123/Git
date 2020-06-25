@@ -489,4 +489,8 @@
 			 ORDER BY ROWNUM DESC)
 	</select>
 	
+	<select id="passSearchId" resultType="string">
+		SELECT USER_ID FROM TB_USER
+		WHERE USER_ID = #{userId} AND EMAIL = #{email}
+	</select>
 </mapper>

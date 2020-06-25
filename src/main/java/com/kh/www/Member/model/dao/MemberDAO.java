@@ -294,5 +294,13 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.AptBoardSearchList", hs, rowBounds);
 	}
 
+	public String idSearch(SqlSessionTemplate sqlSession, String user_Id, String user_email) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("userId", user_Id);
+		hs.put("email", user_email);
+		
+		return sqlSession.selectOne("memberMapper.passSearchId", hs);
+	}
+
 	
 }
