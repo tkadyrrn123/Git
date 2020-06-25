@@ -10,6 +10,7 @@ public class MyComment {
 	private String replyContent;
 	private Date commentDate;
 	private String type;
+	private String cName;
 	public MyComment() {}
 	public MyComment(int replyNo, int boardNo, int noticeNo, int voteId, String replyContent, Date commentDate,
 			String type) {
@@ -65,6 +66,12 @@ public class MyComment {
 		this.type = type;
 	}
 	
+	public String getcName() {
+		return cName;
+	}
+	public void setcName(String cName) {
+		this.cName = cName;
+	}
 	@Override
 	public String toString() {
 		return "MyComment [replyNo=" + replyNo + ", boardNo=" + boardNo + ", noticeNo=" + noticeNo + ", voteId="
