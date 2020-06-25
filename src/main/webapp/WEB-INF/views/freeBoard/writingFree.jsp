@@ -62,8 +62,7 @@
                   <tr id="tr3">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;" name="boardContent">
-                        </textarea>
+                        <textarea id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;" name="boardContent"></textarea>
                      </td>
                   </tr>      
                   <tr id="tr4">
@@ -75,6 +74,7 @@
 
             </table><br>
               <div id="btns">
+                  <button class="btn" type="button" onclick="location.href='list.fr'">목록으로</button>
                   <button class="btn" type="reset">취소</button>
                   <button class="btn">작성완료</button>
             </div>

@@ -8,9 +8,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
-import com.kh.www.freeBoard.model.vo.SearchCondition;
 
 @Repository
 public class FreeBoardDAO {
@@ -69,14 +69,18 @@ public class FreeBoardDAO {
 	}
 
 	public ArrayList<FreeBoard> selectSearchResultList(SqlSessionTemplate sqlSession, HashMap hm, PageInfo pi) {
-		hm.put("pi", pi);
+		int offset = (pi.getCurrentPage() -1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		System.out.println("selectSearchResultList : " + hm);
-		return (ArrayList)sqlSession.selectList("freeMapper.selectSearchResultList", hm);
+		return (ArrayList)sqlSession.selectList("freeMapper.selectSearchResultList", hm, rowBounds);
 	}
 
-	public ArrayList<FreeBoard> selectSortResultList(SqlSessionTemplate sqlSession, HashMap hm) {
+	public ArrayList<FreeBoard> selectSortResultList(SqlSessionTemplate sqlSession, HashMap hm, PageInfo pi) {
+
+		int offset = (pi.getCurrentPage() -1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		System.out.println("selectSortResultList : " + hm);
-		return (ArrayList)sqlSession.selectList("freeMapper.selectSortResultList", hm);
+		return (ArrayList)sqlSession.selectList("freeMapper.selectSortResultList", hm, rowBounds);
 	}
 
 	public int deleteReply(SqlSessionTemplate sqlSession, int rNo) {
@@ -85,6 +89,10 @@ public class FreeBoardDAO {
 
 	public int modifyReply(SqlSessionTemplate sqlSession, Comment c) {
 		return sqlSession.update("freeMapper.updateReply", c);
+	}
+
+	public ArrayList<Comment2> selectRereList(SqlSessionTemplate sqlSession, String boardNo) {
+		return (ArrayList)sqlSession.selectList("freeMapper.selectRereList", boardNo);
 	}
 
 

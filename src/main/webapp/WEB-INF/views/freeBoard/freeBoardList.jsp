@@ -278,7 +278,6 @@
 						<a href="${ pagenation }" id="present">${ p }</a> &nbsp;
 					</c:if>
 				</c:forEach>
-				
 				<!-- [다음] -->
 				<c:if test="${ pi.currentPage >= pi.maxPage }">
 					[다음]

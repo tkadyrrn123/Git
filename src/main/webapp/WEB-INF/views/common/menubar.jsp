@@ -132,6 +132,7 @@
 	});
 	
 	function connect(){
+		console.log(location.host);
 		var ws = new WebSocket("ws://"+location.host+"/www/Alert");
 		socket = ws;
 	    ws.onopen = function () {
