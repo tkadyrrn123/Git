@@ -307,7 +307,12 @@
 						<b>${Vote.vName}</b>
 					</div>
 					<div id="cdt_profile" style="float:left;display:inline;">
+						<c:if test="${!empty loginUser.userFile }">
 						<img class="comment2-1img" src="resources/uploadFiles/${loginUser.userFile}">
+						</c:if>
+						<c:if test="${empty loginUser.userFile }">
+						<img class="comment2-1img" src="resources/uploadFiles/normal.jpg">
+						</c:if>
 					</div>
 					<div class="dong">${writer.nickName}(${writer.aptDong})</div>
 					<div style="display:inline;"><i class="far fa-clock"></i> ${Vote.createDate }</div>
@@ -441,7 +446,12 @@
 			<!--투표중에는 댓글 작성 불가 -->
 			<div class="reply1_box">
 				<div id="cdt_profile" style="float: left; display: inline;">
+					<c:if test="${!empty loginUser.userFile }">
 					<img class="comment2-1img" src="resources/uploadFiles/${loginUser.userFile}">
+					</c:if>
+					<c:if test="${empty loginUser.userFile }">
+					<img class="comment2-1img" src="resources/uploadFiles/normal.jpg">
+					</c:if>
 				</div>
 				<div class="dong">${loginUser.nickName }(${loginUser.aptDong })</div>
 				<c:if test="${!check}">
