@@ -96,8 +96,8 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	}
 
 	@Override
-	public ArrayList<FreeBoard> selectSortResultList(HashMap hm) {
-		return fDAO.selectSortResultList(sqlSession, hm);
+	public ArrayList<FreeBoard> selectSortResultList(HashMap hm, PageInfo pi) {
+		return fDAO.selectSortResultList(sqlSession, hm, pi);
 	}
 
 	@Override

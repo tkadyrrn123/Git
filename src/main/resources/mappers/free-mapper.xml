@@ -162,14 +162,14 @@
 			join tb_board using(board_no)
             join tb_user using(user_id)
 		where board_delete = 'N' and apt_name = #{aptName} 
-		<if test="writer != null">
-			and nickname = #{writer}
+		<if test="sc.writer != null">
+			and nickname = #{sc.writer}
 		</if>
-		<if test="content != null">
-			and board_content like '%'|| #{content} || '%'
+		<if test="sc.content != null">
+			and board_content like '%'|| #{sc.content} || '%'
 		</if>
-		<if test="title != null">
-			and board_title like '%'|| #{title} || '%'
+		<if test="sc.title != null">
+			and board_title like '%'|| #{sc.title} || '%'
 		</if>
 	</select>
 	

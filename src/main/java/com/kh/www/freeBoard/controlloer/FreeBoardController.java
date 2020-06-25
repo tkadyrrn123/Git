@@ -94,8 +94,7 @@ public class FreeBoardController {
 		
 		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
 		
-		hm.put("pi", pi);
-		ArrayList<FreeBoard> list = freeService.selectSortResultList(hm);
+		ArrayList<FreeBoard> list = freeService.selectSortResultList(hm, pi);
 		
 		System.out.println("sort.fr의 정렬된 목록 : "+list);
 		

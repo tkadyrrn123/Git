@@ -69,14 +69,18 @@ public class FreeBoardDAO {
 	}
 
 	public ArrayList<FreeBoard> selectSearchResultList(SqlSessionTemplate sqlSession, HashMap hm, PageInfo pi) {
-		hm.put("pi", pi);
+		int offset = (pi.getCurrentPage() -1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		System.out.println("selectSearchResultList : " + hm);
-		return (ArrayList)sqlSession.selectList("freeMapper.selectSearchResultList", hm);
+		return (ArrayList)sqlSession.selectList("freeMapper.selectSearchResultList", hm, rowBounds);
 	}
 
-	public ArrayList<FreeBoard> selectSortResultList(SqlSessionTemplate sqlSession, HashMap hm) {
+	public ArrayList<FreeBoard> selectSortResultList(SqlSessionTemplate sqlSession, HashMap hm, PageInfo pi) {
+
+		int offset = (pi.getCurrentPage() -1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		System.out.println("selectSortResultList : " + hm);
-		return (ArrayList)sqlSession.selectList("freeMapper.selectSortResultList", hm);
+		return (ArrayList)sqlSession.selectList("freeMapper.selectSortResultList", hm, rowBounds);
 	}
 
 	public int deleteReply(SqlSessionTemplate sqlSession, int rNo) {
