@@ -1,309 +1,346 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
-<style>
-   #all{margin-top: 20px;}
-	#menu{width:50%; margin-left: 222px; font-size:30px; font-weight:bold;}
-	#line1{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px;}
-	#line2{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 228px;}
-	#line3{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 100px;}
-	.sellAll{width: 80%; margin: 40px 0px 0px 200px;}
-
-	#content1{width: 80%; margin-left:100px;}
-	#content2{width: 80%; margin-left:100px;}
-	#content3{width: 65%; margin-left:100px;}
-	#content4{width: 65%; margin-left:100px;} 
-	#content5{width: 61.8%; margin-left:150px;} 
-
-	#title{font-size:30px; width: 50%; font-weight:bold; margin-top: 20px; display: inline-block; margin-left: 130px;} 
-	#hit{display: inline-block; width: 15%; text-align:center; } 
-	#date{display: inline-block; width: 15%; text-align:right; }
-	
-	#sellPic{width: 49%; height: 400px; margin-left: 70px; margin-top: 20px; display: inline-block; float:left;}
-	#img{margin-left : 100px; width: 60%} 
-	
-	
-	#itemName{display: inline-block; font-size: 30px; font-weight:bold; margin-top: 35px; margin-right: 420px;}
-	#price{display: inline-block;  margin-top:30px; width:45%; margin-left: 20px;}
-	
-	#name{display: inline-block; margin-top: 30px; margin-left: 20px;}  
- 	#sellContent{margin-left: 0px; width: 80%; margin-left: 190px; min-height: 200px; border:none; font-size: 16px;}
- 	textarea{ resize:none;}
- 	textarea:focus {outline: none;}
- 	#btn{float:right; margin: 20px 200px 0px 0px;}
- 	.btn{margin-left:10px;
- 	 border: 1px solid #ccccce;
-	    border-radius: 6px;
-	    background-color: #fff;
-	    font-weight: 500;
-	    color: #666;
-	    cursor: pointer;
-	    font-size: 12px;
-	    padding: 7px;
-	    width: 65px;} 
-	.btn:hover{background:skyblue;}
- 	#replyInput{width:80% ; margin: 100px 0px 0px 200px; border: 1px solid black; height: 184px; } 
- 	#rWrite{border: 1px solid black; width: 75%; margin: 0px 0px 0px 30px; height:100px;}  
- 	 
- 	#rProfile{width: 40px; hieght:40px;}
- 	#rImg{ border-radius: 10%;  width: 100%; height:100%; }  
- 	#info{display: inline-block;  height:50px; margin-left: 30px; width:80%;}
- 	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
- 	.info{display: inline-block;} 
- 	#insertBtn{width: 70px;  margin-top: 20px;} 
- 	
- 	
- 	#reply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; }  
- 	#rreply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; }  
- 	#rContent{width: 75%; margin: 20px 0px 0px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
- 	#rUpdateBtn{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 500px;}  
- 	#rDeleteBtn{width: 70px;  vertical-align: middle; margin-top: 20px;}  
- 	#rUpdateBtn2{width: 70px;  vertical-align: middle; margin-top: 20px; margin-left: 457px;}  
- 	#replyDate{width: 12%; font-size: 12px; color: gray; /**margin-left: 70px; margin-top: -20px ;**/}
- 	#replyBtn{margin: 10px 0 10px 60px;}
- 	.likeBtn{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
- 	.likeBtn2{margin-left: 745px; width: 3%; height:3%; vertical-align: middle; display:none;} 
- 	
- 	#likeBtn3{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display: inline-block;}  
- 	#likeBtn4{margin-left: 698px; width: 3%; height:3%; vertical-align: middle; display:none;}  
- 	#likeImg{width: 100%; height:100%; }  
- 	#likeImg2{width:100%; height:100%;}  
- 	.likeCount{display: inline-block;    vertical-align: sub; margin-left: 10px;}  
- 	
-	.img{width:100%; height:400px;}
-	.header_wrap{background-color:rgba(0, 0, 0, 0.5); width:100%; height: 400px;position:absolute;top:0;}
-	#headcomment{
-	position: absolute;
-	left: 45%;
-	top: 220px;
-	color: white;
-	font-size: 1.5em;}
-</style> 
- 
-  
-
+<title>HOUSTORY</title>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/css/marketDetail.css"> 
 
 </head>
 <body>
+
+	<script> 
+	var j = $.noConflict(true); // $.noConflict(true) 를 사용해서 $ -> 변수로 선언한 j로 바꾸니 해결!
+	j(document).ready(function(){ 
+	    var main = j('.bxslider').bxSlider({ 
+	    mode: 'fade', 
+	    auto: true,	//자동으로 슬라이드 
+	    controls : true,	//좌우 화살표	
+	    autoControls: true,	//stop,play 
+	    pager:true,	//페이징 
+	    pause: 3000, 
+	    autoDelay: 0,	
+// 	    slideWidth: 600, 
+	    speed: 600, 
+	    stopAutoOnclick:true
+	}); 
+	
+	j(".bx-stop").click(function(){	// 중지버튼 눌렀을때 
+	    main.stopAuto(); 
+	    j(".bx-stop").hide(); 
+	    j(".bx-start").show(); 
+	    return false; 
+	}); 
+	
+	j(".bx-start").click(function(){	//시작버튼 눌렀을때 
+	    main.startAuto(); 
+	    j(".bx-start").hide(); 
+	    j(".bx-stop").show(); 
+	    return false; 
+	}); 
+	
+	j(".bx-start").hide();	//onload시 시작버튼 숨김. 
+	}); 
+	</script>
 	
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
 	
 	<img class="img" src="resources/images/market6.jpg">
 	<div class="header_wrap">
 	<jsp:include page="../common/menubar.jsp"/>
-	<b id="headcomment">중고 장터</b>
+	<b id="headcomment">중고장터</b>
 	</div>
-	
 	<div id= all>
-		<div id="content1">
-			<div id="title">
-				물건 싸게 팔아요 S급 1번 밖에 안썼어요~~
-			</div>
-			<div id="line1"></div>
-			
-			<div id="date" >
-				게시글 등록일 : 
-			</div>
-			
-			<div id="hit">
-				조회수 : 
-			</div>
-
-			
+			<div id="itemName">${ma.boardTitle}</div>
+			<div id="hit">조회수 : ${ ma.boardCount }</div>
+			<div id="date">등록일 : ${ ma.createDate } </div>
+			<div id="name">작성자 : ${ma.nickName}</div>
+ 			<div id="line1"></div> 
 			<div id=sellPic>
-				<img id=img src="${ pageContext.servletContext.contextPath }/resources/images/01.png"/>
+				<c:if test="${empty ma.fileName}">
+					<img id=img src="resources/images/basicMarket.jpeg"/>
+				</c:if>
+				<c:if test="${!empty ma.fileName}">
+					<div class="bxslider">
+						<c:forEach var="i" items="${ma.fileName}" varStatus="is">
+							<img id=img src="resources/marketUploadFiles/${ fileArr[is.index] }"/>
+						</c:forEach>
+					</div>
+				</c:if>
 			</div>
-			
-			
-			
-			<div id="itemName">
-				레미안 석관 아파트
+			<div class="content_wrap">
+				<div id="price">가격 : ${ma.price}</div>			
+				<div id="content2">${ ma.boardContent }</div>
 			</div>
-			
-			<div id="price">
-				5억
-			</div>			
-			
-			<div id="name">
-				닉네임
-			</div>
-			
-			
-			
-
-		</div>
 		
-			<div id="line2"></div>
-		<div id="content2">
-			<textarea id="sellContent" readonly>
-			
-구입일 - 2020년 1월 24일
-애플케어 - 2022년 1월 24일
-외상 - X
-내부문제 - X
-셀룰러 - O
-
-댓글에 번호 또는 카톡 아이디 써주세요
-			</textarea>
-			
-			
-			
-
-		</div>
-		
-		
-			
-		<div id="line3"></div>
+		<div id="line2"></div>
+		<c:url var="deleteMarket" value="deleteMarket.ma">
+			<c:param name="boardNo" value="${ma.boardNo}"/>
+		</c:url>
+		<c:url var="updateView" value="updateView.ma">
+			<c:param name="boardNo" value="${ma.boardNo}"/>
+			<c:param name="page" value="${page}"/>
+		</c:url>
 		
 		<div id="btn">
-				<button class="btn" id="updateBtn">수정</button>
-				<button class="btn" id="deleteBtn">삭제</button>
-				<button class="btn" id="listBtn">목록</button>
+				<button class="btn_standard" id="updateBtn" onclick="location.href='${updateView}'">수정</button>
+				<button class="btn_standard" id="deleteBtn">삭제</button>
+				<button class="btn_standard" id="listBtn" onclick="location.href='market.ma'" >목록</button>
 		</div>
-		
-		
 		
 		<!--  댓글 작성  -->
 		<div id="content3">
 			<div id="replyInput">
 				<div id="info">
-					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
-					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="rHo">(202호)</div>
+					<c:if test="${!empty loginUser.userFile}">
+					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${loginUser.userFile}"></div>
+					</c:if>
+					<c:if test="${empty loginUser.userFile}">
+					<div class="info"  id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+					</c:if>
+					<div class="info"  id="rWriter">${loginUser.nickName}</div>
 				</div>
-				<button class="btn" id="insertBtn">댓글 등록</button>
+				<button class="reply1_btn" id="insertBtn">댓글 등록</button>
 
-				<textarea id="rWrite" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
-				<span style="color:#aaa;" id="counter">(0 / 최대 200자)</span>
+				<textarea id="rWrite" class="reply_TEXT" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; "  required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
+				<span style="color:#aaa;" class="counter">(0 / 최대 200자)</span>
 			</div>
 		</div> 
 		
 		
-		
 		<!--  댓글   -->
-		 <div id="content4">
-			<div id="reply">
-				<div id="info2">
-					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
-					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="rHo">(202호)</div>
-					<div class="info"  id="replyDate">2020-05-27 03:03</div>
-					<button class="btn" id="rUpdateBtn">수정</button> 
-					<button class="btn" id="rDeleteBtn">삭제</button> 
-				</div>
-				<div width="100%">
-					<textarea id="rContent"  readonly>010-1234-5678 쪽으로 연락 주세요</textarea>
-				</div> 
-				<div>
-					<button class="btn" id="replyBtn">답글</button>
-					<div class="likeBtn" id="likeBtn1">
-						<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like.png">
-					</div>
-					<div class="likeBtn2" id="likeBtn2">
-						<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like2.png">
-					</div>
-					<div class="likeCount">0</div>
-				</div>
-			</div>
+		 <div class="rOuter">
 		</div>
 		
 		<div id="content5">
-			<div id="rreply">
+			<c:forEach var="a" items="${comment2}" varStatus="status">
+			<c:if test="${a.rNo eq b.rNo }">
+			<div class="rreply" id="rreply${ status.index }">
 				<div id="info2">
-					<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/images/01.png"></div>
-					<div class="info"  id="rWriter">작성자</div>
-					<div class="info"  id="rHo">(202호)</div>
-					<div class="info"  id="replyDate">2020-05-27 03:03</div>
-					<button class="btn" id="rUpdateBtn2">수정</button> 
-					<button class="btn" id="rDeleteBtn">삭제</button> 
+					<c:if test="${!empty a.userFile }">
+						<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${a.userFile}"></div>
+					</c:if>
+					<c:if test="${empty a.userFile }"> 
+						<div class="info" id="rProfile"><img id="rImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>
+					</c:if>
+					<div class="info"  id="rWriter">${a.nickname}</div>
+					<div class="info"  id="rreplyDate">${a.rCreateDate}</div>
+					<c:if test="${loginUser.userId eq a.rUserId }">
+						<button type="button" class="btn" id="rrUpdateBtn">수정</button>
+						<button type="button" class="btn" id="rrDeleteBtn">삭제</button>
+						<div style="display:none">${a.rNo}</div>
+						<div style="display:none">${a.rrNo}</div>
+						<div style="display:none">${ status.index }</div>
+					</c:if>
 				</div>
-				<div width="100%">
-					<p id="rContent"  readonly>010-1234-5678 쪽으로 연락 주세요</p>
-				</div> 
-				<div>
-					<button class="btn" id="replyBtn">답글</button>
-					<div class="likeBtn" id="likeBtn3">
-						<img id="likeImg" src="${ pageContext.servletContext.contextPath }/resources/images/like3.png">
-					</div>
-					<div class="likeBtn2" id="likeBtn4">
-						<img id="likeImg2"  src="${ pageContext.servletContext.contextPath }/resources/images/like4.png">
-					</div>
-						<div class="likeCount">0</div>
-				</div>
+
+				<textarea class="rContent${ status.index }" id="rrContent" readonly >${a.rContent}</textarea>
 			</div>
+			</c:if>
+			</c:forEach>
+		</div>	
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-	
-	
-	
+		<jsp:include page="../common/Footer.jsp"/>
 	
 	
 	<script type="text/javascript">
 	
+		$('#deleteBtn').on('click',function(){
+			if(confirm("정말 삭제하시겠습니까?")){
+				location.href="${deleteMarket}";
+			}
+		});
+		
+	
 		/** 댓글 글자수 제한 **/
-		$('#rWrite').keyup(function (e){
-		    var content = $(this).val();
-		    $('#counter').html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
-	
-		    if (content.length > 200){
-		        alert("최대 200자까지 입력 가능합니다.");
-		        $(this).val(content.substring(0, 200));
-		        $('#counter').html("(200 / 최대 200자)");
-		    }
-		}).keydown(function (e){
-			var content = $(this).val();
-		    $('#counter').html("("+content.length+" / 최대 200자)");    //글자수 실시간 카운팅
-	
-		    if (content.length > 200){
-		        alert("최대 200자까지 입력 가능합니다.");
-		        $(this).val(content.substring(0, 200));
-		        $('#counter').html("(200 / 최대 200자)");
-		    }
-		});
-		
-		
-		/** 댓글 창 높이 자동 조절 **/
-		$(function () {
-			
-		  $('#rContent').height(1).height( $('#rContent').prop('scrollHeight') - 20  );	
-		});
-		
-		$('.likeBtn').click(function(){
-			$(this).parent().children('.likeBtn2').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text(); 
-			count *= 1;
-			count = count + 1;
-			$(this).parent().children('.likeCount').text(count);
-		});
-		
-// 		$("#btn").eq(n);
-//  	$("ul li:nth-child(2)").append("<span> - 2nd!</span>");
+		$('.reply_TEXT').keyup(function (e){
+	    var content = $(this).val();
+	    $('#counter').html(content.length+"/200");//글자수 실시간 카운팅
 
+	    if (content.length > 200){
+	        alert("최대 200자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 200));
+	        $('#counter').html("200/200");
+	    }
+	});
 		
-		$('.likeBtn2').click(function(){
-			$(this).parent().children('.likeBtn').css('display','inline-block');
-			$(this).css('display','none');
-			var count = $(this).parent().children('.likeCount').text();
-			count *= 1;
-			count = count - 1;
-			$(this).parent().children('.likeCount').text(count);
+		/* 댓글 목록 조회*/
+   		$(function(){
+			getReplyList();
+		});	
+	
+	function getReplyList(){
+		var boardNo = ${ ma.boardNo };
+		
+		$.ajax({
+			url: 'rList.ma',
+			data: {boardNo:boardNo},
+			dataType: 'json',
+			success: function(data){
+				console.log(data);
+				$rOuter = $('.rOuter');
+				$rOuter.html('');
+				
+				var $div;
+				var $profileImg;
+				var $nickname;
+				var $rContent;
+				var $rCreateDate;
+				var $noprofileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/normal.jpg>');	
+			
+				 
+				if(data.length > 0){
+					for(var i in data){
+						$div = $('<div class="reply2_box">');
+						$div2 = $('<div class="info2">');
+						
+						if(data[i].userFile != null){
+						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/uploadFiles/'+	data[i].userFile +'">');																
+						} else {
+						$profileImg = $('<img class="profileImg" src="${ contextPath }/resources/images/로고.png">');
+						}
+						
+						$nickname = $('<div class="nickname" id="nickname" style="display: inline-block; margin: 7px;">').text(data[i].nickname);
+						$rContentdiv = $('<div>')
+						$rContent = $('<textarea onkeyup="plus('+ data[i].rNo +');"class="rContent'+data[i].rNo+'" readonly style="border-radius: 5px; border: 1px solid black; margin-left:10px; padding:2px; resize:none; width: 78%; min-height: 100px; outline:none; ">').html(data[i].rContent);
+						
+						$rCreateDate = $('<div class="rCreateDate" style="display:inline-block;">').text(data[i].rCreateDate);
+						$rDBtn = $('<input type="button" class="delete_btn" id="dBtn'+data[i].rNo+'" onclick="deleteR('+ data[i].rNo +');" value="삭제">');
+						$rMBtn = $('<input type="button" class="modify_btn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +', this);" value="수정">');
+						
+
+						$div.append($profileImg);
+
+						$div.append($nickname);		
+						$div.append($rCreateDate);
+						
+						if('${loginUser.nickName}' == data[i].nickname){
+							$div.append($rDBtn);
+							$div.append($rMBtn);
+						}
+						
+						$div.append($rContentdiv);
+						$rContentdiv.append($rContent);
+						
+						console.log(data[i].nickname);
+						
+						
+						$div.append($div2);
+						$rOuter.append($div);						
+					}
+				} else{
+					$div = $('<div class="reply2_box">');
+					$rContent = $('<div class="rContent">').text('댓글 없음');
+					
+					$div.append($rContent);
+					$rOuter.append($div);
+				} 
+			}
 		});
+
+	}
+	
+	
+	/* 댓글 추가 ajax */
+		$('#insertBtn').on('click', function(){
+			var userId = '${ loginUser.userId }';
+			var boardNo = ${ ma.boardNo };
+			var content = $('#rWrite').val();  			
+			$.ajax({
+				url: 'insertComment.co',
+				data: {userId:userId, boardNo:boardNo, content:content},
+				success: function(data){
+					document.location.reload(true);
+				}
+			});
+		})
+		
+		
+	/* 댓글 수정 */  		
+		 	function modifyR(rNo, e){
+	 	//	alert(rNo);
+		$('.rContent'+rNo).prop('readonly', false);
+		$('.rContent'+rNo).css('border-color', 'pink');
+		
+		var save1 ="";
+	
+		if($('#mBtn'+rNo).val() == '수정'){
+			save1 = $(e).parent().find('textarea').text();
+			console.log("값"+save1);
+			
+			
+	//	 	$('#mBtn'+rNo).val('완료');
+		 	$('#mBtn'+rNo).val('수정취소');
+		 	
+		 	$div = $(".reply2_box");
+			$ok = $('<input type="button" class="mdBtn" onclick="modifyRup('+rNo+')" value="수정완료">');
+		 	$(e).parent($div).append($ok);
+		 	
+		 	var counter = '<div style="color:#aaa; float: right;" id="counter'+rNo+'">(0/200자)</div>';
+		 	$(e).next().after(counter);
+		 	var content = $(e).prev().find('textarea').text();
+		 	console.log(content.length);
+		 	$('#counter'+rNo).html(content.length+"/200");
+		 	
+			$('#dBtn'+rNo).hide();
+		}else if($('#mBtn'+rNo).val() == '수정취소'){
+			$('.rContent'+rNo).prop('readonly', true);
+			$(e).prev().find('textarea').val(save1);
+			console.log("값"+save1);
+			console.log($(e).prev().find('textarea'));
+			getReplyList();
+		}
+	}
+	
+		function modifyRup(rNo){
+			var bno = ${ ma.boardNo };
+		 	var rContent = $('.rContent'+rNo).val();
+		 	
+		 	$.ajax({
+		 		url: 'updateComment.co',
+		 		data: {bno:bno, rContent:rContent, rNo:rNo},
+		 		success: function(data){
+		 			if(data == 'success'){
+		 				getReplyList();
+		 			}
+		 		}
+		 	});	 		
+		}
+		
+		//댓글 수정시 글자 카운팅
+		 function plus(rNo){
+		    var content = $('.rContent'+rNo).val();
+		    console.log(content);
+		    $('#counter'+rNo+'').html(content.length+"/200");//글자수 실시간 카운팅
+
+		    if (content.length > 200){
+		        alert("최대 200자까지 입력 가능합니다.");
+		        $(this).val(content.substring(0, 200));
+		        $('#counter'+rNo+'').html("200/200");
+		    }
+		} 
+		 
+		// 댓글 삭제
+			function deleteR(rNo){
+				$.ajax({
+					url: 'deleteVoteComment.co',
+					data: {rNo:rNo},
+					success: function(data){
+						if(data == 'success'){
+							alert('확인을 누르면 삭제가 완료됩니다.');
+							getReplyList();
+						}
+					}
+				});
+			}
+		
+		
 	</script> 
 
 </body>
