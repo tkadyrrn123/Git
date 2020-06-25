@@ -16,22 +16,34 @@
 	#hit{display: inline-block; width: 7%; float:right; margin-top: 30px; margin-right: 160px;} 
 	#date{display: inline-block; width: 8%; float:right; margin:30px 20px 0 0}
 	
-	#sellPic{width: 26%; 
+	#sellPic{width: 27%; 
 			 height: 400px; 
-			 margin-left : 200px; 
+			 margin-left : 240px; 
 			 margin-top: 20px; 
 			 margin-bottom: 20px; 
 			 display: inline-block;}
- 	#img{margin-left : 130px; width: 100%} 
+ 	#img{width: 100% !important; height: 500px;} 
 	#itemName{display: inline-block; font-size: 30px; color: #474561; font-weight:bold;margin-left: 220px; margin-top:20px;}
 
 	.content_wrap{display:inline-block;
 				  vertical-align:top;
 				  width: 40%;
-				  margin-top:20px;
-				  margin-left:200px;
+				  margin-top:40px;
+				  margin-left:150px;
 				  font-size:1.5em;}
 	.content_wrap>div{margin-bottom:20px;}
+	
+	.btn_standard {
+			    border: 1px solid #dad4d4;
+			    border-radius: 6px;
+			    background-color: #fff;
+			    font-weight: 500;
+			    color: #666;
+			    cursor: pointer;
+			    font-size: 12px;
+			    padding: 12px;
+				}
+	.btn_standard:hover{font-weight:900;}
 	
 	#name{display: inline-block; margin-top: 30px; float:right; margin-right: 50px;}  
  	#sellContent{width: 80%; min-height: 200px; border:none; font-size: 16px;}
@@ -41,15 +53,17 @@
 	.reply1_box{width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
 	.comment2-1img{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
 	.dong{line-height: 50px; display: inline; margin-left: 10px; margin-right: 10px;}
-	.reply1_btn{float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
+	.reply1_btn{margin-right: 25px; float:right; width:70px; height:25px; background-color:lightgray; color:black; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
 	.reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
+/* 	.counter{color:#aaa; float: right; margin-top: 55px; margin-right: 15px;} */
 
 	/* 원댓글  */	
-	.reply2_box{width: 800px; height: auto; margin-left: 100px; margin-top: 8px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: solid; border-color: rgb(201, 232, 255);}
+	.reply2_box{width: 80%; height: auto; margin-left: 200px; margin-top: 8px; padding:10px 20px;border: solid; border-color: rgb(201, 232, 255);}
 	.reply2_box_btn{cursor: pointer; float: right; margin-top: 15px; margin-right: 15px; border:0;}
 	.reply2_box_btn2{cursor: pointer;margin-left: 10px; margin-top: 10px; margin-bottom: 10px;  border:0; outline:0;}
 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
-	
+	.modify_btn{margin-right: 25px; float:right; width:70px; height:25px; background-color:lightgray; color:black; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
+	.delete_btn{margin-bottom: 10px; float:right; width:70px; height:25px; background-color:lightgray; color:black; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
 	/* 대댓글  */	
 	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
  	
@@ -94,7 +108,7 @@
  		  width: 100%; 
  		  height:100%;}  
  	#rWriter{vertical-align: middle; 
- 			 margin-top: -28px; 
+ 			 margin-top: -8px; 
  			 margin-right: 10px; 
  			 margin-left:10px;
  			 width:7%;}

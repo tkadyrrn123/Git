@@ -154,15 +154,21 @@ public class MarketController {
 	@RequestMapping("marketDetail.ma")
 	public ModelAndView marketDetail(@RequestParam(value="boardNo",required=false) int boardNo, @RequestParam("page") int page, ModelAndView mv) {
 		Market ma = marketService.selectMarketList(boardNo);
+		String filenames = ma.getFileName();
+//		filenames = filenames.substring(0, filenames.length()-1);
+		String[] fileArr = filenames.split(",");
+		
+		System.out.println("detail : " + filenames);
+		System.out.println(Arrays.toString(fileArr));
 		
 		if(ma != null) {
 			mv.addObject("ma",ma)
 			  .addObject("page",page)
+			  .addObject("fileArr", fileArr)
 			  .setViewName("marketDetail");
 		} else {
 			throw new MarketException("상세글 조회에 실패했습니다.");
 		}
-		
 		return mv;
 	}
 	

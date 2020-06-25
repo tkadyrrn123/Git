@@ -44,7 +44,6 @@
                   <tr id="tr5">
                      <td class="td1">물품사진</td>
                      <td>
-                     	<div style="margin-left:20px; margin-bottom:3px; margin-top:3px; font-size: 0.9em;"><a style="color:black; cursor:pointer;" onclick="">${ ma.fileName }</a></div>
                   		<input name="reloadFile" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
                      </td>
                   </tr>      
