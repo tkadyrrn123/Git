@@ -190,6 +190,7 @@
 	var BoardWriter = '${ fb.userId }';
 	
 	$(function(){
+		if(replyWriter != BoardWriter){
 			$('#rSubmit').on('click', function(evt) {
 				  evt.preventDefault();
 			  	if (socket.readyState !== 1) return;
@@ -200,8 +201,10 @@
 			    		  console.log(socketMsg);
 			    		  socket.send(socketMsg);
 			    	  }
-			    });
-		});
+		    });
+		}
+	});
+	
 	</script>
 	
 	
