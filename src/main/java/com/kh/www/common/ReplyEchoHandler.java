@@ -32,10 +32,6 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println("handleTextMessage:" + session +" : "+ message);
-		String senderId = getId(session);
-//		for(WebSocketSession sess : sessions) {
-//			sess.sendMessage(new TextMessage(senderId + " : " + message.getPayload()));
-//		}
 		String msg = message.getPayload();
 		if(!StringUtils.isEmpty(msg)) {
 			String[] strs = msg.split(",");

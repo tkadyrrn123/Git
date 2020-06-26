@@ -667,7 +667,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 					<tr>
 						<td>
 							<p><em>*</em> 비밀번호</p>
-							<input type="text" id="pwd" name="pwd" autocomplete=off>
+							<input type="password" id="pwd" name="pwd" autocomplete=off>
 							<label id="pwdmsg"></label>
 							<input type="hidden" id="pwdchk" value="0"/>
 						</td>
@@ -675,7 +675,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 					<tr>
 						<td>
 							<p><em>*</em> 비밀번호 확인</p>
-							<input type="text" id="pwd2" name="pwd2" autocomplete=off>
+							<input type="password" id="pwd2" name="pwd2" autocomplete=off>
 							<label id="pwdchkmsg"></label>
 							<input type="hidden" id="pwdchk2" value="0"/>
 						</td>
@@ -813,7 +813,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 					<tr>
 						<td>
 							<p><em>*</em> 비밀번호</p>
-							<input type="text" id="adminpwd" name="adminpwd" autocomplete=off>
+							<input type="password" id="adminpwd" name="adminpwd" autocomplete=off>
 							<label id="adminpwdmsg"></label>
 							<input type="hidden" id="adminpwdchk" value="0"/>
 						</td>
@@ -821,7 +821,7 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 					<tr>
 						<td>
 							<p><em>*</em> 비밀번호 확인</p>
-							<input type="text" id="adminpwd2" name="adminpwd2" autocomplete=off>
+							<input type="password" id="adminpwd2" name="adminpwd2" autocomplete=off>
 							<label id="adminpwdchkmsg"></label>
 							<input type="hidden" id="adminpwdchk2" value="0"/>
 						</td>
