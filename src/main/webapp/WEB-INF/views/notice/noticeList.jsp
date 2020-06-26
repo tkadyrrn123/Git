@@ -47,6 +47,7 @@
 	#notice_page_tb a{color:rgb(139, 134, 134);}	
  	#notice_list_tb thead tr td{background-color:#eff3f9;}
 	#notice_list_tb tbody tr:nth-child(even){background-color:#eff3f9;}
+	#notice_page_tb td{border-bottom: 0;}
 	
 	/*페이징 버튼  */
 	.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
