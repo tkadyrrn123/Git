@@ -137,6 +137,7 @@
 								$li = $('<li>');
 								$no = $('<b class="li" style="width: 10%;">').text(data[i].boardNo);
 								$cName = $('<b class="li" style="width: 55%; cursor: pointer;" onclick="clubDetail(' + "'" + data[i].clubName + "'," + data[i].boardNo + ');">').text(data[i].clubName);
+								
 								if(data[i].endYn == 'N'){
 									$cEnd = $('<b class="li" style="width: 35%;">').text("모집중");
 								}else if(data[i].endYn == 'Y'){
