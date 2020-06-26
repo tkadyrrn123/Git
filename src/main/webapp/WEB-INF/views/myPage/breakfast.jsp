@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>HOUSTORY</title>
+<title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 /*-- POPUP common style S --*/

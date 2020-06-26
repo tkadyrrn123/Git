@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>HOUSTORY</title>
+<title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <style>
 	 body{min-height: 100%; letter-spacing: -1px; position: relative;}
 	.back{border: 1px solid black; height: 60%;}

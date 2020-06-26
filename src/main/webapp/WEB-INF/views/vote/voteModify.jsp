@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>HOUSTORY</title>
+<title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <style type="text/css">
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavender;}
    h5{ margin: 0 auto;}

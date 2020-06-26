@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>메인</title>
+<link rel=" shortcut icon" href="resources/images/favicon.png">
+<link rel="icon" href="resources/images/favicon.png">
 <link rel="shortcut icon" href="#">
 <link rel="stylesheet" href="resources/css/select.css" />
 <script src="https://kit.fontawesome.com/4d55e1ad7a.js" crossorigin="anonymous"></script>

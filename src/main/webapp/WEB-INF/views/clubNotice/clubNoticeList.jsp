@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>동호회 공지사항</title>
+<title>HOUSTORY</title>
+<link rel=" shortcut icon" href="resources/images/favicon.png">
+<link rel="icon" href="resources/images/favicon.png">
 <style>
 	.nbTitle{color: black !important;}
 	.nbTitle:visited{color: gray !important;}    
