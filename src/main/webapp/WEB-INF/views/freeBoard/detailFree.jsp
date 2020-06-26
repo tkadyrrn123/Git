@@ -14,7 +14,7 @@
      width: 100%;
      height: 400px;
 }
-	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-top: 185px; margin-bottom: 50px; padding-bottom: 50px;}
+	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-top: 70px; margin-bottom: 50px; padding-bottom: 50px;}
 	#detailContent {width: 900px; height: 95px;}
 	.detailTable{margin: auto; text-align: center; border-collapse: collapse;}
   	.detailTable th{border-bottom: 1px solid lightgray; width:70px;}
@@ -170,7 +170,7 @@
 				<tbody></tbody>
 			</table>								
 			<!-- 대 댓글 -->			
-			<div class="reply3_box">
+<%-- 			<div class="reply3_box">
 				<div id="cdt_profile" style="float: left; display: inline;">
 					<img class="profileImg"src="${ contextPath }/resources/images/로고.png">
 				</div>
@@ -180,7 +180,7 @@
 				<div style="margin-left: 10px;">와! 이런식으로 어쩌구 저쩌구한 투표결과를 보니 좋네요!</div>
 				<div style="margin-left: 10px; color: gray;">2020.2.29. 19:16</div>
 				<input type="button" value="답글" class="reply2_box_btn2">
-			</div>
+			</div> --%>
 		</form>
 	</div>
 	<script>
@@ -190,6 +190,7 @@
 	var BoardWriter = '${ fb.userId }';
 	
 	$(function(){
+		if(replyWriter != BoardWriter){
 			$('#rSubmit').on('click', function(evt) {
 				  evt.preventDefault();
 			  	if (socket.readyState !== 1) return;
@@ -200,8 +201,10 @@
 			    		  console.log(socketMsg);
 			    		  socket.send(socketMsg);
 			    	  }
-			    });
-		});
+		    });
+		}
+	});
+	
 	</script>
 	
 	
@@ -292,7 +295,7 @@
 						
 						$nickname = $('<div class="nickname" id="nickname" style="display: inline-block;">').text(data[i].nickname);
 						$rContentdiv = $('<div>')
-						$rContent = $('<textarea onkeyup="plus('+ data[i].rNo +');"class="rContent'+data[i].rNo+'" readonly style="resize:none; width: 100%; min-height: 100px; outline:none; ">').html(data[i].rContent);
+						$rContent = $('<textarea onkeyup="plus('+ data[i].rNo +');"class="rContent'+data[i].rNo+'" readonly style="resize:none; width: 100%; min-height: 100px; outline:none; border-color: #f3f2f2;">').html(data[i].rContent);
 						
 						$rCreateDate = $('<div class="rCreateDate" style="margin-left: 680px;">').text(data[i].rCreateDate);
 						$rMBtn = $('<input type="button" class="mdBtn" id="mBtn'+data[i].rNo+'" onclick="modifyR('+ data[i].rNo +', this);" value="수정">');
@@ -314,7 +317,7 @@
 							$div.append($rDBtn);
 						}
 						
-						$div.append($rereBtn);
+					//	$div.append($rereBtn);
 						console.log(i);
 						
 		// 대댓 목록
@@ -520,5 +523,6 @@
       	        }
      });
 	</script>
+	<jsp:include page="../common/Footer.jsp"/>	
 </body>
 </html>

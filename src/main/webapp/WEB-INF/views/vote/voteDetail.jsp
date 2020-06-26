@@ -307,7 +307,12 @@
 						<b>${Vote.vName}</b>
 					</div>
 					<div id="cdt_profile" style="float:left;display:inline;">
+						<c:if test="${!empty loginUser.userFile }">
 						<img class="comment2-1img" src="resources/uploadFiles/${loginUser.userFile}">
+						</c:if>
+						<c:if test="${empty loginUser.userFile }">
+						<img class="comment2-1img" src="resources/uploadFiles/normal.jpg">
+						</c:if>
 					</div>
 					<div class="dong">${writer.nickName}(${writer.aptDong})</div>
 					<div style="display:inline;"><i class="far fa-clock"></i> ${Vote.createDate }</div>
@@ -399,6 +404,7 @@
 												<c:set var="Votes" value="0"/>
 												
 												<!-- 내가 투표했는지 확인하고 몇명이 했는지 확인하는 부분 -->
+												<c:if test="${vInlist != null && !vInlist.isEmpty() }">
 												<c:forEach var="j" begin="0" end="${vInlist.size()-1}">
 													<c:if test="${(vInlist[j].userId eq loginUser.userId) and (vclist[i].vcId eq vInlist[j].vcId)}">
 														<a class="change-view-link" style="color:blue;">
@@ -410,6 +416,7 @@
 														<c:set var="Votes" value="${Votes+1}"/>
 													</c:if>
 												</c:forEach>
+												</c:if>
 												<c:set var="percent" value="${ Math.round(Votes / invoteMax * 100) }"/>
 											</span>
 											</span> <span class="poll-result"> <span class="poll-percentage">
@@ -439,7 +446,12 @@
 			<!--투표중에는 댓글 작성 불가 -->
 			<div class="reply1_box">
 				<div id="cdt_profile" style="float: left; display: inline;">
+					<c:if test="${!empty loginUser.userFile }">
 					<img class="comment2-1img" src="resources/uploadFiles/${loginUser.userFile}">
+					</c:if>
+					<c:if test="${empty loginUser.userFile }">
+					<img class="comment2-1img" src="resources/uploadFiles/normal.jpg">
+					</c:if>
 				</div>
 				<div class="dong">${loginUser.nickName }(${loginUser.aptDong })</div>
 				<c:if test="${!check}">

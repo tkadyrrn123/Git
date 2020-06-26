@@ -45,7 +45,7 @@
 
 <jsp:include page="../common/menubar.jsp"/>
 <div id="body">
-      <h2>&nbsp;자유게시판</h2>
+      <h3>&nbsp;자유게시판</h3>
       <!-- <hr style="width: 80%; margin-left: 11%"><br> -->
 
          <form action="insert.fr" method="post" enctype="Multipart/form-data">
@@ -56,13 +56,13 @@
                 <tr id="tr2">
                    <td class="td1">제목</td>
                      <td>
-                        <input id="titleInput" type="text" placeholder="제목을 입력하세요" size="90" name="boardTitle">
+                        <input id="titleInput" type="text" placeholder="제목을 입력하세요" size="90" name="boardTitle" required>
                      </td>
                   </tr>
                   <tr id="tr3">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;" name="boardContent"></textarea>
+                        <textarea id="content" placeholder="내용 입력하세요 " style="margin-left: 20px;" name="boardContent" required></textarea>
                      </td>
                   </tr>      
                   <tr id="tr4">

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.clubNotice.model.vo.ClubNotice;
+import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
 import com.sun.xml.internal.bind.v2.runtime.NameList;
 
@@ -89,6 +90,26 @@ public class CNoticeDAO {
 	//동호회 공지사항 정렬 리스트 가져오기
 	public ArrayList<ClubNotice> selectSortCondition(SqlSessionTemplate sqlSession, HashMap map) {
 		return (ArrayList)sqlSession.selectList("ClubNoticeMapper.selectSortCondition", map);
+	}
+	
+	//댓글등록
+	public int insertNoticeComment(SqlSessionTemplate sqlSession, Comment nc) {
+		return sqlSession.update("ClubNoticeMapper.insertNoticeComment",nc);
+	}
+	
+	//댓글리스트 가져오기
+	public ArrayList<Comment> NoticeCommentList(SqlSessionTemplate sqlSession, int cnNo) {
+		return (ArrayList)sqlSession.selectList("ClubNoticeMapper.NoticeCommentList", cnNo);
+	}
+	
+	//댓글 수정
+	public int commentUpdate(SqlSessionTemplate sqlSession, Comment comment) {
+		return sqlSession.update("ClubNoticeMapper.updateNoticeComment",comment);
+	}
+
+	//댓글 삭제
+	public int commentUpdate(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("ClubNoticeMapper.deleteNoticeComment",rNo);
 	}
 
 	

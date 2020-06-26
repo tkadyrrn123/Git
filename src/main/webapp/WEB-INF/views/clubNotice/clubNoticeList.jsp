@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>동호회 공지사항</title>
 <style>
+	.nbTitle{color: black !important;}
+	.nbTitle:visited{color: gray !important;}    
+
 	* { box-sizing: border-box; }
 	.commnuity_header { position: absolute;
 						left: 46%;
@@ -47,6 +50,7 @@
 	#notice_page_tb a{color:rgb(139, 134, 134);}	
  	#notice_list_tb thead tr td{background-color:#eff3f9;}
 	#notice_list_tb tbody tr:nth-child(even){background-color:#eff3f9;}
+	#notice_page_tb td{border-bottom: 0;}
 	
 	/*페이징 버튼  */
 	.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
@@ -195,7 +199,7 @@
             <thead>
                 <tr id="notice_tr">
                     <td style="width: 7%;">번호</td>
-                    <td class="dong" style="width: 9%;">동호회명</td>
+                    <td class="dong" style="width: 15%;">동호회명</td>
                     <td class="btitle">제목</td>
                     <td style="width: 10%;">작성자</td>
                     <td style="width: 11%">등록일</td>
@@ -214,7 +218,7 @@
 							<c:param name="cnNo" value="${ cn.cnNo }"/>
 							<c:param name="page" value="${ pi.currentPage }"/>
 						</c:url>
-						<a href="${ cndetail }">${ cn.cnTitle }</a>
+						<a href="${ cndetail }" class="nbTitle">${ cn.cnTitle }</a>
                     </td>
                     <td align="center">${ cn.cnoticeNickname }</td>
                     <td align="center">${ cn.cnCreateDate }</td>

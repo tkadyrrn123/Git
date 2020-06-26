@@ -80,7 +80,7 @@
 				<c:forEach var="i" begin="0" end="${blist.size()-1}">
 					<tr>
 						<td>${blist[i].boardNo}</td>
-						<td class=bTitle onclick="boardDetail(${blist[i].boardNo}, '${blist[i].type}', '${blist[i].cName }');">${blist[i].cName } </td>
+						<td class=bTitle onclick="boardDetail(${blist[i].boardNo}, '${blist[i].type}', '${blist[i].cName }');">${blist[i].boardTitle } </td>
 						<td>${blist[i].createDate}</td>
 						<td>${blist[i].type}</td>
 					</tr>

@@ -132,7 +132,6 @@
 	});
 	
 	function connect(){
-		console.log(location.host);
 		var ws = new WebSocket("ws://"+location.host+"/www/Alert");
 		socket = ws;
 	    ws.onopen = function () {
@@ -149,10 +148,10 @@
 	
 	    ws.onclose = function (event) { 
 	    	console.log('Info: connection closed.'); 
-// 	    	setTimeout( function(){ connect(); }, 1000); // retry connection!!
 	    };
 	    ws.onerror = function (err) { console.log('Error: ' + err); };
 	}
+	
 	//알림창 닫기   
 	$('#socketMsg #cBtn').click(function(){
 		$('#socketMsg').fadeOut();

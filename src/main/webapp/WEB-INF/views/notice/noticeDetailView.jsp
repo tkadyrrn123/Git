@@ -152,8 +152,14 @@
 		<!-------------댓글 작성  끝------------>
 			<div class="Reply_list_title">Reply list<i class="far fa-comment-dots"></i><span id="rCount"></span></div>
 		<!-------------댓글 가져오기 ------------>	
-		<div id="noticeComment_list">
-		<!--댓글 구현되는 부분  -->
+		<div id="noticeComment_list">	
+		
+			<!--댓글 구현되는 부분  -->
+			
+				<div id="re_noticeComment_list">
+				
+					<!--답글 구현되는 부분  -->
+				</div>
 		</div>
 		<!-------------댓글 가져오기 끝------------>
 	</div>
@@ -194,7 +200,6 @@
 			url:'addNoticeComment.no',
 			data:{rContent:rContent, noticeNo:noticeNo},
 			success: function(data){
-				
 				if(data == 'success'){ //댓글 등록을 성공하면
 					getCommentList(); //댓글 리스트 불러오기 메소드를 실행시키고
 					$("#rContent").val(''); //댓글입력창 초기화
@@ -262,8 +267,8 @@
 						$div.append($rContent);
 						$div.append($rCreateDate);
 						$noticeComment_outer.append($div); // 최종 반영되는 부분
-					
 					}
+					
 				}else{
 					$div = $('<div id="noticeComment" class="reply2_box">');
 					$rContent = $('<div style="text-align: center;">').text('등록된 댓글이 없습니다.');
@@ -364,11 +369,11 @@
 	}
 	
 	/* 대댓글 입력창  */
-	$(document).on('click','.re_reply_btn', function(){
+	$(document).on('click','.re_reply_btn', function(){ /* 대댓글 버튼을 누르면 */
 		var $rreplyInsertTable = $(this).parent(); /* 댓글 창 */
-		console.log($rreplyInsertTable);
+		//console.log($rreplyInsertTable); // 대댓글의 원댓글 창
 		
-		var re_id_num = $(this).attr("id");
+		var re_id_num = $(this).attr("id"); /* rNo 가져오기 */
 		
 		var rreplys = '<div id="replyInput2" class="reply3_box">' +
 				 '	<div id="notice_profile" style="float:left;display:inline;">' +
@@ -391,19 +396,80 @@
 	});
 	
 	/* 대댓글 등록  */
-	$(document).on('click','#insertBtnRe', function(){
+	$(document).on('click','#insertBtnRe', function(){ /* 댓글 등록 버튼을 누르면 */
 		var userId = '${ loginUser.userId }';
 		var rNo = $(this).next().text();
 		var content = $(this).next().next().children().val();
+		var replyplace = $(this).prev().prev().parent().after();
 		
-			$.ajax({
+		$.ajax({
 			url: 'insertComment2.no',
 			data: {userId:userId, rNo:rNo, content:content},
-			success: function(data){
-				document.location.reload(true);
-			}
+			success: function(comment2){
+				console.log(comment2);
+				
+/* 				if(data == 'success'){ //답글 등록을 성공하면
+					getCommentList(); //답글 리스트 불러오기 메소드를 실행시키고
+					$(this).next().next().children().val('');//답글입력창 초기화
+					$("#replyInput2").remove();
+				} */
+				
+	  				$re_noticeComment_outer = $('#re_noticeComment_list');
+	 				//$re_noticeComment_outer = replyplace
+					$re_noticeComment_outer.html('');
+					
+					var $div;
+					var $userFile;
+					var $rUserId;
+					var $rContent;
+					var $rCreateDate;
+					
+					var $rModify;
+					var $rDelete;
+					
+					//console.log(comment2.length) 숫자나옴 성공
+
+					if(comment2.length > 0){
+						for(var i in comment2){
+// 							console.log(comment2[i].rrNo);
+// 							console.log(rNo);
+							if(comment2[i].rNo == rNo){
+								console.log(comment2[i].rrNo); //숫자 나옴다.
+								
+								$div = $('<div id="replyInput2'+comment2[i].rrNo+'" class="reply3_box">');
+								$userFile = $('<img class="comment_img" src="${contextPath}/resources/uploadFiles/'+comment2[i].userFile+'">');
+								
+		 						if("${loginUser.userId}"== comment2[i].rUserId){
+		 							$rModify = $('<div id="update_btn_'+comment2[i].rrNo+'" class="update_btn" onclick="re_commentUpdateForm('+comment2[i].rrNo+',\''+comment2[i].rContent+'\',this);"> 수정 </div>');
+									$rDelete = $('<div id="delete_btn_'+comment2[i].rrNo+'" class="delete_btn" onclick="re_commentDelete('+comment2[i].rrNo+');"> 삭제 </div>');
+								}else{
+									$rModify = "";
+									$rDelete = "";
+								}
+		
+								$rUserId = $('<div class="dong2">').text(comment2[i].rUserId);
+								$rContent = $('<textarea id="reply_TEXT" class="reply_TEXT_'+comment2[i].rrNo+'" name="rContent_'+comment2[i].rrNo+'" cols="94" rows="5" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" resize:none; readonly onkeyup="plus('+comment2[i].rrNo+');"></textarea>').text(comment2[i].rContent);
+								$rCreateDate = $('<div id="rCreateDate_'+comment2[i].rrNo+'" style="margin-left: 10px; color: gray;">').text(comment2[i].rCreateDate);
+							
+								$div.append($userFile);
+								$div.append($rUserId);
+								
+								$div.append($rModify);
+								$div.append($rDelete);
+								
+								$div.append($rContent);
+								$div.append($rCreateDate);
+		 						$re_noticeComment_outer.append($div); // 최종 반영되는 부분
+								
+								replyplace.after($div);
+							}
+						}
+					}
+					$("#replyInput2").remove();
+				}
+			})
+					$(this).next().next().children().val('');//답글입력창 초기화
 		}); 
-	})
 	</script>
 
 	<jsp:include page="../common/Footer.jsp"/>

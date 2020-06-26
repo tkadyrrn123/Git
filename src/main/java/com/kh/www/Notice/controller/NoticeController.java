@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,7 +29,6 @@ import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Notice.model.exception.NoticeException;
 import com.kh.www.Notice.model.service.NoticeService;
 import com.kh.www.Notice.model.vo.Notice;
-import com.kh.www.club.model.exception.ClubException;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.Comment2;
@@ -382,7 +380,7 @@ public class NoticeController {
 		response.setContentType("application/json; charset=UTF-8");
 		
 		ArrayList<Comment> clist = noticeService.noticeCommentList(nNo);
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
 			gson.toJson(clist, response.getWriter());
 		} catch (JsonIOException e) {
@@ -432,17 +430,16 @@ public class NoticeController {
         
         return noticeService.commentUpdate(rNo);
     }
-	@RequestMapping("test2.no")
-	public ModelAndView test(ModelAndView mv, HttpSession session) {
-		mv.setViewName("test2");
-		return mv;
-	}
 	
 	//공지사항 대댓글 추가	
 	@RequestMapping("insertComment2.no")
 	@ResponseBody
-	public ArrayList<Comment2> insertComments2(@RequestParam("userId") String userId, @RequestParam("rNo") int rNo, @RequestParam("content") String content, HttpServletResponse response) {
-		Comment2 c = new Comment2();
+	public ArrayList<Comment2> insertComments2(@ModelAttribute Comment2 c, @RequestParam("userId") String userId, @RequestParam("rNo") int rNo,
+			@RequestParam("content") String content, HttpServletResponse response) {
+		
+//		public Object insertComments2(@ModelAttribute Comment2 c, @RequestParam("userId") String userId, @RequestParam("rNo") int rNo,
+//				@RequestParam("content") String content, HttpServletResponse response) {
+			
 		c.setrNo(rNo);
 		c.setrContent(content);
 		c.setrUserId(userId);
@@ -450,6 +447,7 @@ public class NoticeController {
 		int result = noticeService.insertComment2(c);
 		
 		if(result > 0) {
+			//return "success";
 			ArrayList<Comment2> comment2 = noticeService.selectComment2(rNo);
 			return comment2;
 			
@@ -458,4 +456,20 @@ public class NoticeController {
 		}
 		
 	}
+	//공지사항 대댓글 리스트 가져오기
+//	@RequestMapping("reList.no")
+//	public void replyList(@RequestParam("rNo") int rNo, HttpServletResponse response) {
+//		response.setContentType("application/json; charset=UTF-8");
+//		
+//		ArrayList<Comment> clist = noticeService.noticeCommentList(rNo);
+//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH").create();
+//		try {
+//			gson.toJson(clist, response.getWriter());
+//		} catch (JsonIOException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//			
+//	}
 }
