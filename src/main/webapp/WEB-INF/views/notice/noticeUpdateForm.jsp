@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 수정</title>
+<title>HOUSTORY</title>
+<link rel=" shortcut icon" href="resources/images/favicon.png">
+<link rel="icon" href="resources/images/favicon.png">
 <style type="text/css">
    #notice_write_body{margin-top: 30px; margin-bottom: 30px;}
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavenderBlush;}

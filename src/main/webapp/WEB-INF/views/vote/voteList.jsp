@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>HOUSTORY</title>
+<title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <!-- <link rel="stylesheet" type="text/css" href="resources/css/freeBoard.css"> -->
 <style>
 	* { box-sizing: border-box; }

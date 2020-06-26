@@ -6,7 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>동호회 공지사항 상세보기</title>
+<title>HOUSTORY</title>
+<link rel=" shortcut icon" href="resources/images/favicon.png">
+<link rel="icon" href="resources/images/favicon.png">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 50px; padding-bottom: 50px;}

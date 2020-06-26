@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>HOUSTORY</title>
+<title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
 $accent-color: #355cc9;
