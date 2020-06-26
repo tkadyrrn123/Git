@@ -8,22 +8,9 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
-   #allDiv{width: 60%; height: 1000px; border: 1px lightgray solid; margin-left:40px;}
+   #allDiv{width: 60%; height: 1200px; border: 1px lightgray solid; margin: 0px auto;}
    #imgDiv{width: 85%; height: 560px;  margin: 0px auto; margin-top: 40px; }
    #aptImg{width: 100%; height: 560px;}
-
-
-   #allDiv {
-       color: #545861;
-       font-size: 12px;
-       /* letter-spacing: -1px; */
-       letter-spacing: 0px !important;
-       line-height: 20px;
-       word-break: keep-all;
-       word-wrap: break-word;
-       white-space: normal;
-      float: left;
-   }
 
    #menubar{float: left; display: inline-block; width:15%; height: 400px; border: 1px solid #ddd; color: #545861; padding-top:20px;margin-left:20px;}
    ul{list-style:none;}
@@ -36,7 +23,7 @@
    	html, body { height:100%; padding: 0; margin: 0;}
 	ul, li{padding: 0; margin: 0; list-style-type:none; }
 	   #hello:hover, #info:hover, #pic:hover{cursor:pointer;}
-   #all{margin-top: 30px; height:110%;}
+   #all{margin-top: 30px; height:130%;}
 	.img{filter: brightness(70%);
      width: 100%;
      height: 400px;}
@@ -58,12 +45,12 @@
 	<b id="headcomment">인사말</b>	
    <div id="all">
       <!-- 좌측 메뉴 바 -->
-      <div id="menubar">
+      <!-- <div id="menubar">
          <ul>
             <li id="hello" onclick="location.href='welcome.apt'">인사말</li>
             <li id="info" onclick="location.href='information.apt'">아파트 정보</li>   
          </ul>
-      </div>
+      </div> -->
    
       <div id="allDiv">
 
