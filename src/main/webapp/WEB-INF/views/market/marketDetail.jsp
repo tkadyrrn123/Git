@@ -63,10 +63,10 @@
 			<div id="name">작성자 : ${ma.nickName}</div>
  			<div id="line1"></div> 
 			<div id=sellPic>
-				<c:if test="${empty ma.fileName}">
+				<c:if test="${empty ma.fileName || !ma.fileName.contains('.')}">
 					<img id=img src="resources/images/basicMarket.jpeg"/>
 				</c:if>
-				<c:if test="${!empty ma.fileName}">
+				<c:if test="${ma.fileName.contains('.')}">
 					<div class="bxslider">
 						<c:forEach var="i" items="${ma.fileName}" varStatus="is">
 							<img id=img src="resources/marketUploadFiles/${ fileArr[is.index] }"/>
@@ -340,6 +340,10 @@
 				});
 			}
 		
+			$(function(){
+				console.log($('#price').text());
+				$('#price').text($('#price').text().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')) ;
+			});
 		
 	</script> 
 
