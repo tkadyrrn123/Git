@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <style>
 	 body{min-height: 100%; letter-spacing: -1px; position: relative;}
 	.back{border: 1px solid black; height: 60%;}

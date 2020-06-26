@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <!-- <link rel="stylesheet" type="text/css" href="resources/css/freeBoard.css"> -->
 <style>
 .fbTitle{color: black !important;}

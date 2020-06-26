@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
    #allDiv{width: 60%; height: 1200px; border: 1px lightgray solid; margin: 0px auto;}

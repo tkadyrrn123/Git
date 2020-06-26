@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <style>
 
 body,html{
