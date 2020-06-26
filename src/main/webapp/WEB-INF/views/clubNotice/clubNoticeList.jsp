@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>동호회 공지사항</title>
 <style>
+	.nbTitle{color: black !important;}
+	.nbTitle:visited{color: gray !important;}    
+
 	* { box-sizing: border-box; }
 	.commnuity_header { position: absolute;
 						left: 46%;
@@ -215,7 +218,7 @@
 							<c:param name="cnNo" value="${ cn.cnNo }"/>
 							<c:param name="page" value="${ pi.currentPage }"/>
 						</c:url>
-						<a href="${ cndetail }">${ cn.cnTitle }</a>
+						<a href="${ cndetail }" class="nbTitle">${ cn.cnTitle }</a>
                     </td>
                     <td align="center">${ cn.cnoticeNickname }</td>
                     <td align="center">${ cn.cnCreateDate }</td>
