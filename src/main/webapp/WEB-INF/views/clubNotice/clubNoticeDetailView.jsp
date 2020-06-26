@@ -19,6 +19,7 @@
 	.img {filter: brightness(70%); width: 100%; height: 400px;}	
 	.nDongview{color:lightcoral; margin-left: 60px; margin-bottom: 20px;}
 	
+	
 /* 글내용 */
 	.board_content{width: 800px;    height: auto;    margin-left: 100px;    margin-top: 40px;    margin-bottom: 40px;}
 
@@ -81,7 +82,7 @@
 		<h2 style="margin-left: 15px;">동호회 공지사항 상세보기</h2>
 		<hr>
 		<br>
-		<div class="clubNameview"><i class="fas fa-crown"></i>  ${ ClubNotice.clubName } </div>
+		<div class="nDongview"><i class="fas fa-crown"></i>  ${ ClubNotice.clubName } </div>
 			<div id="detailContent" class="detailTable" style="text-align: left; position: relative;">
 				<div class="detailTable_title">${ ClubNotice.cnTitle }</div>
 				<div id="notice_profile" style="float:left;display:inline;">
