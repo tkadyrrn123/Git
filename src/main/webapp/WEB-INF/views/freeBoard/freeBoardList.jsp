@@ -65,7 +65,7 @@
                   border:0;}
                   
 	.page_wrap{display:inline-block; position:absolute; margin-top: 10px; margin-left: 50%;}
-	.form_wrap{margin:30px auto 0 auto; width: 340px;}
+	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 150px;}
 
 	#selectBox{
 	  display: block;
@@ -161,7 +161,7 @@
 	<img class="img" src="resources/images/myPageImage.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
-	<h2>자유 게시판</h2>
+	<h3><b>자유 게시판</b></h3>
 	</div>
 	<div class="select-box" id="selectBox">
 	
