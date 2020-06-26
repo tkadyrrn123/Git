@@ -410,7 +410,8 @@
 				
 /* 				if(data == 'success'){ //답글 등록을 성공하면
 					getCommentList(); //답글 리스트 불러오기 메소드를 실행시키고
-					$(content).val(''); //답글입력창 초기화
+					$(this).next().next().children().val('');//답글입력창 초기화
+					$("#replyInput2").remove();
 				} */
 				
 	  				$re_noticeComment_outer = $('#re_noticeComment_list');
@@ -464,8 +465,10 @@
 							}
 						}
 					}
+					$("#replyInput2").remove();
 				}
 			})
+					$(this).next().next().children().val('');//답글입력창 초기화
 		}); 
 	</script>
 
