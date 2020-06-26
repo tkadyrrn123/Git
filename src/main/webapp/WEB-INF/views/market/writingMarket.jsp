@@ -22,27 +22,27 @@
                 <tr id="tr2">
                    <td class="td1">제목</td>
                      <td>
-                        <input name="boardTitle" class="inputs" type="text" placeholder="제목을 입력하세요" size="90">
+                        <input name="boardTitle" class="inputs" type="text" placeholder="제목을 입력하세요" size="90" required>
                      </td>
                   </tr>
                   <tr id="tr3">
                      <td class="td1">가격</td>
                      <td>
-                       <input name="price" class="inputs" type="text" placeholder="가격을 입력하세요" size="90">
+                       <input name="price" class="inputs" type="text" placeholder="가격을 입력하세요" size="90" required>
                      </td>
                   </tr>      
                   <tr id="tr4">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea cols="107"rows="24" name="boardContent" id="content" placeholder="내용 입력하세요 "></textarea>
+                        <textarea cols="107"rows="24" name="boardContent" id="content" placeholder="내용 입력하세요 " required></textarea>
                      </td>
                   </tr>      
                   <tr id="tr5">
                      <td class="td1">물품사진</td>
                      <td>
-                  <input name="uploadFile1" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
-                  <input name="uploadFile2" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
-                  <input name="uploadFile3" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
+                  <input name="uploadFile1" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px; display:inline-block; width:25%; font-size: 0.9em;">
+                  <input name="uploadFile2" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px; display:inline-block; width:25%; font-size: 0.9em;">
+                  <input name="uploadFile3" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px; display:inline-block; width:25%; font-size: 0.9em;">
                      </td>
                   </tr>      
 

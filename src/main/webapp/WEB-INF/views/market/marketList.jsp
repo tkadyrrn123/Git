@@ -32,10 +32,10 @@
 				<div class=sell OnClick="location.href='marketDetail.ma?boardNo=${m.boardNo}&page=${pi.currentPage}'">
 					<div class=sellDiv>
 						<div class="hidden" style="display:none">${m.boardNo}</div>
-						<c:if test="${empty m.fileName}">
+						<c:if test="${empty m.fileName || !m.fileName.contains('.')}">
 							<div class=sellPic><img class=sellPic src="resources/images/basicMarket.jpeg"/></div>
 						</c:if>
-						<c:if test="${!empty m.fileName}">
+						<c:if test="${m.fileName.contains('.')}">
 							<div class=sellPic>
 								<c:forTokens var="f" items="${ m.fileName }" delims="," varStatus="fs">
 									<c:if test="${fs.first eq true}">
@@ -53,7 +53,8 @@
 						</div>
 						<div class="insideWrap">
 							<span class=sellId><i class="fas fa-user-circle"></i> ${m.nickName}</span>
-							<span class=sellPrice><i class="fas fa-won-sign"></i> ${m.price}</span>
+<!-- 							<span class="icon"><i class="fas fa-won-sign"></i></span> -->
+							<span class=sellPrice>${m.price}원</span>
 							<span class="views"><i class="fas fa-eye"></i> ${m.boardCount}</span>
 						</div>
 					</div>
@@ -146,6 +147,12 @@
 	<jsp:include page="../common/Footer.jsp"/>	
 	
 	<script>
+		$(function(){
+			for(var i = 0; i < $('.sell').length; i++){
+				console.log($('.sellPrice')[i].innerText);
+				$('.sellPrice')[i].innerText = $('.sellPrice')[i].innerText.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+			}
+		});
 	</script>
 	
 	

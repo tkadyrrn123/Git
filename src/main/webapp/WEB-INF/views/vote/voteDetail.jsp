@@ -314,7 +314,7 @@
 						<img class="comment2-1img" src="resources/uploadFiles/normal.jpg">
 						</c:if>
 					</div>
-					<div class="dong">${writer.nickName}(${writer.aptDong})</div>
+					<div class="dong">${writer.nickName}</div>
 					<div style="display:inline;"><i class="far fa-clock"></i> ${Vote.createDate }</div>
 					<div style="display:inline;"><i class="far fa-eye"></i> ${Vote.vCount }</div>
 				<!--수정 /삭제 선택 -->	
@@ -361,7 +361,7 @@
 						<c:if test="${vclist != null && !vclist.isEmpty() }">
 							<c:if test="${(Vote.overlapYN).equals('N') }">
 								<c:forEach var="i" begin="0" end="${vclist.size()-1}">
-									<li><input type="radio" name="article_poll_fldpoll_egseq" class="vam" value="${vclist[i].vcId}"><label style="vertical-align: text-bottom;">${vclist[i].vcName}</label></li>
+									<li><input type="radio" name="article_poll_fldpoll_egseq" class="vam" value="${vclist[i].vcId}"><label style="vertical-align: text-bottom; margin-top: 2px; margin-bottom:0px;">${vclist[i].vcName}</label></li>
 								</c:forEach>
 							</c:if>
 							<c:if test="${(Vote.overlapYN).equals('Y') }">
@@ -453,7 +453,7 @@
 					<img class="comment2-1img" src="resources/uploadFiles/normal.jpg">
 					</c:if>
 				</div>
-				<div class="dong">${loginUser.nickName }(${loginUser.aptDong })</div>
+				<div class="dong">${loginUser.nickName }</div>
 				<c:if test="${!check}">
 				<button type="button" id="addComment" class="reply1_btn">댓글등록</button>
 				</c:if>
