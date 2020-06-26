@@ -195,7 +195,7 @@
             <thead>
                 <tr id="notice_tr">
                     <td style="width: 7%;">번호</td>
-                    <td class="dong" style="width: 9%;">동호회명</td>
+                    <td class="dong" style="width: 15%;">동호회명</td>
                     <td class="btitle">제목</td>
                     <td style="width: 10%;">작성자</td>
                     <td style="width: 11%">등록일</td>
