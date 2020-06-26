@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <style>
 body,html{
 	margin: 0;

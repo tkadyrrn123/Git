@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style>
 $accent-color: #355cc9;

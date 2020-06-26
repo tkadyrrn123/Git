@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HOUSTORY</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 /*-- POPUP common style S --*/
