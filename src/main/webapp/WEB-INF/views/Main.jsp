@@ -9,16 +9,16 @@
 	 body{min-height: 100%; letter-spacing: -1px; position: relative;}
 	.back{border: 1px solid black; height: 60%;}
 	.back>img{width: 100%; height: 100%;}
-	.board_box{margin-top: 20px; overflow: hidden; width: 80%; margin-left: auto;     margin-bottom: 1%; margin-right: auto;}
+	.board_box{margin-top: 20px; overflow: hidden; width: 80%; margin-left: auto; margin-bottom: 1%;}
 	.mboard{border: 1px solid #dedede; float: left;}
-	.board_box .noti_board{width: 666px; margin-right: 60px; }
+	.board_box .noti_board{width: 666px; margin-right: 30px; }
 	.mboard .title{padding: 20px; border-bottom: 1px solid #dedede; font-size: 16px; font-weight: bold; color: #222; margin: 0;}
 	.mboard .title span{font-size: 12px; font-weight: normal; color: #6a6a6a; margin-left: 7px;}
 	.noti_board_cate, .comu_board_cate{padding: 20px; position: relative;}
 	.noti_board_cate ul{margin-bottom: 20px;}
 	.comu_board_cate ul{margin-bottom: 20px;}
 	.cate a:hover{color: #62B3B6;}
-	
+	.comu_board{ margin-left: 30px;}
 	.noti_board_cate .cate a, .comu_board_cate .cate a{font-size: 14px; font-weight: bold; letter-spacing: -2px;}
 	.board_box .comu_board{width: 400px;}
 	.comu_board_cate li{float: left; padding: 0 10px;}
