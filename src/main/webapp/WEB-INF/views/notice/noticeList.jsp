@@ -7,9 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
-	.nbTitle{color: black !important;}
-	.nbTitle:visited{color: gray !important;}    
+	.nbTitle{color: black !important;} 
+	.nbTitle:visited{color: gray !important;}      
 
 	* { box-sizing: border-box; }
 	.commnuity_header { position: absolute;

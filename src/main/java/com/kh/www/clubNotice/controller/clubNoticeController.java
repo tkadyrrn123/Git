@@ -83,15 +83,12 @@ public class clubNoticeController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String aptName = loginUser.getAptName();
 		
-		
-		System.out.println("작성폼 누르면 아파트이름 뽑아서 네임리스트 에 넣을 것임: " + aptName);
 		ArrayList<String[]> cNamelist = ClubNoticeService.selectcNamelist(aptName);
-		
-		System.out.println("Controller에서 뽑아보는 cNameList : " + cNamelist);
 		
 		if(cNamelist != null) {
 			mv.addObject("cNamelist", cNamelist);
 			mv.setViewName("clubNoticeInsertForm");
+			System.out.println("//동호회 이름 리스트 가져오기"+mv);
 		}else {
 			throw new ClubNoticeException("동호회 공지사항 작성폼을 가져오는데에 실패했습니다.");
 		}

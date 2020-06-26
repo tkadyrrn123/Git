@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>동호회 공지사항</title>
 <style>
-	.nbTitle{color: black !important;}
-	.nbTitle:visited{color: gray !important;}    
+	.nbTitle{color: black !important;} 
+	.nbTitle:visited{color: gray !important;}   
 
 	* { box-sizing: border-box; }
 	.commnuity_header { position: absolute;
