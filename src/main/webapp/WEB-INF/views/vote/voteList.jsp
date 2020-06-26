@@ -48,8 +48,8 @@
     			  font-size: 0.9em; 
     			  font-weight: bold; 
                   color:rgb(139, 134, 134);}
-	.page_wrap{display:inline-block; position:absolute; margin-top: 10px; margin-left: 50%;}
-	.form_wrap{margin:30px auto 0 auto; width: 267px;}
+	.page_wrap{display:inline-block; position:absolute; margin-top: 10px; margin-left: 47%;}
+	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 80px;}
 
 	#selectBox{
 	  display: block;
