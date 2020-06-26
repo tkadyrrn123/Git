@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
+	.nbTitle{color: black !important;}
+	.nbTitle:visited{color: gray !important;}    
+
 	* { box-sizing: border-box; }
 	.commnuity_header { position: absolute;
 						left: 46%;
@@ -47,10 +51,12 @@
 	#notice_page_tb a{color:rgb(139, 134, 134);}	
  	#notice_list_tb thead tr td{background-color:#eff3f9;}
 	#notice_list_tb tbody tr:nth-child(even){background-color:#eff3f9;}
+	#notice_page_tb td{border-bottom: 0;}
 	
 	/*페이징 버튼  */
 	.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}
+	
 	/*서치 */
 	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 200px;}
 	#selectBox{
@@ -200,7 +206,7 @@
             <thead>
                 <tr id="notice_tr">
                     <td style="width: 7%;">번호</td>
-                    <td class="dong" style="width: 9%;">동</td>
+                    <td class="dong" style="width: 15%;">동</td>
                     <td class="btitle">제목</td>
                     <td style="width: 10%;">작성자</td>
                     <td style="width: 11%">등록일</td>
@@ -218,7 +224,7 @@
 							<c:param name="nNo" value="${ n.nNo }"/>
 							<c:param name="page" value="${ pi.currentPage }"/>
 						</c:url>
-						<a href="${ ndetail }">${ n.nTitle }</a>
+						<a href="${ ndetail }" class="nbTitle">${ n.nTitle }</a>
                     </td>
                     <td align="center">${ n.userId }</td>
                     <td align="center">${ n.nCreateDate }</td>

@@ -295,6 +295,16 @@ h2 {
 											padding-left: 5px;
 											outline: none;
 											transition: all 0.3s ease-out;}
+											
+.modal2 .modal-content input[type="text"]{ width: 50%;
+						    			    height: 35px;
+										    border-radius: 5px;
+										    background: #f9f9f9;
+											border: 1px solid #d4d4d4;
+											box-shadow: inset 0 2px 3px rgba(0,0,0,.05);
+											padding-left: 5px;
+											outline: none;
+											transition: all 0.3s ease-out;}											
 .modal2 .modal-layer{position: fixed; 
                      top: 0; left: 0; 
                      width: 100%; height: 100%; 

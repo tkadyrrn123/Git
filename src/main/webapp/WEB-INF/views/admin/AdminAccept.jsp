@@ -237,7 +237,7 @@ a{cursor: pointer;}
 							}
 							</script>
 						</div>
-						<form id="search" action="searchApart.adm" onsubmit="return searchChk();">
+						<form id="search" action="searchAccept.adm" onsubmit="return searchChk();">
 							<select id="searchOption" name="searchOption">
 								<option>회원아이디</option>
 								<option>닉네임</option>

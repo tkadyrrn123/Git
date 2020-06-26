@@ -3,6 +3,7 @@ package com.kh.www;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -311,14 +312,20 @@ public class HomeController {
 	}
 	
 	@RequestMapping("idSearch.do")
-	public String idSearch(@RequestParam("userId_email") String user_email, HttpServletResponse response) throws IOException {
+	public String idSearch(@RequestParam("userId_email") String user_email, HttpServletResponse response, HttpServletRequest request) throws IOException {
 		
 		String userId = mService.idSearch(user_email);
 		
+		InetAddress local = InetAddress.getLocalHost();
+		
+		String ip = local.getHostAddress();
+		int port = request.getServerPort();
+		String juso = ip+":"+port;
+		
 		String msg = "";
 		msg += "<div align='center' style='border:1px solid black; font-family:verdana; width: 500px; height: 400px; background-color: #292c2f;'>";
-		msg += "<br><br><img src=\"http://localhost:6080/spring/resources/images/%EB%A1%9C%EA%B3%A0.png\">";
-		msg += "<h2 style='color: white;'>아이디 찾기 입니다.</h2>";
+		msg += "<br><br><img src=\"http://"+juso+"/www/resources/images/%EB%A1%9C%EA%B3%A0.png\">";
+		msg += "<h2 style='color: white;'>아이디 찾기</h2>";
 		msg += "<div style='font-size: 130%; color: white;'>";
 		msg += "회원님의 아이디는 <strong>";
 		msg += userId + "</strong> 입니다.</div><br></div>";
@@ -341,15 +348,22 @@ public class HomeController {
 		return "index";
 	}
 	@RequestMapping("passSearch.do")
-	public String passSearch(@RequestParam("userPass_id") String user_Id, @RequestParam("userPass_email") String user_email, HttpServletResponse response) throws IOException {
+	public String passSearch(@RequestParam("userPass_id") String user_Id, @RequestParam("userPass_email") String user_email,
+							 HttpServletResponse response, HttpServletRequest request) throws IOException {
 		
 		 String uuid = "";
 		 uuid = UUID.randomUUID().toString().replaceAll("-", "");
 		 uuid = uuid.substring(0, 10);
 		 
+		 InetAddress local = InetAddress.getLocalHost();
+		 
+		 String ip = local.getHostAddress();
+		 int port = request.getServerPort();
+		 String juso = ip+":"+port;
+		 
 		 String msg = "";
 		 msg += "<div align='center' style='border:1px solid black; font-family:verdana; width: 500px; height: 400px; background-color: #292c2f;'>";
-		 msg += "<br><br><img src=\"http://localhost:6080/spring/resources/images/%EB%A1%9C%EA%B3%A0.png\">";
+		 msg += "<br><br><img src=\"http://"+juso+"/www/resources/images/%EB%A1%9C%EA%B3%A0.png\">";
 		 msg += "<h2 style='color: white;'>비밀번호 찾기</h2>";
 		 msg += "<div style='font-size: 130%; color: white;'>";
 		 msg += "임시 비밀번호 : <strong>";
