@@ -137,16 +137,15 @@
 								$li = $('<li>');
 								$no = $('<b class="li" style="width: 10%;">').text(data[i].boardNo);
 								$cName = $('<b class="li" style="width: 55%; cursor: pointer;" onclick="clubDetail(' + "'" + data[i].clubName + "'," + data[i].boardNo + ');">').text(data[i].clubName);
-								$cPrice = $('<b class="li" style="width: 25%;">').text(data[i].clubPlace+"원");
+								
 								if(data[i].endYn == 'N'){
-									$cEnd = $('<b class="li" style="width: 10%;">').text("모집중");
+									$cEnd = $('<b class="li" style="width: 35%;">').text("모집중");
 								}else if(data[i].endYn == 'Y'){
-									$cEnd = $('<b class="li" style="width: 10%;">').text("모집마감");
+									$cEnd = $('<b class="li" style="width: 35%;">').text("모집마감");
 								}
 								
 								$li.append($no);
 								$li.append($cName);
-								$li.append($cPrice);
 								$li.append($cEnd);
 								$clubUlBody.append($li);
 							}
