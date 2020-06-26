@@ -30,7 +30,7 @@
 		]]>
 		</if>
 		<if test='option == "finish"'>
-		order by v.end_date desc
+		order by v.end_date - v.create_date, v.end_date desc
 		</if>
 		<if test='option == "latest"'>
 		order by v.create_date desc
