@@ -361,7 +361,7 @@
 						<c:if test="${vclist != null && !vclist.isEmpty() }">
 							<c:if test="${(Vote.overlapYN).equals('N') }">
 								<c:forEach var="i" begin="0" end="${vclist.size()-1}">
-									<li><input type="radio" name="article_poll_fldpoll_egseq" class="vam" value="${vclist[i].vcId}"><label style="vertical-align: text-bottom;">${vclist[i].vcName}</label></li>
+									<li><input type="radio" name="article_poll_fldpoll_egseq" class="vam" value="${vclist[i].vcId}"><label style="vertical-align: text-bottom; margin-top: 2px; margin-bottom:0px;">${vclist[i].vcName}</label></li>
 								</c:forEach>
 							</c:if>
 							<c:if test="${(Vote.overlapYN).equals('Y') }">
