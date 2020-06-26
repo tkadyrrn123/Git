@@ -28,7 +28,7 @@
 	.content_wrap{display:inline-block;
 				  vertical-align:top;
 				  width: 40%;
-				  margin-top:40px;
+				  margin-top:30px;
 				  margin-left:150px;
 				  font-size:1.5em;}
 	.content_wrap>div{margin-bottom:20px;}
@@ -64,6 +64,16 @@
 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
 	.modify_btn{margin-right: 25px; float:right; width:70px; height:25px; background-color:lightgray; color:black; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
 	.delete_btn{margin-bottom: 10px; float:right; width:70px; height:25px; background-color:lightgray; color:black; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
+	.profileImg {
+			    width: 38px;
+			    height: 38px;
+			    border-radius: 100%;
+			    margin-top: 5px;
+			    margin-left: 10px;
+			    margin-bottom: 5px;
+			    margin-right: 10px;
+			    vertical-align: middle;
+				}
 	/* 대댓글  */	
 	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
  	

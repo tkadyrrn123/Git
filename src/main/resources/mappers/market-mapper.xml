@@ -3,7 +3,8 @@
 <mapper namespace="marketMapper">
     <select id="getListCount" resultType="_int">
     	select count(*)
-    	from tb_board
+    	from tb_market 
+    		 join tb_board using(board_no)
     	where board_delete= 'N'
     </select>
     
