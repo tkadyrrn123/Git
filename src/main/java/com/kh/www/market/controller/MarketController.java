@@ -52,10 +52,11 @@ public class MarketController {
 			currentPage = page;
 		}
 		
-		int listCount = marketService.getListCount();
+		int listCount = marketService.getListCount();	
 		
 		
 		PageInfo pi = Pagenation.getPageInfoMarket(currentPage,listCount);
+		System.out.println("market pi : " + pi);
 		
 		ArrayList<Market> list = marketService.selectList(pi);
 		
@@ -77,8 +78,8 @@ public class MarketController {
 	
 	
 	@RequestMapping("writing.ma")
-	public String writing(@ModelAttribute Market m, HttpServletRequest request,HttpSession session, MultipartHttpServletRequest multi) throws MarketException {
-
+	public String writing(@ModelAttribute Market m, HttpServletRequest request,HttpSession session, 
+							MultipartHttpServletRequest multi) throws MarketException {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String id = loginUser.getUserId();
 		m.setUserId(id);
@@ -99,7 +100,7 @@ public class MarketController {
 			renameFileName = saveFile(mFile, request);
 			if(renameFileName!=null) {
 				filenames += renameFileName+",";
-			}
+			} 
 		}
 		filenames = filenames.substring(0, filenames.length()-1);
 		String[] fileArr = filenames.split(",");
@@ -120,8 +121,6 @@ public class MarketController {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "/marketUploadFiles";
 		
-//		System.out.println(file.getOriginalFilename());
-		
 		File folder = new File(savePath);
 		
 		if(!folder.exists()) {
@@ -131,7 +130,8 @@ public class MarketController {
 		if(!file.getOriginalFilename().equals("")) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 			String originFileName = file.getOriginalFilename();
-			String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+			String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + "." 
+			+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 			
 			originFileName.substring(originFileName.lastIndexOf(".") + 1);
 			
@@ -152,9 +152,13 @@ public class MarketController {
 	
 	
 	@RequestMapping("marketDetail.ma")
-	public ModelAndView marketDetail(@RequestParam(value="boardNo",required=false) int boardNo, @RequestParam("page") int page, ModelAndView mv) {
+	public ModelAndView marketDetail(@RequestParam(value="boardNo",required=false) int boardNo, 
+									 @RequestParam("page") int page, ModelAndView mv) {
 		Market ma = marketService.selectMarketList(boardNo);
-		String filenames = ma.getFileName();
+		String filenames = "";
+		if(ma != null) {
+			filenames = ma.getFileName();
+		}
 //		filenames = filenames.substring(0, filenames.length()-1);
 		String[] fileArr = filenames.split(",");
 		

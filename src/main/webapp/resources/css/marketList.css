@@ -2,9 +2,9 @@
 
 .wrapper{margin-top: 20px; margin-bottom:40px;}
 	.sellAll{width: 90%; margin: 100px auto 0px auto; postion:relative;line-height: 1.6}
-	.sell{width: 350px; 
+	.sell{width: 330px; 
 		  display: inline-block; 
-		  margin-left: 100px; 
+		  margin-left: 60px; 
 		  margin-bottom:50px;
 		  box-shadow: 0 2px 40px 0 rgba(0,0,0,0.07);
 		  transition: box-shadow .3s ease-out, transform .3s ease-out, opacity .2s ease-out;
@@ -23,11 +23,12 @@
 	.sellName{width: 300px; height: 10%; font-size: 20px; font-weight:bold;margin-top:10px;text-align:center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 	.sellName>a{color: black !important;}
 	.sellName>a:visited{color: gray !important;}
-	.sellId{width: 70px; height: 10%; display:inline-block; margin-right:100px;
+	.sellId{width: 100px; height: 10%; display:inline-block; margin-right:45px;
 			color: #474561; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 	.sellId>a{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-	.views{width:53px; display:inline-block; color: #474561; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+	.views{width:54px; display:inline-block; color: #474561; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;margin-left:5px;}
 	.sellPrice{width: 94px; height: 10%; display:inline-block;text-align:right; text-align: right; color: #474561; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+	.icon{height: 10%; display:inline-block;text-align:right; text-align: right; color: #474561; }
 	.btn_standard {
 			    border: 1px solid #dad4d4;
 			    border-radius: 6px;
@@ -42,7 +43,7 @@
 	.insideWrap{
 				border-top:1px solid #dad4d4;
 				margin-top:7px;
-				padding: 10px;
+				padding: 8px;
 				}
 	
 	#write-btn{

@@ -2,6 +2,7 @@
 
 	#body{margin-top: 20px;}
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavender;}
+   table{height:600px;}
    h5{ margin: 0 auto;}
    h2{font-family: "Sans-Serif"; margin-left: 11%;}
    hr{border-color: lavender;}
