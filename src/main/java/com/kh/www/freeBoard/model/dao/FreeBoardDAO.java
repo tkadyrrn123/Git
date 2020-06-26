@@ -76,7 +76,6 @@ public class FreeBoardDAO {
 	}
 
 	public ArrayList<FreeBoard> selectSortResultList(SqlSessionTemplate sqlSession, HashMap hm, PageInfo pi) {
-
 		int offset = (pi.getCurrentPage() -1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		System.out.println("selectSortResultList : " + hm);
