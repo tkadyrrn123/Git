@@ -51,7 +51,7 @@
                 <tr id="tr2">
                    <td class="td1">제목</td>
                      <td>
-                        <input id="titleInput" name="nTitle" type="text" placeholder="제목을 입력하세요" size="90">
+                        <input id="titleInput" name="nTitle" type="text" placeholder="제목을 입력하세요" size="90" required>
                      </td>
                 </tr>
 <!-- ----------------------------------------------- -->
@@ -72,7 +72,7 @@
                   <tr id="tr3">
                      <td class="td1">내용</td>
                      <td>
-                        <textarea id="content" name="nContent" placeholder="내용 입력하세요 " style="margin-left: 20px; resize: none;"></textarea>
+                        <textarea id="content" name="nContent" placeholder="내용 입력하세요 " style="margin-left: 20px; resize: none;" required></textarea>
                      </td>
                   </tr>      
                   <tr id="tr4">
