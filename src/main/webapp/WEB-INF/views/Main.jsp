@@ -7,8 +7,8 @@
 <title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <style>
 	 body{min-height: 100%; letter-spacing: -1px; position: relative;}
-	.back{border: 1px solid black; height: 60%;}
-	.back>img{width: 100%; height: 100%;}
+	.back{border: none; height: 500px; overflow: hidden;}
+	.back>img{width: 100%; max-height: initial; }
 	.board_box{margin-top: 20px; overflow: hidden; width: 80%; margin-left: auto; margin-bottom: 1%;}
 	.mboard{border: 1px solid #dedede; float: left;}
 	.board_box .noti_board{width: 666px; margin-right: 30px; }
@@ -43,7 +43,7 @@
 </head>
 <body>
 	<jsp:include page="common/menubar.jsp"/>
-	<div class="back"><img src="resources/images/main_back2.png"></div>
+	<div class="back"><img src="resources/images/gif_title3.gif"></div>
 	<div class="board_box">
 		<div class="mboard noti_board">
 			<p class="title">공지사항<span>아파트 새 소식을 확인해주세요!</span></p> 
