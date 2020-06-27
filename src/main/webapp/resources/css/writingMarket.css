@@ -8,12 +8,12 @@
    hr{border-color: lavender;}
    .inputs{height: 60%; border: 1px solid lavender; margin-left: 20px; width: 80%;}
    #tr1{height: 10%}
-   #tr2{height: 10%;}
-   #tr3{height: 10%;}
+   #tr2{height: 60px;}
+   #tr3{height: 60px;}
    #tr4{height: 60%;}
-   #tr5{height: 10%;}
+   #tr5{height: 40px;}
    #tb{width: 60%; height: 600px; margin: 0 auto; }
-   .td1{text-align: center; font-size: 11px; background: lavender;}
+   .td1{text-align: center; font-size: 0.9em; background: lavender; width:50px;}
    
    #content{width: 80%; height: 90%; border:1px solid lavender;text-align:left; margin-left: 20px; resize: none; display:block;}
    #btns{text-align: center;}

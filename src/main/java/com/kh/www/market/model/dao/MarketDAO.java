@@ -88,5 +88,13 @@ public class MarketDAO {
 		return sqlSession.insert("marketMapper.insertFiles", renameFileName);
 	}
 
+	public int modifyReply(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.update("marketMapper.modifyReply", c);
+	}
+
+	public int deleteComment(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("marketMapper.deleteComment",rNo);
+	}
+
 
 }

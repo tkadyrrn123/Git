@@ -33,6 +33,7 @@ import com.kh.www.comment.model.exception.CommentException;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
+import com.kh.www.freeBoard.model.exception.FreeBoardException;
 import com.kh.www.freeBoard.model.vo.SearchCondition;
 import com.kh.www.market.model.exception.MarketException;
 import com.kh.www.market.model.service.MarketService;
@@ -301,26 +302,35 @@ public class MarketController {
 		}
 	}
 	
-//	//	댓글 수정
-//		@RequestMapping("updateComment.co")
-//		@ResponseBody
-//		public ArrayList<Comment> updateComments(@RequestParam("boardNo") int boardNo, @RequestParam("content") String content, @RequestParam("rNo") int rNo, HttpServletResponse response) {
-//			Comment c = new Comment();
-//			c.setrNo(rNo);
-//			c.setBoardNo(boardNo);
-//			c.setrContent(content);
-//			
-//			int result = marketService.updateComment(c);
-//			
-//			if(result > 0) {
-//				ArrayList<Comment> comment = marketService.selectComment(boardNo);
-//				return comment;
-//				
-//			}else {
-//				throw new CommentException("댓글 수정에 실패했습니다.");
-//			}
-//			
-//		}
+//  댓글 수정
+	@RequestMapping("modifyReply.ma")
+    @ResponseBody
+    public String modifyReply(@RequestParam("rNo") int rNo, @ModelAttribute Comment c, @RequestParam("rContent") String rContent) {
+		
+		c.setrNo(rNo);
+		c.setrContent(rContent);
+		
+		int result = marketService.modifyReply(c);
+		
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new FreeBoardException("댓글 수정 실패!");
+		}
+    }
+	
+//	댓글 삭제
+	@RequestMapping("deleteComment.ma")
+	@ResponseBody
+	public String deleteReply(@RequestParam int rNo) {
+		int result = marketService.deleteComment(rNo);
+		
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new MarketException("댓글 삭제에 실패했습니다.");
+		}
+	}
 	
 	
 }

@@ -266,7 +266,7 @@
 		 	function modifyR(rNo, e){
 	 	//	alert(rNo);
 		$('.rContent'+rNo).prop('readonly', false);
-		$('.rContent'+rNo).css('border-color', 'pink');
+		$('.rContent'+rNo).css('border-color', '#6c9ab1');
 		
 		var save1 ="";
 	
@@ -298,20 +298,20 @@
 		}
 	}
 	
-		function modifyRup(rNo){
-			var bno = ${ ma.boardNo };
-		 	var rContent = $('.rContent'+rNo).val();
-		 	
-		 	$.ajax({
-		 		url: 'updateComment.co',
-		 		data: {bno:bno, rContent:rContent, rNo:rNo},
-		 		success: function(data){
-		 			if(data == 'success'){
-		 				getReplyList();
-		 			}
-		 		}
-		 	});	 		
-		}
+// 		수정 댓글 저장 
+	 	function modifyRup(rNo){
+			 	var rContent = $('.rContent'+rNo).val();
+			 	
+			 	$.ajax({
+			 		url: 'modifyReply.ma',
+			 		data: {rContent:rContent, rNo:rNo},
+			 		success: function(data){
+			 			if(data == 'success'){
+			 				getReplyList();
+			 			}
+			 		}
+			 	});	 		
+			}
 		
 		//댓글 수정시 글자 카운팅
 		 function plus(rNo){
@@ -329,7 +329,7 @@
 		// 댓글 삭제
 			function deleteR(rNo){
 				$.ajax({
-					url: 'deleteVoteComment.co',
+					url: 'deleteComment.ma',
 					data: {rNo:rNo},
 					success: function(data){
 						if(data == 'success'){
