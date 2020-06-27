@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -312,9 +313,13 @@ public class HomeController {
 	}
 	
 	@RequestMapping("idSearch.do")
-	public String idSearch(@RequestParam("userId_email") String user_email, HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public String idSearch(@RequestParam("userId_email") String user_email, @RequestParam("userId_name") String name,
+			   HttpServletResponse response, HttpServletRequest request) throws IOException {
 		
-		String userId = mService.idSearch(user_email);
+			HashMap<String, Object> hs = new HashMap<String, Object>();
+			hs.put("email",user_email);
+			hs.put("name",name);
+			String userId = mService.idSearch(hs);
 		
 		InetAddress local = InetAddress.getLocalHost();
 		
