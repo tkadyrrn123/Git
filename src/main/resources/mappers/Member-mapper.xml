@@ -171,7 +171,7 @@
 	</select>
 	
 	<select id="AcceptList" resultMap="MemberResult">
-		SELECT * FROM TB_USER WHERE ACCEPT='N'
+		SELECT * FROM TB_USER WHERE ACCEPT='N' ORDER BY ROWNUM DESC
 	</select>
 	
 	<select id="AcceptSelectCount" resultType="_int">
@@ -416,7 +416,7 @@
 	</update>
 	
 	<select id="idSearch" resultType="string">
-		SELECT USER_ID FROM TB_USER WHERE EMAIL = #{email}
+		SELECT USER_ID FROM TB_USER WHERE EMAIL = #{email} AND USER_NAME = #{name}
 	</select>
 	
 	<update id="searchPwdAlter">
