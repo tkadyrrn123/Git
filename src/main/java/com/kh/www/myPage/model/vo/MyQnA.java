@@ -10,6 +10,7 @@ public class MyQnA {
 	private Date QNADate;
 	private String QNAFileName;
 	private String deleteYN;
+	private String answerYN;
 	public MyQnA() {}
 	
 	public MyQnA(String userId, String qNATitle, String qNAContent) {
@@ -20,7 +21,7 @@ public class MyQnA {
 	}
 
 	public MyQnA(int qNAId, String qNATitle, String qNAContent, String userId, Date qNADate, String qNAFileName,
-			String deleteYN) {
+			String deleteYN, String answerYN) {
 		super();
 		QNAId = qNAId;
 		QNATitle = qNATitle;
@@ -29,6 +30,7 @@ public class MyQnA {
 		QNADate = qNADate;
 		QNAFileName = qNAFileName;
 		this.deleteYN = deleteYN;
+		this.answerYN = answerYN;
 	}
 
 	public int getQNAId() {
@@ -85,6 +87,14 @@ public class MyQnA {
 
 	public void setDeleteYN(String deleteYN) {
 		this.deleteYN = deleteYN;
+	}
+	
+	public String getAnswerYN() {
+		return answerYN;
+	}
+
+	public void setAnswerYN(String answerYN) {
+		this.answerYN = answerYN;
 	}
 
 	@Override

@@ -102,18 +102,21 @@
     </select>
     <insert id="insertQnA">
     	insert into tb_qna
-    	values(SEQ_QNA.NEXTVAL, #{QNATitle}, #{QNAContent}, #{userId}, default, default)
+    	values(SEQ_QNA.NEXTVAL, #{QNATitle}, #{QNAContent}, #{userId}, default, default, default)
     </insert>
     <insert id="insertQnAFileName">
     	insert all 
     	into tb_qna
-    	values(SEQ_QNA.NEXTVAL, #{QNATitle}, #{QNAContent}, #{userId}, default, default)
+    	values(SEQ_QNA.NEXTVAL, #{QNATitle}, #{QNAContent}, #{userId}, default, default, default)
     	into tb_file
     	values(SEQ_FILE.NEXTVAL, null, #{QNAFileName}, null, SEQ_QNA.CURRVAL)
     	select * from dual
     </insert>
     <select id="getQnAListCount" resultType="_int">
-    	select count(*) from tb_QnA where user_id = #{userId}
+    	select count(*) from tb_QnA 
+    	<if test="userId != null">
+    	where user_id = #{userId}
+    	</if>
     </select>
    	<resultMap type="MyQnA" id="MyQnAResultSet">
     	<id property="QNAId" column="QnA_id"/>
@@ -123,12 +126,38 @@
     	<result property="QNADate" column="QnA_date"/>
     	<result property="QNAFileName" column="file_name"/>
     	<result property="deleteYN" column="DELETE_YN"/>
+    	<result property="answerYN" column="ANSWER_YN"/>
+    </resultMap>
+    <resultMap type="REQnA" id="ReQnAResultSet">
+    	<id property="QNAREId" column="QNA_RE_id"/>
+    	<result property="QNAId" column="QnA_id"/>
+    	<result property="QNATitle" column="QnA_title"/>
+    	<result property="QNAContent" column="QnA_content"/>
+    	<result property="userId" column="user_id"/>
+    	<result property="QNADate" column="QnA_date"/>
+    	<result property="deleteYN" column="DELETE_YN"/>
     </resultMap>
     <select id="getQnAList" resultMap="MyQnAResultSet">
-    	select QNA_ID, QNA_TITLE, QNA_CONTENT, USER_ID, QNA_DATE, FILE_NAME, DELETE_YN
+    	select QNA_ID, QNA_TITLE, QNA_CONTENT, USER_ID, QNA_DATE, FILE_NAME, DELETE_YN, ANSWER_YN
     	from tb_QnA
     	left join tb_file
     	using(QNA_ID)
+    	<if test="userId != null">
     	where user_id = #{userId}
+    	</if>
+    </select>
+    <insert id="REQNA">
+    	insert into tb_qna_re
+    	values(SEQ_QNA_RE.NEXTVAL, #{QNAId}, #{QNATitle}, #{QNAContent}, #{userId}, default, default)
+    </insert>
+    <update id="answerQNA">
+    	update tb_qna set answer_yn = 'Y'
+    	where qna_id = ${qNAId}
+    </update>
+    <select id="getREQnAList" resultMap="ReQnAResultSet">
+    	select * from tb_qna_re
+    	<if test="userId != null">
+    	where user_id = #{userId}
+    	</if>
     </select>
 </mapper>

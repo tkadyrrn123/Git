@@ -8,6 +8,7 @@ import com.kh.www.myPage.model.vo.Meal;
 import com.kh.www.myPage.model.vo.MyBoard;
 import com.kh.www.myPage.model.vo.MyComment;
 import com.kh.www.myPage.model.vo.MyQnA;
+import com.kh.www.myPage.model.vo.REQnA;
 
 public interface MyPageService {
 
@@ -34,5 +35,11 @@ public interface MyPageService {
 	int getQnAListCount(String userId);
 
 	ArrayList<MyQnA> getQnAList(String userId, PageInfo pi);
+
+	int REQNA(REQnA reQNA);
+
+	int answerQNA(int qNAId);
+
+	ArrayList<REQnA> getREQnAList(String userId);
 
 }

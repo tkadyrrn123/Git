@@ -12,6 +12,7 @@ import com.kh.www.myPage.model.vo.Meal;
 import com.kh.www.myPage.model.vo.MyBoard;
 import com.kh.www.myPage.model.vo.MyComment;
 import com.kh.www.myPage.model.vo.MyQnA;
+import com.kh.www.myPage.model.vo.REQnA;
 
 @Repository("myDAO")
 public class MyPageDAO {
@@ -67,6 +68,18 @@ public class MyPageDAO {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("myPageMapper.getQnAList", userId, rowBounds);
+	}
+
+	public int REQNA(REQnA reQNA, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("myPageMapper.REQNA",reQNA);
+	}
+
+	public int answerQNA(int qNAId, SqlSessionTemplate sqlSession) {
+		return sqlSession.update("myPageMapper.answerQNA",qNAId);
+	}
+
+	public ArrayList<REQnA> getREQnAList(String userId, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("myPageMapper.getREQnAList", userId);
 	}
 
 }

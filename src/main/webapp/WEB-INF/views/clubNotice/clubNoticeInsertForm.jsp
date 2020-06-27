@@ -12,7 +12,7 @@
    #notice_write_body{margin-top: 30px; margin-bottom: 30px;}
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavenderBlush;}
    h5{ margin: 0 auto;}
-   h2{font-family: "Sans-Serif";     margin-left: 11%;}
+   h2{font-family: "Sans-Serif";}
    hr{border-color: lavenderBlush;}
    #titleInput{height: 60%; border: 1px solid lavenderBlush; margin-left: 20px; width: 80%;}
    #tr1{height: 10%}
@@ -43,6 +43,9 @@
 <body>
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
+<div class="commnuity_header">
+	<h2 style="font-weight:700;">동호회 공지사항</h2>
+	</div>
 <div id="notice_write_body">
          <form action="clubNoticeInsert.cn" method="post" enctype="Multipart/form-data">
             <table id="tb">
