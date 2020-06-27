@@ -158,7 +158,7 @@
 	<img class="img" src="resources/images/voteImage.png">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
-	<h2>투표 게시판</h2>
+	<h2 style="font-weight:700;">투표 게시판</h2>
 	</div>
 	<div class="select-box" id="selectBox">
 		  <div class="select-box__current" tabindex="1">

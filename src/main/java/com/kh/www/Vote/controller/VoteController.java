@@ -37,7 +37,12 @@ public class VoteController {
 	
 	// 투표목록 불러오기
 	@RequestMapping("voteList.vo")
-	public ModelAndView voteList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, @RequestParam(value="option", required=false) String option, @RequestParam(value="search", required=false) String search, @RequestParam(value="sOption", required=false) String sOption, HttpServletRequest request) {
+	public ModelAndView voteList(@RequestParam(value="page", required=false) Integer page, 
+								ModelAndView mv, 
+								@RequestParam(value="option", required=false) String option, 
+								@RequestParam(value="search", required=false) String search, 
+								@RequestParam(value="sOption", required=false) String sOption, 
+								HttpServletRequest request) {
 		int currentPage = 1;
 		// continue, finish, latest, total, content
 		if(page != null) {
@@ -106,7 +111,12 @@ public class VoteController {
 	}
 	
 	@RequestMapping("voteDetail.vo")
-	public ModelAndView votingDetail(@RequestParam ("vId") int vId, @RequestParam (value="check", required=false) boolean check, @RequestParam("userId") String userId, @RequestParam ("page") Integer page, ModelAndView mv, HttpServletResponse response) {
+	public ModelAndView votingDetail(@RequestParam ("vId") int vId,
+									@RequestParam (value="check", required=false) boolean check, 
+									@RequestParam("userId") String userId, 
+									@RequestParam ("page") Integer page, 
+									ModelAndView mv, 
+									HttpServletResponse response) {
 		ArrayList<Comment> comment = cService.selectVoteComment(vId);
 		ArrayList<Comment2> comment2 = cService.selectComment2();
 		ArrayList<Comment> likeList = cService.selectLike();
@@ -127,7 +137,16 @@ public class VoteController {
 			vInlist = vService.selectVInvoteList(vcIdList);
 		}
 		Member writer = vService.selectWriteUser(v.getUserId());
-		mv.addObject("Vote", v).addObject("vclist", vclist).addObject("vInlist", vInlist).addObject("writer", writer).addObject("likeList", likeList).addObject("currentPage", currentPage).addObject("check", check).addObject("comment", comment).addObject("comment2", comment2).setViewName("voteDetail");
+		mv.addObject("Vote", v)
+		.addObject("vclist", vclist)
+		.addObject("vInlist", vInlist)
+		.addObject("writer", writer)
+		.addObject("likeList", likeList)
+		.addObject("currentPage", currentPage)
+		.addObject("check", check)
+		.addObject("comment", comment)
+		.addObject("comment2", comment2)
+		.setViewName("voteDetail");
 		// 캐시 없애서 뒤로가기 방지
 		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -137,7 +156,12 @@ public class VoteController {
 	}
 	
 	@RequestMapping("choiseVote.vo")
-	public ModelAndView choiseVote(@RequestParam("article_poll_fldpoll_egseq") int[] vcId, @RequestParam("vId") int vId, @RequestParam ("check") boolean check, @RequestParam ("page") Integer page, HttpServletRequest req, HttpServletResponse response, ModelAndView mv) {
+	public ModelAndView choiseVote(	@RequestParam("article_poll_fldpoll_egseq") int[] vcId, 
+									@RequestParam("vId") int vId, @RequestParam ("check") boolean check, 
+									@RequestParam ("page") Integer page, 
+									HttpServletRequest req, 
+									HttpServletResponse response, 
+									ModelAndView mv) {
 		HttpSession session = req.getSession();
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String userId = loginUser.getUserId();

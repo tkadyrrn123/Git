@@ -33,7 +33,13 @@
 	<form action="update.my" method="post" onsubmit="return check();">
 		<div class="area">
 			<ul class="ul">
-				<li class="image"><img src="resources/uploadFiles/${loginUser.userFile}" width="110px" height="110px"></li>
+				<li class="image"><c:if test="${!empty loginUser.userFile }">
+					<img src="resources/uploadFiles/${loginUser.userFile}" width="110px" height="110px" id="image">
+					</c:if>
+					<c:if test="${empty loginUser.userFile }">
+					<img src="resources/uploadFiles/normal.jpg" width="110px" height="110px" id="image">
+					</c:if>
+				</li>
 				<li class="top">현재 아파트</li>
 				<li>
 				<input type="hidden" value="${loginUser.userId }" name="userId">

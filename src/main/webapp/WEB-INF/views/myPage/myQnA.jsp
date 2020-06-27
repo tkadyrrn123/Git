@@ -191,11 +191,11 @@
 }
 </style>
 <script>
-function goDetail(data) {
+function goDetail(data,check) {
     /*팝업 오픈전 별도의 작업이 있을경우 구현*/ 
-    popupOpen(data); //레이어 팝업창 오픈 
+    popupOpen(data,check); //레이어 팝업창 오픈 
 }
-function popupOpen(data) {
+function popupOpen(data,check) {
     $('.layerpop').css("position", "absolute");
     //영역 가운에데 레이어를 뛰우기 위해 위치 계산 
     $('.layerpop').css("top",(($(window).height() - $('.layerpop').outerHeight()) / 2) + $(window).scrollTop());
@@ -207,7 +207,7 @@ function popupOpen(data) {
 	    console.log(fileName);
 	    $('#QnATitle').val(title);
 	    $('#QnAContent').val(content);
-	    if(fileName != 'null'){
+	    if(fileName != 'null' && check == 0){
 	    	$('.download-name').val(fileName);
 	    	$('#download').attr('href','resources/uploadFiles/'+fileName);
 	    }else{
@@ -294,13 +294,17 @@ function QnAsubmit(){
 				<c:forEach var="i" begin="0" end="${qlist.size()-1}">
 					<tr>
 						<td>${qlist[i].QNAId }</td>
-						<td onClick="javascript:goDetail('${qlist[i]}');">${qlist[i].QNATitle }</td>
+						<td onClick="javascript:goDetail('${qlist[i]}',0);">${qlist[i].QNATitle }</td>
 						<td>${qlist[i].QNADate}</td>
-						<c:if test='${qlist[i].deleteYN eq "N"}'>
+						<c:if test='${qlist[i].answerYN eq "N"}'>
 							<td>처리 중</td>
 						</c:if>
-						<c:if test='${qlist[i].deleteYN eq "Y"}'>
-							<td>처리 완료</td>
+						<c:if test='${qlist[i].answerYN eq "Y"}'>
+							<c:forEach var="j" begin="0" end="${rqlist.size()-1}">
+								<c:if test="${rqlist[j].QNAId == qlist[i].QNAId}">
+									<td onClick="javascript:goDetail('${rqlist[j]}',1);">처리 완료</td>
+								</c:if>
+							</c:forEach>
 						</c:if>
 					</tr>
 				</c:forEach>

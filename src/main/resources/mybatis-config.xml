@@ -21,6 +21,7 @@
 		<typeAlias type="com.kh.www.Member.model.vo.LevelCount" alias="LevelCount"/>
 		<typeAlias type="com.kh.www.myPage.model.vo.MyComment" alias="MyComment"/>
 		<typeAlias type="com.kh.www.myPage.model.vo.MyQnA" alias="MyQnA"/>
+		<typeAlias type="com.kh.www.myPage.model.vo.REQnA" alias="REQnA"/>
 		<typeAlias type="com.kh.www.clubNotice.model.vo.ClubNotice" alias="ClubNotice"/>
 		<typeAlias type="com.kh.www.Vote.model.vo.VChoice" alias="VChoice"/>
 		<typeAlias type="com.kh.www.Vote.model.vo.VInvote" alias="VInvote"/>

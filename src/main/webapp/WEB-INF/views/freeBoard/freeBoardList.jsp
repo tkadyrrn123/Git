@@ -16,11 +16,11 @@
 #present{color: black !important;}
 #next{color: black !important;}
 
-
+#titleCrop{width: 100%; overflow: hidden; max-height: 450px;}
+#titleCrp>img{max-height: initial;}
 .img { 
      filter: brightness(70%);
-     width: 100%;
-     height: 400px;
+     width: 100%; margin-top: -5%;
 }
 	* { box-sizing: border-box; }
 /* 	body { background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); } */
@@ -157,11 +157,10 @@
 </style>
 </head>
 <body>
-
-	<img class="img" src="resources/images/myPageImage.jpg">
+	<div id="titleCrop"><img class="img" src="resources/images/gif_title.gif"></div>
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
-	<h3><b>자유 게시판</b></h3>
+	<b>자유 게시판</b>
 	</div>
 	<div class="select-box" id="selectBox">
 	
