@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>HOUSTORY</title>
-<link rel=" shortcut icon" href="resources/images/favicon.png">
+<link rel="shortcut icon" href="resources/images/favicon.png">
 <link rel="icon" href="resources/images/favicon.png">
 <link rel="shortcut icon" href="#">
 <link rel="stylesheet" href="resources/css/select.css" />
