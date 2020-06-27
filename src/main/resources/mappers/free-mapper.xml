@@ -30,7 +30,8 @@
  	
 	<select id="getListCount" resultType="_int">
 		select count(*)
-		from tb_board
+		from tb_free
+                join tb_board using(board_no)
                 join tb_user using(user_id)
 		where board_delete = 'N' and apt_name=#{aptName}
 	</select>

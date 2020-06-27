@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.clubNotice.model.vo.ClubNotice;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 public interface ClubNoticeService {
@@ -49,17 +50,29 @@ public interface ClubNoticeService {
 	//동호회 공지사항 정렬 리스트 가져오기
 	ArrayList<ClubNotice> selectSortCondition(HashMap map);
 
-	//댓글리스트 가져오기
-	ArrayList<Comment> noticeCommentList(int cnNo);
+//	//댓글리스트 가져오기
+//	ArrayList<Comment> noticeCommentList(int cnNo);
 
 	//댓글 등록
 	int insertNoticeComment(Comment nc);
+//
+//	//댓글 수정
+//	int commentUpdate(Comment comment);
+//
+//	//댓글 삭제
+//	int commentUpdate(int rNo);
 
-	//댓글 수정
-	int commentUpdate(Comment comment);
+	ArrayList<Comment> selectComment(int cnNo);
 
-	//댓글 삭제
-	int commentUpdate(int rNo);
+	ArrayList<Comment2> selectComment2();
+
+	int deleteComment(int rNo);
+
+	int commentUpdate(Comment c);
+
+	int insertComment2(Comment2 c);
+
+	ArrayList<Comment2> selectComment2(int rNo);
 
 	
 	

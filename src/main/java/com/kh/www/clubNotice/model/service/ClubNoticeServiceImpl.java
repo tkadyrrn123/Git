@@ -11,6 +11,7 @@ import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.clubNotice.model.dao.CNoticeDAO;
 import com.kh.www.clubNotice.model.vo.ClubNotice;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 import com.sun.xml.internal.bind.v2.runtime.NameList;
 
@@ -103,19 +104,49 @@ public class ClubNoticeServiceImpl implements ClubNoticeService {
 		return cnDAO.insertNoticeComment(sqlSession, nc);
 	}
 	
-	@Override //댓글리스트 가져오기
-	public ArrayList<Comment> noticeCommentList(int cnNo) {
-		return cnDAO.NoticeCommentList(sqlSession, cnNo);
+//	@Override //댓글리스트 가져오기
+//	public ArrayList<Comment> noticeCommentList(int cnNo) {
+//		return cnDAO.NoticeCommentList(sqlSession, cnNo);
+//	}
+//	
+//	@Override //댓글 수정
+//	public int commentUpdate(Comment comment) {
+//		return cnDAO.commentUpdate(sqlSession, comment);
+//	}
+//	
+//	@Override //댓글 삭제
+//	public int commentUpdate(int rNo) {
+//		return cnDAO.commentUpdate(sqlSession, rNo);
+//	}
+	
+	@Override
+	public ArrayList<Comment> selectComment(int cnNo) {
+		return cnDAO.selectComment(sqlSession, cnNo);
 	}
 	
-	@Override //댓글 수정
-	public int commentUpdate(Comment comment) {
-		return cnDAO.commentUpdate(sqlSession, comment);
+	@Override
+	public ArrayList<Comment2> selectComment2() {
+		return cnDAO.selectComment2(sqlSession);
 	}
 	
-	@Override //댓글 삭제
-	public int commentUpdate(int rNo) {
-		return cnDAO.commentUpdate(sqlSession, rNo);
+	@Override
+	public int commentUpdate(Comment c) {
+		return cnDAO.updateComment(sqlSession, c);
+	}
+	
+	@Override
+	public int deleteComment(int rNo) {
+		return cnDAO.deleteComment(sqlSession, rNo);
+	}
+	
+	@Override
+	public int insertComment2(Comment2 c) {
+		return cnDAO.insertComment2(sqlSession, c);
+	}
+	
+	@Override
+	public ArrayList<Comment2> selectComment2(int rNo) {
+		return cnDAO.selectComment2(sqlSession, rNo);
 	}
 }
 
