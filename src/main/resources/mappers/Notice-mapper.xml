@@ -239,4 +239,9 @@
 		<result property="nickname" column="NICKNAME"/>
 		<result property="userFile" column="USER_FILE"/>
 	</resultMap>
+	
+	<select id="getnNo" resultType="_int">
+		SELECT NOTICE_NO FROM TB_NOTICE
+		WHERE USER_ID = #{writer} AND NOTICE_TITLE = #{title}
+	</select>
 </mapper>

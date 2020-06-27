@@ -107,6 +107,14 @@ public class NoticeDAO {
 		return (ArrayList)sqlSession.selectList("NoticeMapper.selectComment2",rNo);
 	}
 
+	public int getnNo(SqlSessionTemplate sqlSession, String writer, String title) {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("writer", writer);
+		hs.put("title", title);
+		System.out.println("들어옴 ㅋㅋ");
+		return sqlSession.selectOne("NoticeMapper.getnNo", hs);
+	}
+
 
 
 }

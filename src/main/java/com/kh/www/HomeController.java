@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -312,9 +313,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping("idSearch.do")
-	public String idSearch(@RequestParam("userId_email") String user_email, HttpServletResponse response, HttpServletRequest request) throws IOException {
-		
-		String userId = mService.idSearch(user_email);
+	public String idSearch(@RequestParam("userId_email") String user_email, @RequestParam("userId_name") String name,
+						   HttpServletResponse response, HttpServletRequest request) throws IOException {
+		HashMap<String, Object> hs = new HashMap<String, Object>();
+		hs.put("email",user_email);
+		hs.put("name",name);
+		String userId = mService.idSearch(hs);
 		
 		InetAddress local = InetAddress.getLocalHost();
 		
@@ -342,7 +346,7 @@ public class HomeController {
 			out.println("<script>alert('메일을 확인해주세요!'); history.go(-1);</script>");
             out.flush();
 		}else {
-			out.println("<script>alert('등록된 이메일이 없습니다. 다시 확인해주세요!'); history.go(-1);</script>");
+			out.println("<script>alert('등록된 회원이 없습니다. 다시 확인해주세요!'); history.go(-1);</script>");
             out.flush();
 		}
 		return "index";

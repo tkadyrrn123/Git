@@ -245,8 +245,8 @@ public class MemberDAO {
 		return sqlSession.update("memberMapper.AdminAptMemberDelete", userId);
 	}
 
-	public String idSearch(SqlSessionTemplate sqlSession, String email) {
-		return sqlSession.selectOne("memberMapper.idSearch", email);
+	public String idSearch(SqlSessionTemplate sqlSession, HashMap<String, Object> hs) {
+		return sqlSession.selectOne("memberMapper.idSearch", hs);
 	}
 
 	public int searchPwdAlter(SqlSessionTemplate sqlSession, String userId, String uuid) {
