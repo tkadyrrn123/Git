@@ -1,7 +1,6 @@
 package com.kh.www.Member.model.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.kh.www.Member.model.vo.BoardType;
 import com.kh.www.Member.model.vo.LevelCount;
@@ -86,7 +85,7 @@ public interface MemberService {
 	// 멤버 탈퇴(관리자)
 	int AdminAptMemberDelete(String userId);
 	//아이디 찾기
-	String idSearch(HashMap<String, Object> hs);
+	String idSearch(String email);
 	
 	String idSearch(String user_Id, String user_email);
 	//비밀번호 찾기(임시비밃너호로 변경)

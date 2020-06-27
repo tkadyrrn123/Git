@@ -62,7 +62,5 @@ public interface NoticeService {
 	int insertComment2(Comment2 c);
 	ArrayList<Comment2> selectComment2(int rNo);
 
-	int getnNo(String writer, String title);
-
 	
 }

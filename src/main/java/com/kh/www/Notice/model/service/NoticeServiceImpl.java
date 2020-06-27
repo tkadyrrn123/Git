@@ -120,9 +120,4 @@ public class NoticeServiceImpl implements NoticeService {
 	public ArrayList<Comment2> selectComment2(int rNo) {
 		return nDAO.selectComment2(sqlSession, rNo);
 	}
-
-	@Override
-	public int getnNo(String writer, String title) {
-		return nDAO.getnNo(sqlSession, writer, title);
-	}
 }

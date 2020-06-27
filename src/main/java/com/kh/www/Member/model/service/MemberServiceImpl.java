@@ -1,7 +1,6 @@
 package com.kh.www.Member.model.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,8 +209,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String idSearch(HashMap<String, Object> hs) {
-		return mDAO.idSearch(sqlSession, hs);
+	public String idSearch(String email) {
+		return mDAO.idSearch(sqlSession, email);
 	}
 
 	@Override

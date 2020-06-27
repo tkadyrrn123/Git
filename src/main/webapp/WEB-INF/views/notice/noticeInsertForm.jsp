@@ -43,7 +43,7 @@
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div id="notice_write_body">
-         <form id="NoticeInsert"action="noticeInsert.no" method="post" enctype="Multipart/form-data">
+         <form action="noticeInsert.no" method="post" enctype="Multipart/form-data">
             <table id="tb">
                  <tr id="tr1">
                    <td colspan=2 style="color: darksalmon; font-weight: bold; font-size: 30px;">공지사항 등록</td>
@@ -85,33 +85,10 @@
             </table><br>
               <div id="btns">
                   <button type="button" class="btn" onclick="location.href='noticeList.no'">취소</button>
-                  <button type="button" id="nBtn" class="btn" >등록하기</button>
+                  <button class="btn" type="submit">등록하기</button>
             </div>
          </form>
    	</div>
    	<jsp:include page="../common/Footer.jsp"/>
 </body>
-
-<script>
-	/* 웹소켓  */
-	var NoticeWriter = '${ loginUser.userId }';
-	var NoticeTitle = null;
-	
-	$(function(){
-			$('#nBtn').on('click', function(evt) {
-				evt.preventDefault();
-			  	if (socket.readyState !== 1) return;
-			    	  
-			    	  if(socket){
-			    		  NoticeTitle=$('#titleInput').val();
-			    		  let socketMsg = "NoticeWrite," + NoticeWriter + "," + NoticeTitle ;
-			    		  console.log(socketMsg);
-			    		  socket.send(socketMsg);
-			    	  }
-			    	  document.getElementById('NoticeInsert').submit();
-			    	  
-		    });
-	});
-	
-</script>
 </html>

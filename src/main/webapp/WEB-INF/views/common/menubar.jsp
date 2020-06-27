@@ -136,6 +136,7 @@
 		socket = ws;
 	    ws.onopen = function () {
 	        console.log('Info: connection opened.');
+	        
 	    };
 	
 	    ws.onmessage = function (event) {

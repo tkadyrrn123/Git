@@ -113,9 +113,6 @@
 					<li onclick="location.href='AptBoardList.adm'">- 전체 게시글 목록</li>
 				</ul>
 			</li>
-			<li class="dropdown" onclick="location.href=''">
-				<label>Q & A 관리</label>
-			</li>
 		</ul>
 	</div>
 
