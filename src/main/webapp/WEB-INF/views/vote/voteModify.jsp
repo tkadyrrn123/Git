@@ -41,7 +41,7 @@
 <img class="img" src="resources/images/voteImage.png">
 <jsp:include page="../common/menubar.jsp"/>
 <div class="commnuity_header">
-<h2 style="margin-left: 0;">투표 게시판</h2>
+<h2 style="margin-left: 0; font-weight:700;">투표 게시판</h2>
 </div>
 <div id="body">
       <h2>&nbsp;투표</h2>

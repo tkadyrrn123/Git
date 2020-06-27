@@ -69,7 +69,10 @@ public class VoteDAO {
 		}
 		
 	}
-	public int updateVote(Vote v, ArrayList<VChoice> vclist, ArrayList<VChoice> originVClist, SqlSessionTemplate sqlSession) {
+	public int updateVote(Vote v, 
+						ArrayList<VChoice> vclist, 
+						ArrayList<VChoice> originVClist, 
+						SqlSessionTemplate sqlSession) {
 		int result1 = 0;
 		int result2 = 0;
 		System.out.println(v.getOverlapYN());
@@ -86,7 +89,6 @@ public class VoteDAO {
 	
 		if(result2 > 0) {
 			// 마지막으로 투표 수정
-			System.out.println(v.getOverlapYN());
 			return sqlSession.update("voteMapper.updateVote", v);
 		}
 		return 0;

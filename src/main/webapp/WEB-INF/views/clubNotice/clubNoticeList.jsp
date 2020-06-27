@@ -154,7 +154,7 @@
 	<img class="img" src="resources/images/clubNotice.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
-	<h2>동호회 공지사항</h2>
+	<h2 style="font-weight:700;">동호회 공지사항</h2>
 	</div>
 <!--동 정렬 시작--------------------------------------------------------------------------------------------------  -->
 	<div class="select-box" id="selectBox">

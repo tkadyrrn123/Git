@@ -66,7 +66,11 @@
 	
 	#replyInput2{margin-top: 10px; width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
 	
-	
+	.commnuity_header { position: absolute;
+						left: 45%;
+						top: 220px;
+						color: white;
+						font-size: 1.5em;}
 	
 	
 	
@@ -124,6 +128,9 @@
 <body>
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
+<div class="commnuity_header">
+	<h2 style="font-weight:700;">동호회 공지사항</h2>
+	</div>
 	<div class="outer">
 	<!----------- 게시글 상단부 시작  ---------->	
 		<br>
