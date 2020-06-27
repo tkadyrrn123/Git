@@ -13,6 +13,7 @@ import com.kh.www.myPage.model.vo.Meal;
 import com.kh.www.myPage.model.vo.MyBoard;
 import com.kh.www.myPage.model.vo.MyComment;
 import com.kh.www.myPage.model.vo.MyQnA;
+import com.kh.www.myPage.model.vo.REQnA;
 
 @Service("myService")
 public class MyPageServiceImpl implements MyPageService{
@@ -82,5 +83,21 @@ public class MyPageServiceImpl implements MyPageService{
 	public ArrayList<MyQnA> getQnAList(String userId, PageInfo pi) {
 		return myDAO.getQnAList(userId, pi, sqlSession);
 	}
+	
+	@Override
+	public int REQNA(REQnA reQNA) {
+		return myDAO.REQNA(reQNA, sqlSession);
+	}
+
+	@Override
+	public int answerQNA(int qNAId) {
+		return myDAO.answerQNA(qNAId,sqlSession);
+	}
+
+	@Override
+	public ArrayList<REQnA> getREQnAList(String userId) {
+		return myDAO.getREQnAList(userId, sqlSession);
+	}
+
 
 }
