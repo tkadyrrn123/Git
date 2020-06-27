@@ -9,11 +9,7 @@
 <title>자유게시판-상세보기</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
-.img { 
-     filter: brightness(70%);
-     width: 100%;
-     height: 400px;
-}
+
 	.outer {width: 1000px; height: auto; margin-left: auto; margin-right: auto; margin-top: 70px; margin-bottom: 50px; padding-bottom: 50px;}
 	#detailContent {width: 900px; height: 95px;}
 	.detailTable{margin: auto; text-align: center; border-collapse: collapse;}
@@ -57,11 +53,18 @@
 	.reply3_box{width: 763px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
  	
  	#rtb{border: 1px solid black;}
+ 	
+#titleCrop{width: 100%; overflow: hidden; max-height: 450px;}
+#titleCrp>img{max-height: initial;}
+.img { 
+     filter: brightness(70%);
+     width: 100%; margin-top: -10%;
+}
 </style>
 </head>
 <body>
 
-<img class="img" src="resources/images/noticeImage.jpg">
+<div id="titleCrop"><img class="img" src="resources/images/gif_title.gif"></div>
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
 		<form>

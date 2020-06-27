@@ -7,11 +7,7 @@
 <meta charset="UTF-8">
 <title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <style type="text/css">
-.img { 
-     filter: brightness(70%);
-     width: 100%;
-     height: 400px;
-}
+
 /*    #body{margin-top: 300px;} */
    table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavenderBlush;}
    h5{ margin: 0 auto;}
@@ -30,7 +26,7 @@
    #tr3{height: 70%;}
    #tr4{height: 10%;}
    #tb{width: 50%; height: 600px; margin: 0 auto; }
-   .td1{text-align: center; font-size: 11px; background: lavenderBlush;}
+   .td1{text-align: center; font-size: 11px; background: lavenderBlush; width: 50px;}
    
    #content{width: 80%; height: 90%; border: 1px solid lavenderBlush;}
    #btns{text-align: center;}
@@ -38,15 +34,31 @@
  
     input::placeholder{font-style: italic; color: darksalmon;}
     textarea::placeholder{font-style: italic; color: darksalmon;}
+    
+ 	.commnuity_header { 
+	position: absolute;
+	left: 45%;
+	top: 220px;
+	color: white;
+	font-size: 1.5em; 	
+ 	}
+#titleCrop{width: 100%; overflow: hidden; max-height: 450px;}
+#titleCrp>img{max-height: initial;}
+.img { 
+     filter: brightness(70%);
+     width: 100%; margin-top: -15%;
+}    
 </style>
 </head>
 <body>
 
-<img class="img" src="resources/images/myPageImage.jpg">
+<div id="titleCrop"><img class="img" src="resources/images/gif_title.gif"></div>
 <jsp:include page="../common/menubar.jsp"/>
 
 <div id="body">
-      <h2>&nbsp;자유게시판</h2>
+	<div class="commnuity_header">
+	<b>자유 게시판</b>
+	</div>
       <!-- <hr style="width: 80%; margin-left: 11%"><br> -->
 
          <form action="update.fr" method="post" enctype="Multipart/form-data">
@@ -84,7 +96,7 @@
               		<c:param name="page" value="${ page }"/>
               	</c:url>
           		<button class="btn" type="button" onclick="location.href='${ flist }'">목록으로</button>  
-                <button class="btn" type="reset">취소</button>
+                <button class="btn" type="reset">되돌리기</button>
                 <button class="btn">수정완료</button>
             </div>
          </form>

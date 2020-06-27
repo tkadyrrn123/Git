@@ -16,11 +16,11 @@
 #present{color: black !important;}
 #next{color: black !important;}
 
-#titleCrop{width: 100%; overflow: hidden; max-height: 500px;}
-#titleCrp img{max-height: initial;}
+#titleCrop{width: 100%; overflow: hidden; max-height: 450px;}
+#titleCrp>img{max-height: initial;}
 .img { 
      filter: brightness(70%);
-     width: 100%;
+     width: 100%; margin-top: -5%;
 }
 	* { box-sizing: border-box; }
 /* 	body { background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); } */
