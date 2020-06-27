@@ -32,6 +32,7 @@ import com.kh.www.myPage.model.vo.Meal;
 import com.kh.www.myPage.model.vo.MyBoard;
 import com.kh.www.myPage.model.vo.MyComment;
 import com.kh.www.myPage.model.vo.MyQnA;
+import com.kh.www.myPage.model.vo.REQnA;
 @SessionAttributes("loginUser")
 @Controller
 public class MyPageController {
@@ -115,7 +116,10 @@ public class MyPageController {
 		PageInfo pi = Pagenation.getPageInfo(currentPage, listCount);
 		
 		ArrayList<MyQnA> qlist = myService.getQnAList(m.getUserId(),pi);
-		mv.addObject("qlist", qlist);
+		
+		ArrayList<REQnA> rqlist = myService.getREQnAList(m.getUserId());
+		
+		mv.addObject("qlist", qlist).addObject(rqlist);
 		mv.addObject("pi", pi);
 		mv.setViewName("myQnA");
 		return mv;

@@ -44,6 +44,9 @@
 <body>
 <img class="img" src="resources/images/noticeImage.jpg">
 <jsp:include page="../common/menubar.jsp"/>
+<div class="commnuity_header">
+	<h2 style="font-weight:700;">동호회 공지사항</h2>
+	</div>
 <div id="notice_write_body">
          <form action="ClubNoticeUpdate.cn" method="post" enctype="Multipart/form-data">
 	        <input type="hidden" name="page" value="${ page }">
