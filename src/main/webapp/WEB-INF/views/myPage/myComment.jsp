@@ -97,7 +97,7 @@
 		<tfoot>
 			<!-- 페이징 처리 -->
 			<tr align="center" height="20" id="buttonTab">
-				<td colspan="3">
+				<td colspan="4">
 					<br>
 					<!-- [이전] -->
 					<c:if test="${ pi.currentPage <= 1 }">
