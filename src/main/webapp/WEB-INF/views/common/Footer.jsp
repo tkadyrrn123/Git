@@ -15,7 +15,7 @@ footer{
 
 footer .footer-limiter {
 	max-width: 880px;
-	margin: 0 auto;
+	margin: 0 auto; 
 }
 
 footer .footer-left p{
@@ -63,23 +63,37 @@ footer .container_small{padding-left: 250px;}
 .names{font-size: 20px;}
 .tleft{color: #92a8d1;}
 .tright{margin-left: 20px; color: #f7cac9;}
+
+.footer-left{display: inline-block; margin: 20px; margin-left: 150px; vertical-align: super;}
+#ftLogo{width: 180px;}
+h5{color: white;}
+h4{color: white;}
+#ftChar{display: inline-block; vertical-align: middle;}
 </Style>
 </head>
 <body>
 	<footer>
-		<div class="footer-limiter">
-			<div class="footer-right">
+		<div class="footer-left">
+			<div><img id="ftLogo" src="resources/images/로고.png"></div>
+		</div>	
+	<div id="ftChar">
+		<div class="footer-limiter" >
+			<h4>©하우스토리, TEAM PROJECT</h4>
+			<h5>김민주 | 박근오 | 송도훈 | 이종훈 | 임연화 | 정무지개</h5>
+			<h5>다같이살조</h5>
+		
+		
+		
+<!--  			<div class="footer-right">
 				<p style="margin-left: 10px;"><b class="names tleft">하우스토리</b></p>
 				<p><b class="names tleft">이종훈</b> <b class="names tright">임연화</b></p>
 				<p><b class="names tleft">박근오</b> <b class="names tright">김민주</b></p>
 				<p><b class="names tleft">송도훈</b> <b class="names tright">정무지개</b></p>
 			</div>
-
-			<div class="footer-left">
-				<div ><img src="resources/images/로고.png"></div>
-			</div>
+-->
+ 
 		</div>
-
+	</div>
 	</footer>
 </body>
 </html>
