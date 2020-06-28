@@ -406,7 +406,7 @@ textarea, select{
 							</div>
 							<c:if test="${QNAFileName ne null }">
 							<div>
-								<a class="usertype" href="resources/uploadFiles/${QNAFileName}" download style="margin:20px;">다운로드</a>
+								<a class="usertype" href="resources/uploadFiles/${QNAFileName}" download style="margin:20px; color:white">다운로드</a>
 							</div>
 							</c:if>
 						</div>
@@ -415,28 +415,28 @@ textarea, select{
 						</p>
 						<br clear="all">
 						<c:if test="${REQNA ne null }">
-						<div class="ReForm">
-							<span>
-								<b>답변내용</b>
-							</span>
-						</div>
-						<br clear="all">
-						<div id="Answer_Form">
-							<h2><span class="usertype">답변</span>${REQNA.QNATitle }</h2>
-							<div id="Answer_info">
-								<strong>
-									<i class="fa fa-clock-o" aria-hidden="true">${REQNA.QNADate }</i>
-								</strong>
+							<div class="ReForm">
+								<span>
+									<b>답변내용</b>
+								</span>
 							</div>
-							<div id="AnswerContent">
-								${REQNA.QNAContent }
+							<br clear="all">
+							<div id="Answer_Form">
+								<h2><span class="usertype">답변</span>${REQNA.QNATitle }</h2>
+								<div id="Answer_info">
+									<strong>
+										<i class="fa fa-clock-o" aria-hidden="true">${REQNA.QNADate }</i>
+									</strong>
+								</div>
+								<div id="AnswerContent">
+									${REQNA.QNAContent }
+								</div>
 							</div>
-						</div>
 						</c:if>
 						<c:if test="${REQNA eq null }">
 						<div class="ReForm">
 							<span>
-								<b>답변내용</b>
+								<b>답변하기</b>
 							</span>
 						</div>
 						<form id="AnswerInput" action="REQNA.adm" method="post">

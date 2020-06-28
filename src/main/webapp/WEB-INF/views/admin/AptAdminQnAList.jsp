@@ -239,7 +239,17 @@ textarea, select{
     border-top-right-radius: 10px;
     font-weight: bold;
 }
-
+#detail{
+    padding: 4px 20px;
+    font-weight: bold;
+    font-size: 12px;
+    border: 0;
+    background: #3fb574;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-top: 1%;
+}
 
 /*이 2개의 스타일은  토글*/
 #container.container_small{padding-left: 250px;}
@@ -306,7 +316,7 @@ textarea, select{
 										<td>${q.QNADate}</td>
 										<td>${q.answerYN}</td>
 										<td>${q.deleteYN}</td>
-										<td><button value="${q.QNAId}" onclick="location.href='qna_ReForm.adm?QNAId=${q.QNAId}&QNATitle=${q.QNATitle}&userId=${q.userId}&QNADate=${q.QNADate}&QNAContent=${q.QNAContent }&page=${ pi.currentPage}&file=${q.QNAFileName}'">답변하기</button></td>
+										<td style="text-align: center;"><button id="detail" onclick="location.href='qna_ReForm.adm?QNAId=${q.QNAId}&QNATitle=${q.QNATitle}&userId=${q.userId}&QNADate=${q.QNADate}&QNAContent=${q.QNAContent }&page=${ pi.currentPage}&file=${q.QNAFileName}'">이동</button></td>
 									</tr>
 								</c:forEach>
 								</c:if>
