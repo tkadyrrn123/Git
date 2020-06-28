@@ -23,13 +23,14 @@
 	         font-family: 'Nanum Gothic';
 	         position: absolute; top: 0px; left: 10%; color:white;
 	         }
-	.menubar a{float: left; font-family: 'Anton', sans-serif; font-size: 45px; margin-top: 18px;}
+	.menubar a{float: left; font-family: 'Anton', sans-serif; font-size: 45px; margin-top: 18px; -webkit-transition: all 0.30s ease-in-out;}
+	.menubar a:hover{color: #62B3B6;}
 	.catelist li{float: left; display: inline-block; text-align: center;}
 	.catelist>ul>li:first-child{margin-left: 18px;}
 	.dropdown{width: 134px; line-height: 75px;}
 	.dropdown:hover label{color: #62B3B6;}
 	.sub li{width: 134px; line-height: 50px; text-align: center; cursor: pointer;}
-	.sub li:hover{color:white;}
+	.sub li:hover{color:#62B3B6;}
 	.user{line-height: 84px;}
 	.user li{float:right; width: 40px;}
 	.user .fas{font-size: 20px;}
@@ -98,7 +99,6 @@
 				<c:if test="${ loginUser.userLevel == 1 }">
 					<li><i class="fas fa-sign-out-alt" onclick="location.href='logout.adm'"></i></li>
 					<li><i class="fas fa-user" onclick="location.href='myProfile.my'"></i></li>
-					<li><i class="fas fa-bell"></i></li>
 				</c:if>
 				
 				<c:if test="${ loginUser.userLevel == 2 }">

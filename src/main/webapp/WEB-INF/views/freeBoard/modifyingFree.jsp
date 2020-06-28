@@ -9,7 +9,7 @@
 <style type="text/css">
 
 /*    #body{margin-top: 300px;} */
-   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavenderBlush;}
+   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: #eff3f9 ;}
    h5{ margin: 0 auto;}
    h2{
 	position: absolute;
@@ -18,22 +18,22 @@
 	color: white;
 	font-size: 1.5em; 	  
    }
-   hr{border-color: lavenderBlush;}
-   #titleInput{height: 60%; border: 1px solid lavenderBlush; margin-left: 20px; width: 80%;}
+   hr{border-color: #eff3f9 ;}
+   #titleInput{height: 60%; border: 1px solid #eff3f9 ; margin-left: 20px; width: 80%;}
    
    #tr1{height: 10%}
    #tr2{height: 10%;}
    #tr3{height: 70%;}
    #tr4{height: 10%;}
    #tb{width: 50%; height: 600px; margin: 0 auto; }
-   .td1{text-align: center; font-size: 11px; background: lavenderBlush; width: 50px;}
+   .td1{text-align: center; font-size: 11px; background: #eff3f9 ; width: 50px;}
    
-   #content{width: 80%; height: 90%; border: 1px solid lavenderBlush;}
+   #content{width: 80%; height: 90%; border: 1px solid #eff3f9 ;}
    #btns{text-align: center;}
-   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: lavenderBlush;}
+   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: #eff3f9 ;}
  
-    input::placeholder{font-style: italic; color: darksalmon;}
-    textarea::placeholder{font-style: italic; color: darksalmon;}
+    input::placeholder{font-style: italic; color: #38614a;}
+    textarea::placeholder{font-style: italic; color: #38614a;}
     
  	.commnuity_header { 
 	position: absolute;
@@ -42,17 +42,17 @@
 	color: white;
 	font-size: 1.5em; 	
  	}
-#titleCrop{width: 100%; overflow: hidden; max-height: 450px;}
+#titleCrop{width: 100%; overflow: hidden; max-height: 420px;}
 #titleCrp>img{max-height: initial;}
 .img { 
-     filter: brightness(70%);
-     width: 100%; margin-top: -15%;
+     /* filter: brightness(70%); */
+     width: 100%; 
 }    
 </style>
 </head>
 <body>
 
-<div id="titleCrop"><img class="img" src="resources/images/gif_title.gif"></div>
+<div id="titleCrop"><img class="img" src="resources/images/gif_title3.gif"></div>
 <jsp:include page="../common/menubar.jsp"/>
 
 <div id="body">
@@ -68,7 +68,7 @@
          	
             <table id="tb">
                  <tr id="tr1">
-                   <td colspan=2 style="color: darksalmon; font-weight: bold;">수정하기</td>
+                   <td colspan=2 style="color: #aab2be ; font-weight: bold;">수정하기</td>
                 </tr> 
                 <tr id="tr2">
                    <td class="td1">제목</td>

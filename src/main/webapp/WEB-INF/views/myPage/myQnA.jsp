@@ -44,10 +44,10 @@
 		cursor: pointer;
 	}
 	.bottomBoard>tr:nth-child(even){
-		background-color: #CEF6F5;
+		background-color: #bdcce1;
 	}
 	#write{
-		background-color:skyblue;
+		background-color: #6a97db;
 		height: 40px;
 		color: white;
 		border-radius: 5px;
@@ -166,8 +166,8 @@
 .download-name{
 	margin-right: 50px;
 }
-.myPageUl li:nth-child(3) {
-	background-color: #8181F7;
+.myPageUl li:nth-child(4) {
+	background-color: #b2c9ec;
 }
 #mask {  
     position:absolute;  
@@ -189,6 +189,8 @@
 	border-bottom-color: #e2e2e2; 
 	border-radius: .25em;
 }
+.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}
 </style>
 <script>
 function goDetail(data,check) {
@@ -273,7 +275,8 @@ function QnAsubmit(){
 </head>
 <body>
 	<div id="mask"></div>
-	<img class="img" src="resources/images/myPageImage.jpg">
+<!-- 	<img class="img" src="resources/images/myPageImage.jpg"> -->
+		<img class="img" src="resources/images/마이페이지.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">QnA</b>
 	<div class="myMenu">
@@ -300,9 +303,13 @@ function QnAsubmit(){
 							<td>처리 중</td>
 						</c:if>
 						<c:if test='${qlist[i].answerYN eq "Y"}'>
+							<c:set var="check" value="0"/>
 							<c:forEach var="j" begin="0" end="${rqlist.size()-1}">
-								<c:if test="${rqlist[j].QNAId == qlist[i].QNAId}">
-									<td onClick="javascript:goDetail('${rqlist[j]}',1);">처리 완료</td>
+								<c:if test="${check eq 0 }">
+									<c:if test="${rqlist[j].QNAId == qlist[i].QNAId}">
+										<c:set var="check" value="1"/>
+										<td style="cursor:pointer;" onClick="javascript:goDetail('${rqlist[j]}',1);">처리완료</td>
+									</c:if>
 								</c:if>
 							</c:forEach>
 						</c:if>
@@ -320,45 +327,43 @@ function QnAsubmit(){
 		<tbody>
 		<!-- 페이징 처리 -->
 			<tr align="center" height="20" id="buttonTab">
-				<td>
-				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+				<td colspan="4">
+					<br>
 					<!-- [이전] -->
 					<c:if test="${ pi.currentPage <= 1 }">
-						[이전] &nbsp;
+						
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="myQnA.my">
+						<c:url var="before" value="myComment.my">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
-						<a href="${ before }">[이전]</a> &nbsp;
+						<a class="btn-standard" href="${ before }">이전</a>
 					</c:if>
 					
 					<!-- 페이지 -->
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:if test="${ p eq pi.currentPage }">
-							<font color="red" size="4"><b>[${ p }]</b></font>
+							<font class="btn-standard" color="red" size="4"><b style="color: red;">${ p }</b></font>
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="myQnA.my">
+							<c:url var="pagination" value="myComment.my">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
+							<a class="btn-standard" href="${ pagination }">${ p }</a>
 						</c:if>
 					</c:forEach>
 					
 					<!-- [다음] -->
 					<c:if test="${ pi.currentPage >= pi.maxPage }">
-						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="myQnA.my">
+						<c:url var="after" value="myComment.my">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
-						<a href="${ after }">[다음]</a>
+						<a class="btn-standard" href="${ after }">다음</a>
 					</c:if>
 				</td>
-				<td><button id="write" onClick="javascript:goDetail();">문의작성</button></td>
 			</tr>
 		</tbody>
 	</table>

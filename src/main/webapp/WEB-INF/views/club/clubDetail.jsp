@@ -125,7 +125,8 @@
 <body>
 	
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
-	<img class="img" src="resources/images/05.PNG">
+<!-- 	<img class="img" src="resources/images/05.PNG"> -->
+ 	<img class="img" src="resources/images/동호회목록.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">동호회 상세 페이지</b>	
 	<div id= all> 

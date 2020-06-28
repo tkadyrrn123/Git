@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.kh.www.Member.model.vo.Member;
@@ -117,9 +114,8 @@ public class MyPageController {
 		
 		ArrayList<MyQnA> qlist = myService.getQnAList(m.getUserId(),pi);
 		
-		ArrayList<REQnA> rqlist = myService.getREQnAList(m.getUserId());
-		
-		mv.addObject("qlist", qlist).addObject(rqlist);
+		ArrayList<REQnA> rqlist = myService.getREQnAList(null);
+		mv.addObject("qlist", qlist).addObject("rqlist", rqlist);
 		mv.addObject("pi", pi);
 		mv.setViewName("myQnA");
 		return mv;

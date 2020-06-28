@@ -8,24 +8,24 @@
 <title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <style type="text/css">
    #notice_write_body{margin-top: 30px; margin-bottom: 30px;}
-   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavenderBlush;}
+   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: #eff3f9;}
    h5{ margin: 0 auto;}
    h2{font-family: "Sans-Serif";     margin-left: 11%;}
-   hr{border-color: lavenderBlush;}
-   #titleInput{height: 60%; border: 1px solid lavenderBlush; margin-left: 20px; width: 80%;}
+   hr{border-color: #eff3f9;}
+   #titleInput{height: 60%; border: 1px solid #eff3f9; margin-left: 20px; width: 80%;}
    #tr1{height: 10%}
    #tr2{height: 10%;}
    #tr3{height: 70%;}
    #tr4{height: 10%;}
    #tb{width: 60%; height: 600px; margin: 0 auto; }
-   .td1{text-align: center; font-size: 11px; background: lavenderBlush;}
+   .td1{text-align: center; font-size: 11px; background: #eff3f9;}
    
    #content{width: 90%; height: 90%; border: none;}
    #btns{text-align: center;}
-   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: lavenderBlush;}
+   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: #eff3f9;}
  
-    input::placeholder{font-style: italic; color: darksalmon;}
-    textarea::placeholder{font-style: italic; color: darksalmon;}
+    input::placeholder{font-style: italic; color: #38614a;}
+    textarea::placeholder{font-style: italic; color: #38614a;}
 
    .commnuity_header { position: absolute;
 						left: 45%;
@@ -35,18 +35,18 @@
     .img {filter: brightness(70%);
 		    width: 100%;
 		    height: 400px;}	
-	.apt_dong_Select{height: 60%; border: 1px solid lavenderBlush; margin-left: 20px; width: 50%;}	    
+	.apt_dong_Select{height: 60%; border: 1px solid #eff3f9; margin-left: 20px; width: 50%;}	    
 		    
 </style>
 </head>
 <body>
-<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/유럽집느낌.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div id="notice_write_body">
-         <form action="noticeInsert.no" method="post" enctype="Multipart/form-data">
+         <form id="NoticeInsert" action="noticeInsert.no" method="post" enctype="Multipart/form-data">
             <table id="tb">
                  <tr id="tr1">
-                   <td colspan=2 style="color: darksalmon; font-weight: bold; font-size: 30px;">공지사항 등록</td>
+                   <td colspan=2 style="color: #38614a; font-weight: bold; font-size: 30px;">공지사항 등록</td>
                 </tr> 
                 <tr id="tr2">
                    <td class="td1">제목</td>
@@ -85,7 +85,7 @@
             </table><br>
               <div id="btns">
                   <button type="button" class="btn" onclick="location.href='noticeList.no'">취소</button>
-                  <button class="btn" type="submit">등록하기</button>
+                  <button id="nBtn" class="btn" type="button">등록하기</button>
             </div>
          </form>
    	</div>

@@ -40,7 +40,10 @@
 </head>
 <body>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
-	<img class="img" src="resources/images/06.png">
+<!-- 	<img class="img" src="resources/images/06.png"> -->
+	<img class="img" src="resources/images/긴사진.jpg">
+
+	
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">인사말</b>	
    <div id="all">
@@ -56,7 +59,7 @@
 
       <!-- 아파트 사진   -->
          <div id="imgDiv">
-            <img id="aptImg" src="${ pageContext.servletContext.contextPath }/resources/images/02.png"/>
+            <img id="aptImg" src="${ pageContext.servletContext.contextPath }/resources/images/고급아파트느낌.jpg"/>
          </div>
          <div>
             <div class="ment" id="ment1">
