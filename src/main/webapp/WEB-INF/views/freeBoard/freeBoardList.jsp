@@ -252,8 +252,8 @@
 					<button class="btn-standard">이전</button>
 				</c:if>
 				<c:if test="${ pi.currentPage > 1 }">
-<%-- 				<c:url var="before" value="list.fr"> --%>
-					<c:url var="before" value="${ loc }">
+				<c:url var="before" value="list.fr">
+<%-- 					<c:url var="before" value="${ loc }"> --%>
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						<c:if test="${ searchValue ne null }">
 							<c:param name="condition" value="${ condition }"/>
@@ -270,7 +270,8 @@
 					</c:if>
 					
 					<c:if test="${ p ne pi.currentPage }">
-						<c:url var="pagenation" value="${ loc }">
+<%-- 						<c:url var="pagenation" value="${ loc }"> --%>
+						<c:url var="pagination" value="list.fr">
 							<c:param name="page" value="${ p }"/>
 						<c:if test="${ searchValue ne null }">
 							<c:param name="condition" value="${ condition }"/>
