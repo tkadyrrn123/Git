@@ -26,7 +26,9 @@
     			  } 
     .board_wrab table{border-collapse: collapse;
     				  width: 1500px;
-    				  margin: 0 auto;}
+    				  margin: 0 auto;
+    				  margin-bottom: 20px;
+    				  }
     .board_wrab thead{font-weight: bold;}
     .board_wrab td{border-bottom: 1px solid #aaa; 
     				padding:15px;}
@@ -151,7 +153,15 @@
 </style>
 </head>
 <body>
-	<img class="img" src="resources/images/clubNotice.jpg">
+<!-- 	<img class="img" src="resources/images/clubNotice.jpg"> -->
+ 	<img class="img" src="resources/images/메인어떨까.jpg">
+<!-- 	<img class="img" src="resources/images/동호회면어떨까.jpg">느낌좋음 -->
+<!-- 	<img class="img" src="resources/images/투표에.jpg">너무 미국대통령  -->
+<!-- 	<img class="img" src="resources/images/투표없냐.jpg"> 구리다-->
+<!-- 	<img class="img" src="resources/images/손든사진.jpg">더구리다 -->
+<!-- 	<img class="img" src="resources/images/손든사진.jpg"> -->
+<!-- 	<img class="img" src="resources/images/마켓에어떤지.jpg"> 별루임-->
+<!-- 	<img class="img" src="resources/images/유럽집느낌.jpg"> -->
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<h2 style="font-weight:700;">동호회 공지사항</h2>

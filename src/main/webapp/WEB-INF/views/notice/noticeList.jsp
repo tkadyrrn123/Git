@@ -24,7 +24,9 @@
     			  } 
     .board_wrab table{border-collapse: collapse;
     				  width: 1500px;
-    				  margin: 0 auto;}
+    				  margin: 0 auto;
+    				  margin-bottom: 20px;
+    				  }
     .board_wrab thead{font-weight: bold;}
     .board_wrab td{border-bottom: 1px solid #aaa; 
     				padding:15px;}
