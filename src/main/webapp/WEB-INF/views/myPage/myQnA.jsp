@@ -275,7 +275,8 @@ function QnAsubmit(){
 </head>
 <body>
 	<div id="mask"></div>
-	<img class="img" src="resources/images/myPageImage.jpg">
+<!-- 	<img class="img" src="resources/images/myPageImage.jpg"> -->
+		<img class="img" src="resources/images/마이페이지.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">QnA</b>
 	<div class="myMenu">

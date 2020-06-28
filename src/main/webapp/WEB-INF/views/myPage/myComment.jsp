@@ -61,7 +61,8 @@
 </style>
 </head>
 <body>
-	<img class="img" src="resources/images/myPageImage.jpg">
+<!-- 	<img class="img" src="resources/images/myPageImage.jpg"> -->
+		<img class="img" src="resources/images/마이페이지.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">내 댓글</b>
 	<div class="myMenu">
