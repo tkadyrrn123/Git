@@ -76,7 +76,7 @@
 </style>
 </head>
 <body>
-<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/유럽집느낌.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
 	<!----------- 게시글 상단부 시작  ---------->	

@@ -24,7 +24,9 @@
     			  } 
     .board_wrab table{border-collapse: collapse;
     				  width: 1500px;
-    				  margin: 0 auto;}
+    				  margin: 0 auto;
+    				  margin-bottom: 20px;
+    				  }
     .board_wrab thead{font-weight: bold;}
     .board_wrab td{border-bottom: 1px solid #aaa; 
     				padding:15px;}
@@ -57,7 +59,7 @@
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}
 	
 	/*서치 */
-	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 200px;}
+	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 50px;}
 	#selectBox{
 	  display: block;
 	  margin-left: 85%;
@@ -153,7 +155,7 @@
 </style>
 </head>
 <body>
-	<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/유럽집느낌.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<h2>공지사항</h2>

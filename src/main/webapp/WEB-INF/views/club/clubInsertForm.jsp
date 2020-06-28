@@ -45,7 +45,8 @@
 </style>
 </head>
 <body>
-	<img class="img" src="resources/images/05.PNG">
+<!-- 	<img class="img" src="resources/images/05.PNG"> -->
+ 	<img class="img" src="resources/images/동호회목록.jpg">
 	<jsp:include page="../common/menubar.jsp"/> 
 	<b id="headcomment">동호회 신청</b>
 <div id="body">
