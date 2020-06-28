@@ -29,8 +29,8 @@
    #btns{text-align: center;}
    .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: #eff3f9;}
  
-    input::placeholder{font-style: italic; color: #aab2be;}
-    textarea::placeholder{font-style: italic; color: #aab2be;}
+    input::placeholder{font-style: italic; color: #38614a;}
+    textarea::placeholder{font-style: italic; color: #38614a;}
 	.img{filter: brightness(70%);
      width: 100%;
      height: 400px;}
@@ -56,7 +56,7 @@
          <form action="clubInsert.cb" method="post" enctype="Multipart/form-data">
             <table id="tb">
                  <tr id="tr1">
-                   <td colspan=2 style="color: #aab2be; font-weight: bold;">작성하기</td>
+                   <td colspan=2 style="color: #38614a; font-weight: bold;">작성하기</td>
                 </tr> 
                 <tr id="tr2">
                    <td class="td1">동호회 명</td>

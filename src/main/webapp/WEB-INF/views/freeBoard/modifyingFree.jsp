@@ -32,8 +32,8 @@
    #btns{text-align: center;}
    .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: #eff3f9 ;}
  
-    input::placeholder{font-style: italic; color: darksalmon;}
-    textarea::placeholder{font-style: italic; color: darksalmon;}
+    input::placeholder{font-style: italic; color: #38614a;}
+    textarea::placeholder{font-style: italic; color: #38614a;}
     
  	.commnuity_header { 
 	position: absolute;
