@@ -74,6 +74,12 @@
 		where BOARD_NO = #{boardNo}
 	</update>
 	
+	<update id="deleteClub2">
+		update tb_club
+		set END_YN = 'Y'
+		where BOARD_NO = #{boardNo}
+	</update>
+	
 	<insert id="insertComment">
 		insert into tb_comment
 		values(SEQ_REPLY.NEXTVAL, #{boardNo},default,default, #{rUserId}, #{rContent}, sysdate, 'N', default )
