@@ -94,7 +94,7 @@
 						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
 					</c:if>
 					<c:if test="${empty notice.noticeFile }">
-						<img class="comment_img" src="${contextPath}/resources/uploadFiles/normal.jpg">
+						<img class="comment_img" src="${contextPath}/resources/images/normal.jpg">
 					</c:if>
                  </div> 					
 				<div class="dong">${ notice.userId }</div>
@@ -142,7 +142,7 @@
 						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
 					</c:if>
 					<c:if test="${empty notice.noticeFile }">
-						<img class="comment_img" src="${contextPath}/resources/uploadFiles/normal.jpg">
+						<img class="comment_img" src="${contextPath}/resources/images/normal.jpg">
 					</c:if>
                  </div> 
 				<div class="dong">${ loginUser.userId }</div>
@@ -384,7 +384,7 @@
 				 '			<div class="info" id="rProfile"><img class="comment_img" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${loginUser.userFile}"></div>' +
 				 '		</c:if>' +
 				 '		<c:if test="${empty loginUser.userFile }">' +
-				 '			<div class="info" id="rProfile"><img class="comment_img" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/normal.jpg"></div>' +
+				 '			<div class="info" id="rProfile"><img class="comment_img" src="${ pageContext.servletContext.contextPath }/resources/images/normal.jpg"></div>' +
 				 '	 	</c:if>' +
 				 '	</div>' +
 				 '	<div class="dong"  id="rWriter">${ loginUser.userId }</div>' +
