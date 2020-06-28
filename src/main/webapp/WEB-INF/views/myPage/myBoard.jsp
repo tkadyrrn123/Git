@@ -101,7 +101,6 @@
 					<br>
 					<!-- [이전] -->
 					<c:if test="${ pi.currentPage <= 1 }">
-						
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
 						<c:url var="before" value="myComment.my">
