@@ -334,7 +334,7 @@ function QnAsubmit(){
 						
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="myComment.my">
+						<c:url var="before" value="myQnA.my">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
 						<a class="btn-standard" href="${ before }">이전</a>
@@ -347,7 +347,7 @@ function QnAsubmit(){
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="myComment.my">
+							<c:url var="pagination" value="myQnA.my">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
 							<a class="btn-standard" href="${ pagination }">${ p }</a>
@@ -358,12 +358,13 @@ function QnAsubmit(){
 					<c:if test="${ pi.currentPage >= pi.maxPage }">
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="myComment.my">
+						<c:url var="after" value="myQnA.my">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
 						<a class="btn-standard" href="${ after }">다음</a>
 					</c:if>
 				</td>
+				<td><button id="write" onClick="javascript:goDetail();">문의작성</button></td>
 			</tr>
 		</tbody>
 	</table>
