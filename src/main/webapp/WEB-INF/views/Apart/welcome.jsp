@@ -40,7 +40,8 @@
 </head>
 <body>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
-	<img class="img" src="resources/images/06.png">
+<!-- 	<img class="img" src="resources/images/06.png"> -->
+	<img class="img" src="resources/images/긴사진.jpg">
 
 	
 	<jsp:include page="../common/menubar.jsp"/>
