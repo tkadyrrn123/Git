@@ -56,7 +56,8 @@
 <body>
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
 
-    <img class="img" src="resources/images/06.png">
+<!--     <img class="img" src="resources/images/06.png"> -->
+    <img class="img" src="resources/images/긴사진.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">아파트 정보</b>
 
