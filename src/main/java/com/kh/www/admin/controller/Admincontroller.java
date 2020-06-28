@@ -706,7 +706,7 @@ public class Admincontroller {
 		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
 		ArrayList<MyQnA> qlist = myService.getQnAList(null, pi);
 		
-		mv.addObject("pi", pi).addObject("qlist", qlist).setViewName("AdminQnAList");
+		mv.addObject("pi", pi).addObject("qlist", qlist).setViewName("AptAdminQnAList");
 		
 		return mv;
 	}
@@ -732,5 +732,10 @@ public class Admincontroller {
 		} else {
 			throw new MyPageException("QNA 처리에 실패하였습니다.");
 		}
+	}
+	
+	@RequestMapping("qna_ReForm.adm")
+	public String reForm() {
+		return "AptAdminQnAReForm";
 	}
 }

@@ -46,13 +46,13 @@
 #titleCrp>img{max-height: initial;}
 .img { 
      filter: brightness(70%);
-     width: 100%; margin-top: -15%;
+     width: 100%; 
 }    
 </style>
 </head>
 <body>
 
-<div id="titleCrop"><img class="img" src="resources/images/gif_title.gif"></div>
+<div id="titleCrop"><img class="img" src="resources/images/gif_title3.gif"></div>
 <jsp:include page="../common/menubar.jsp"/>
 
 <div id="body">
