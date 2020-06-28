@@ -70,7 +70,10 @@
 				<li class="dropdown"><label>아파트 소개</label>
 					<ul class="sub">
 						<li onclick="location.href='welcome.apt'">아파트 정보</li>
-						<li onclick="location.href='information.apt'">아파트 위치</li>
+						<c:url var="info" value="information.apt">
+							<c:param name="userId" value="${ loginUser.userId }"></c:param>
+						</c:url>
+						<li onclick="location.href='${info}'">아파트 위치</li>
 					</ul>
 				</li>
 				<li class="dropdown"><label>공지사항</label>
