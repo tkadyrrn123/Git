@@ -20,7 +20,7 @@
 #titleCrp>img{max-height: initial;}
 .img { 
      filter: brightness(70%);
-     width: 100%; margin-top: -5%;
+     width: 100%;
 }
 	* { box-sizing: border-box; }
 /* 	body { background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); } */
@@ -157,7 +157,7 @@
 </style>
 </head>
 <body>
-	<div id="titleCrop"><img class="img" src="resources/images/gif_title.gif"></div>
+	<div id="titleCrop"><img class="img" src="resources/images/gif_title3.gif"></div>
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<b>자유 게시판</b>
