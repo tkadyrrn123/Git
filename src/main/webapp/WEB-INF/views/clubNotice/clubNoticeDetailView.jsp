@@ -50,22 +50,19 @@
 	.go_list{width:70px; height:25px; background-color:lightgray; border:0; outline:0; border-radius:0.34em; cursor: pointer;}		
 
 /* 댓글작성 */
-	.reply1_box{width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
+	.reply1_box{width: 800px; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
 	.comment_img{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
 	.dong{line-height:3; display: inline; margin-left: 10px; margin-right: 10px;}
 	.dong2{display: inline; margin-left: 10px; margin-right: 10px;}
 	/* 댓글등록버튼  */
 	.reply1_btn{margin-right: 15px; float:right; width:70px; height:25px; background-color:lightgray; color:white; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
 	/* 댓글 textarea */	
-	.reply{width: 800px; height: auto; margin-left: 100px; margin-top: 8px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: solid; border-color: rgb(201, 232, 255);}
+	.reply{width: 800px; margin-left: 100px; margin-top: 8px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: solid; border-color: rgb(201, 232, 255);}
 	#rCount{margin-left: 5px;}
-	#rWrite{border-radius:0.34em; border-color: lightgrey; resize:none; margin-left: 10px;
-    margin-top: 20px;}	
-/* 	#reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;} */
+	#rWrite{border-radius:0.34em; border-color: lightgrey; resize:none; margin-left: 10px; margin-top: 20px;}	
+	.rWrite{border-radius:0.34em; border-color: lightgrey; resize:none; margin-left: 10px; margin-top: 20px;}	
 	.info{display: inline-block;} 	
-	
-	#replyInput2{margin-top: 10px; width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
-	
+	#info{display: inline-block;} 	
 	.commnuity_header { position: absolute;
 						left: 45%;
 						top: 220px;
@@ -81,26 +78,30 @@
 	#replyDate{margin-left: 10px; color: gray;}
 
 /* 	.replyDate{display: inline; margin-left: 10px; margin-right: 10px;} */
-/* 	.dong2{display: inline; margin-left: 10px; margin-right: 10px;} */
 
 /* 댓글 입력창 */
-	.rWrite{border-radius:0.34em; border-color: lightgrey; resize:none;}
 
 	.update_btn{margin-right: 10px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
-/* 	.delete_btn{margin-right: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500; */
-/* 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;}  */
-	
 	.delete_btn{margin-right: 10px; margin-left: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
 	.counter{color:#aaa; float: right; margin-top: 80px; margin-right: 15px;}
 	.counter2{color:#aaa; float: right; margin-right: 15px; margin-top: 85px;}
-	
-/* 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;} */
 	 
 /* 대댓글  */	
+	#replyInput2{margin-top: 10px; width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; 
+	padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
+	#replyInput2{width: 760px; 
+/*      height: auto;  */
+     margin-left: 140px; 
+     background-color: rgb(201, 232, 255); 
+     padding-left: 10px; 
+     padding-right: 10px; 
+     padding-top: 10px; 
+     padding-bottom: 10px; 
+     margin-top: 8px;}
  	.rreply{width: 760px; 
-     height: auto; 
+/*      height: auto;  */
      margin-left: 140px; 
      background-color: rgb(201, 232, 255); 
      padding-left: 10px; 
@@ -118,15 +119,11 @@
     border: 0px;
     border-radius: 6px;
     }
-    
-	.reply3_box{width: 760px; height: auto; margin-left: 140px; background-color: rgb(201, 232, 255); padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 8px;}
- 	.re_submit_btn{margin-right: 10px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
-		color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
  
 </style>
 </head>
 <body>
-<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/동호회공지.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div class="commnuity_header">
 	<h2 style="font-weight:700;">동호회 공지사항</h2>
@@ -293,8 +290,8 @@
 				
   				<script>
 				$(function () {
-					$('.rContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 32  );
-					$('.rrContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 32  );
+// 					$('.rContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 32  );
+// 					$('.rrContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 32  );
 					  
 					  
 					$('#replyUpdate${ status.index }').hide();
@@ -407,10 +404,10 @@
 		
 		
 		/** textarea 높이 자동 조절 **/
-		$(function () {
+// 		$(function () {
 			
-		  $('.textarea').height(1).height( $('.textarea').prop('scrollHeight') - 10  );	
-		});
+// 		  $('.textarea').height(1).height( $('.textarea').prop('scrollHeight') - 10  );	
+// 		});
 	
 			
 	/* 댓글 추가 ajax */
@@ -440,7 +437,7 @@
 				if(confirm("댓글을 삭제하시겠습니까?")){
 				
 				$.ajax({
-					url: 'deleteComment2.cb',
+					url: 'deleteComment2.co',
 					data: {rNo:rNo},
 					success: function(data){
 						$reply = $('#reply' + i);
@@ -494,8 +491,8 @@
 						 '	</div>' +
 						 '	<button class="update_btn" id="insertBtnRe" style="width:70px;">댓글 등록</button>' +
 						 '  <div style="display:none;">' + $(this).next().text() + '</div>' +
-						 '	<textarea class="rWrite" id="rrWrite" cols=87; row=4; style=" margin-left: 10px; margin-top: 10px; border-radius: 0.34em; border-color: lightgrey; overflow: hidden; overflow-wrap: break-word; resize: none;" required  placeholder="댓글을 입력해주세요."></textarea>'  +
-						 '	<span style="color:black;" id="counter">0/200</span>' +
+						 '	<textarea class="rWrite" id="rrWrite" cols="87" row="4" style=" margin-left: 10px; margin-top: 10px; border-radius: 0.34em; border-color: lightgrey; overflow: hidden; overflow-wrap: break-word; resize: none;" required  placeholder="댓글을 입력해주세요."></textarea>'  +
+						 '	<span style="color:black;" class="counter" id="counter">0/200</span>' +
 						 '</div>'
 				$rreplyInsertTable.after(rreplys);
 			});
@@ -518,7 +515,7 @@
 			$(document).on('click','#rrUpdateBtn', function(){
 				var rrNo = $(this).next().next().next().text();
 				var i = $(this).next().next().next().next().text();
-				var $textarea = '<textarea class="rContent'+ i +'" id="rrContent" cols=87; row=4; style="border-radius: 0.34em; border-color: lightgrey; overflow: hidden; overflow-wrap: break-word; resize: none;">'+$(this).parent().next().text() + '</textarea>';
+				var $textarea = '<textarea class="rContent'+ i +'" id="rrContent" cols="87" row="4" style="margin-left: 10px; margin-top: 20px; border-radius: 0.34em; border-color: lightgrey; overflow: hidden; overflow-wrap: break-word; resize: none;">'+$(this).parent().next().text() + '</textarea>';
 				$(this).after('<button type="button" class="update_btn" id="rrUpdateBtnCancel" style="width:70px;">수정 취소</button>')
 				$(this).after('<button type="button" class="update_btn" id="rrUpdateBtnSubmit" style="width:70px;">수정 완료</button>')
 	
@@ -561,12 +558,13 @@
 				
 					if(confirm("댓글을 삭제하시겠습니까?")){
 						$.ajax({
-			   				url: 'deleteComment3.cb',
+			   				url: 'deleteComment3.co',
 			   				data: {rrNo:rrNo},
 			   				success: function(data){
 			   					$rreply = $('#rreply' + i);
 			   					$rreply.html("");
 							$rreply.css('display', 'none');
+							document.location.reload();
 			   				}
 						}); 
 			   		}	
