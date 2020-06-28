@@ -117,9 +117,8 @@ public class MyPageController {
 		
 		ArrayList<MyQnA> qlist = myService.getQnAList(m.getUserId(),pi);
 		
-		ArrayList<REQnA> rqlist = myService.getREQnAList(m.getUserId());
-		
-		mv.addObject("qlist", qlist).addObject(rqlist);
+		ArrayList<REQnA> rqlist = myService.getREQnAList(null);
+		mv.addObject("qlist", qlist).addObject("rqlist", rqlist);
 		mv.addObject("pi", pi);
 		mv.setViewName("myQnA");
 		return mv;

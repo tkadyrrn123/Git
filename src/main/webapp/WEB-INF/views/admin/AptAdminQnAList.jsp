@@ -297,6 +297,7 @@ textarea, select{
 										</td>
 									</tr>
 								</c:if>
+								<c:if test="${!empty qlist }">
 								<c:forEach var="q" items="${qlist}">
 									<tr>
 										<td>${q.QNAId}</td>
@@ -305,9 +306,10 @@ textarea, select{
 										<td>${q.QNADate}</td>
 										<td>${q.answerYN}</td>
 										<td>${q.deleteYN}</td>
-										<td><button value="${q.QNAId}"; onclick="location.href='qna_ReForm.adm'">답변하기</button></td>
+										<td><button value="${q.QNAId}" onclick="location.href='qna_ReForm.adm?QNAId=${q.QNAId}&QNATitle=${q.QNATitle}&userId=${q.userId}&QNADate=${q.QNADate}&QNAContent=${q.QNAContent }&page=${ pi.currentPage}&file=${q.QNAFileName}'">답변하기</button></td>
 									</tr>
 								</c:forEach>
+								</c:if>
 							</tbody>							
 						</table>
 					</section>

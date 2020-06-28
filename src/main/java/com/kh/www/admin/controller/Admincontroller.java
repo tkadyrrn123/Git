@@ -735,7 +735,22 @@ public class Admincontroller {
 	}
 	
 	@RequestMapping("qna_ReForm.adm")
-	public String reForm() {
-		return "AptAdminQnAReForm";
+	public ModelAndView reForm	(@RequestParam("QNAId") int QNAId, 
+								@RequestParam("QNATitle") String QNATitle, 
+								@RequestParam("userId") String userId, 
+								@RequestParam("QNADate") String QNADate, 
+								@RequestParam("QNAContent") String QNAContent, 
+								@RequestParam("file") String QNAFileName,
+								@RequestParam("page") int page, HttpSession session, ModelAndView mv) {
+		String AdminUserId = ((Member)session.getAttribute("loginUser")).getUserId();
+		ArrayList<REQnA> rqlist = myService.getREQnAList(AdminUserId);
+		for(REQnA re:rqlist) {
+			if(re.getQNAId() == QNAId) {
+				mv.addObject("REQNA", re);
+			}
+		}
+		Member writer = mService.Login(userId);
+		mv.addObject("QNAId", QNAId).addObject("QNATitle", QNATitle).addObject("writer", writer).addObject("QNADate", QNADate).addObject("QNAContent", QNAContent).addObject("page", page).addObject("QNAFileName", QNAFileName).setViewName("AptAdminQnAReForm");
+		return mv;
 	}
 }
