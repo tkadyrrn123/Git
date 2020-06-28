@@ -386,29 +386,35 @@ textarea, select{
 						<div><p id="title">Q n A 답변</p></div>
 						<hr>
 						<div id="QnAForm">
-							<h2><span class="usertype">입주민</span>여기다가 글 제목</h2>
+							<h2><span class="usertype">입주민</span>${QNATitle }</h2>
 							<div id="userInfo">
 								<strong>
-									<i class="fas fa-user">유저 아이디</i>
+									<i class="fas fa-user">${writer.userId }</i>
 								</strong>
 								<strong>
-									<i class="fa fa-clock-o" aria-hidden="true">올린 날짜</i>
+									<i class="fa fa-clock-o" aria-hidden="true">${QNADate }</i>
 								</strong>
 								<strong>
-									<i class="fa fa-envelope-o" aria-hidden="true">유저 이메일</i>
+									<i class="fa fa-envelope-o" aria-hidden="true">${writer.email }</i>
 								</strong>
 								<strong>
-									<i class="fa fa-phone" aria-hidden="true">유저 핸드폰</i>
+									<i class="fa fa-phone" aria-hidden="true">${writer.phone }</i>
 								</strong>
 							</div>
 							<div id="content">
-								내용
+								${QNAContent}
 							</div>
+							<c:if test="${QNAFileName ne null }">
+							<div>
+								<a class="usertype" href="resources/uploadFiles/${QNAFileName}" download style="margin:20px;">다운로드</a>
+							</div>
+							</c:if>
 						</div>
 						<p>
 						<button id="listBtn" onclick="location.href='selectAllQNAList.adm'">목록</button>
 						</p>
 						<br clear="all">
+						<c:if test="${REQNA ne null }">
 						<div class="ReForm">
 							<span>
 								<b>답변내용</b>
@@ -416,27 +422,31 @@ textarea, select{
 						</div>
 						<br clear="all">
 						<div id="Answer_Form">
-							<h2><span class="usertype">답변</span>문의제목 그대로</h2>
+							<h2><span class="usertype">답변</span>${REQNA.QNATitle }</h2>
 							<div id="Answer_info">
 								<strong>
-									<i class="fa fa-clock-o" aria-hidden="true">올린 날짜</i>
+									<i class="fa fa-clock-o" aria-hidden="true">${REQNA.QNADate }</i>
 								</strong>
 							</div>
 							<div id="AnswerContent">
-								내용
+								${REQNA.QNAContent }
 							</div>
 						</div>
-						<br>
-						
+						</c:if>
+						<c:if test="${REQNA eq null }">
 						<div class="ReForm">
 							<span>
 								<b>답변내용</b>
 							</span>
 						</div>
-						<form id="AnswerInput">
-							<textarea></textarea>
+						<form id="AnswerInput" action="REQNA.adm" method="post">
+							<input type="hidden" name="QNAId" value="${QNAId}">
+							<input type="hidden" name="QNATitle" value="${QNATitle}">
+							<input type="hidden" name="page" value="${page }">
+							<textarea name="QNAContent"></textarea>
 							<button id="ansBtn">작성하기</button>
 						</form>
+						</c:if>
 							<br><br><br><br><br><br><br><br>
 					</section>
 					

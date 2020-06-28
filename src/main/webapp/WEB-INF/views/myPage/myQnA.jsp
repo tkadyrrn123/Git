@@ -300,9 +300,13 @@ function QnAsubmit(){
 							<td>처리 중</td>
 						</c:if>
 						<c:if test='${qlist[i].answerYN eq "Y"}'>
+							<c:set var="check" value="0"/>
 							<c:forEach var="j" begin="0" end="${rqlist.size()-1}">
-								<c:if test="${rqlist[j].QNAId == qlist[i].QNAId}">
-									<td onClick="javascript:goDetail('${rqlist[j]}',1);">처리 완료</td>
+								<c:if test="${check eq 0 }">
+									<c:if test="${rqlist[j].QNAId == qlist[i].QNAId}">
+										<c:set var="check" value="1"/>
+										<td style="cursor:pointer;" onClick="javascript:goDetail('${rqlist[j]}',1);">처리완료</td>
+									</c:if>
 								</c:if>
 							</c:forEach>
 						</c:if>
@@ -322,6 +326,7 @@ function QnAsubmit(){
 			<tr align="center" height="20" id="buttonTab">
 				<td>
 				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+				
 					<!-- [이전] -->
 					<c:if test="${ pi.currentPage <= 1 }">
 						[이전] &nbsp;
