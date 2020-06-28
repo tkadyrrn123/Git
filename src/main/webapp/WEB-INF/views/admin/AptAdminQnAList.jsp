@@ -252,17 +252,19 @@ textarea, select{
 	<jsp:include page="AptAdminMenubar.jsp"/>
 	<div id="wrapper">
 		<div id="container">
-				<h1 id="container_title">전체 Q & A 목록</h1>
+				<h1 id="container_title">전체 QnA 목록</h1>
 				<div class="container_content">
 					<section>
-						<div><h2 style="margin: 10px 0;">전체 Q & A 조회</h2></div>
+						<div><h2 style="margin: 10px 0;">Q n A</h2></div>
 						
-						<form id="search" action="AptAdminBoardSearch.adm" onsubmit="return searchChk();">
+						
+						<form id="search" action="AptAdminMemberSearch.adm" onsubmit="return searchChk();">
 							<select id="searchOption" name="searchOption">
-								<option>제목</option>
-								<option>작성자</option>
+								<option>회원아이디</option>
+								<option>닉네임</option>
+								<option>이름</option>
 							</select>
-							<input type="hidden" name="num" value="${num}">
+							
 							<input type="text" id="searchText" name="searchText">
 							<input type="submit" id="btn_submit" name="btn_submit">
 							<script>
@@ -278,44 +280,36 @@ textarea, select{
 						<table>
 							<thead>
 								<tr>
-									 <th scope="col" style="width: 10px;">번호</th>
-									 <th scope="col" style="width: 30px;">게시판</th>
-							         <th scope="col" style="width: 400px;">제목</th>
-							         <th scope="col" style="width: 70px;">작성자</th>
-							         <th scope="col" style="width: 100px;">작성일</th>
-							         <th scope="col" style="width: 100px;">답변여부</th>
-							         <th scope="col" style="width: 20px;">삭제여부</th>
+									 <th style="width: 30px;">번호</th>
+							         <th style="width: 400px;">제목</th>
+							         <th style="width: 150px;">작성자</th>
+							         <th style="width: 110px;">작성일</th>
+							         <th style="width: 30px;">답변여부</th>
+							         <th style="width: 30px;">삭제여부</th>
+							         <th style="width: 30px;">답변하기</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty bList }">
+								<c:if test="${empty qlist }">
 									<tr>
-										<td colspan="11" style="text-align: center; padding: 100px 0 !important;">
+										<td colspan="7" style="text-align: center; padding: 100px 0 !important;">
 											자료가 없습니다.
 										</td>
 									</tr>
 								</c:if>
-								<c:forEach var="b" items="${bList}">
+								<c:forEach var="q" items="${qlist}">
 									<tr>
-										<td>${b.bId}</td>
-										<td>${b.type}</td>
-										<td>${b.title}</td>
-										<td>${b.writer}</td>
-										<td>${b.createDate}</td>
-										<td>${b.count}</td>
-										<td>${b.delete}</td>
+										<td>${q.QNAId}</td>
+										<td>${q.QNATitle}</td>
+										<td>${q.userId}</td>
+										<td>${q.QNADate}</td>
+										<td>${q.answerYN}</td>
+										<td>${q.deleteYN}</td>
+										<td><button value="${q.QNAId}"; onclick="location.href='qna_ReForm.adm'">답변하기</button></td>
 									</tr>
 								</c:forEach>
 							</tbody>							
 						</table>
-						<div id="popup_layer" >
-							<div id="popup_info" >
-								<div id="topbar">회원 탈퇴</div>
-								<p id="deleteMsg"><b></b>님을 탈퇴 시키겠습니까?</p>
-								<button class="member_btn left_btn">탈퇴</button>
-								<button class="member_btn right_btn">취소</button>
-							</div>
-						</div>
 					</section>
 					<!--페이징-->	
 					<div id="pageBtn">

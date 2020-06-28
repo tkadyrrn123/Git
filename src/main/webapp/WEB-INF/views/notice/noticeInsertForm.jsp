@@ -91,4 +91,26 @@
    	</div>
    	<jsp:include page="../common/Footer.jsp"/>
 </body>
+
+<script>
+	/* 웹소켓  */
+	var NoticeWriter = '${ loginUser.userId }';
+	var NoticeTitle = null;
+	
+	$(function(){
+			$('#nBtn').on('click', function(evt) {
+				evt.preventDefault();
+			  	if (socket.readyState !== 1) return;
+			    	  
+			    	  if(socket){
+			    		  NoticeTitle=$('#titleInput').val();
+			    		  let socketMsg = "NoticeWrite," + NoticeWriter + "," + NoticeTitle ;
+			    		  console.log(socketMsg);
+			    		  socket.send(socketMsg);
+			    	  }
+			    	  document.getElementById('NoticeInsert').submit();
+			    	  
+		    });
+	});
+</script>
 </html>

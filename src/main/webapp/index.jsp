@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -5,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>HOUSTORY</title>
-<link rel="shortcut icon" href="resources/images/favicon.png">
+<link rel=" shortcut icon" href="resources/images/favicon.png">
 <link rel="icon" href="resources/images/favicon.png">
 <link rel="shortcut icon" href="#">
 <link rel="stylesheet" href="resources/css/select.css" />
@@ -1469,7 +1470,11 @@ div.postcodify_popup_layer input.keyword:focus{outline: none;}
 						<td><p class="text">아이디는 가입시 등록한 메일 주소로 알려드립니다. 가입할 때 등록한 메일 주소를 입력하고 "아이디 찾기" 버튼을 클릭해주세요.</p></td>
 					</tr>
 					<tr>
-						<td><input type="email" name="userId_email" placeholder="이메일 주소"></td>
+						<td>
+							<input type="text" name="userId_name" placeholder="이름" style="width: 20%;"> 
+							&nbsp;&nbsp;&nbsp;
+							<input type="email" name="userId_email" placeholder="이메일 주소">
+						</td>
 					</tr>
 					<tr>
 						<td>
