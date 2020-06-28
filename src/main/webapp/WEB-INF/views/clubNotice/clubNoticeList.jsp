@@ -61,7 +61,7 @@
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}
 
 	/*서치 */
-	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 200px;}
+	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 50px;}
 	#selectBox{
 	  display: block;
 	  margin-left: 85%;
@@ -154,14 +154,7 @@
 </head>
 <body>
 <!-- 	<img class="img" src="resources/images/clubNotice.jpg"> -->
- 	<img class="img" src="resources/images/메인어떨까.jpg">
-<!-- 	<img class="img" src="resources/images/동호회면어떨까.jpg">느낌좋음 -->
-<!-- 	<img class="img" src="resources/images/투표에.jpg">너무 미국대통령  -->
-<!-- 	<img class="img" src="resources/images/투표없냐.jpg"> 구리다-->
-<!-- 	<img class="img" src="resources/images/손든사진.jpg">더구리다 -->
-<!-- 	<img class="img" src="resources/images/손든사진.jpg"> -->
-<!-- 	<img class="img" src="resources/images/마켓에어떤지.jpg"> 별루임-->
-<!-- 	<img class="img" src="resources/images/유럽집느낌.jpg"> -->
+ 	<img class="img" src="resources/images/동호회공지.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<h2 style="font-weight:700;">동호회 공지사항</h2>

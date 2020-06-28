@@ -43,7 +43,7 @@
 </head>
 <body>
 	<jsp:include page="common/menubar.jsp"/>
-	<div class="back"><img src="resources/images/main_back2.png"></div>
+	<div class="back"><img src="resources/images/전체공지.jpg"></div>
 	<div class="board_box">
 		<div class="mboard noti_board">
 			<p class="title">공지사항<span>아파트 새 소식을 확인해주세요!</span></p> 

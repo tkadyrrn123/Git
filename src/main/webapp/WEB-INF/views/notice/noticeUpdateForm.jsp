@@ -27,8 +27,8 @@
    #btns{text-align: center;}
    .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: #eff3f9;}
  
-    input::placeholder{font-style: italic; color: darksalmon;}
-    textarea::placeholder{font-style: italic; color: darksalmon;}
+    input::placeholder{font-style: italic; color: #aab2be;}
+    textarea::placeholder{font-style: italic; color: #aab2be;}
 
    .commnuity_header { position: absolute;
 						left: 45%;
@@ -43,7 +43,7 @@
 </style>
 </head>
 <body>
-<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/유럽집느낌.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div id="notice_write_body">
          <form action="noticeUpdate.no" method="post" enctype="Multipart/form-data">
@@ -53,7 +53,7 @@
 			
             <table id="tb">
                  <tr id="tr1">
-                   <td colspan=2 style="color: darksalmon; font-weight: bold; font-size: 30px;">공지사항 수정</td>
+                   <td colspan=2 style="color: #aab2be; font-weight: bold; font-size: 30px;">공지사항 수정</td>
                 </tr> 
                 <tr id="tr2">
                    <td class="td1">제목</td>

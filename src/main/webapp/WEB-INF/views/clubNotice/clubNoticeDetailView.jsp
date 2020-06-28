@@ -123,7 +123,7 @@
 </style>
 </head>
 <body>
-<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/동호회공지.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div class="commnuity_header">
 	<h2 style="font-weight:700;">동호회 공지사항</h2>
