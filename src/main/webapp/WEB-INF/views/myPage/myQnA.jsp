@@ -189,6 +189,8 @@
 	border-bottom-color: #e2e2e2; 
 	border-radius: .25em;
 }
+.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}
 </style>
 <script>
 function goDetail(data,check) {
@@ -324,46 +326,43 @@ function QnAsubmit(){
 		<tbody>
 		<!-- 페이징 처리 -->
 			<tr align="center" height="20" id="buttonTab">
-				<td>
-				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
-				
+				<td colspan="4">
+					<br>
 					<!-- [이전] -->
 					<c:if test="${ pi.currentPage <= 1 }">
-						[이전] &nbsp;
+						
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="myQnA.my">
+						<c:url var="before" value="myComment.my">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
-						<a href="${ before }">[이전]</a> &nbsp;
+						<a class="btn-standard" href="${ before }">이전</a>
 					</c:if>
 					
 					<!-- 페이지 -->
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:if test="${ p eq pi.currentPage }">
-							<font color="red" size="4"><b>[${ p }]</b></font>
+							<font class="btn-standard" color="red" size="4"><b style="color: red;">${ p }</b></font>
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="myQnA.my">
+							<c:url var="pagination" value="myComment.my">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
+							<a class="btn-standard" href="${ pagination }">${ p }</a>
 						</c:if>
 					</c:forEach>
 					
 					<!-- [다음] -->
 					<c:if test="${ pi.currentPage >= pi.maxPage }">
-						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="myQnA.my">
+						<c:url var="after" value="myComment.my">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
-						<a href="${ after }">[다음]</a>
+						<a class="btn-standard" href="${ after }">다음</a>
 					</c:if>
 				</td>
-				<td><button id="write" onClick="javascript:goDetail();">문의작성</button></td>
 			</tr>
 		</tbody>
 	</table>
