@@ -1,26 +1,26 @@
 @charset "UTF-8";
 
 	#body{margin-top: 20px;}
-   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavender;}
+   table, tr, td{border-bottom: 1px solid #eff3f9; border-collapse: collapse; border-color: #eff3f9;}
    table{height:600px;}
    h5{ margin: 0 auto;}
    h2{font-family: "Sans-Serif"; margin-left: 11%;}
    hr{border-color: lavender;}
-   .inputs{height: 60%; border: 1px solid lavender; margin-left: 20px; width: 80%;}
+   .inputs{height: 60%; border: 1px solid #eff3f9; margin-left: 20px; width: 80%;}
    #tr1{height: 10%}
    #tr2{height: 60px;}
    #tr3{height: 60px;}
    #tr4{height: 60%;}
    #tr5{height: 40px;}
    #tb{width: 60%; height: 600px; margin: 0 auto; }
-   .td1{text-align: center; font-size: 0.9em; background: lavender; width:50px;}
+   .td1{text-align: center; font-size: 0.9em; background: #eff3f9; width:50px;}
    
-   #content{width: 80%; height: 90%; border:1px solid lavender;text-align:left; margin-left: 20px; resize: none; display:block;}
+   #content{width: 80%; height: 90%; border:1px solid #eff3f9;text-align:left; margin-left: 20px; resize: none; display:block;}
    #btns{text-align: center;}
-   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: lavender;}
+   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: #eff3f9;}
  
-    input::placeholder{font-style: italic; color: darksalmon;}
-    textarea::placeholder{font-style: italic; color: darksalmon;}
+    input::placeholder{font-style: italic; color: #38614a;}
+    textarea::placeholder{font-style: italic; color: #38614a;}
     
 	.img{width:100%; height:400px;}
 	.header_wrap{background-color:rgba(0, 0, 0, 0.5); width:100%; height: 400px;position:absolute;top:0;}

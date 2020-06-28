@@ -54,7 +54,7 @@
 	<img class="img" src="resources/images/market6.jpg">
 	<div class="header_wrap">
 	<jsp:include page="../common/menubar.jsp"/>
-	<b id="headcomment">중고장터</b>
+	<b id="headcomment">중고마켓</b>
 	</div>
 	<div id= all>
 			<div id="itemName">${ma.boardTitle}</div>
@@ -280,7 +280,8 @@
 		 	
 		 	$div = $(".reply2_box");
 			$ok = $('<input type="button" class="mdBtn" onclick="modifyRup('+rNo+')" value="수정완료">');
-		 	$(e).parent($div).append($ok);
+// 		 	$(e).parent($div).append($ok);
+		 	$div.append($ok);
 		 	
 		 	var counter = '<div style="color:#aaa; float: right;" id="counter'+rNo+'">(0/200자)</div>';
 		 	$(e).next().after(counter);

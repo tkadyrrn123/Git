@@ -15,7 +15,7 @@
 	<b id="headcomment">중고 장터</b>
 	</div>
 <div id="body">
-      <h2 style="color: darksalmon;">작성하기</h2>
+      <h2 style="color: #38614a;">작성하기</h2>
       <hr style="width: 80%; margin-left: 11%"><br>
 
          <form action="updateMarket.ma" method="post" enctype="Multipart/form-data">
@@ -44,7 +44,9 @@
                   <tr id="tr5">
                      <td class="td1">물품사진</td>
                      <td>
-                  		<input name="reloadFile" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px;">
+                  		<input name="reloadFile" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px; display:inline-block; width:25%; font-size: 0.9em;">
+                  		<input name="reloadFile" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px; display:inline-block; width:25%; font-size: 0.9em;">
+                  		<input name="reloadFile" type="file" accept=".png, .jpg" style="margin-left: 20px; padding: 5px; display:inline-block; width:25%; font-size: 0.9em;">
                      </td>
                   </tr>      
 

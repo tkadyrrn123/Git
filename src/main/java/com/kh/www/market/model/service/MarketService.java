@@ -45,5 +45,7 @@ public interface MarketService {
 
 	int deleteComment(int rNo);
 
+	int updateMarketFile(Market ma);
+
 
 }

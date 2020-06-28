@@ -103,7 +103,7 @@ public class MarketController {
 				filenames += renameFileName+",";
 			} 
 		}
-		filenames = filenames.substring(0, filenames.length()-1);
+//		filenames = filenames.substring(0, filenames.length()-1);
 		String[] fileArr = filenames.split(",");
 		
 		System.out.println(filenames);
@@ -147,6 +147,7 @@ public class MarketController {
 			}
 			return renameFileName;
 		} else {
+			System.out.println("null 되니?");
 			return null;
 		}
 	}
@@ -157,9 +158,9 @@ public class MarketController {
 									 @RequestParam("page") int page, ModelAndView mv) {
 		Market ma = marketService.selectMarketList(boardNo);
 		String filenames = "";
-		if(ma != null) {
+//		if(ma != null) {
 			filenames = ma.getFileName();
-		}
+//		}
 //		filenames = filenames.substring(0, filenames.length()-1);
 		String[] fileArr = filenames.split(",");
 		
@@ -205,7 +206,7 @@ public class MarketController {
 	
 	@RequestMapping("updateMarket.ma")
 	public ModelAndView updateMarket(@ModelAttribute Market ma, @RequestParam("reloadFile") MultipartFile reloadFile,@RequestParam("page") int page, HttpServletRequest request, ModelAndView mv ) {
-		if(reloadFile != null && reloadFile.isEmpty()) {
+		if(reloadFile != null && !reloadFile.isEmpty()) {
 			if(ma.getFileName() != null) {
 				deleteFile(ma.getFileName(), request);
 			}
@@ -216,13 +217,13 @@ public class MarketController {
 				ma.setFileName(fileName);
 			}
 		}
-//		int resultFile = marketService.updateMarketFile(ma);
+		int resultFile = marketService.updateMarketFile(ma);
 		
 		int result = marketService.updateMarket(ma);
 		int result2 = marketService.updatePrice(ma);
 		
 		
-		if(result > 0 || result2 > 0){
+		if(result > 0 || result2 > 0 || resultFile > 0){
 			mv.addObject("page",page);
 			mv.setViewName("redirect:marketDetail.ma?boardNo=" + ma.getBoardNo());
 		} else {

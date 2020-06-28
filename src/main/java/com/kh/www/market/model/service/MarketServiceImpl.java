@@ -119,5 +119,10 @@ public class MarketServiceImpl implements MarketService {
 		return marketDAO.deleteComment(sqlSession, rNo);
 	}
 
+	@Override
+	public int updateMarketFile(Market ma) {
+		return marketDAO.updateMarketFile(sqlSession, ma);
+	}
+
 
 }

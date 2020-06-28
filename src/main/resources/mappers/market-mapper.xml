@@ -218,5 +218,11 @@
 		where reply_no =#{rNo}
 	</update>
 	
+	<update id="updateFile">
+		update tb_file
+		set file_name = #{fileName}
+		where board_no = #{boardNo}
+	</update>
+	
 	
 </mapper>

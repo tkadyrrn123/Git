@@ -96,5 +96,9 @@ public class MarketDAO {
 		return sqlSession.update("marketMapper.deleteComment",rNo);
 	}
 
+	public int updateMarketFile(SqlSessionTemplate sqlSession, Market ma) {
+		return sqlSession.update("marketMapper.updateFile",ma);
+	}
+
 
 }
