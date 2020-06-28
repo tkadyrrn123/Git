@@ -30,7 +30,7 @@
     margin-right: 111px;
     margin-top: 30px; width: 33%; height:500px;}
 	
-	#title{margin-left: 20px; font-size: 30px; font-weight:bold; margin-top: 35px; height: 100px; background: none; }
+	#title{margin-left: 20px; font-size: 30px; font-weight:bold; margin-top: 35px;background: none;    height: 94px;  width: 78%; }
 	#name{margin-left: 20px; margin-top: 20px; font-size: 20px; font-weight:bold; display: inline-block;}
 	#nameInput{display: inline-block; margin-left: 30px;}
 	#count{margin-left: 20px; margin-top: 16px; font-size: 20px; font-weight:bold;}  
@@ -66,7 +66,7 @@
  	 
  	#rProfile{width: 40px; height:40px; margin-top: 10px;}
  	#rImg{ border-radius: 50%;  width: 100%; height:100%; }  
- 	#rWriter{vertical-align: middle; margin-top: -28px; margin-right: 10px; margin-left:10px;width:7%;}
+ 	#rWriter{vertical-align: middle; margin-top: -2px; margin-right: 10px; margin-left:10px;width:7%;}
  	#rHo{vertical-align: middle; margin-top: -28px;}
  	#info{display: inline-block;  height:50px; margin-left: 30px; width:80%;}
  	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
@@ -86,10 +86,12 @@
  	#rDeleteBtnC{width: 70px;  vertical-align: middle; margin-top: 20px;}   */
  	
  	#rUpdateBtnAjax{margin-left: 29px;}  
+ 	#rUpdateBtnC{width:90px;}  
  	#rDeleteBtnAjax{margin-left: 16px;}  
+ 	#rDeleteBtnC{width:90px;}  
  	
  	#rrUpdateBtn{width: 70px; margin-left: 617px;}  
- 	#replyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px; margin-top: 29px; margin-right:500px;}
+ 	#replyDate{width: 8%; font-size: 12px; color: gray; margin-left: 10px; margin-top: 29px; margin-right:500px;}
  	#rreplyDate{width: 12%; font-size: 12px; color: gray; margin-left: 10px;     margin-top: 29px; margin-right: 372px; vertical-align: top;}
  	#rrContent{background: skyblue;}
  	
@@ -147,7 +149,7 @@
 			
 			
 			<div id="infoBox">
-				<textarea name="clubName"  id="title" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal; " required>${ c.clubName }</textarea>
+				<textarea name="clubName"  id="title" style="overflow: hidden; overflow-wrap: break-word; resize: horicontal;text-overflow: ellipsis; " required>${ c.clubName }</textarea>
 				<div id="line4"></div>
 				
 				<div id="name">작성자  </div>		
@@ -314,7 +316,7 @@ ${ c.clubEtc }
 							<div class="info"  id="replyDate">${b.rCreateDate}</div>
 						<c:if test="${loginUser.userId eq b.rUserId }">
 							<button class="btn" id="rUpdateBtnC" onclick="updateReply(${ status.index }, ${b.rNo })" >수정완료</button> 
-							<button class="btn" id="rDeleteBtnC${ status.index }">수정취소</button>
+							<button class="btn" id="rDeleteBtnC${ status.index }" style="width:90px;">수정취소</button>
 						</c:if>
 					</div>
 
