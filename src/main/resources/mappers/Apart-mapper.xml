@@ -148,4 +148,11 @@
             #{item}
         </foreach>
 	</delete>
+	
+	<select id="info" resultMap="ApartResultMap">
+		select * 
+		from tb_apart
+    		join tb_user using(apt_name) 
+		where user_id = #{userId}
+	</select>
 </mapper>

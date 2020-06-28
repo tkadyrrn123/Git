@@ -32,7 +32,7 @@
    #imformTable{border-collapse: collapse; border-spacing: 0;}
    td, th { padding: 10px; border: 1px solid #ddd}
    
-   #warning{width:80%; margin: 0px auto;} 
+   #warning{width:80%; margin: 0px auto; margin-top:10px;} 
    #menubar{float: left; display: inline-block; width:15%; height: 400px; border: 1px solid #ddd; color: #545861; padding-top:20px;margin-left:20px;}
    ul{list-style:none;}
    #menubar li{font-size: 30px; height: 70px; font-weight: normal; margin-left:30px; }
@@ -73,44 +73,36 @@
    
       <div id="allDiv">
 	
-	
+<!--           <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> --> 	
+
 		<!-- 지도 표시 공간 -->
-          <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> 
          <div id="map"></div>   
-   
  		 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b84e06d19b1a33aab7847008f9f1ccbe&libraries=services"></script>
  		 <script>
  			<!-- 지도 중심 좌표 -->
  			var mapContainer = document.getElementById('map'),
  			mapOption = {
  					center: new kakao.maps.LatLng(33.450701, 126.570667),
- 					level: 3 <!-- 확대 레벨 -->
+ 					level: 3 <!-- 확대레벨 -->
  			}
- 			
  			 <!-- 지도 생성 -->
  			var map = new kakao.maps.Map(mapContainer, mapOption);
- 			
  			<!-- 주소-좌표 변환 -->
  			var geocoder = new kakao.maps.services.Geocoder();
- 			
  			<!-- 주소 입력 -->
- 			geocoder.addressSearch('경기 부천시 신흥로276번길 15', function(result, status){
- 				
+ 			geocoder.addressSearch("${apt.address}", function(result, status){
  				if(status === kakao.maps.services.Status.OK){
  					var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
- 					
  					<!-- 화살표로 표시 -->
  					var marker = new kakao.maps.Marker({
  						map: map,
  						position: coords
  					});
- 					
  					<!-- 설명 박스 -->
  					var infowindow = new kakao.maps.InfoWindow({
- 						content: '<div style="width:150px; text-align:center; padding:6px 0;">아파트</div>'
+ 						content: '<div style="width:150px; text-align:center; padding:6px 0;">${apt.name}</div>'
  					});
  					infowindow.open(map, marker);
- 					
  					<!-- 중심을 입력한 곳으로 -->
  					map.setCenter(coords);
  				} else{
@@ -136,27 +128,24 @@
                <tbody>
                   <tr>
                      <th>이름</th>
-                     <td>래미안 부천 중동</td>
+                     <td>${apt.name }</td>
                   </tr>
                   <tr>
                      <th>위치</th>
-                     <td>경기도 부천시 원미구 중동 3-241번지 일대</td>
+                     <td>${apt.address }</td>
                   </tr>
                   <tr>
                      <th >세대정보</th>
-                     <td>총 616 세대 (일반분양 616 세대)</td>
+                     <td>${apt.dong }</td>
                   </tr> 
                   <tr>
-                     <th>규모</th>
-                     <td>7개동 (지하 2층~ 최고 27층)</td>
+                     <th>대표 번호</th>
+                     <td>${ apt.tel }</td>
                   </tr>
+
                   <tr>
-                     <th>일반분양 주택형</th>
-                     <td>59.98㎡ (130세대) 70㎡A (169세대) 70㎡B (52세대) 84㎡A (242세대) 84㎡B (23세대)</td>
-                  </tr>
-                  <tr>
-                     <th>입주년월</th>
-                     <td>2015.10</td>
+                     <th>등록일</th>
+                     <td>${apt.createdate }</td>
                   </tr>
                </tbody>
             </table>

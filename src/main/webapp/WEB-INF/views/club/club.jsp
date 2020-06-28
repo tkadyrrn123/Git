@@ -48,8 +48,6 @@ body {
 		transform-style: preserve-3d;
 		transition: transform 0.5s cubic-bezier(0.75, 0, 0.85, 1);
 	}
-
-
 .more {
 	display: none;
 	}
