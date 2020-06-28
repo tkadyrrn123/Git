@@ -188,10 +188,11 @@
  		<!-------------댓글 작성  ------------>
 			<div class="reply1_box" id="rtb">
 				<div id="notice_profile" style="float:left;display:inline;">
-					<c:if test="${!empty cn.cnoticeFile }">
-						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ cn.cnoticeFile }">
+<%-- 					<c:if test="${!empty cn.cnoticeFile }"> --%>
+					<c:if test="${!empty loginUser.userFile }">
+						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ loginUser.userFile }">
 					</c:if>
-					<c:if test="${empty cn.cnoticeFile }">
+					<c:if test="${empty loginUser.userFile }">
 						<img class="comment_img" src="/resources/uploadFiles/normal.jpg">
 					</c:if>
                  </div> 
