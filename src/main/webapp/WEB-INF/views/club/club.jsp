@@ -166,7 +166,7 @@ body {
 	}
 
 .back .info {
-		margin-top: -30px;
+		margin-top: 10px;
 		/* 	position: relative;
 		display: flex;
 		align-items: center;
@@ -309,8 +309,10 @@ body {
 	#sellPic{width: 100%; height: 210px;}	 
 	
 	#imgg{}
-	 table{text-align:center;}  
-	 th{width:80px; height: 30px;}
+	 table{text-align:center; text-overflow: ellipsis; width: 100%;   height: 200px;}
+	 td{height: 50px;}  
+	 table p{height: 39px; width: 233px; text-overflow: ellipsis; overflow: hidden;}  
+	 th{width:80px; height: 30px; text-overflow: ellipsis;}
 	 #all{margin-top: 250px;}
 	 #title{width: 50%; margin-left: 246px; font-size: 30px; font-weight: bold; margin-top: 30px;}
 	#line{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px; border: 1px solid lightgray;} 
@@ -401,7 +403,9 @@ body {
                            				계획
                            			</th>
                            			<td>
+                           				<p>
                            				${ b.clubPlan }
+                           				</p>
                            			</td>
                            		</tr>
                            		<tr>
@@ -409,15 +413,19 @@ body {
                            				장소
                            			</th>
                            			<td>
+                           				<p>
                            				${ b.clubPlace }
+                           				</p>
                            			</td> 
                            		</tr>
-                           		<tr>
+                           		<tr> 
                            			<th>
                            				인원수
                            			</th> 
-                           			<td>
+                           			<td>	<br>
+                           				<p>
                            				( ${b.clubPeople } / ${ b.maxPeople } )
+                           				</p>
                            			</td>
                            		</tr>
                            </table>
