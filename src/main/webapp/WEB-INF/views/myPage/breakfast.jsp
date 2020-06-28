@@ -234,7 +234,9 @@ function resPopupClose() {
 </script>
 </head>
 <body>
-	<img class="img" src="resources/images/myPageImage.jpg">
+<!-- 	<img class="img" src="resources/images/myPageImage.jpg"> -->
+	<img class="img" src="resources/images/마이페이지.jpg">
+	
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">조석식 예약</b>
 	<div class="myMenu">
