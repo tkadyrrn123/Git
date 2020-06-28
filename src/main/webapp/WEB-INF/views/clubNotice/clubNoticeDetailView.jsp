@@ -142,7 +142,7 @@
 						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ cn.cnoticeFile }">
 					</c:if>
 					<c:if test="${empty cn.cnoticeFile }">
-						<img class="comment_img" src="/resources/uploadFiles/normal.jpg">
+						<img class="comment_img" src="${contextPath}/resources/uploadFiles/normal.jpg">
 					</c:if>
                  </div> 
 				<div class="dong">${ cn.cnoticeNickname }</div>
