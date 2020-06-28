@@ -67,7 +67,7 @@
 	.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}              
 
-	.page_wrap{display:inline-block; position:absolute; margin-top: 10px; margin-left: 50%;}
+	.page_wrap{margin-top: 10px; margin-left: 40%;}
 	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 150px;}
 
 	#selectBox{

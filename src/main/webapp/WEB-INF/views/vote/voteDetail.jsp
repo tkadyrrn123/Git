@@ -88,7 +88,7 @@
 	#topic-poll {  border: 1px solid lightgray;  width: 695px;  padding: 15px;  vertical-align: top;  border-radius: 10px;  font-size: 14px;  margin-left: 140px;  margin-top: 10px;  margin-bottom: 10px;}
 	#topic-poll .icon-edit:hover {  background-position: -384px 0;}
 	#topic-poll .poll-header {  overflow: hidden;  padding-bottom: 10px;  border-bottom: 1px solid lightgray;  position: relative;  min-height: 20px;}
-	#topic-poll .poll-header .poll-title {  display: inline-block;  position: absolute;  bottom: 10px;  font-size: 17px;}
+	#topic-poll .poll-header .poll-title {  display: inline-block;  position: absolute;  bottom: 5px;  font-size: 17px;}
 	#topic-poll .poll-header .poll-edit-link {  display: inline-block;  float: right;  color: #999999;}
 	#topic-poll .poll-header .poll-edit-link .sui-bttn {  padding: 3px 9px;}
 	#topic-poll .poll-header .poll-edit-link .icon-edit {  margin-left: 10px;}

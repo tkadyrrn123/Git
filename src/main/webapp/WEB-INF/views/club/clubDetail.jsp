@@ -33,7 +33,7 @@
 	#title{margin-left: 20px; font-size: 30px; font-weight:bold; margin-top: 35px; height: 100px; background: none; }
 	#name{margin-left: 20px; margin-top: 20px; font-size: 20px; font-weight:bold; display: inline-block;}
 	#nameInput{display: inline-block; margin-left: 30px;}
-	#count{margin-left: 20px; margin-top: 31px; font-size: 20px; font-weight:bold;}  
+	#count{margin-left: 20px; margin-top: 16px; font-size: 20px; font-weight:bold;}  
 	#countInput{margin-left: 52px; margin-top: 20px; background: none;} 
 	#applyBtn{margin-left: 52px; width: 80%; height: 50px; margin-top: 10px;}  
 	#outBtn{margin-left: 52px; width: 80%; height: 50px; margin-top: 10px;}  
@@ -71,7 +71,7 @@
  	#info{display: inline-block;  height:50px; margin-left: 30px; width:80%;}
  	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
  	.info{display: inline-block;} 
- 	#insertBtn{width: 70px;  margin-top: 20px;} 
+ 	#insertBtn{width: 90px;  margin-top: 20px;} 
  	#counter{margin-top: 70px;float: right;margin-right: 50px;}
  	
  
