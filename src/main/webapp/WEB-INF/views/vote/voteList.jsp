@@ -250,7 +250,7 @@
 						<!-- 페이지 -->
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 							<c:if test="${ p eq pi.currentPage }">
-								<font color="red" size="4"><b class="btn-standard">${ p }</b></font>
+								<font size="4"><b class="btn-standard" style="color: red;">${ p }</b></font>
 							</c:if>
 							
 							<c:if test="${ p ne pi.currentPage }">
