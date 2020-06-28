@@ -8,8 +8,8 @@
 <title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <link rel="stylesheet" type="text/css" href="resources/css/MyPage.css">
 <style>
-	.myPageUl li:nth-child(4) {
-		background-color: #8181F7;
+	.myPageUl li:nth-child(5) {
+		background-color: #b2c9ec;
 	}
 	#plus{
 		position: absolute;

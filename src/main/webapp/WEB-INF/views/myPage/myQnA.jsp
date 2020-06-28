@@ -44,10 +44,10 @@
 		cursor: pointer;
 	}
 	.bottomBoard>tr:nth-child(even){
-		background-color: #CEF6F5;
+		background-color: #bdcce1;
 	}
 	#write{
-		background-color:skyblue;
+		background-color: #6a97db;
 		height: 40px;
 		color: white;
 		border-radius: 5px;
@@ -166,8 +166,8 @@
 .download-name{
 	margin-right: 50px;
 }
-.myPageUl li:nth-child(3) {
-	background-color: #8181F7;
+.myPageUl li:nth-child(4) {
+	background-color: #b2c9ec;
 }
 #mask {  
     position:absolute;  

@@ -82,7 +82,7 @@
 	border-bottom: 1px solid #BDBDBD;
 }
 .myPageUl li:nth-child(1) {
-	background-color: #8181F7;
+	background-color: #b2c9ec;
 }
 </style>
 <script>

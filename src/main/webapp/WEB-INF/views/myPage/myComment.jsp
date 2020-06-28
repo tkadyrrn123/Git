@@ -48,14 +48,16 @@
 	color: black;
 	}
 	.bottomBoard>tr:nth-child(even){
-		background-color: #CEF6F5;
+		background-color: #bdcce1;
 	}
-	.myPageUl li:nth-child(5) {
-	background-color: #8181F7;
+	.myPageUl li:nth-child(3) {
+	background-color: #b2c9ec;
 	}
 	.cContent{
 		cursor: pointer;
 	}
+	.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}
 </style>
 </head>
 <body>
@@ -99,38 +101,37 @@
 					<br>
 					<!-- [이전] -->
 					<c:if test="${ pi.currentPage <= 1 }">
-						[이전] &nbsp;
+						
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
 						<c:url var="before" value="myComment.my">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
-						<a href="${ before }">[이전]</a> &nbsp;
+						<a class="btn-standard" href="${ before }">이전</a>
 					</c:if>
 					
 					<!-- 페이지 -->
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:if test="${ p eq pi.currentPage }">
-							<font color="red" size="4"><b>[${ p }]</b></font>
+							<font class="btn-standard" color="red" size="4"><b style="color: red;">${ p }</b></font>
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
 							<c:url var="pagination" value="myComment.my">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
+							<a class="btn-standard" href="${ pagination }">${ p }</a>
 						</c:if>
 					</c:forEach>
 					
 					<!-- [다음] -->
 					<c:if test="${ pi.currentPage >= pi.maxPage }">
-						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
 						<c:url var="after" value="myComment.my">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
-						<a href="${ after }">[다음]</a>
+						<a class="btn-standard" href="${ after }">다음</a>
 					</c:if>
 				</td>
 			</tr>
