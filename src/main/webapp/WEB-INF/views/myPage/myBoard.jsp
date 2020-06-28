@@ -51,11 +51,13 @@
 	color: black;
 	}
 	.myPageUl li:nth-child(2) {
-	background-color: #8181F7;
+	background-color: #b2c9ec;
 	}
 	.bTitle{
 		cursor: pointer;
 	}
+	.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}
 </style>
 </head>
 <body>
@@ -105,7 +107,7 @@
 						<c:url var="before" value="myBoard.my">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
-						<a href="${ before }">[이전]</a> &nbsp;
+						<a class="btn-standard" href="${ before }">[이전]</a> &nbsp;
 					</c:if>
 					
 					<!-- 페이지 -->
@@ -118,7 +120,7 @@
 							<c:url var="pagination" value="myBoard.my">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
+							<a class="btn-standard" href="${ pagination }">${ p }</a> &nbsp;
 						</c:if>
 					</c:forEach>
 					
@@ -130,7 +132,7 @@
 						<c:url var="after" value="myBoard.my">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
-						<a href="${ after }">[다음]</a>
+						<a class="btn-standard" href="${ after }">[다음]</a>
 					</c:if>
 				</td>
 			</tr>
