@@ -104,7 +104,7 @@
 					<c:if test="${ pi.currentPage <= 1 }">
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="myComment.my">
+						<c:url var="before" value="myBoard.my">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
 						<a class="btn-standard" href="${ before }">이전</a>
@@ -117,7 +117,7 @@
 						</c:if>
 						
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="myComment.my">
+							<c:url var="pagination" value="myBoard.my">
 								<c:param name="page" value="${ p }"/>
 							</c:url>
 							<a class="btn-standard" href="${ pagination }">${ p }</a>
@@ -128,7 +128,7 @@
 					<c:if test="${ pi.currentPage >= pi.maxPage }">
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="myComment.my">
+						<c:url var="after" value="myBoard.my">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url> 
 						<a class="btn-standard" href="${ after }">다음</a>
