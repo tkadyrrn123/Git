@@ -326,6 +326,7 @@ function QnAsubmit(){
 			<tr align="center" height="20" id="buttonTab">
 				<td>
 				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+				
 					<!-- [이전] -->
 					<c:if test="${ pi.currentPage <= 1 }">
 						[이전] &nbsp;
