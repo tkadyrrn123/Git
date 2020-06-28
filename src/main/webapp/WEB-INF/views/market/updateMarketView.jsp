@@ -12,7 +12,7 @@
 <img class="img" src="resources/images/market6.jpg">
 	<div class="header_wrap">
 	<jsp:include page="../common/menubar.jsp"/>
-	<b id="headcomment">중고 장터</b>
+	<b id="headcomment">중고마켓</b>
 	</div>
 <div id="body">
       <h2 style="color: #38614a;">작성하기</h2>
