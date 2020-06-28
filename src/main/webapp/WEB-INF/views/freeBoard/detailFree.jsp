@@ -54,10 +54,10 @@
  	
  	#rtb{border: 1px solid black;}
  	
-#titleCrop{width: 100%; overflow: hidden; max-height: 450px;}
+#titleCrop{width: 100%; overflow: hidden; max-height: 420px;}
 #titleCrp>img{max-height: initial;}
 .img { 
-     filter: brightness(70%);
+     /* filter: brightness(70%); */
      width: 100%;
 }
 </style>
