@@ -122,7 +122,7 @@ body {
 	
 	.front h2 {
 /* 		grid-row: 2; */
-		margin-bottom: 0.3em;
+		margin-bottom: -1.2em;
 		text-transform: uppercase;
 		letter-spacing: 3px;
 		color: #fff;
@@ -130,7 +130,12 @@ body {
 		text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 		margin-top: -10px;
 		text-align: center; 
+		text-overflow: ellipsis;
+		overflow: hidden;word-break:break-all;height: 70px;
 	}
+	.back h2 {text-overflow: ellipsis;
+		overflow: hidden;height: 35px;
+		word-break:break-all;}
 	
 	.front .rating {
 /* 		grid-row: 3; */

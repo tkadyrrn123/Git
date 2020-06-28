@@ -161,6 +161,7 @@
 		$('#canclebtn').on('click',function(){
 			<c:url var="can" value="clubDetail.cb">
 				<c:param name="boardNo" value="${ c.boardNo }"></c:param>
+				<c:param name="userId" value="${ loginUser.userId }"></c:param>
 				<c:param name="clubName" value="${ c.clubName }"></c:param>
 			</c:url>
 			if(confirm("수정을 중단하고 이전 페이지로 이동하시겠습니까?")){
