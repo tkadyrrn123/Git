@@ -47,6 +47,7 @@ public class ClubDAO {
 	}
 
 	public int deleteClub(SqlSessionTemplate sqlSession, Integer boardNo) {
+		sqlSession.update("clubMapper.deleteClub2", boardNo);
 		return sqlSession.update("clubMapper.deleteClub", boardNo);
 	}
 
