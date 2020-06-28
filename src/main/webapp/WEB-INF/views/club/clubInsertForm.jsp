@@ -8,11 +8,11 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
 <style type="text/css">
    #body{margin-top: 30px;}
-   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavender;}
+   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: #eff3f9;}
    h2{font-family: "Sans-Serif";     margin-left: 11%;}
-   hr{border-color: lavender;}
-   #titleInput{height: 60%; border: 1px solid lavender; margin-left: 20px; width: 80%;}
-   .countInput{height: 60%; border: 1px solid lavender; margin-left: 20px;}
+   hr{border-color: #eff3f9;}
+   #titleInput{height: 60%; border: 1px solid #eff3f9; margin-left: 20px; width: 80%;}
+   .countInput{height: 60%; border: 1px solid #eff3f9; margin-left: 20px;}
    
    #tr1{height: 5%}
    #tr2{height: 5%;}
@@ -23,14 +23,14 @@
    #tr7{height: 20%;}
    #tr8{height: 5%;}
    #tb{width: 60%; height: 1000px; margin: 0 auto; }
-   .td1{text-align: center; font-size: 11px; background: lavender;}
+   .td1{text-align: center; font-size: 11px; background: #eff3f9;}
    
-   .content{width: 80%; height: 90%; border-color: lavender;}
+   .content{width: 80%; height: 90%; border-color: #eff3f9;}
    #btns{text-align: center;}
-   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: lavenderBlush;}
+   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: #eff3f9;}
  
-    input::placeholder{font-style: italic; color: darksalmon;}
-    textarea::placeholder{font-style: italic; color: darksalmon;}
+    input::placeholder{font-style: italic; color: #aab2be;}
+    textarea::placeholder{font-style: italic; color: #aab2be;}
 	.img{filter: brightness(70%);
      width: 100%;
      height: 400px;}
@@ -56,7 +56,7 @@
          <form action="clubInsert.cb" method="post" enctype="Multipart/form-data">
             <table id="tb">
                  <tr id="tr1">
-                   <td colspan=2 style="color: darksalmon; font-weight: bold;">작성하기</td>
+                   <td colspan=2 style="color: #aab2be; font-weight: bold;">작성하기</td>
                 </tr> 
                 <tr id="tr2">
                    <td class="td1">동호회 명</td>
