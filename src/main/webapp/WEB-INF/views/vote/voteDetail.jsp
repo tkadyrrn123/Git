@@ -88,7 +88,7 @@
 	#topic-poll {  border: 1px solid lightgray;  width: 695px;  padding: 15px;  vertical-align: top;  border-radius: 10px;  font-size: 14px;  margin-left: 140px;  margin-top: 10px;  margin-bottom: 10px;}
 	#topic-poll .icon-edit:hover {  background-position: -384px 0;}
 	#topic-poll .poll-header {  overflow: hidden;  padding-bottom: 10px;  border-bottom: 1px solid lightgray;  position: relative;  min-height: 20px;}
-	#topic-poll .poll-header .poll-title {  display: inline-block;  position: absolute;  bottom: 10px;  font-size: 17px;}
+	#topic-poll .poll-header .poll-title {  display: inline-block;  position: absolute;  bottom: 5px;  font-size: 17px;}
 	#topic-poll .poll-header .poll-edit-link {  display: inline-block;  float: right;  color: #999999;}
 	#topic-poll .poll-header .poll-edit-link .sui-bttn {  padding: 3px 9px;}
 	#topic-poll .poll-header .poll-edit-link .icon-edit {  margin-left: 10px;}
@@ -278,7 +278,8 @@
 </style>
 </head>
 <body>
-<img class="img" src="resources/images/voteImage.png">
+<!-- <img class="img" src="resources/images/voteImage.png"> -->
+	<img class="img" src="resources/images/투표3.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div class="commnuity_header">
 <h2 style="font-weight:700;">투표 게시판</h2>
@@ -307,12 +308,15 @@
 						<b>${Vote.vName}</b>
 					</div>
 					<div id="cdt_profile" style="float:left;display:inline;">
-						<c:if test="${!empty loginUser.userFile }">
-						<img class="comment2-1img" src="resources/uploadFiles/${loginUser.userFile}">
+					
+						<c:if test="${!empty writer.userFile }">
+						<img class="comment2-1img" src="resources/uploadFiles/${writer.userFile}">
 						</c:if>
-						<c:if test="${empty loginUser.userFile }">
+						
+						<c:if test="${empty writer.userFile }">
 						<img class="comment2-1img" src="resources/uploadFiles/normal.jpg">
 						</c:if>
+						
 					</div>
 					<div class="dong">${writer.nickName}</div>
 					<div style="display:inline;"><i class="far fa-clock"></i> ${Vote.createDate }</div>

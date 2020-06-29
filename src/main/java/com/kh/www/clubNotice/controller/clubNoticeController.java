@@ -167,11 +167,7 @@ public class clubNoticeController {
 			
 		ClubNotice ClubNotice = ClubNoticeService.selectclubNotice(cnNo); //글번호 전체 내용 가져오기
 		
-		System.out.println(comment.size());
-		System.out.println(comment2.size());
-		System.out.println(likeList.size());
-		System.out.println(comment.size() + comment2.size());
-		System.out.println(comment.size() + comment2.size() + likeList.size());
+		System.out.println("공지사항 상세조회 컨트롤러에서 cn 뽑기 : "+ClubNotice);
 		
 		if(ClubNotice != null) { 
 			mv.addObject("cn", ClubNotice);

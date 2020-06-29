@@ -109,4 +109,8 @@ public class ApartDAO {
 		return sqlSession.delete("aptMapper.ApartDelete", chkId);
 	}
 
+	public Apart info(SqlSessionTemplate sqlSession, String userId) {
+		return sqlSession.selectOne("aptMapper.info", userId);
+	}
+
 }

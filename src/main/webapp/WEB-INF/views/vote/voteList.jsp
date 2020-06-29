@@ -152,10 +152,13 @@
 		background-color: #f7f7f7;
 		cursor: pointer;
 	}
+	.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}
 </style>
 </head>
 <body>
-	<img class="img" src="resources/images/voteImage.png">
+<!-- 	<img class="img" src="resources/images/voteImage.png"> -->
+	<img class="img" src="resources/images/투표3.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<h2 style="font-weight:700;">투표 게시판</h2>
@@ -233,7 +236,7 @@
 					<br>
 						<!-- [이전] -->
 						<c:if test="${ pi.currentPage <= 1 }">
-							[이전] &nbsp;
+							<b class="btn-standard" >이전</b>
 						</c:if>
 						<c:if test="${ pi.currentPage > 1 }">
 							<c:url var="before" value="voteList.vo">
@@ -242,13 +245,13 @@
 								<c:param name="search" value="${ keyword.search }"/>
 								<c:param name="sOption" value="${ keyword.sOption }"/>
 							</c:url>
-							<a href="${ before }">[이전]</a> &nbsp;
+							<a class="btn-standard" href="${ before }">이전</a>
 						</c:if>
 						
 						<!-- 페이지 -->
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 							<c:if test="${ p eq pi.currentPage }">
-								<font color="red" size="4"><b>[${ p }]</b></font> &nbsp;
+								<font size="4"><b class="btn-standard" style="color: red;">${ p }</b></font>
 							</c:if>
 							
 							<c:if test="${ p ne pi.currentPage }">
@@ -258,13 +261,13 @@
 									<c:param name="search" value="${ keyword.search }"/>
 									<c:param name="sOption" value="${ keyword.sOption }"/>
 								</c:url>
-								<a href="${ pagination }">${ p }</a> &nbsp;
+								<a class="btn-standard" href="${ pagination }">${ p }</a>
 							</c:if>
 						</c:forEach>
 						
 						<!-- [다음] -->
 						<c:if test="${ pi.currentPage >= pi.maxPage }">
-							[다음]
+							<b class="btn-standard" >다음</b>
 						</c:if>
 						<c:if test="${ pi.currentPage < pi.maxPage }">
 							<c:url var="after" value="voteList.vo">
@@ -273,7 +276,7 @@
 								<c:param name="search" value="${ keyword.search }"/>
 								<c:param name="sOption" value="${ keyword.sOption }"/>
 							</c:url> 
-							<a href="${ after }">[다음]</a>
+							<a class="btn-standard" href="${ after }">다음</a>
 						</c:if>
 					</td>
 				</tr>

@@ -44,4 +44,6 @@ public interface ApartService {
 
 	int ApartDelete(String[] chkId);
 
+	Apart info(String userId);
+
 }
