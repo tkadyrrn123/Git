@@ -65,7 +65,7 @@
                 <tr id="tr2">
                    <td class="td1">동</td>
                      <td>
-                     	<select name="nDong" class="apt_dong_Select">
+                     	<select name="nDong" class="apt_dong_Select" id="apt_dong_Select">
 						    <option value="전체 공지" selected>전체 공지</option>
 						    <c:forEach var="i" begin="0" end="${nDonglist.size()}" varStatus="status">
 						        <c:if test="${nDonglist[i] != selected}">
@@ -104,6 +104,9 @@
             </div>
          </form>
    	</div>
+   	<script>
+   		$("#apt_dong_Select").val('${notice.nDong}').attr("selected", "selected");
+   	</script>
    	<jsp:include page="../common/Footer.jsp"/>
 </body>
 </html>

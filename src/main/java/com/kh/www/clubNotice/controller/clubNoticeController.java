@@ -167,7 +167,7 @@ public class clubNoticeController {
 			
 		ClubNotice ClubNotice = ClubNoticeService.selectclubNotice(cnNo); //글번호 전체 내용 가져오기
 		
-		System.out.println("공지사항 상세조회 컨트롤러에서 cn 뽑기 : "+ClubNotice);
+		//System.out.println("공지사항 상세조회 컨트롤러에서 cn 뽑기 : "+ClubNotice);
 		
 		if(ClubNotice != null) { 
 			mv.addObject("cn", ClubNotice);
@@ -185,14 +185,15 @@ public class clubNoticeController {
 	@RequestMapping("ClubNoticeUpdateView.cn") //동호회 공지 수정하기 폼으로 이동 - 수정할 글 상세조회
 	public ModelAndView noticeUpdateView(@RequestParam("cnNo") int cnNo, @RequestParam("page") int page, ModelAndView mv, HttpSession session, HttpServletResponse response) {
 		
-		ClubNotice ClubNotice = ClubNoticeService.selectUpdateClubNotice(cnNo);
+		ClubNotice ClubNotice = ClubNoticeService.selectUpdateClubNotice(cnNo);//글번호를 보내서 글정보 다 가져오기
+		
 		
 		//동호회 이름 리스트 가져오기
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		String aptName = loginUser.getAptName();
+		String aptName = loginUser.getAptName(); //유저에서 아파트이름 가져오고
 		
 		ArrayList<String[]> cNamelist = new ArrayList<>();
-		cNamelist = ClubNoticeService.selectcNamelist(aptName);
+		cNamelist = ClubNoticeService.selectcNamelist(aptName); //아파트이름으로 동호회리스트 가져오기
 		
 		if(ClubNotice != null && cNamelist != null) {
 			mv.addObject("ClubNotice", ClubNotice).addObject("page", page).addObject("cNamelist", cNamelist).setViewName("clubNoticeUpdateForm");
