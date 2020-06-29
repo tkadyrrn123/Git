@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 <meta charset="UTF-8">
 <title>HOUSTORY</title>
 <link rel=" shortcut icon" href="resources/images/favicon.png">
@@ -66,11 +66,10 @@
                  <tr id="tr2">
                    <td class="td1">동호회</td>
                      <td>
-                     	<select name="clubName" class="clubSelect">
+                     	<select name="clubName" class="clubSelect" id="clubSelect">
 						    <c:forEach var="i" begin="0" end="${cNamelist.size()-1}" varStatus="status">
 						        <c:if test="${cNamelist[i] != selected}">
-								    <option value="${cNamelist[i]}" selected>${cNamelist[i]}</option>
-<%-- 								    <option value="${cNamelist[i]}" ${cNamelist[i] == clubName ? 'selected="selected"' : '' }>${cNamelist[i]}</option> --%>
+						        	<option value="${cNamelist[i]}">${cNamelist[i]}</option>
 						        </c:if>
 						    </c:forEach>
 						</select>
@@ -104,6 +103,9 @@
             </div>
          </form>
    	</div>
+   	<script>
+   		$("#clubSelect").val('${ClubNotice.clubName}').attr("selected", "selected");
+   	</script>
    	<jsp:include page="../common/Footer.jsp"/>
 </body>
 </html>

@@ -50,7 +50,7 @@
 	        <input type="hidden" name="page" value="${ page }">
 			<input type="hidden" name="nNo" value="${ notice.nNo }">
 			<input type="hidden" name="renameFileName" value="${ notice.renameFileName }">
-			
+			 
             <table id="tb">
                  <tr id="tr1">
                    <td colspan=2 style="color: #38614a; font-weight: bold; font-size: 30px;">공지사항 수정</td>
@@ -65,7 +65,7 @@
                 <tr id="tr2">
                    <td class="td1">동</td>
                      <td>
-                     	<select name="nDong" class="apt_dong_Select">
+                     	<select name="nDong" class="apt_dong_Select" id="apt_dong_Select">
 						    <option value="전체 공지" selected>전체 공지</option>
 						    <c:forEach var="i" begin="0" end="${nDonglist.size()}" varStatus="status">
 						        <c:if test="${nDonglist[i] != selected}">
@@ -104,6 +104,9 @@
             </div>
          </form>
    	</div>
+   	<script>
+   		$("#apt_dong_Select").val('${notice.nDong}').attr("selected", "selected");
+   	</script>
    	<jsp:include page="../common/Footer.jsp"/>
 </body>
 </html>
