@@ -50,7 +50,7 @@
 	        <input type="hidden" name="page" value="${ page }">
 			<input type="hidden" name="nNo" value="${ notice.nNo }">
 			<input type="hidden" name="renameFileName" value="${ notice.renameFileName }">
-			
+			 
             <table id="tb">
                  <tr id="tr1">
                    <td colspan=2 style="color: #38614a; font-weight: bold; font-size: 30px;">공지사항 수정</td>
