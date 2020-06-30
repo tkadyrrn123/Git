@@ -21,20 +21,20 @@ public class MainServiceImpl implements MainService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<Notice> getRealNoticeList() {
-		return mDAO.getRealNoticeList(sqlSession);
+	public ArrayList<Notice> getRealNoticeList(String aptName) {
+		return mDAO.getRealNoticeList(aptName, sqlSession);
 	}
 
 	@Override
-	public ArrayList<FreeBoard> getRealFreeBoard() {
+	public ArrayList<FreeBoard> getRealFreeBoard(String aptName) {
 		// TODO Auto-generated method stub
-		return mDAO.getRealFreeBoard(sqlSession);
+		return mDAO.getRealFreeBoard(aptName, sqlSession);
 	}
 
 	@Override
-	public ArrayList<Club> getRealClub() {
+	public ArrayList<Club> getRealClub(String aptName) {
 		// TODO Auto-generated method stub
-		return mDAO.getRealClub(sqlSession);
+		return mDAO.getRealClub(aptName, sqlSession);
 	}
 
 }

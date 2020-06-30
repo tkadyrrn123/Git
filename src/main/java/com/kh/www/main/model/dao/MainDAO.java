@@ -12,16 +12,16 @@ import com.kh.www.freeBoard.model.vo.FreeBoard;
 @Repository
 public class MainDAO {
 
-	public ArrayList<Notice> getRealNoticeList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("mainMapper.getRealNoticeList");
+	public ArrayList<Notice> getRealNoticeList(String aptName, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("mainMapper.getRealNoticeList", aptName);
 	}
 
-	public ArrayList<FreeBoard> getRealFreeBoard(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("mainMapper.getRealFreeBoard");
+	public ArrayList<FreeBoard> getRealFreeBoard(String aptName, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("mainMapper.getRealFreeBoard", aptName);
 	}
 
-	public ArrayList<Club> getRealClub(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("mainMapper.getRealClub");
+	public ArrayList<Club> getRealClub(String aptName, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("mainMapper.getRealClub", aptName);
 	}
 
 

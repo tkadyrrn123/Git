@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.club.model.vo.Club;
 import com.kh.www.freeBoard.model.vo.FreeBoard;
@@ -28,10 +30,10 @@ public class MainController {
 
 	// 메인페이지 최근 공지사항 가져오기
 	@RequestMapping("getRealNoticeList.main")
-	private void getRealNoticeList(HttpServletResponse response) {
+	private void getRealNoticeList(HttpServletResponse response, HttpSession session) {
 		response.setContentType("application/json; charset=UTF-8");
-
-		ArrayList<Notice> nlist = mainService.getRealNoticeList();
+		String aptName = ((Member)session.getAttribute("loginUser")).getAptName();
+		ArrayList<Notice> nlist = mainService.getRealNoticeList(aptName);
 		JSONArray jArray = new JSONArray();
 		for (Notice n : nlist) {
 			JSONObject jObject = new JSONObject();
@@ -52,15 +54,17 @@ public class MainController {
 	
 	@RequestMapping("getRealFreeBoard.main")
 	@ResponseBody
-	private ArrayList<FreeBoard> getRealFreeBoard() {
-		ArrayList<FreeBoard> flist = mainService.getRealFreeBoard();
+	private ArrayList<FreeBoard> getRealFreeBoard(HttpSession session) {
+		String aptName = ((Member)session.getAttribute("loginUser")).getAptName();
+		ArrayList<FreeBoard> flist = mainService.getRealFreeBoard(aptName);
 		return flist;
 	}
 	
 	@RequestMapping("getRealClub.main")
 	@ResponseBody
-	private ArrayList<Club> getRealClub(){
-		ArrayList<Club> clist = mainService.getRealClub();
+	private ArrayList<Club> getRealClub(HttpSession session){
+		String aptName = ((Member)session.getAttribute("loginUser")).getAptName();
+		ArrayList<Club> clist = mainService.getRealClub(aptName);
 		return clist;
 	}
 }
