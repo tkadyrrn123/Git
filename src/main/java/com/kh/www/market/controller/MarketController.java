@@ -99,7 +99,7 @@ public class MarketController {
 				filenames += renameFileName+",";
 			} 
 		}
-		filenames = filenames.substring(0, filenames.length()-1);
+//		filenames = filenames.substring(0, filenames.length()-1);
 		String[] fileArr = filenames.split(",");
 		
 		int fileResult = marketService.insertFiles(filenames);
