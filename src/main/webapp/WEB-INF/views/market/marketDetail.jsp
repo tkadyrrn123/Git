@@ -54,7 +54,7 @@
 	<img class="img" src="resources/images/market6.jpg">
 	<div class="header_wrap">
 	<jsp:include page="../common/menubar.jsp"/>
-	<b id="headcomment">중고장터</b>
+	<b id="headcomment">중고마켓</b>
 	</div>
 	<div id= all>
 			<div id="itemName">${ma.boardTitle}</div>
@@ -266,7 +266,7 @@
 		 	function modifyR(rNo, e){
 	 	//	alert(rNo);
 		$('.rContent'+rNo).prop('readonly', false);
-		$('.rContent'+rNo).css('border-color', 'pink');
+		$('.rContent'+rNo).css('border-color', '#6c9ab1');
 		
 		var save1 ="";
 	
@@ -277,11 +277,13 @@
 			
 	//	 	$('#mBtn'+rNo).val('완료');
 		 	$('#mBtn'+rNo).val('수정취소');
+// 		 	$('#dBtn'+rNo).val('수정완료');
 		 	
-		 	$div = $(".reply2_box");
+		 	$div = $('.reply2_box');
 			$ok = $('<input type="button" class="mdBtn" onclick="modifyRup('+rNo+')" value="수정완료">');
 		 	$(e).parent($div).append($ok);
-		 	
+// 		 	$div.append($ok);
+
 		 	var counter = '<div style="color:#aaa; float: right;" id="counter'+rNo+'">(0/200자)</div>';
 		 	$(e).next().after(counter);
 		 	var content = $(e).prev().find('textarea').text();
@@ -298,20 +300,20 @@
 		}
 	}
 	
-		function modifyRup(rNo){
-			var bno = ${ ma.boardNo };
-		 	var rContent = $('.rContent'+rNo).val();
-		 	
-		 	$.ajax({
-		 		url: 'updateComment.co',
-		 		data: {bno:bno, rContent:rContent, rNo:rNo},
-		 		success: function(data){
-		 			if(data == 'success'){
-		 				getReplyList();
-		 			}
-		 		}
-		 	});	 		
-		}
+// 		수정 댓글 저장 
+	 	function modifyRup(rNo){
+			 	var rContent = $('.rContent'+rNo).val();
+			 	
+			 	$.ajax({
+			 		url: 'modifyReply.ma',
+			 		data: {rContent:rContent, rNo:rNo},
+			 		success: function(data){
+			 			if(data == 'success'){
+			 				getReplyList();
+			 			}
+			 		}
+			 	});	 		
+			}
 		
 		//댓글 수정시 글자 카운팅
 		 function plus(rNo){
@@ -329,7 +331,7 @@
 		// 댓글 삭제
 			function deleteR(rNo){
 				$.ajax({
-					url: 'deleteVoteComment.co',
+					url: 'deleteComment.ma',
 					data: {rNo:rNo},
 					success: function(data){
 						if(data == 'success'){

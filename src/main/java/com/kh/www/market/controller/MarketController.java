@@ -33,6 +33,7 @@ import com.kh.www.comment.model.exception.CommentException;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
 import com.kh.www.common.model.vo.PageInfo;
+import com.kh.www.freeBoard.model.exception.FreeBoardException;
 import com.kh.www.freeBoard.model.vo.SearchCondition;
 import com.kh.www.market.model.exception.MarketException;
 import com.kh.www.market.model.service.MarketService;
@@ -83,17 +84,13 @@ public class MarketController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String id = loginUser.getUserId();
 		m.setUserId(id);
-		
-		System.out.println("id : " + id);
-		System.out.println(m.getUserId());
-		
+
 		int result = marketService.insertBoard(m);
 		
 		String renameFileName="";
 		String filenames = "";
 		Iterator<String> files = multi.getFileNames();
 		while(files.hasNext()) {
-			
 			String upFile = files.next();
 			System.out.println(upFile);
 			MultipartFile mFile = multi.getFile(upFile);
@@ -102,11 +99,8 @@ public class MarketController {
 				filenames += renameFileName+",";
 			} 
 		}
-		filenames = filenames.substring(0, filenames.length()-1);
+//		filenames = filenames.substring(0, filenames.length()-1);
 		String[] fileArr = filenames.split(",");
-		
-		System.out.println(filenames);
-		System.out.println(Arrays.toString(fileArr));
 		
 		int fileResult = marketService.insertFiles(filenames);
 		
@@ -154,12 +148,13 @@ public class MarketController {
 	@RequestMapping("marketDetail.ma")
 	public ModelAndView marketDetail(@RequestParam(value="boardNo",required=false) int boardNo, 
 									 @RequestParam("page") int page, ModelAndView mv) {
+		// no값을 이용해서 글에 대한 정보를 가져온 다음 파일이름만 뽑아서 정보, 파일이름, 페이지를 가지고 상세페이지로 넘어갑니다   
 		Market ma = marketService.selectMarketList(boardNo);
 		String filenames = "";
 		if(ma != null) {
 			filenames = ma.getFileName();
 		}
-//		filenames = filenames.substring(0, filenames.length()-1);
+		filenames = filenames.substring(0, filenames.length()-1);
 		String[] fileArr = filenames.split(",");
 		
 		System.out.println("detail : " + filenames);
@@ -204,7 +199,7 @@ public class MarketController {
 	
 	@RequestMapping("updateMarket.ma")
 	public ModelAndView updateMarket(@ModelAttribute Market ma, @RequestParam("reloadFile") MultipartFile reloadFile,@RequestParam("page") int page, HttpServletRequest request, ModelAndView mv ) {
-		if(reloadFile != null && reloadFile.isEmpty()) {
+		if(reloadFile != null && !reloadFile.isEmpty()) {
 			if(ma.getFileName() != null) {
 				deleteFile(ma.getFileName(), request);
 			}
@@ -215,13 +210,13 @@ public class MarketController {
 				ma.setFileName(fileName);
 			}
 		}
-//		int resultFile = marketService.updateMarketFile(ma);
+		int resultFile = marketService.updateMarketFile(ma);
 		
 		int result = marketService.updateMarket(ma);
 		int result2 = marketService.updatePrice(ma);
 		
 		
-		if(result > 0 || result2 > 0){
+		if(result > 0 || result2 > 0 || resultFile > 0){
 			mv.addObject("page",page);
 			mv.setViewName("redirect:marketDetail.ma?boardNo=" + ma.getBoardNo());
 		} else {
@@ -301,26 +296,35 @@ public class MarketController {
 		}
 	}
 	
-//	//	댓글 수정
-//		@RequestMapping("updateComment.co")
-//		@ResponseBody
-//		public ArrayList<Comment> updateComments(@RequestParam("boardNo") int boardNo, @RequestParam("content") String content, @RequestParam("rNo") int rNo, HttpServletResponse response) {
-//			Comment c = new Comment();
-//			c.setrNo(rNo);
-//			c.setBoardNo(boardNo);
-//			c.setrContent(content);
-//			
-//			int result = marketService.updateComment(c);
-//			
-//			if(result > 0) {
-//				ArrayList<Comment> comment = marketService.selectComment(boardNo);
-//				return comment;
-//				
-//			}else {
-//				throw new CommentException("댓글 수정에 실패했습니다.");
-//			}
-//			
-//		}
+//  댓글 수정
+	@RequestMapping("modifyReply.ma")
+    @ResponseBody
+    public String modifyReply(@RequestParam("rNo") int rNo, @ModelAttribute Comment c, @RequestParam("rContent") String rContent) {
+		
+		c.setrNo(rNo);
+		c.setrContent(rContent);
+		
+		int result = marketService.modifyReply(c);
+		
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new FreeBoardException("댓글 수정 실패!");
+		}
+    }
+	
+//	댓글 삭제
+	@RequestMapping("deleteComment.ma")
+	@ResponseBody
+	public String deleteReply(@RequestParam int rNo) {
+		int result = marketService.deleteComment(rNo);
+		
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new MarketException("댓글 삭제에 실패했습니다.");
+		}
+	}
 	
 	
 }
