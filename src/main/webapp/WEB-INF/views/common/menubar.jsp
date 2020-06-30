@@ -64,18 +64,12 @@
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
 	<div class="menubar">
 		<a href="main.do">HOUSTORY</a>
-		
 		<div class="catelist">
 			<ul>
-				<li class="dropdown"><label>아파트 소개</label>
-					<ul class="sub">
-						<li onclick="location.href='welcome.apt'">아파트 정보</li>
-						<c:url var="info" value="information.apt">
-							<c:param name="userId" value="${ loginUser.userId }"></c:param>
-						</c:url>
-						<li onclick="location.href='${info}'">아파트 위치</li>
-					</ul>
-				</li>
+				<c:url var="info" value="information.apt">
+					<c:param name="userId" value="${ loginUser.userId }"></c:param>
+				</c:url>
+				<li class="dropdown"><label onclick="location.href='${info}'">아파트 정보</label></li>
 				<li class="dropdown"><label>공지사항</label>
 					<ul class="sub">
 						<li onclick="location.href='noticeList.no'">공지사항</li>
@@ -85,7 +79,7 @@
 				<li class="dropdown"><label>커뮤니티</label>
 					<ul class="sub">
 						<li onclick="location.href='list.fr'">자유게시판</li>
-						<li onclick="location.href='market.ma'">중고장터</li>
+						<li onclick="location.href='market.ma'">중고마켓</li>
 					</ul>
 				</li>
 				<li class="dropdown"><label>동호회</label>
