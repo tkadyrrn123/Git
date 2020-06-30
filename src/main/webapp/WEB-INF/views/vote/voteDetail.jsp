@@ -232,10 +232,9 @@
  	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
  	.info{display: inline-block;} 
  	#insertBtn{width: 70px;  margin-top: 20px;} 
- 	#counter{margin-top: 70px;float: right;margin-right: 50px;}
+ 	#counter{margin-top: 70px;margin-right: 50px;}
  	#recounter{margin-top: 70px;float: right;margin-right: 50px;}
  
- 	
  	#content4 textarea{width: 75%; margin: 20px 0px 14px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
  	 .reply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; }  
  	.rreply{width: 110%; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; } 
