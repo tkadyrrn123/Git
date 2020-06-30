@@ -235,7 +235,6 @@
  	#counter{margin-top: 70px;margin-right: 50px;}
  	#recounter{margin-top: 70px;float: right;margin-right: 50px;}
  
- 	
  	#content4 textarea{width: 75%; margin: 20px 0px 14px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
  	 .reply{width:80% ; margin: 10px 0px 0px 200px; border: 1px solid black; }  
  	.rreply{width: 110%; margin: 10px 0px 0px 200px; border: 1px solid black; background: skyblue; } 
