@@ -54,17 +54,17 @@
  	
  	#rtb{border: 1px solid black;}
  	
-#titleCrop{width: 100%; overflow: hidden; max-height: 420px;}
+#titleCrop{width: 100%; overflow: hidden; max-height: 400px;}
 #titleCrp>img{max-height: initial;}
 .img { 
      /* filter: brightness(70%); */
-     width: 100%;
+     width: 100%; margin-top: -30%;
 }
 </style>
 </head>
 <body>
 
-<div id="titleCrop"><img class="img" src="resources/images/gif_title3.gif"></div>
+<div id="titleCrop"><img class="img" src="resources/images/gif_title.gif"></div>
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
 		<form>

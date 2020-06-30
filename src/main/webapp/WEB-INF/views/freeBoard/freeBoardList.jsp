@@ -16,12 +16,6 @@
 #present{color: black !important;}
 #next{color: black !important;}
 
-#titleCrop{width: 100%; overflow: hidden; max-height: 420px;}
-#titleCrp>img{max-height: initial;}
-.img { 
-     /* filter: brightness(70%); */
-     width: 100%;
-}
 	* { box-sizing: border-box; }
 /* 	body { background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); } */
  	.commnuity_header { 
@@ -157,10 +151,17 @@
 	}
 	
 	.search_input{height:37px; margin:0 5px; vertical-align:bottom; border:1px solid #dad4d4;}
+	
+#titleCrop{width: 100%; overflow: hidden; max-height: 400px;}
+#titleCrp>img{max-height: initial;}
+.img { 
+     /* filter: brightness(70%); */
+     width: 100%;  
+}	
 </style>
 </head>
 <body>
-	<div id="titleCrop"><img class="img" src="resources/images/gif_title3.gif"></div>
+	<div id="titleCrop"><img class="img" src="resources/images/gif_title.gif"></div>
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
 	<b>자유 게시판</b>
