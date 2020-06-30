@@ -277,12 +277,13 @@
 			
 	//	 	$('#mBtn'+rNo).val('완료');
 		 	$('#mBtn'+rNo).val('수정취소');
+// 		 	$('#dBtn'+rNo).val('수정완료');
 		 	
-		 	$div = $(".reply2_box");
+		 	$div = $('.reply2_box');
 			$ok = $('<input type="button" class="mdBtn" onclick="modifyRup('+rNo+')" value="수정완료">');
-// 		 	$(e).parent($div).append($ok);
-		 	$div.append($ok);
-		 	
+		 	$(e).parent($div).append($ok);
+// 		 	$div.append($ok);
+
 		 	var counter = '<div style="color:#aaa; float: right;" id="counter'+rNo+'">(0/200자)</div>';
 		 	$(e).next().after(counter);
 		 	var content = $(e).prev().find('textarea').text();

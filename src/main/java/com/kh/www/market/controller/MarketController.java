@@ -84,17 +84,13 @@ public class MarketController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String id = loginUser.getUserId();
 		m.setUserId(id);
-		
-		System.out.println("id : " + id);
-		System.out.println(m.getUserId());
-		
+
 		int result = marketService.insertBoard(m);
 		
 		String renameFileName="";
 		String filenames = "";
 		Iterator<String> files = multi.getFileNames();
 		while(files.hasNext()) {
-			
 			String upFile = files.next();
 			System.out.println(upFile);
 			MultipartFile mFile = multi.getFile(upFile);
@@ -103,11 +99,8 @@ public class MarketController {
 				filenames += renameFileName+",";
 			} 
 		}
-//		filenames = filenames.substring(0, filenames.length()-1);
+		filenames = filenames.substring(0, filenames.length()-1);
 		String[] fileArr = filenames.split(",");
-		
-		System.out.println(filenames);
-		System.out.println(Arrays.toString(fileArr));
 		
 		int fileResult = marketService.insertFiles(filenames);
 		
@@ -147,7 +140,6 @@ public class MarketController {
 			}
 			return renameFileName;
 		} else {
-			System.out.println("null 되니?");
 			return null;
 		}
 	}
@@ -156,12 +148,13 @@ public class MarketController {
 	@RequestMapping("marketDetail.ma")
 	public ModelAndView marketDetail(@RequestParam(value="boardNo",required=false) int boardNo, 
 									 @RequestParam("page") int page, ModelAndView mv) {
+		// no값을 이용해서 글에 대한 정보를 가져온 다음 파일이름만 뽑아서 정보, 파일이름, 페이지를 가지고 상세페이지로 넘어갑니다   
 		Market ma = marketService.selectMarketList(boardNo);
 		String filenames = "";
-//		if(ma != null) {
+		if(ma != null) {
 			filenames = ma.getFileName();
-//		}
-//		filenames = filenames.substring(0, filenames.length()-1);
+		}
+		filenames = filenames.substring(0, filenames.length()-1);
 		String[] fileArr = filenames.split(",");
 		
 		System.out.println("detail : " + filenames);

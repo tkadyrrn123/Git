@@ -53,7 +53,17 @@
 	.reply1_box{width: 800px; height: auto; margin-left: 100px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: dotted; border-color: rgb(201, 232, 255);}
 	.comment2-1img{width: 38px; height: 38px; border-radius: 100%; margin-top: 5px; margin-left: 10px; margin-bottom: 5px; margin-right: 10px; vertical-align: middle;}
 	.dong{line-height: 50px; display: inline; margin-left: 10px; margin-right: 10px;}
-	.reply1_btn{margin-right: 25px; float:right; width:70px; height:25px; background-color:lightgray; color:black; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
+	.reply1_btn{margin-right: 25px; 
+				float:right; 
+				height:25px; 
+				outline:0; 
+				cursor: pointer; 
+				border: 1px solid #dad4d4;
+    			border-radius: 6px;
+    			background-color: #fff;
+   				color: #666;
+    			font-size: 1em;
+    			padding:3px;}
 	.reply_TEXT{border-radius:0.34em; border-color: lightgrey; resize:none;}
 /* 	.counter{color:#aaa; float: right; margin-top: 55px; margin-right: 15px;} */
 
@@ -62,9 +72,43 @@
 	.reply2_box_btn{cursor: pointer; float: right; margin-top: 15px; margin-right: 15px; border:0;}
 	.reply2_box_btn2{cursor: pointer;margin-left: 10px; margin-top: 10px; margin-bottom: 10px;  border:0; outline:0;}
 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
-	.modify_btn{display:inline-block;margin-right: 25px; float:right; width:70px; height:25px; background-color:lightgray; color:black; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
-	.mdBtn{float:right;}
-	.delete_btn{margin-bottom: 10px; float:right; width:70px; height:25px; background-color:lightgray; color:black; border:0; outline:0; border-radius:0.34em; cursor: pointer; margin-top: 10px;}
+	.modify_btn{display:inline-block;
+				margin-right: 25px; 
+				margin-top:7px;
+				float:right; 
+				width:70px; 
+				height:25px; 
+				outline:0; 
+				cursor: pointer;
+				border: 1px solid #dad4d4;
+    			border-radius: 6px;
+    			background-color: #fff;
+   				color: #666;
+    			font-size: 1em;
+    			padding:3px;}
+	.mdBtn{float:right;
+			width:70px; 
+			height:25px; 
+			display:inline-block;
+			border: 1px solid #dad4d4;
+    		border-radius: 6px;
+    		background-color: #fff;
+   			color: #666;
+    		font-size: 1em;
+    		padding:3px;}
+	.delete_btn{margin-bottom: 10px;
+				margin-top:7px; 
+				float:right; 
+				width:70px; 
+				height:25px; 
+				cursor: pointer; 
+				outline:0; 
+				border: 1px solid #dad4d4;
+    			border-radius: 6px;
+    			background-color: #fff;
+   				color: #666;
+    			font-size: 1em;
+    			padding:3px;}
 	.profileImg {
 			    width: 38px;
 			    height: 38px;
@@ -137,7 +181,7 @@
  		   margin-left: 30px; 
  		   width:100%;}
  	.info{display: inline-block;} 
- 	#insertBtn{width: 70px;  
+ 	#insertBtn{width: 75px;  
  			   margin-top: 20px;} 
  	
  	.rOuter{width: 65%; margin-left:100px;}
