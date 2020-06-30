@@ -7,19 +7,21 @@
 		from
 		(select *
 		from tb_notice
+        join tb_user using(user_id)
 		order by notice_date desc)
-		where rownum < 6 and notice_delete = 'N'
+		where rownum < 6 and notice_delete = 'N' and apt_name = #{aptName}
 		]]>
 	</select>
 	<select id="getRealFreeBoard" resultMap="boardResultSet">
 		<![CDATA[
 		select *
 		from
-		(select board_no, board_title, board_content, create_date, user_id, board_count, board_delete
-		from tb_free
-		     join tb_board using(board_no)
-		where board_delete = 'N'
-		order by create_date desc)
+		(select b.board_no, b.board_title, b.board_content, b.create_date, b.user_id, b.board_count, b.board_delete
+		from tb_free f
+		     join tb_board b on(f.board_no = b.board_no)
+             join tb_user u on(b.user_id = u.user_id)
+		where b.board_delete = 'N' and u.apt_name = #{aptName}
+		order by b.create_date desc)
 		where rownum < 6
 		]]>
 	</select>
@@ -27,12 +29,13 @@
 		<![CDATA[
 		select *
 		from
-		(select club_name, board_no, club_intro, club_plan, club_place, club_etc, max_people, end_yn, file_name
-		from tb_club
-			join tb_board using(board_no)
-            left join tb_file using(board_no) 
-		where board_delete = 'N'
-		order by create_date desc)
+		(select c.club_name, c.board_no, c.club_intro, c.club_plan, c.club_place, c.club_etc, c.max_people, c.end_yn, f.file_name
+		from tb_club c
+			join tb_board b on(c.board_no = b.board_no)
+            join tb_user u on(b.user_id = u.user_id)
+            left join tb_file f on(c.board_no = f.board_no) 
+		where board_delete = 'N' and apt_name = #{aptName}
+		order by b.create_date desc)
 		where rownum < 6
 		]]>
 	</select>

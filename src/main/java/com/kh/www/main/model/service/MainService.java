@@ -8,10 +8,10 @@ import com.kh.www.freeBoard.model.vo.FreeBoard;
 
 public interface MainService {
 
-	ArrayList<Notice> getRealNoticeList();
+	ArrayList<Notice> getRealNoticeList(String aptName);
 
-	ArrayList<FreeBoard> getRealFreeBoard();
+	ArrayList<FreeBoard> getRealFreeBoard(String aptName);
 
-	ArrayList<Club> getRealClub();
+	ArrayList<Club> getRealClub(String aptName);
 
 }
