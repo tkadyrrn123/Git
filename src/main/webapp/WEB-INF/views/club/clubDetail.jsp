@@ -171,7 +171,7 @@
 					<c:param name="boardNo" value="${ c.boardNo }"></c:param>	
 				</c:url>
 				<c:if test="${ result eq 0 }">
-				<button type="button" class="btn" id="applyBtn" onclick="location.href='${apply}'">가입 신청하기</button> 
+				<button type="button" class="btn" id="applyBtn" style="border: 1px solid #ccccce;" onclick="location.href='${apply}'">가입 신청하기</button> 
 				</c:if>
 				
 
@@ -213,13 +213,13 @@ ${ c.clubEtc }
 		
 		<div id="btn">
 			<c:if test="${ c.nickName eq loginUser.nickName }">
-				<button class="btn" id="updateBtn">수정</button>
-				<button type="button" class="btn" id="deleteBtn">삭제</button>
+				<button class="btn" id="updateBtn"style="border: 1px solid #ccccce;">수정</button>
+				<button type="button" class="btn" id="deleteBtn"style="border: 1px solid #ccccce;">삭제</button>
 			</c:if>	
 				<c:url var="cList" value="clubList.cb">
 					<c:param name="page" value="${ page }"></c:param>
 				</c:url>
-				<button type="button" class="btn" id="listBtn" onclick="location.href='${ cList }'">목록</button>
+				<button type="button" class="btn" id="listBtn" onclick="location.href='${ cList }'"style="border: 1px solid #ccccce;">목록</button>
 		</div>
 		
 		</form>
@@ -236,7 +236,7 @@ ${ c.clubEtc }
 					</c:if>
 					<div class="info"  id="rWriter">${ loginUser.nickName }</div>
 				</div>
-				<button class="btn" id="insertBtn">댓글 등록</button>
+				<button class="btn" id="insertBtn" style="border: 1px solid #ccccce;">댓글 등록</button>
 
 				<textarea class="rWrite" id="rWrite" style="overflow: hidden; overflow-wrap: break-word; resize: none;" required placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea> 
 				<span style="color:#aaa;" id="counter">(0 / 최대 200자)</span>
@@ -258,8 +258,8 @@ ${ c.clubEtc }
 							<div class="info"  id="rWriter">${b.nickname}</div>
 							<div class="info"  id="replyDate">${b.rCreateDate}</div>
 						<c:if test="${loginUser.userId eq b.rUserId }">
-							<button type="button" class="btn" id="rUpdateBtn${ status.index }">수정</button> 
-							<button type="button" class="btn" id="rDeleteBtn${ status.index }">삭제</button>
+							<button type="button" class="btn" id="rUpdateBtn${ status.index }"style="border: 1px solid #ccccce;">수정</button> 
+							<button type="button" class="btn" id="rDeleteBtn${ status.index }"style="border: 1px solid #ccccce;">삭제</button>
 							<div style="display:none">${b.rNo}</div>
 						</c:if>
 					</div>
@@ -315,8 +315,8 @@ ${ c.clubEtc }
 							<div class="info"  id="rWriter">${b.nickname}</div>
 							<div class="info"  id="replyDate">${b.rCreateDate}</div>
 						<c:if test="${loginUser.userId eq b.rUserId }">
-							<button class="btn" id="rUpdateBtnC" onclick="updateReply(${ status.index }, ${b.rNo })" >수정완료</button> 
-							<button class="btn" id="rDeleteBtnC${ status.index }" style="width:90px;">수정취소</button>
+							<button class="btn" id="rUpdateBtnC" onclick="updateReply(${ status.index }, ${b.rNo })" style="border: 1px solid #ccccce;">수정완료</button> 
+							<button class="btn" id="rDeleteBtnC${ status.index }" style="border:1px solid #ccccce; width:90px;">수정취소</button>
 						</c:if>
 					</div>
 
@@ -385,8 +385,8 @@ ${ c.clubEtc }
 					<div class="info"  id="rWriter">${a.nickname}</div>
 					<div class="info"  id="rreplyDate">${a.rCreateDate}</div>
 					<c:if test="${loginUser.userId eq a.rUserId }">
-						<button type="button" class="btn" id="rrUpdateBtn">수정</button> 
-						<button type="button" class="btn" id="rrDeleteBtn">삭제</button>
+						<button type="button" class="btn" id="rrUpdateBtn"style="border: 1px solid #ccccce;">수정</button> 
+						<button type="button" class="btn" id="rrDeleteBtn"style="border: 1px solid #ccccce;">삭제</button>
 						<div style="display:none">${a.rNo}</div>
 						<div style="display:none">${a.rrNo}</div>
 						<div style="display:none">${ status.index }</div>
@@ -548,7 +548,7 @@ ${ c.clubEtc }
 						 '	 	</c:if>' +
 						 '			<div class="info"  id="rWriter">${ loginUser.nickName }</div>' +
 						 '	</div>' +
-						 '	<button class="btn" id="insertBtnRe" style="width:70px;">댓글 등록</button>' +
+						 '	<button class="btn" id="insertBtnRe" style="width:90px;">댓글 등록</button>' +
 						 '  <div style="display:none;">' + $(this).next().text() + '</div>' +
 						 '	<textarea class="rWrite" id="rrWrite" style="border:1px solid black; overflow: hidden; overflow-wrap: break-word; resize: none;" required  placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>'  +
 						 '	<span style="color:black;" id="counter">(0 / 최대 200자)</span>' +
@@ -575,8 +575,8 @@ ${ c.clubEtc }
    			var rrNo = $(this).next().next().next().text();
    			var i = $(this).next().next().next().next().text();
    			var $textarea = '<textarea class="rContent'+ i +'" id="rrContent" style="border:1px solid black; min-height:100px;" >'+$(this).parent().next().text() + '</textarea>';
-   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnCancel" style="width:70px;">수정 취소</button>')
-   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnSubmit" style="width:70px;">수정 완료</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnCancel" style="width:90px;">수정 취소</button>')
+   			$(this).after('<button type="button" class="btn" id="rrUpdateBtnSubmit" style="width:90px; margin-left:-28px;;">수정 완료</button>')
 
    			
 
