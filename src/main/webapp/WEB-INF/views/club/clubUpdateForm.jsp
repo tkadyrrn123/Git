@@ -33,8 +33,8 @@
 	#title{margin-left: 20px; font-size: 30px; font-weight:bold; margin-top: 35px; height: 100px; }
 	#name{margin-left: 20px; margin-top: 20px; font-size: 20px; font-weight:bold; display: inline-block;}
 	#nameInput{display: inline-block; margin-left: 30px;}
-	#count{margin-left: 20px; margin-top: 50px; font-size: 20px; font-weight:bold;}  
-	#countInput{margin-left: 52px; margin-top: 20px; font-size:30px; height:40px;} 
+	#count{margin-left: 20px; margin-top: 40px; font-size: 20px; font-weight:bold;}  
+	#countInput{margin-left: 52px; margin-top: 20px; font-size:30px; height:50px;} 
 	#applyBtn{margin-left: 52px; width: 80%; height: 50px; margin-top: 100px;}  
 	
 	
@@ -42,7 +42,7 @@
 	#etc{display: inline-block;} 
  	.textarea{margin-top: 40px; width: 80%; margin-left: 190px; min-height: 100px; border:none; font-size: 16px;} 
  	
- 	 textarea{ resize:none;}
+ 	 textarea{resize:none;}
 
 
  	#btn{float:right; margin: 20px 200px 0px 0px;}
@@ -72,8 +72,8 @@
 	
 }
 	#updatebtn{margin-left: 855px;width:90px;}
-	#canclebtn{margin-bottom:30px;}
-	#curPeople{readonly; background:none; border:none; margin-left: 52px; margin-top: 20px; font-size:30px; height:40px;}
+	#canclebtn{}
+	#curPeople{readonly; background:none; border:none; margin-left: 52px; margin-top: 20px; font-size:30px; height:50px;}
 	#curPeople:focus {outline: none;}
 </style> 
  
@@ -85,7 +85,8 @@
 	
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
 	
-	<img class="img" src="resources/images/05.PNG">
+<!-- 	<img class="img" src="resources/images/05.PNG"> -->
+	 	<img class="img" src="resources/images/동호회목록.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">동호회 수정 페이지</b>
 	<div id= all>
@@ -116,7 +117,7 @@
 					
 				<div id="count">총 모집 인원  </div>
 				
-				<textarea  name="maxPeople"  id="countInput">${ c.maxPeople }</textarea>
+				<textarea name="maxPeople"  id="countInput">${ c.maxPeople }</textarea>
 
 				
 				<div id="count"> 현재 인원  </div>
@@ -160,6 +161,7 @@
 		$('#canclebtn').on('click',function(){
 			<c:url var="can" value="clubDetail.cb">
 				<c:param name="boardNo" value="${ c.boardNo }"></c:param>
+				<c:param name="userId" value="${ loginUser.userId }"></c:param>
 				<c:param name="clubName" value="${ c.clubName }"></c:param>
 			</c:url>
 			if(confirm("수정을 중단하고 이전 페이지로 이동하시겠습니까?")){

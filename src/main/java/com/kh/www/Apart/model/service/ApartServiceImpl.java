@@ -170,4 +170,9 @@ public class ApartServiceImpl implements ApartService{
 		return aptDAO.ApartDelete(sqlSession, chkId);
 	}
 
+	@Override
+	public Apart info(String userId) {
+		return aptDAO.info(sqlSession, userId);
+	}
+
 }

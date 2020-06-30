@@ -152,7 +152,6 @@ public class FreeBoardController {
 		} else {
 			throw new FreeBoardException("자유게시판 검색 실패!");
 		}
-		
 			return mv;
 	}
 	

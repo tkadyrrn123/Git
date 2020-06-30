@@ -6,12 +6,12 @@
 <meta charset="UTF-8">
 <title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <style type="text/css">
-   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: lavender;}
+   table, tr, td{border-bottom: 1px solid black; border-collapse: collapse; border-color: #eff3f9;}
    h5{ margin: 0 auto;}
    h2{font-family: "Sans-Serif"; margin-left: 11%;}
-   hr{border-color: lavender;}
-   #titleInput{height: 60%; border: 1px solid lavender; margin-left: 20px; width: 80%;}
-   .inputs{height: 60%; border: 1px solid lavender; margin-left: 20px;}
+   hr{border-color: #eff3f9;}
+   #titleInput{height: 60%; border: 1px solid #eff3f9; margin-left: 20px; width: 80%;}
+   .inputs{height: 60%; border: 1px solid #eff3f9; margin-left: 20px;}
    #tr1{height: 10%}
    #tr2{height: 6%;}
    #tr3{height: 6%;}
@@ -19,28 +19,29 @@
    #tr5{height: 36%;}
    #tr6{height: 6%;}
    #tb{width: 60%; height: 700px; margin: 0 auto; }
-   .td1{text-align: center; font-size: 11px; background: lavender;}
+   .td1{text-align: center; font-size: 11px; background: #eff3f9;}
     /* #list li{list-style-type: decimal-leading-zero;} */ 
    .content{width: 90%; height: 90%; border: none;}
    #btns{text-align: center;}
-   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: lavender;}
+   .btn{border: none; border-radius: 5px; height: 30px; width: 90px; background-color: #eff3f9;}
  	.commnuity_header { position: absolute;
 						left: 46%;
 						top: 220px;
 						color: white;
 						font-size: 1.5em;}
-    input::placeholder{font-style: italic; color: darksalmon;}
-    textarea::placeholder{font-style: italic; color: darksalmon;}
+    input::placeholder{font-style: italic; color: #38614a;}
+    textarea::placeholder{font-style: italic; color: #38614a;}
     .img{filter: brightness(70%);
      width: 100%;
      height: 400px;  }
 </style>
 </head>
 <body>
-<img class="img" src="resources/images/voteImage.png">
+<!-- <img class="img" src="resources/images/voteImage.png"> -->
+	<img class="img" src="resources/images/투표3.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div class="commnuity_header">
-<h2 style="margin-left: 0;">투표 게시판</h2>
+<h2 style="margin-left: 0; font-weight:700;">투표 게시판</h2>
 </div>
 <div id="body">
       <h2>&nbsp;투표</h2>
@@ -49,7 +50,7 @@
          <form action="writeVote.vo" method="post" onsubmit="return check();">
             <table id="tb">
                 <tr id="tr1">
-                   <td colspan=2 style="color: darksalmon; font-weight: bold;">작성하기</td>
+                   <td colspan=2 style="color: #38614a; font-weight: bold;">작성하기</td>
                 </tr> 
                 <tr id="tr2">
                    <td class="td1">제목</td>
@@ -79,10 +80,10 @@
                      			<li>1. <input type="text" class="vclist" name="vclist"></li>
                      			<li>2. <input type="text" class="vclist" name="vclist"></li>
                      		</ol>
-                     		<button type="button" id="add" onclick="addlist();" style="background-color: lavender; border-radius: 5px;">
+                     		<button type="button" id="add" onclick="addlist();" style="background-color: #eff3f9; border-radius: 5px;">
                      			후보 추가
                      		</button>
-                     		<button type="button" id="remove" onclick="removelist();" style="background-color: lavender; border-radius: 5px;">
+                     		<button type="button" id="remove" onclick="removelist();" style="background-color: #eff3f9; border-radius: 5px;">
                      			후보 제거
                      		</button>
                      	</div>

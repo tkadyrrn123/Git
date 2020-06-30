@@ -206,5 +206,23 @@
 		<result property="nickname" column="nickname"/>
 	</resultMap>
 	
+	<update id="modifyReply">
+		update tb_comment
+		set reply_content=#{rContent}, comment_date = sysdate
+		where reply_no=#{rNo}
+	</update>
+	
+	<update id="deleteComment">
+		update tb_comment
+		set comments_delete='Y'
+		where reply_no =#{rNo}
+	</update>
+	
+	<update id="updateFile">
+		update tb_file
+		set file_name = #{fileName}
+		where board_no = #{boardNo}
+	</update>
+	
 	
 </mapper>

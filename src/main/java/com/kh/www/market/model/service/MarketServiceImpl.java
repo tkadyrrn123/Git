@@ -109,5 +109,20 @@ public class MarketServiceImpl implements MarketService {
 		return marketDAO.insertFiles(sqlSession, renameFileName);
 	}
 
+	@Override
+	public int modifyReply(Comment c) {
+		return marketDAO.modifyReply(sqlSession, c);
+	}
+
+	@Override
+	public int deleteComment(int rNo) {
+		return marketDAO.deleteComment(sqlSession, rNo);
+	}
+
+	@Override
+	public int updateMarketFile(Market ma) {
+		return marketDAO.updateMarketFile(sqlSession, ma);
+	}
+
 
 }

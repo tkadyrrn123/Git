@@ -13,25 +13,24 @@ import javax.servlet.http.HttpSession;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
 import com.kh.www.Member.model.vo.Member;
 import com.kh.www.Notice.model.exception.NoticeException;
-import com.kh.www.Notice.model.vo.Notice;
+import com.kh.www.club.model.exception.ClubException;
 import com.kh.www.clubNotice.model.exception.ClubNoticeException;
 import com.kh.www.clubNotice.model.service.ClubNoticeService;
 import com.kh.www.clubNotice.model.vo.ClubNotice;
+import com.kh.www.comment.model.service.CommentService;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 
 @Controller
@@ -40,8 +39,11 @@ public class clubNoticeController {
 	@Autowired
 	private ClubNoticeService ClubNoticeService;
 	
+	@Autowired(required=false)
+	private CommentService coService;
+	
 	@RequestMapping("clubNoticeList.cn") //동호회-공지사항 리스트
-	public ModelAndView clubNoticeList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpSession session) {
+	public ModelAndView clubNoticeList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpSession session, HttpServletResponse response) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String aptName = loginUser.getAptName();
 		
@@ -77,21 +79,18 @@ public class clubNoticeController {
 	
 	//동호회 공지사항 신규 작성으로 이동 및 동호회 이름 리스트 가져오기
 	@RequestMapping("cnoticeInsertView.cn")
-	public ModelAndView clubNameList(ModelAndView mv, HttpSession session) {
+	public ModelAndView clubNameList(ModelAndView mv, HttpSession session, HttpServletResponse response) {
 		
 		//동호회 이름 리스트 가져오기
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String aptName = loginUser.getAptName();
 		
-		
-		System.out.println("작성폼 누르면 아파트이름 뽑아서 네임리스트 에 넣을 것임: " + aptName);
 		ArrayList<String[]> cNamelist = ClubNoticeService.selectcNamelist(aptName);
-		
-		System.out.println("Controller에서 뽑아보는 cNameList : " + cNamelist);
 		
 		if(cNamelist != null) {
 			mv.addObject("cNamelist", cNamelist);
 			mv.setViewName("clubNoticeInsertForm");
+			System.out.println("//동호회 이름 리스트 가져오기"+mv);
 		}else {
 			throw new ClubNoticeException("동호회 공지사항 작성폼을 가져오는데에 실패했습니다.");
 		}
@@ -101,7 +100,7 @@ public class clubNoticeController {
 	
 	
 	@RequestMapping("clubNoticeInsert.cn") //동호회-공지사항 작성
-	public String noticeInsert(@ModelAttribute ClubNotice cn, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session) {
+	public String noticeInsert(@ModelAttribute ClubNotice cn, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session, HttpServletResponse response) {
 	
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			
@@ -159,16 +158,24 @@ public class clubNoticeController {
 	}
 		
 	@RequestMapping("cndetail.cn") //동호회-공지사항 상세조회
-	public ModelAndView noticeDetail(@RequestParam("cnNo") int cnNo, @RequestParam("page") int page,
-							  ModelAndView mv) {
+	public ModelAndView noticeDetail(@RequestParam("cnNo") int cnNo, @RequestParam(value="page", required=false) Integer page,
+							  ModelAndView mv, HttpServletResponse response) {
 		
+		ArrayList<Comment> comment = ClubNoticeService.selectComment(cnNo);
+		ArrayList<Comment2> comment2 = ClubNoticeService.selectComment2();
+		ArrayList<Comment> likeList = coService.selectLike();	
+			
 		ClubNotice ClubNotice = ClubNoticeService.selectclubNotice(cnNo); //글번호 전체 내용 가져오기
 		
-		if(ClubNotice != null) {
-			// 모델엔드뷰로 보드를 보낸다.
-			mv.addObject("ClubNotice", ClubNotice)
-			  .addObject("page", page)
-			  .setViewName("clubNoticeDetailView");
+		//System.out.println("공지사항 상세조회 컨트롤러에서 cn 뽑기 : "+ClubNotice);
+		
+		if(ClubNotice != null) { 
+			mv.addObject("cn", ClubNotice);
+			mv.addObject("page", page);
+			mv.addObject("comment", comment); //->b
+			mv.addObject("comment2", comment2);
+			mv.addObject("likeList", likeList);
+			mv.setViewName("clubNoticeDetailView");
 		}else {
 			throw new ClubNoticeException("공지사항 상세보기에 실패했습니다.");
 		}
@@ -176,16 +183,17 @@ public class clubNoticeController {
 	}
 	
 	@RequestMapping("ClubNoticeUpdateView.cn") //동호회 공지 수정하기 폼으로 이동 - 수정할 글 상세조회
-	public ModelAndView noticeUpdateView(@RequestParam("cnNo") int cnNo, @RequestParam("page") int page, ModelAndView mv, HttpSession session) {
+	public ModelAndView noticeUpdateView(@RequestParam("cnNo") int cnNo, @RequestParam("page") int page, ModelAndView mv, HttpSession session, HttpServletResponse response) {
 		
-		ClubNotice ClubNotice = ClubNoticeService.selectUpdateClubNotice(cnNo);
+		ClubNotice ClubNotice = ClubNoticeService.selectUpdateClubNotice(cnNo);//글번호를 보내서 글정보 다 가져오기
+		
 		
 		//동호회 이름 리스트 가져오기
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		String aptName = loginUser.getAptName();
+		String aptName = loginUser.getAptName(); //유저에서 아파트이름 가져오고
 		
 		ArrayList<String[]> cNamelist = new ArrayList<>();
-		cNamelist = ClubNoticeService.selectcNamelist(aptName);
+		cNamelist = ClubNoticeService.selectcNamelist(aptName); //아파트이름으로 동호회리스트 가져오기
 		
 		if(ClubNotice != null && cNamelist != null) {
 			mv.addObject("ClubNotice", ClubNotice).addObject("page", page).addObject("cNamelist", cNamelist).setViewName("clubNoticeUpdateForm");
@@ -197,7 +205,7 @@ public class clubNoticeController {
 	
 	@RequestMapping("ClubNoticeUpdate.cn") //동호회 공지사항 업데이트
 	public ModelAndView boardUpdateForm(@ModelAttribute ClubNotice cn, @RequestParam("reloadFile") MultipartFile reloadFile,
-								  @RequestParam("page") int page, HttpServletRequest request, ModelAndView mv) {
+								  @RequestParam("page") int page, HttpServletRequest request, ModelAndView mv, HttpServletResponse response) {
 		
 		//업데이트 파일 있으면이 기존 파일을 삭제하고 업데이트 파일을 renameFileName에 새로 저장
 		//글 수정 시 업데이트 파일을 새로 넣지 않으면 기존파일은 유지됨
@@ -248,7 +256,7 @@ public class clubNoticeController {
 	
 	//동호회 공지사항 삭제
 	@RequestMapping("ClubNoticeDelete.cn")
-	public String deleteBoard(@RequestParam("cnNo") int cnNo) {
+	public String deleteBoard(@RequestParam("cnNo") int cnNo, HttpServletResponse response) {
 		int result = ClubNoticeService.deleteClubNotice(cnNo);
 		
 		if(result > 0) {
@@ -354,35 +362,40 @@ public class clubNoticeController {
 			return mv;
 		}
 		//댓글 리스트 가져오기
-		@RequestMapping("ccList.cn")
-		public void replyList(@RequestParam("cnNo") int cnNo, HttpServletResponse response) {
-			response.setContentType("application/json; charset=UTF-8");
-			
-			ArrayList<Comment> cclist = ClubNoticeService.noticeCommentList(cnNo);
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-			try {
-				gson.toJson(cclist, response.getWriter());
-			} catch (JsonIOException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-				
-		}
+//		@RequestMapping("ccList.cn")
+//		public void replyList(@RequestParam("cnNo") int cnNo, HttpServletResponse response) {
+//			response.setContentType("application/json; charset=UTF-8");
+//			
+//			ArrayList<Comment> cclist = ClubNoticeService.noticeCommentList(cnNo);
+//			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//			try {
+//				gson.toJson(cclist, response.getWriter());
+//			} catch (JsonIOException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//				
+//		}
 		//댓글 등록
-		@RequestMapping("addNoticeComment.cn")
+		@RequestMapping("insertComment.cn")
 		@ResponseBody //success 리턴을 위해
-		public Object addReply(@ModelAttribute Comment nc, HttpSession session) {
-			
+		public ArrayList<Comment> addReply(@RequestParam("cnNo") int cnNo, @RequestParam("content") String content,
+				@ModelAttribute Comment c, HttpSession session) {
+							
 			Member loginUser = (Member)session.getAttribute("loginUser");
 			String ncUserId = loginUser.getUserId();
 			
-			nc.setrUserId(ncUserId); //코멘트 객체에 userId 넣기
+			c.setBoardNo(cnNo);
+			c.setrContent(content);
+			c.setrUserId(ncUserId); //코멘트 객체에 userId 넣기
 			
-			int result = ClubNoticeService.insertNoticeComment(nc);
+			int result = ClubNoticeService.insertNoticeComment(c);
 			
 			if(result > 0) {
-				return "success";
+				ArrayList<Comment> comment = ClubNoticeService.selectComment(cnNo);
+				return comment;
+				//return "success";
 			}else {
 				throw new NoticeException("동호회 공지사항 댓글 등록에 실패하였습니다.");
 			}
@@ -391,20 +404,78 @@ public class clubNoticeController {
 		//댓글 수정
 		@RequestMapping("commentUpdate.cn")
 	    @ResponseBody
-	    private int commentUpdate(@RequestParam int rNo, @RequestParam String rContent) throws Exception{
+	    public ArrayList<Comment> commentUpdate(@RequestParam("cnNo") int cnNo,
+	    		@RequestParam("content") String rContent, @RequestParam("rNo") int rNo,
+			@ModelAttribute Comment c, HttpServletResponse response){
 	        
-	        Comment comment = new Comment();
-	        comment.setrNo(rNo);
-	        comment.setrContent(rContent);
+	        c.setrNo(rNo);
+	        c.setBoardNo(cnNo);
+	        c.setrContent(rContent);
 	        
-	        return ClubNoticeService.commentUpdate(comment);
+	        int result = ClubNoticeService.commentUpdate(c);
+	        
+	        if(result > 0) {
+				ArrayList<Comment> comment = ClubNoticeService.selectComment(cnNo);
+				return comment;
+				
+			}else {
+				throw new ClubException("댓글 수정에 실패했습니다.");
+			}
 	    }
 		
 		//댓글 삭제
-		@RequestMapping("commentUpdate.cn{rNo}")
-	    @ResponseBody
-	    private int commentUpdate(@PathVariable int rNo) throws Exception{
-	        
-	        return ClubNoticeService.commentUpdate(rNo);
-	    }
+		@RequestMapping("deleteComment.cn")
+		public String deleteComment(@RequestParam("clubName") String clubName, @RequestParam("userId") String userId, @RequestParam("cnNo") int cnNo, Model mv, @RequestParam("rNo") int rNo) {
+
+			int result = ClubNoticeService.deleteComment(rNo);
+			if(result > 0 ) {
+				mv.addAttribute("clubName", clubName);
+				mv.addAttribute("cnNo", cnNo);
+				mv.addAttribute("userId", userId);
+				return "redirect:cndetail.cn";
+			
+			}else {
+				throw new ClubException("댓글 삭제에 실패했습니다.");
+			}
+		}
+		//대댓글 추가	insertComment2.co 로 해보겠습니다........이씨! 
+		@RequestMapping("insertComment2.cn")
+		@ResponseBody
+		public ArrayList<Comment2> insertComments2(@RequestParam("userId") String userId, @RequestParam("rNo") int rNo, 
+				@ModelAttribute Comment2 c, @RequestParam("content") String content, HttpServletResponse response) {
+			
+			c.setrNo(rNo);
+			c.setrContent(content);
+			c.setrUserId(userId);
+
+			int result = ClubNoticeService.insertComment2(c);
+			
+			if(result > 0) {
+				ArrayList<Comment2> comment2 = ClubNoticeService.selectComment2(rNo);
+				return comment2;
+				
+			}else {
+				throw new ClubException("댓글 등록에 실패했습니다.");
+			}
+			
+		}
+//		//대댓글 수정
+//		@RequestMapping("updateComment3.cb")
+//		@ResponseBody
+//		public int updateComment2(@RequestParam("content") String content, @RequestParam("rrNo") int rrNo, HttpServletResponse response) {
+//			Comment2 c = new Comment2();
+//			c.setRrNo(rrNo);
+//			c.setrContent(content);
+//			
+//			int result = cService.updateComment2(c);
+//			
+//			if(result > 0) {
+//
+//				return result;
+//				
+//			}else {
+//				throw new ClubException("댓글 수정에 실패했습니다.");
+//			}
+//			
+//		}		
 }

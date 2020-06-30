@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.www.Apart.model.service.ApartService;
 import com.kh.www.Apart.model.vo.Apart;
@@ -23,6 +24,10 @@ import com.kh.www.Member.model.vo.MemberCount;
 import com.kh.www.admin.model.vo.SearchOption;
 import com.kh.www.common.Pagenation;
 import com.kh.www.common.model.vo.PageInfo;
+import com.kh.www.myPage.model.exception.MyPageException;
+import com.kh.www.myPage.model.service.MyPageService;
+import com.kh.www.myPage.model.vo.MyQnA;
+import com.kh.www.myPage.model.vo.REQnA;
 
 @SessionAttributes({"mall","lvCnt"})
 @Controller
@@ -33,6 +38,9 @@ public class Admincontroller {
 	
 	@Autowired
 	private MemberService mService;
+	
+	@Autowired
+	private MyPageService myService;
 	
 	//회원가입 신청한 회원이 몇명 있는지
 	@RequestMapping("adminMain.adm")
@@ -683,5 +691,66 @@ public class Admincontroller {
 	         .addAttribute("pi", pi);
 		
 		return "AptAdminBoardList";
+	}
+	
+	// 모든 QNA 불러오기
+	@RequestMapping("selectAllQNAList.adm")
+	public ModelAndView selectAllQNAList(@RequestParam(value="page", required = false) Integer page, ModelAndView mv) {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = myService.getQnAListCount(null);
+		PageInfo pi = Pagenation.getMemberInfo(currentPage, listCount);
+		ArrayList<MyQnA> qlist = myService.getQnAList(null, pi);
+		
+		mv.addObject("pi", pi).addObject("qlist", qlist).setViewName("AptAdminQnAList");
+		
+		return mv;
+	}
+	
+	@RequestMapping("REQNA.adm")
+	public ModelAndView ModifyQNA(  @RequestParam("QNAId") int QNAId,
+									@RequestParam("QNATitle") String QNATitle,
+									@RequestParam("QNAContent") String QNAContent,
+									@RequestParam(value="page", required = false) Integer page, 
+									HttpSession session,
+									ModelAndView mv) {
+		String userId = ((Member)session.getAttribute("loginUser")).getUserId();
+		REQnA reQNA = new REQnA(QNAId, QNATitle, QNAContent, userId);
+		
+		int result1 = myService.REQNA(reQNA);
+		if(result1 > 0) {
+			int result2 = myService.answerQNA(QNAId);
+			if(result2 > 0) {
+				return selectAllQNAList(page,mv);
+			}else {
+				throw new MyPageException("QNA 처리에 실패하였습니다.");
+			}
+		} else {
+			throw new MyPageException("QNA 처리에 실패하였습니다.");
+		}
+	}
+	
+	@RequestMapping("qna_ReForm.adm")
+	public ModelAndView reForm	(@RequestParam("QNAId") int QNAId, 
+								@RequestParam("QNATitle") String QNATitle, 
+								@RequestParam("userId") String userId, 
+								@RequestParam("QNADate") String QNADate, 
+								@RequestParam("QNAContent") String QNAContent, 
+								@RequestParam("file") String QNAFileName,
+								@RequestParam("page") int page, HttpSession session, ModelAndView mv) {
+		String AdminUserId = ((Member)session.getAttribute("loginUser")).getUserId();
+		ArrayList<REQnA> rqlist = myService.getREQnAList(AdminUserId);
+		for(REQnA re:rqlist) {
+			if(re.getQNAId() == QNAId) {
+				mv.addObject("REQNA", re);
+			}
+		}
+		Member writer = mService.Login(userId);
+		mv.addObject("QNAId", QNAId).addObject("QNATitle", QNATitle).addObject("writer", writer).addObject("QNADate", QNADate).addObject("QNAContent", QNAContent).addObject("page", page).addObject("QNAFileName", QNAFileName).setViewName("AptAdminQnAReForm");
+		return mv;
 	}
 }

@@ -41,5 +41,11 @@ public interface MarketService {
 
 	int insertFiles(String renameFileName);
 
+	int modifyReply(Comment c);
+
+	int deleteComment(int rNo);
+
+	int updateMarketFile(Market ma);
+
 
 }

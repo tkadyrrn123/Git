@@ -88,7 +88,7 @@
 	#topic-poll {  border: 1px solid lightgray;  width: 695px;  padding: 15px;  vertical-align: top;  border-radius: 10px;  font-size: 14px;  margin-left: 140px;  margin-top: 10px;  margin-bottom: 10px;}
 	#topic-poll .icon-edit:hover {  background-position: -384px 0;}
 	#topic-poll .poll-header {  overflow: hidden;  padding-bottom: 10px;  border-bottom: 1px solid lightgray;  position: relative;  min-height: 20px;}
-	#topic-poll .poll-header .poll-title {  display: inline-block;  position: absolute;  bottom: 10px;  font-size: 17px;}
+	#topic-poll .poll-header .poll-title {  display: inline-block;  position: absolute;  bottom: 5px;  font-size: 17px;}
 	#topic-poll .poll-header .poll-edit-link {  display: inline-block;  float: right;  color: #999999;}
 	#topic-poll .poll-header .poll-edit-link .sui-bttn {  padding: 3px 9px;}
 	#topic-poll .poll-header .poll-edit-link .icon-edit {  margin-left: 10px;}
@@ -233,7 +233,7 @@
  	.info{display: inline-block;} 
  	#insertBtn{width: 70px;  margin-top: 20px;} 
  	#counter{margin-top: 70px;float: right;margin-right: 50px;}
- 	
+ 	#recounter{margin-top: 70px;float: right;margin-right: 50px;}
  
  	
  	#content4 textarea{width: 75%; margin: 20px 0px 14px 50px; border:none; font-size:18px; font-weight: bold; min-height: 34px;} 
@@ -278,10 +278,11 @@
 </style>
 </head>
 <body>
-<img class="img" src="resources/images/voteImage.png">
+<!-- <img class="img" src="resources/images/voteImage.png"> -->
+	<img class="img" src="resources/images/투표3.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 <div class="commnuity_header">
-<h2>투표 게시판</h2>
+<h2 style="font-weight:700;">투표 게시판</h2>
 </div>
 	<div class="outer" >
 		<form name="pollVoteForm" action="choiseVote.vo" method="post">
@@ -307,12 +308,15 @@
 						<b>${Vote.vName}</b>
 					</div>
 					<div id="cdt_profile" style="float:left;display:inline;">
-						<c:if test="${!empty loginUser.userFile }">
-						<img class="comment2-1img" src="resources/uploadFiles/${loginUser.userFile}">
+					
+						<c:if test="${!empty writer.userFile }">
+						<img class="comment2-1img" src="resources/uploadFiles/${writer.userFile}">
 						</c:if>
-						<c:if test="${empty loginUser.userFile }">
+						
+						<c:if test="${empty writer.userFile }">
 						<img class="comment2-1img" src="resources/uploadFiles/normal.jpg">
 						</c:if>
+						
 					</div>
 					<div class="dong">${writer.nickName}</div>
 					<div style="display:inline;"><i class="far fa-clock"></i> ${Vote.createDate }</div>
@@ -465,6 +469,7 @@
 				<textarea id="reply_TEXT" class="reply_TEXT" name="reply_TEXT" cols="105" rows="4"></textarea>
 				</c:if>
 				</div>
+				<span style="color:black;" id="counter">(0 / 최대 200자)</span>
 			</div>
 		</form>
 	</div>
@@ -553,7 +558,6 @@
 					$('.rContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 32  );
 					$('.rrContent${ status.index }').height(1).height( $('.rContent${ status.index }').prop('scrollHeight') + 32  );
 					  
-					  
 					$('#replyUpdate${ status.index }').hide();
 					
 					
@@ -638,9 +642,9 @@
 
 		// textarea 체크
 		$('.reply_TEXT').keyup(function (e){
+			console.log($('.rWrite'));
 		    var content = $(this).val();
 		    $('#counter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
-
 		    if (content.length > 200){
 		        alert("최대 200자까지 입력 가능합니다.");
 		        $(this).val(content.substring(0, 200));
@@ -746,9 +750,6 @@
   	   			var voteId = ${ Vote.vId };
    				var rNo = b;
    				var content = $('.rrContent' + a).val();
-   				console.log(typeof voteId);
-   				console.log(typeof b);
-   				console.log(typeof content);
   	   			$.ajax({
   	   				url: 'updateVoteComment.co',
   	   				data: {voteId:voteId, content:content, rNo:b},
@@ -773,10 +774,10 @@
 						 '	 	</c:if>' +
 						 '			<div class="info"  id="rWriter">${ loginUser.nickName }</div>' +
 						 '	</div>' +
-						 '	<button class="btn" id="insertBtnRe" style="width:70px;">댓글 등록</button>' +
+						 '	<button class="btn" id="insertBtnRe" style="width:85px;">댓글 등록</button>' +
 						 '  <div style="display:none;">' + $(this).next().text() + '</div>' +
 						 '	<textarea class="rWrite" id="rrWrite" style="border:1px solid black; overflow: hidden; overflow-wrap: break-word; resize: none;" required  placeholder="댓글을 입력해주세요. 비방, 홍보글, 도배글 등은 예고없이 삭제될 수 있습니다."></textarea>'  +
-						 '	<span style="color:black;" id="counter">(0 / 최대 200자)</span>' +
+						 '	<span style="color:black;" id="recounter">(0 / 최대 200자)</span>' +
 						 '</div>'
    			$rreplyInsertTable.after(rreplys);
    		});
@@ -885,6 +886,16 @@
    					thisBtn.parent().children('.likeCount').text(count);
    				}
    			});
+		});
+		$(document).on('keyup','.rWrite', function(e){
+		    var content = $(this).val();
+		    $('#recounter').html("("+content.length+"/200자)");//글자수 실시간 카운팅
+
+		    if (content.length > 200){
+		        alert("최대 200자까지 입력 가능합니다.");
+		        $(this).val(content.substring(0, 200));
+		        $('#recounter').html("(200/200자)");
+		    }
 		});
 	</script>
 		

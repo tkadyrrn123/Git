@@ -40,6 +40,19 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 		if(!StringUtils.isEmpty(msg)) {
 			String[] strs = msg.split(",");
 			
+			//공지사항 알람
+			if(strs != null && "NoticeWrite".equals(strs[0])) {
+
+				String messsage = "<strong>공지사항 알림!</strong><br>" + "새로운 공지사항이  추가되었습니다.<br>"
+						+"<p><a href='noticeList.no'>이동하기<i class='fas fa-arrow-circle-right'></i></a></p>";
+				TextMessage tmpMsg = new TextMessage(messsage);
+
+				for(WebSocketSession sess : sessions) {
+					sess.sendMessage(tmpMsg);
+				} 
+			}
+
+			//자유게시판 알람
 			if(strs != null && strs.length == 4) {
 				String cmd = strs[0];
 				String replyWriter = strs[1];//댓글 작성자
@@ -61,7 +74,7 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println("afterConnectionClosed:" + session +" : "+ status);
+		sessions.remove(session);
 	}
 	
 	private String getId(WebSocketSession session) {

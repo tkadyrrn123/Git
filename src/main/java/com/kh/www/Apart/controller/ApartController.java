@@ -37,19 +37,25 @@ public class ApartController {
 	}
 	
 	// 카카오 지도
-	@RequestMapping(value = "address", method = RequestMethod.GET)
-	public Map<String, Object> address(String loc) {
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		// 서비스에서 주소를 가져오는 메소드 호출
-		String address = aptService.address(loc);
-		map.put("address", address);
-		return map;
-	}
+//	@RequestMapping(value = "address", method = RequestMethod.GET)
+//	public Map<String, Object> address(String loc) {
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		// 서비스에서 주소를 가져오는 메소드 호출
+//		String address = aptService.address(loc);
+//		map.put("address", address);
+//		return map;
+//	}
 	
 	// 아파트 정보
 	@RequestMapping("information.apt")
-	public String information() {
+	public String information(@RequestParam("userId") String userId, Model model) {
+		Apart apt = aptService.info(userId);
+		if(apt != null) {
+			model.addAttribute("apt", apt);
+		}else {
+			model.addAttribute("msg", "아파트 위치 조회에 실패했습니다.");
+		}
 		return "information";
 	}
 	// 아파트 인사말	

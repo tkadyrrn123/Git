@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.www.Notice.model.vo.Notice;
 import com.kh.www.clubNotice.model.vo.ClubNotice;
 import com.kh.www.common.model.vo.Comment;
+import com.kh.www.common.model.vo.Comment2;
 import com.kh.www.common.model.vo.PageInfo;
 import com.sun.xml.internal.bind.v2.runtime.NameList;
 
@@ -110,6 +111,30 @@ public class CNoticeDAO {
 	//댓글 삭제
 	public int commentUpdate(SqlSessionTemplate sqlSession, int rNo) {
 		return sqlSession.update("ClubNoticeMapper.deleteNoticeComment",rNo);
+	}
+
+	public ArrayList<Comment> selectComment(SqlSessionTemplate sqlSession, int cnNo) {
+		return (ArrayList)sqlSession.selectList("ClubNoticeMapper.selectComment", cnNo);
+	}
+
+	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("ClubNoticeMapper.selectComment2");
+	}
+
+	public int updateComment(SqlSessionTemplate sqlSession, Comment c) {
+		return sqlSession.update("ClubNoticeMapper.updateComment", c);
+	}
+
+	public int deleteComment(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("ClubNoticeMapper.deleteComment", rNo);
+	}
+
+	public int insertComment2(SqlSessionTemplate sqlSession, Comment2 c) {
+		return sqlSession.insert("ClubNoticeMapper.insertComment2", c);
+	}
+
+	public ArrayList<Comment2> selectComment2(SqlSessionTemplate sqlSession, int rNo) {
+		return (ArrayList)sqlSession.selectList("ClubNoticeMapper.selectComment23",rNo);
 	}
 
 	

@@ -8,8 +8,8 @@
 <title>HOUSTORY</title><link rel=" shortcut icon" href="resources/images/favicon.png"><link rel="icon" href="resources/images/favicon.png">
 <link rel="stylesheet" type="text/css" href="resources/css/MyPage.css">
 <style>
-	.myPageUl li:nth-child(4) {
-		background-color: #8181F7;
+	.myPageUl li:nth-child(5) {
+		background-color: #b2c9ec;
 	}
 	#plus{
 		position: absolute;
@@ -24,7 +24,8 @@
 </style>
 </head>
 <body>
-	<img class="img" src="resources/images/myPageImage.jpg">
+<!-- 	<img class="img" src="resources/images/myPageImage.jpg"> -->
+		<img class="img" src="resources/images/마이페이지.jpg">
 	<jsp:include page="../common/menubar.jsp"/>
 	<b id="headcomment">프로필</b>
 	<div class="myMenu">

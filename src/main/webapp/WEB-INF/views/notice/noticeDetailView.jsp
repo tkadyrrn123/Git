@@ -48,6 +48,7 @@
 	.fa-comment-dots{margin-left: 7px; color: #62b3b6;}
 	.Reply_list_title{margin-left: 120px; color: #62b3b6; margin-top: 10px; margin-bottom: 10px;}
 	#rCount{margin-left: 5px;}
+	
 /* 원댓글  */	
 	.reply2_box{width: 800px; height: auto; margin-left: 100px; margin-top: 8px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;border: solid; border-color: rgb(201, 232, 255);}
 	
@@ -58,8 +59,8 @@
 	
 	.delete_btn{margin-right: 10px; margin-left: 15px; margin-top: 15px; border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
 	    color: #666; cursor: pointer; font-size: 12px; padding: 7px; width: 65px; float: right; text-align: center;} 
-	.counter{color:#aaa; float: right; margin-top: 55px; margin-right: 15px;}
-	.counter2{color:#aaa; float: right; margin-right: 15px; margin-top: 70px;}
+	.counter{color:#aaa; float: right; margin-top: 85px; margin-right: 15px;}
+	.counter2{color:#aaa; float: right; margin-right: 15px; margin-top: 85px;}
 	
 	.fa-thumbs-up{cursor: pointer; float: right; margin-top: 10px; margin-right: 10px;}
 	 
@@ -75,7 +76,7 @@
 </style>
 </head>
 <body>
-<img class="img" src="resources/images/noticeImage.jpg">
+	<img class="img" src="resources/images/유럽집느낌.jpg">
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="outer">
 	<!----------- 게시글 상단부 시작  ---------->	
@@ -93,8 +94,8 @@
 						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
 					</c:if>
 					<c:if test="${empty notice.noticeFile }">
-						<img class="comment_img" src="${contextPath}/resources/uploadFiles/normal.jpg">
-					</c:if>
+						<img class="comment_img" src="resources/uploadFiles/normal.jpg">
+					</c:if>                             
                  </div> 					
 				<div class="dong">${ notice.userId }</div>
 				<div style="display:inline;"><i class="far fa-clock" style="margin-right: 10px;"></i>${ notice.nCreateDate }</div>
@@ -137,17 +138,17 @@
 		<!-------------댓글 작성  ------------>
 			<div class="reply1_box" id="rtb">
 				<div id="notice_profile" style="float:left;display:inline;">
-					<c:if test="${!empty notice.noticeFile }">
-						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ notice.noticeFile }">
+					<c:if test="${!empty loginUser.userFile }">
+						<img class="comment_img" src="${contextPath}/resources/uploadFiles/${ loginUser.userFile }">
 					</c:if>
-					<c:if test="${empty notice.noticeFile }">
-						<img class="comment_img" src="${contextPath}/resources/uploadFiles/normal.jpg">
+					<c:if test="${empty loginUser.userFile }">
+						<img class="comment_img" src="resources/uploadFiles/normal.jpg">
 					</c:if>
                  </div> 
 				<div class="dong">${ loginUser.userId }</div>
 					<input type="button" id="rSubmit" class="reply1_btn" value="댓글등록">
 				<div style="margin-left: 10px; margin-top: 12px;">
-					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="94" rows="5" placeholder="댓글을 입력해주세요."></textarea>
+					<textarea id="rContent" class="reply_TEXT" name="reply_TEXT" cols="92" rows="5" placeholder="댓글을 입력해주세요."></textarea>
 				<div class="counter" id="counter">0/200</div>
 				</div>
 			</div>
@@ -256,7 +257,7 @@
 
 						$rUserId = $('<div class="dong2">').text(data[i].rUserId);
 						$reReply = $('<div id="'+data[i].rNo+'" class="re_reply_btn"> 답글 </div>');
-						$rContent = $('<textarea id="reply_TEXT" class="reply_TEXT_'+data[i].rNo+'" name="rContent_'+data[i].rNo+'" cols="94" rows="5" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" resize:none; readonly onkeyup="plus('+data[i].rNo+');"></textarea>').text(data[i].rContent);
+						$rContent = $('<textarea id="reply_TEXT" class="reply_TEXT_'+data[i].rNo+'" name="rContent_'+data[i].rNo+'" cols="92" rows="5" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" resize:none; readonly onkeyup="plus('+data[i].rNo+');"></textarea>').text(data[i].rContent);
 						$rCreateDate = $('<div id="rCreateDate_'+data[i].rNo+'" style="margin-left: 10px; color: gray;">').text(data[i].rCreateDate);
 					
 						$div.append($userFile);
@@ -390,7 +391,7 @@
 				 '	<button class="re_submit_btn" id="insertBtnRe" style="width:70px;">댓글 등록</button>' +
 				 '  <div style="display:none;">' + re_id_num + '</div>' +
 				 '  <div style="margin-left: 10px; margin-top: 12px;">' +
-				 '	<textarea class="reply_TEXT" id="rrWrite" cols="89" rows="5" resize:none; placeholder="댓글을 입력해주세요."></textarea>'  +
+				 '	<textarea class="reply_TEXT" id="rrWrite" cols="87" rows="5" resize:none; placeholder="댓글을 입력해주세요."></textarea>'  +
 				 '	<div class="counter" id="counter">0/200</div>' +
 				 ' </div>'+
 				 '</div>'
@@ -450,7 +451,7 @@
 								}
 		
 								$rUserId = $('<div class="dong2">').text(comment2[i].rUserId);
-								$rContent = $('<textarea id="reply_TEXT" class="reply_TEXT_'+comment2[i].rrNo+'" name="rContent_'+comment2[i].rrNo+'" cols="94" rows="5" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" resize:none; readonly onkeyup="plus('+comment2[i].rrNo+');"></textarea>').text(comment2[i].rContent);
+								$rContent = $('<textarea id="reply_TEXT" class="reply_TEXT_'+comment2[i].rrNo+'" name="rContent_'+comment2[i].rrNo+'" cols="92" rows="5" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" resize:none; readonly onkeyup="plus('+comment2[i].rrNo+');"></textarea>').text(comment2[i].rContent);
 								$rCreateDate = $('<div id="rCreateDate_'+comment2[i].rrNo+'" style="margin-left: 10px; color: gray;">').text(comment2[i].rCreateDate);
 							
 								$div.append($userFile);

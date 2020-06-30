@@ -16,11 +16,11 @@
 #present{color: black !important;}
 #next{color: black !important;}
 
-
+#titleCrop{width: 100%; overflow: hidden; max-height: 420px;}
+#titleCrp>img{max-height: initial;}
 .img { 
-     filter: brightness(70%);
+     /* filter: brightness(70%); */
      width: 100%;
-     height: 400px;
 }
 	* { box-sizing: border-box; }
 /* 	body { background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); } */
@@ -63,8 +63,11 @@
     			  font-weight: bold; 
                   color:rgb(139, 134, 134);
                   border:0;}
-                  
-	.page_wrap{display:inline-block; position:absolute; margin-top: 10px; margin-left: 50%;}
+    /*페이징 버튼  */
+	.btn-standard {border: 1px solid #ccccce; border-radius: 6px; background-color: #fff; font-weight: 500;
+	    color: #666; cursor: pointer; font-size: 12px; padding: 7px;}              
+
+	.page_wrap{margin-top: 10px; margin-left: 40%;}
 	.form_wrap{margin:30px auto 0 auto; width: 340px; margin-bottom: 150px;}
 
 	#selectBox{
@@ -157,11 +160,10 @@
 </style>
 </head>
 <body>
-
-	<img class="img" src="resources/images/myPageImage.jpg">
+	<div id="titleCrop"><img class="img" src="resources/images/gif_title3.gif"></div>
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="commnuity_header">
-	<h3><b>자유 게시판</b></h3>
+	<b>자유 게시판</b>
 	</div>
 	<div class="select-box" id="selectBox">
 	
@@ -247,40 +249,41 @@
      -->
     <!-- [이전] -->
 				<c:if test="${ pi.currentPage <= 1 }">
-					[이전] &nbsp;
+					<button class="btn-standard">이전</button>
 				</c:if>
 				<c:if test="${ pi.currentPage > 1 }">
-<%-- 				<c:url var="before" value="list.fr"> --%>
-					<c:url var="before" value="${ loc }">
+				<c:url var="before" value="list.fr">
+<%-- 					<c:url var="before" value="${ loc }"> --%>
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						<c:if test="${ searchValue ne null }">
 							<c:param name="condition" value="${ condition }"/>
 							<c:param name="searchValue" value="${ searchValue }"/>
 						</c:if>
 					</c:url>
-					<a href="${ before }" id="prev">[이전]</a> &nbsp;
+					<button class="btn-standard" id="prev" onclick="location.href='${ before }'">이전</button>
 				</c:if>
 				
 				<!-- 페이지 -->
 				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 					<c:if test="${ p eq pi.currentPage }">
-						<font color="red" size="4"><b>[${ p }]</b></font>
+						<button class="btn-standard" style="color:red;">${ p }</button>
 					</c:if>
 					
 					<c:if test="${ p ne pi.currentPage }">
-						<c:url var="pagenation" value="${ loc }">
+<%-- 						<c:url var="pagenation" value="${ loc }"> --%>
+						<c:url var="pagination" value="list.fr">
 							<c:param name="page" value="${ p }"/>
 						<c:if test="${ searchValue ne null }">
 							<c:param name="condition" value="${ condition }"/>
 							<c:param name="searchValue" value="${ searchValue }"/>
 						</c:if>
 						</c:url>
-						<a href="${ pagenation }" id="present">${ p }</a> &nbsp;
+						<button class="btn-standard" onclick="location.href='${ pagination }'">${ p }</button>
 					</c:if>
 				</c:forEach>
 				<!-- [다음] -->
 				<c:if test="${ pi.currentPage >= pi.maxPage }">
-					[다음]
+					<button class="btn-standard">다음</button>
 				</c:if>
 				<c:if test="${ pi.currentPage < pi.maxPage }">
 					<c:url var="after" value="${ loc }">
@@ -290,7 +293,7 @@
 							<c:param name="searchValue" value="${ searchValue }"/>
 						</c:if>						
 					</c:url> 
-					<a href="${ after }" id="next">[다음]</a>
+					<button class="btn-standard" id="next" onclick="location.href='${ after }'">다음</button>
 				</c:if>
 				
     </div>

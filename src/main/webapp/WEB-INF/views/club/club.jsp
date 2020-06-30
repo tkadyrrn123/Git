@@ -48,8 +48,6 @@ body {
 		transform-style: preserve-3d;
 		transition: transform 0.5s cubic-bezier(0.75, 0, 0.85, 1);
 	}
-
-
 .more {
 	display: none;
 	}
@@ -122,7 +120,7 @@ body {
 	
 	.front h2 {
 /* 		grid-row: 2; */
-		margin-bottom: 0.3em;
+		margin-bottom: -1.2em;
 		text-transform: uppercase;
 		letter-spacing: 3px;
 		color: #fff;
@@ -130,7 +128,12 @@ body {
 		text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 		margin-top: -10px;
 		text-align: center; 
+		text-overflow: ellipsis;
+		overflow: hidden;word-break:break-all;height: 70px;
 	}
+	.back h2 {text-overflow: ellipsis;
+		overflow: hidden;height: 35px;
+		word-break:break-all;}
 	
 	.front .rating {
 /* 		grid-row: 3; */
@@ -166,7 +169,7 @@ body {
 	}
 
 .back .info {
-		margin-top: -30px;
+		margin-top: 10px;
 		/* 	position: relative;
 		display: flex;
 		align-items: center;
@@ -309,8 +312,10 @@ body {
 	#sellPic{width: 100%; height: 210px;}	 
 	
 	#imgg{}
-	 table{text-align:center;}  
-	 th{width:80px; height: 30px;}
+	 table{text-align:center; text-overflow: ellipsis; width: 100%;   height: 200px;}
+	 td{height: 50px;}  
+	 table p{height: 39px; width: 233px; text-overflow: ellipsis; overflow: hidden;}  
+	 th{width:80px; height: 30px; text-overflow: ellipsis;}
 	 #all{margin-top: 250px;}
 	 #title{width: 50%; margin-left: 246px; font-size: 30px; font-weight: bold; margin-top: 30px;}
 	#line{width: 80%; background: lightgray; height:2px; margin: auto; margin-top: 20px; border: 1px solid lightgray;} 
@@ -345,7 +350,8 @@ body {
 
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application" />	
 	
-	<img class="img" src="resources/images/05.PNG">
+<!-- 	<img class="img" src="resources/images/05.PNG"> -->
+ 	<img class="img" src="resources/images/동호회목록.jpg">
 	<jsp:include page="../common/menubar.jsp"/> 
 	<b id="headcomment">동호회 페이지</b>	
 	<div id= title>
@@ -400,7 +406,9 @@ body {
                            				계획
                            			</th>
                            			<td>
+                           				<p>
                            				${ b.clubPlan }
+                           				</p>
                            			</td>
                            		</tr>
                            		<tr>
@@ -408,15 +416,19 @@ body {
                            				장소
                            			</th>
                            			<td>
+                           				<p>
                            				${ b.clubPlace }
+                           				</p>
                            			</td> 
                            		</tr>
-                           		<tr>
+                           		<tr> 
                            			<th>
                            				인원수
                            			</th> 
-                           			<td>
+                           			<td>	<br>
+                           				<p>
                            				( ${b.clubPeople } / ${ b.maxPeople } )
+                           				</p>
                            			</td>
                            		</tr>
                            </table>
