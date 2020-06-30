@@ -232,7 +232,7 @@
  	#info2{display: inline-block;  height:50px; margin-top: 12px; margin-left: 30px; width:100%;}
  	.info{display: inline-block;} 
  	#insertBtn{width: 70px;  margin-top: 20px;} 
- 	#counter{margin-top: 70px;float: right;margin-right: 50px;}
+ 	#counter{margin-top: 70px;margin-right: 50px;}
  	#recounter{margin-top: 70px;float: right;margin-right: 50px;}
  
  	
